@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Belt : MonoBehaviour
@@ -9,9 +10,11 @@ public class Belt : MonoBehaviour
     public Belt BeltInSequence;
     public Item BeltItem;
     public bool isSpaceTaken;
+    public bool isMachineBlocking;
 
     private void Start()
     {
+        isMachineBlocking = false;
         BeltInSequence = null;
         BeltInSequence = GetNextBelt();
         gameObject.name = $"Belt: {BeltID++}";
@@ -39,19 +42,27 @@ public class Belt : MonoBehaviour
 
         if (BeltItem.GetItem() != null && BeltInSequence != null && BeltInSequence.isSpaceTaken == false)
         {
-            Vector3 toPosition = BeltInSequence.GetItemPosition();
-            BeltInSequence.isSpaceTaken = true;
-            float step = BeltManager.Instance.speed * Time.deltaTime;
-
-            while (BeltItem.GetItem().transform.position != toPosition)
+            if (BeltInSequence.GetComponent<Machine>())
             {
-                BeltItem.GetItem().transform.position = Vector3.MoveTowards(BeltItem.transform.position, toPosition, step);
-                yield return null;
+                Machine machine = BeltInSequence.GetComponent<Machine>();
+                isMachineBlocking = !machine.GetCraftedItem().Recipes.ContainsKey(BeltItem.GetItemData());
             }
+            if(!isMachineBlocking)
+            {
+                Vector3 toPosition = BeltInSequence.GetItemPosition();
+                BeltInSequence.isSpaceTaken = true;
+                float step = BeltManager.Instance.speed * Time.fixedDeltaTime;
 
-            isSpaceTaken = false;
-            BeltInSequence.BeltItem = BeltItem;
-            BeltItem = null;
+                while (BeltItem.GetItem().transform.position != toPosition)
+                {
+                    BeltItem.GetItem().transform.position = Vector3.MoveTowards(BeltItem.transform.position, toPosition, step);
+                    yield return null;
+                }
+
+                isSpaceTaken = false;
+                BeltInSequence.BeltItem = BeltItem;
+                BeltItem = null;
+            }
         }
     }
 
