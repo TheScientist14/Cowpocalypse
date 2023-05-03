@@ -5,11 +5,18 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using DG.Tweening;
 using static UnityEngine.RectTransform;
+using UnityEngine.InputSystem;
 
 public class SlidingPanel : MonoBehaviour
 {
     [SerializeField]
-    private RectTransform _rt;
+    private RectTransform _rtTomove;
+    [Header("At least one")]
+    [SerializeField,Tooltip("The effect will be triggered over the moving Rect")]
+    private bool _hoverRtToMove;
+    [SerializeField,Tooltip("The effect will be triggered over the main steady rect")]
+    private bool _hoveRtMain;
+    private RectTransform _rtMain;
     [SerializeField]
     private Axis _axis;
     [SerializeField, Range(.1f, 2f)]
@@ -18,7 +25,29 @@ public class SlidingPanel : MonoBehaviour
     private Ease _ease;
     private bool _expanded;
     private List<Tween> _runningTweens = new List<Tween>(2);
-        //Demo script
+    InputsActions a;
+    private void Awake()
+    {
+        a = InputMaster.instance.InputAction;
+        _rtMain = transform as RectTransform;
+    }
+    private void OnEnable()
+    {
+        a.Player.PointerPosition.performed += ctx => CheckValue(ctx.ReadValue<Vector2>());
+    }
+    private void OnDisable()
+    {
+        a.Player.PointerPosition.performed -= ctx => CheckValue(ctx.ReadValue<Vector2>());
+    }
+    public void CheckValue(Vector2 val)
+    {
+        Toggle((_hoverRtToMove && IsPointOverRect(_rtTomove, val)) || (_hoveRtMain && IsPointOverRect(_rtMain, val)));
+    }
+    public bool IsPointOverRect(RectTransform r, Vector2 val)
+    {
+        return RectTransformUtility.ScreenPointToLocalPointInRectangle(r, val, null, out Vector2 localMousePos) && r.rect.Contains(localMousePos);
+    }
+    //Demo script
     /*private IEnumerator Start()
     {
         while (true)
@@ -43,21 +72,21 @@ public class SlidingPanel : MonoBehaviour
 
     public void Collapse()
     {
-        Toggler(false);
+        Toggle(false);
     }
 
     public void Expand()
     {
-        Toggler(true);
+        Toggle(true);
     }
-    public void Toggler(bool expand)
+    public void Toggle(bool expand)
     {
         if (_expanded == (_expanded = expand))
             return;
         _runningTweens.ForEach(t => t.Kill());
         _runningTweens.Clear();
-        var targetMin = _rt.anchorMin;
-        var targetMax = _rt.anchorMax;
+        var targetMin = _rtTomove.anchorMin;
+        var targetMax = _rtTomove.anchorMax;
         if (_axis == Axis.Vertical)
         {
             targetMin.x = _expanded ? 0 : -1;
@@ -68,7 +97,7 @@ public class SlidingPanel : MonoBehaviour
             targetMin.y = _expanded ? 0 : -1;
             targetMax.y = _expanded ? 1 : 0;
         }
-        _runningTweens.Add(_rt.DOAnchorMin(targetMin, _duration).SetEase(_ease));
-        _runningTweens.Add(_rt.DOAnchorMax(targetMax, _duration).SetEase(_ease));
+        _runningTweens.Add(_rtTomove.DOAnchorMin(targetMin, _duration).SetEase(_ease));
+        _runningTweens.Add(_rtTomove.DOAnchorMax(targetMax, _duration).SetEase(_ease));
     }
 }
