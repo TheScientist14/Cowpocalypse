@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d391d4023e803140b0d56a24867b9b7, type: 3}
+  m_Name: Robot Eyes
+  m_EditorClassIdentifier: 
+  <Price>k__BackingField: 400
+  <Name>k__BackingField: Robot Eyes
+  <CraftDuration>k__BackingField: 1
+  <Tier>k__BackingField: {fileID: 11400000, guid: 8094ace0322e98647bda4816c6da0ff4, type: 2}
+  _parents:
+  - {fileID: 11400000, guid: 0a3bbd265e3d67f4a90f257b773d6f88, type: 2}
+  - {fileID: 11400000, guid: 8d07a57313bf9ad42be6687bb4d1b801, type: 2}
+  _amounts: 0200000002000000
