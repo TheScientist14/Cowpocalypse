@@ -50,7 +50,7 @@ public class Splitter : Belt
                     ItemMoving = true;
                     Vector3 toPosition = OutputBelts[CurrentOutput].GetItemPosition();
                     OutputBelts[CurrentOutput].isSpaceTaken = true;
-                    float step = BeltManager.Instance.speed * Time.fixedDeltaTime;
+                    float step = BeltManager.instance.speed * Time.fixedDeltaTime;
 
                     while (BeltItem.GetItem().transform.position != toPosition)
                     {

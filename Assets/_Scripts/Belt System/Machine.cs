@@ -1,3 +1,4 @@
+using _Scripts.Pooling_System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -23,13 +24,13 @@ public class Machine : Belt
         Stock.TryGetValue(BeltItem.GetItemData(), out int amount);
         Stock[BeltItem.GetItemData()] = Stock[BeltItem.GetItemData()] + 1;
         print(amount);
-        Destroy(BeltItem);
+        PoolManager.instance.DespawnObject(BeltItem);
         isSpaceTaken = false;
         foreach (ItemData item in CraftedItem.Recipes.Keys)
         {
             if (Stock[item] < CraftedItem.Recipes[item])
             {
-                StopCoroutine(StartBeltMove());
+                yield break;
             }
         }
         foreach (ItemData item in CraftedItem.Recipes.Keys)
