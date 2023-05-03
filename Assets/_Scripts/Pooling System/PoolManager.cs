@@ -42,7 +42,7 @@ namespace _Scripts.Pooling_System
         
         public void SpawnObject(ItemData itemData)
         {
-            itemPool[0].itemData = itemData;
+            itemPool[0].SetItemData(itemData);
             //itemPool[0].GetComponent<SpriteRenderer>().sprite = itemData.sprite;
             itemPool[0].gameObject.SetActive(true);
             existingItems.Add(itemPool[0]);
