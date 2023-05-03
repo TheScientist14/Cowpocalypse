@@ -441,7 +441,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce9dada17add95549a6bdefe64b6decb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfPooledObjects: 2
+  numberOfPooledObjects: 10
+  minPoolSize: 2
+  numberToAdd: 10
+  numberToAddMultiplier: 0
+  itemPool: []
+  existingItems: []
 --- !u!4 &1341332855
 Transform:
   m_ObjectHideFlags: 0
