@@ -25,7 +25,7 @@ public class AllTierUi : MonoBehaviour
         foreach (IGrouping<ItemTier, ItemData> tier in s)
         {
             var inst = Instantiate(_tierPrefab, _layout.transform);
-            inst.TierName.Title = tier.Key.Name;
+            inst.TierName.Value = tier.Key.Name;
             inst.InstantiateRecipes(tier);
         }
     }
