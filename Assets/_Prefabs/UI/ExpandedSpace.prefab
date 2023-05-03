@@ -166,7 +166,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 69265dbe4f6d1c34a9350f6f6dc08642, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _rt: {fileID: 794928214039560190}
+  _rtTomove: {fileID: 794928214039560190}
+  _hoverRtToMove: 0
+  _hoveRtMain: 1
   _axis: 1
   _duration: 0.5
   _ease: 4
