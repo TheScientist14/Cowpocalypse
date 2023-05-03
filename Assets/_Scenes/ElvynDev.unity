@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -3421431852118544989, guid: 6ff40ac3a32ce4f47bd1d9bccc6d8b98, type: 3}
+      propertyPath: SpawnedItemData
+      value: 
+      objectReference: {fileID: 11400000, guid: 4440af91f24e0f14e94e6d36fbe7a345, type: 2}
     - target: {fileID: 348153738528665622, guid: 6ff40ac3a32ce4f47bd1d9bccc6d8b98, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -441,10 +445,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ce9dada17add95549a6bdefe64b6decb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  numberOfPooledObjects: 10
-  minPoolSize: 2
-  numberToAdd: 10
-  numberToAddMultiplier: 0
+  minPoolSize: 0.2
+  percentageToAdd: 0.5
   itemPool: []
   existingItems: []
 --- !u!4 &1341332855

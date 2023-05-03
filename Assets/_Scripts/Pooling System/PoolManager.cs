@@ -9,14 +9,14 @@ namespace _Scripts.Pooling_System
     public class PoolManager : Singleton<PoolManager>
     {
         [Header("Start number of pooled items")]
-        [SerializeField] private int numberOfPooledObjects;
-        [Header("Limit of pooled items left in the pool before adding new ones")]
-        [SerializeField] private int minPoolSize;
-        [Header("Number of pooled items to add once limit is reached")]
-        [SerializeField] private int numberToAdd;
-        [Header("The multiplier for adding pooled items (the more you produce the more you should add) the added pooled items shouldn't be a constant")]
-        [SerializeField] private int numberToAddMultiplier;
+        [ShowNonSerializedField] private int _numberOfPooledObjects = 10;
+        [Header("Limit of pooled items left in the pool before adding new ones (value between 0 and 1)")]
+        [SerializeField] private float minPoolSize;
+        [Header("The multiplier for adding pooled items (value between 0 and 1")]
+        [SerializeField] private float percentageToAdd;
 
+        //TODO : uncoment sprite line (line 43)
+        
         public bool NotEnabled => false;
 
         [EnableIf("NotEnabled")] [SerializeField]
@@ -27,7 +27,7 @@ namespace _Scripts.Pooling_System
 
         private void Awake()
         {
-            for (int i = 0; i < numberOfPooledObjects; i++)
+            for (int i = 0; i < _numberOfPooledObjects; i++)
             {
                 Item newItem = new GameObject().AddComponent<Item>();
                 newItem.AddComponent<SpriteRenderer>();
@@ -37,7 +37,7 @@ namespace _Scripts.Pooling_System
             }
         }
         
-        public void SpawnObject(ItemData itemData, Vector3 prmPosition)
+        public Item SpawnObject(ItemData itemData, Vector3 prmPosition)
         {
             itemPool[0].SetItemData(itemData);
             //itemPool[0].GetComponent<SpriteRenderer>().sprite = itemData.sprite;
@@ -45,10 +45,12 @@ namespace _Scripts.Pooling_System
             itemPool[0].gameObject.SetActive(true);
             existingItems.Add(itemPool[0]);
             itemPool.RemoveAt(0);
-            if (itemPool.Count <= minPoolSize)
+            if (itemPool.Count <= _numberOfPooledObjects * minPoolSize)
             {
-                StartCoroutine(AddToPool(numberToAdd * numberToAddMultiplier));
+                StartCoroutine(AddToPool(Mathf.FloorToInt(_numberOfPooledObjects * percentageToAdd)));
             }
+
+            return existingItems[^1];
         }
 
 
@@ -74,9 +76,9 @@ namespace _Scripts.Pooling_System
                 newItem.transform.parent = transform;
                 newItem.gameObject.SetActive(false);
                 itemPool.Add(newItem);
+                _numberOfPooledObjects++;
+                yield return new WaitForEndOfFrame();
             }
-            
-            yield break;
         }
     }
 }

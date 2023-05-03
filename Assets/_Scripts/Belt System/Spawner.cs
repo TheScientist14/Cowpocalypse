@@ -23,11 +23,7 @@ public class Spawner : Belt
             yield return new WaitForSeconds(SpawnRate);
             if (isSpaceTaken == false)
             {
-                
-                PoolManager.instance.SpawnObject(SpawnedItemData, transform.position);
-                GameObject Item = Instantiate(SpawnedItem, transform.position, Quaternion.Euler(Vector3.zero));
-                BeltItem = Item.GetComponent<Item>();
-                BeltItem.SetItemData(SpawnedItemData);
+                BeltItem = PoolManager.instance.SpawnObject(SpawnedItemData, transform.position);
                 isSpaceTaken = true;
             }
         }
