@@ -22,7 +22,7 @@ public class Belt : MonoBehaviour
         if(BeltInSequence == null)
             BeltInSequence = GetNextBelt();
 
-        if (BeltItem != null && BeltItem.item != null)
+        if (BeltItem != null && BeltItem.GetItem() != null)
             StartCoroutine(StartBeltMove());
     }
 
@@ -37,15 +37,15 @@ public class Belt : MonoBehaviour
     {
         isSpaceTaken = true;
 
-        if (BeltItem.item != null && BeltInSequence != null && BeltInSequence.isSpaceTaken == false)
+        if (BeltItem.GetItem() != null && BeltInSequence != null && BeltInSequence.isSpaceTaken == false)
         {
             Vector3 toPosition = BeltInSequence.GetItemPosition();
             BeltInSequence.isSpaceTaken = true;
             float step = BeltManager.Instance.speed * Time.deltaTime;
 
-            while (BeltItem.item.transform.position != toPosition)
+            while (BeltItem.GetItem().transform.position != toPosition)
             {
-                BeltItem.item.transform.position = Vector3.MoveTowards(BeltItem.transform.position, toPosition, step);
+                BeltItem.GetItem().transform.position = Vector3.MoveTowards(BeltItem.transform.position, toPosition, step);
                 yield return null;
             }
 

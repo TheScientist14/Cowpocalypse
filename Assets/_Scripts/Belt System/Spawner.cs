@@ -24,7 +24,7 @@ public class Spawner : Belt
             {
                 GameObject Item = Instantiate(SpawnedItem, transform.position, Quaternion.Euler(Vector3.zero));
                 BeltItem = Item.GetComponent<Item>();
-                BeltItem.itemData = SpawnedItemData;
+                BeltItem.SetItemData(SpawnedItemData);
                 isSpaceTaken = true;
             }
         }

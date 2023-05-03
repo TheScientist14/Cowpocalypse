@@ -26,7 +26,7 @@ public class Splitter : Belt
         if(OutputBelts[2] == null)
             OutputBelts[2] = GetRightBelt();
 
-        if (BeltItem != null && BeltItem.item != null)
+        if (BeltItem != null && BeltItem.GetItem() != null)
             StartCoroutine(StartBeltMove());
     }
 
@@ -45,9 +45,9 @@ public class Splitter : Belt
                 OutputBelts[CurrentOutput].isSpaceTaken = true;
                 float step = BeltManager.Instance.speed * Time.deltaTime;
 
-                while (BeltItem.item.transform.position != toPosition)
+                while (BeltItem.GetItem().transform.position != toPosition)
                 {
-                    BeltItem.item.transform.position = Vector3.MoveTowards(BeltItem.transform.position, toPosition, step);
+                    BeltItem.GetItem().transform.position = Vector3.MoveTowards(BeltItem.transform.position, toPosition, step);
                     yield return null;
                 }
 
