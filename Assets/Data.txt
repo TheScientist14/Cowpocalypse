@@ -1,0 +1,49 @@
+﻿2, Iron Ore, 1, 1.5
+3, Coal, 1, 1
+4, Copper Ore, 1, 1
+1, Water, 1, 1
+5, Oil, 1, 1
+6, Sulfur, 1, 1
+8, Petroleum Gas, 2, 1, Oil, 20
+25, Plastic, 2, 1, Coal, Petroleum Gas, 2, 20
+18, Lubricant, 2, 1, Petroleum Gas, Water, 10, 10
+15, Iron Plates, 2, 1, Iron Ore, Coal, 5, 10
+28, Sulfuric Acid, 2, 1, Sulfur, Iron Plates, Water, 5, 1, 10
+7, Copper Plates, 2, 1, Copper Ore, 1
+10, Iron Gear Wheel, 2, 1, Iron Plates, 2
+50, Electronic Circuit, 3, 1, Copper Plates, Iron Plates, Plastic, 1, 3, 2
+80, Battery, 3, 1, Copper Plates, Iron Plates,, Sulfuric Acid, 1, 1, 20
+25, Electric Motors, 3, 1, Copper Plates, Iron Plates, 1, 2
+12, Copper Cable, 3, 1, Copper Plates, 2
+35, Petroleum Jelly, 3, 1, Petroleum Gas, Water, 20, 10
+45, Nitric Acid, 3, 1, Sulfuric Acid, Petroleum Gas, 5, 20
+30, Plastic Bars, 3, 1, Petroleum Gas, Coal, 20, 1
+150, Engine Units, 3, 1, Iron Gear Wheel, Copper Cable, Electronic Circuit, 1, 2, 1
+200, Advanced Circuit, 3, 1, Electronic Circuit, Copper Cable, Plastic, 2, 2, 4
+300, Electric Engines, 3, 1, Engine Units, Lubricant, Electronic Circuit, 1, 15, 2
+60, Explosives, 4, 1, Sulfur, Coal, Water, 1, 1, 10
+500, Processing Units, 4, 1, Electronic Circuit, Advanced Circuit, Copper Cable, 20, 2, 5
+250, Speed Modules, 4, 1, Electronic Circuit, Advanced Circuit, 5, 5
+800, Rocket Control Units, 4, 1, Processing Units, Explosives, Speed Modules, 1, 10, 1
+200, Robot Frames, 5, 1, Iron Plates, Iron Gear Wheel, 5, 10
+150, Robot Arms, 5, 1, Electronic Circuit, Iron Gear Wheel, Iron Plates, 5, 5, 5
+120, Robot Legs, 5, 1, Electric Motors, Iron Plates, Iron Gear Wheel, 2, 10, 4
+150, Robot Battery, 5, 1, Battery, Copper Cable, 20, 2
+400, Robot CPU, 5, 1, Processing Units, Copper Cable, Plastic, 2, 10, 20
+300, Robot Power Supply, 5, 1, Electric Engines, Petroleum Jelly, 2, 20
+200, Robot Vision, 5, 1, Advanced Circuit, Copper Cable, 2, 10
+100, Robot Sound, 5, 1, Electronic Circuit, Copper Cable, 2, 2
+250, Robot Sensors, 5, 1, Advanced Circuit, Plastic Bars, Copper Cable, 5, 1, 10
+80, Robot Navigation, 5, 1, Electronic Circuit, Iron Gear Wheel, 1, 2
+600, Robot AI, 5, 1, Robot CPU, Nitric Acid, Plastic, 1, 2, 2
+800, Robot Body, 5, 1, Robot Frames, Robot Arms, Robot Legs, Iron Plates, 1, 1, 1, 5
+900, Robot Brain, 5, 1, Robot Battery, Robot CPU, Robot Power Supply, 1, 1, 1
+400, Robot Eyes, 5, 1, Robot Vision, Robot Sensors, 2, 2
+300, Robot Voice, 5, 1, Robot Sound, Robot Sensors, 1, 2
+500, Robot Mobility, 6, 1, Robot Navigation, Robot Legs, 2, 2
+1000, Robot Intelligence, 6, 1, Robot AI, Robot Brain, 1, 1
+800, Robot Perception, 6, 1, Robot Eyes, Robot Sensors, 1, 3
+200, Robot Communication, 6, 1, Copper Cable, Plastic Bars, 2, 2
+600, Robot Manipulation, 6, 1, Robot Arms, Robot Legs, 2, 2
+1200, Robot Assembly, 6, 1, Robot Body, Robot Brain, 1, 1
+10000, Abomination Cow, 7, 1, Rocket Control Units, Robot Mobility, Robot Intelligence, Robot Perception, Robot Communication, Robot Manipulation, Robot Assembly, 1, 1, 1, 1, 1, 1, 1

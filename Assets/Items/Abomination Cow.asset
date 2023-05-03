@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d391d4023e803140b0d56a24867b9b7, type: 3}
+  m_Name: Abomination Cow
+  m_EditorClassIdentifier: 
+  <Price>k__BackingField: 10000
+  <Name>k__BackingField: Abomination Cow
+  <CraftDuration>k__BackingField: 1
+  <Tier>k__BackingField: {fileID: 11400000, guid: 81399086e40b8ba4eb8eb459f02f1dfc, type: 2}
+  _parents:
+  - {fileID: 11400000, guid: b53412da055c4c944a467b7b3f854d06, type: 2}
+  - {fileID: 11400000, guid: 4365bf4f388d3c74680917ec64f19866, type: 2}
+  - {fileID: 11400000, guid: aa12611d319c7184fa820c4160e81d66, type: 2}
+  - {fileID: 11400000, guid: dfb71a75612fe1c418d73d1c85872986, type: 2}
+  - {fileID: 11400000, guid: 616099b310232c643b9517749616817c, type: 2}
+  - {fileID: 11400000, guid: 84c1ee5dc736653489d85bf11ca69433, type: 2}
+  - {fileID: 11400000, guid: c5392832c6ff5254083aff2863719311, type: 2}
+  _amounts: 01000000010000000100000001000000010000000100000001000000

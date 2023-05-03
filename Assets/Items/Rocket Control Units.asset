@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d391d4023e803140b0d56a24867b9b7, type: 3}
+  m_Name: Rocket Control Units
+  m_EditorClassIdentifier: 
+  <Price>k__BackingField: 800
+  <Name>k__BackingField: Rocket Control Units
+  <CraftDuration>k__BackingField: 1
+  <Tier>k__BackingField: {fileID: 11400000, guid: 72f7e0257636bad4ab461d69352e4ccb, type: 2}
+  _parents:
+  - {fileID: 11400000, guid: 325fd63796bfa094c9f60817b0b9cf6d, type: 2}
+  - {fileID: 11400000, guid: 301bbcb73c8e603468abb8efb93f0582, type: 2}
+  - {fileID: 11400000, guid: 592f1286e5ffd244cab9d751273fcf11, type: 2}
+  _amounts: 010000000a00000001000000
