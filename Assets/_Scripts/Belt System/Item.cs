@@ -4,11 +4,21 @@ using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    public GameObject item;
-    public ItemData itemData;
+    [SerializeField] private GameObject item;
+    [SerializeField] private ItemData itemData;
 
     private void Awake()
     {
         item = gameObject;
+    }
+
+    public ItemData GetItemData()
+    {
+        return itemData;
+    }
+
+    public GameObject GetItem()
+    {
+        return item;
     }
 }
