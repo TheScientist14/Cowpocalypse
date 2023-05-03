@@ -44,6 +44,16 @@ public class Splitter : Belt
                 {
                     Machine machine = OutputBelts[CurrentOutput].GetComponent<Machine>();
                     isMachineBlocking = !machine.GetCraftedItem().Recipes.ContainsKey(BeltItem.GetItemData());
+
+                ItemMoving = true;
+                Vector3 toPosition = OutputBelts[CurrentOutput].GetItemPosition();
+                OutputBelts[CurrentOutput].isSpaceTaken = true;
+                float step = BeltManager.Instance.speed * Time.deltaTime;
+
+                while (BeltItem.GetItem().transform.position != toPosition)
+                {
+                    BeltItem.GetItem().transform.position = Vector3.MoveTowards(BeltItem.transform.position, toPosition, step);
+                    yield return null;
                 }
                 if(!isMachineBlocking)
                 {

@@ -17,7 +17,6 @@ public class Machine : Belt
         gameObject.name = $"Machine: {BeltID++}";
 
         SetCafteditem(CraftedItem);
-
     }
 
     public override IEnumerator StartBeltMove()
