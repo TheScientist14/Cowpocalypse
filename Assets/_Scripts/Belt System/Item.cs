@@ -7,6 +7,7 @@ public class Item : MonoBehaviour
     [SerializeField] private GameObject item;
     [SerializeField] private ItemData itemData;
 
+
     private void Awake()
     {
         item = gameObject;

@@ -5,14 +5,19 @@ using UnityEngine;
 public class Machine : Belt
 {
     [SerializeField] private ItemData CraftedItem;
-    public Dictionary<ItemData, int> Stock { get; private set; }
+
+    private ItemData CurrentCraftedItem;
+    public Dictionary<ItemData, int> Stocks { get; private set; }
+
     // Start is called before the first frame update
 
     private void Start()
     {
         Stock = new Dictionary<ItemData, int>();
         gameObject.name = $"Machine: {BeltID++}";
+
         SetCafteditem(CraftedItem);
+
     }
 
     public override IEnumerator StartBeltMove()
@@ -32,5 +37,7 @@ public class Machine : Belt
     public ItemData GetCraftedItem()
     {
         return CraftedItem;
+        yield return new WaitForSeconds(CraftedItem.CraftDuration);
+
     }
 }
