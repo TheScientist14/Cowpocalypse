@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using _Scripts.Pooling_System;
 using UnityEngine;
 
 public class Spawner : Belt
@@ -22,6 +23,8 @@ public class Spawner : Belt
             yield return new WaitForSeconds(SpawnRate);
             if (isSpaceTaken == false)
             {
+                
+                PoolManager.instance.SpawnObject(SpawnedItemData, transform.position);
                 GameObject Item = Instantiate(SpawnedItem, transform.position, Quaternion.Euler(Vector3.zero));
                 BeltItem = Item.GetComponent<Item>();
                 BeltItem.SetItemData(SpawnedItemData);

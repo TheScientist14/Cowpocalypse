@@ -6,7 +6,7 @@ using UnityEngine;
 
 namespace _Scripts.Pooling_System
 {
-    public class PoolManager : MonoBehaviour
+    public class PoolManager : Singleton<PoolManager>
     {
         [Header("Start number of pooled items")]
         [SerializeField] private int numberOfPooledObjects;
@@ -37,10 +37,11 @@ namespace _Scripts.Pooling_System
             }
         }
         
-        public void SpawnObject(ItemData itemData)
+        public void SpawnObject(ItemData itemData, Vector3 prmPosition)
         {
             itemPool[0].SetItemData(itemData);
             //itemPool[0].GetComponent<SpriteRenderer>().sprite = itemData.sprite;
+            itemPool[0].transform.position = prmPosition;
             itemPool[0].gameObject.SetActive(true);
             existingItems.Add(itemPool[0]);
             itemPool.RemoveAt(0);
