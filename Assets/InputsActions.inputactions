@@ -9,7 +9,7 @@
                     "name": "ZoomValue",
                     "type": "Value",
                     "id": "83aed690-5381-4292-b67a-ca86e34ffb3a",
-                    "expectedControlType": "Double",
+                    "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
@@ -49,33 +49,6 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
-                },
-                {
-                    "name": "_PrimaryFingerPosition",
-                    "type": "PassThrough",
-                    "id": "3c5098d3-1cf3-43ad-89f3-e1c9ee06952d",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "_SecondaryFingerPosition",
-                    "type": "PassThrough",
-                    "id": "40211afd-9eb6-45b2-825c-a6fec1aa7eaa",
-                    "expectedControlType": "Vector2",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "_SecondaryFingerTouch",
-                    "type": "Button",
-                    "id": "2cb05899-99f0-42bc-b738-1ae2f8321f41",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "",
-                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -91,15 +64,37 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "29380b4c-3771-4023-bd1f-f0cfaeb461f3",
-                    "path": "",
+                    "name": "Pinch",
+                    "id": "16992aac-a28d-4c53-8e6e-c80903a91968",
+                    "path": "Pinch",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ZoomValue",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "m_FirstFingerPositionValueId",
+                    "id": "c4960551-ab97-43c2-87b8-45ce1a2831e4",
+                    "path": "<Touchscreen>/touch0/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "Touchscreen",
                     "action": "ZoomValue",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "m_SecondFingerPositionValueId",
+                    "id": "5179b7f8-d51a-4153-a650-22a2720d3522",
+                    "path": "<Touchscreen>/touch1/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Touchscreen",
+                    "action": "ZoomValue",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
@@ -147,28 +142,6 @@
                 },
                 {
                     "name": "",
-                    "id": "cdaa1520-2f43-42f2-a2aa-f4546638f452",
-                    "path": "<Touchscreen>/touch0/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Touchscreen",
-                    "action": "_PrimaryFingerPosition",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "b246b14c-e15d-4d0b-b7ae-5be58160f635",
-                    "path": "<Touchscreen>/touch1/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Touchscreen",
-                    "action": "_SecondaryFingerPosition",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "7e269523-5df9-4ab6-a2da-8b7738d1f8c7",
                     "path": "<Touchscreen>/touch0/position",
                     "interactions": "",
@@ -190,15 +163,37 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "cdf02d61-f0dd-4942-83b9-21ef3b317965",
-                    "path": "<Touchscreen>/touch0/press",
-                    "interactions": "Press",
+                    "name": "One Modifier",
+                    "id": "be38f45d-7922-4410-9eea-73bacebc23fd",
+                    "path": "OneModifier",
+                    "interactions": "",
                     "processors": "",
-                    "groups": "Touchscreen",
-                    "action": "_SecondaryFingerTouch",
-                    "isComposite": false,
+                    "groups": "",
+                    "action": "DoubleClickPosition",
+                    "isComposite": true,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "36acc5ae-4b95-4dc6-8a8e-47fb5aae56f1",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "DoubleClickPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "e47ead8b-afcb-4e08-8245-0886fbabd48b",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "DoubleClickPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
