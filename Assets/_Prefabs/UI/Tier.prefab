@@ -284,7 +284,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tierName:
-    _title: Tier1
-    _titleT: {fileID: 1714938273468588185}
+    _value: Tier 1
+    _text: {fileID: 1714938273468588185}
   _layout: {fileID: 1714938274185840145}
   _prefab: {fileID: 9133027545470972643, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
