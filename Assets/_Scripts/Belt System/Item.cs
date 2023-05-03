@@ -21,4 +21,14 @@ public class Item : MonoBehaviour
     {
         return item;
     }
+
+    public void SetItemData(ItemData data)
+    {
+        itemData = data;
+    }
+
+    public void SetItem(GameObject setItem)
+    {
+        item = setItem;
+    }
 }
