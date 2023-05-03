@@ -26,7 +26,7 @@ public class Splitter : Belt
         if(OutputBelts[2] == null)
             OutputBelts[2] = GetRightBelt();
 
-        if (BeltItem != null && BeltItem.item != null)
+        if (BeltItem != null && BeltItem.GetItem() != null)
             StartCoroutine(StartBeltMove());
     }
 
@@ -40,22 +40,30 @@ public class Splitter : Belt
         {
             if (OutputBelts[CurrentOutput].isSpaceTaken == false)
             {
-                ItemMoving = true;
-                Vector3 toPosition = OutputBelts[CurrentOutput].GetItemPosition();
-                OutputBelts[CurrentOutput].isSpaceTaken = true;
-                float step = BeltManager.Instance.speed * Time.deltaTime;
-
-                while (BeltItem.item.transform.position != toPosition)
+                if (OutputBelts[CurrentOutput].GetComponent<Machine>())
                 {
-                    BeltItem.item.transform.position = Vector3.MoveTowards(BeltItem.transform.position, toPosition, step);
-                    yield return null;
+                    Machine machine = OutputBelts[CurrentOutput].GetComponent<Machine>();
+                    isMachineBlocking = !machine.GetCraftedItem().Recipes.ContainsKey(BeltItem.GetItemData());
                 }
+                if(!isMachineBlocking)
+                {
+                    ItemMoving = true;
+                    Vector3 toPosition = OutputBelts[CurrentOutput].GetItemPosition();
+                    OutputBelts[CurrentOutput].isSpaceTaken = true;
+                    float step = BeltManager.Instance.speed * Time.fixedDeltaTime;
 
-                ItemMoving = false;
-                isSpaceTaken = false;
-                OutputBelts[CurrentOutput].BeltItem = BeltItem;
-                BeltItem = null;
-                CurrentOutput++;
+                    while (BeltItem.GetItem().transform.position != toPosition)
+                    {
+                        BeltItem.GetItem().transform.position = Vector3.MoveTowards(BeltItem.transform.position, toPosition, step);
+                        yield return null;
+                    }
+
+                    ItemMoving = false;
+                    isSpaceTaken = false;
+                    OutputBelts[CurrentOutput].BeltItem = BeltItem;
+                    BeltItem = null;
+                    CurrentOutput++;
+                }
             }
             else if(!ItemMoving)
                 CurrentOutput++;

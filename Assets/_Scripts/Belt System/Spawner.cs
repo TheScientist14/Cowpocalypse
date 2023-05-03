@@ -5,6 +5,7 @@ using UnityEngine;
 public class Spawner : Belt
 {
     public GameObject SpawnedItem;
+    public ItemData SpawnedItemData;
     public float SpawnRate;
     // Start is called before the first frame update
     void Start()
@@ -23,6 +24,7 @@ public class Spawner : Belt
             {
                 GameObject Item = Instantiate(SpawnedItem, transform.position, Quaternion.Euler(Vector3.zero));
                 BeltItem = Item.GetComponent<Item>();
+                BeltItem.SetItemData(SpawnedItemData);
                 isSpaceTaken = true;
             }
         }
