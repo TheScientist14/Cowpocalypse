@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 
 public class Belt : MonoBehaviour
-{ 
+{
     public static int BeltID = 0;
 
     public Belt BeltInSequence;
@@ -22,7 +22,7 @@ public class Belt : MonoBehaviour
 
     private void Update()
     {
-        if(BeltInSequence == null)
+        if (BeltInSequence == null)
             BeltInSequence = GetNextBelt();
 
         if (BeltItem != null && BeltItem.GetItem() != null)
@@ -46,16 +46,8 @@ public class Belt : MonoBehaviour
             {
                 Machine machine = BeltInSequence.GetComponent<Machine>();
                 isMachineBlocking = !machine.GetCraftedItem().Recipes.ContainsKey(BeltItem.GetItemData());
-            Vector3 toPosition = BeltInSequence.GetItemPosition();
-            BeltInSequence.isSpaceTaken = true;
-            float step = BeltManager.Instance.speed * Time.deltaTime;
-
-            while (BeltItem.GetItem().transform.position != toPosition)
-            {
-                Machine machine = BeltInSequence.GetComponent<Machine>();
-                isMachineBlocking = !machine.GetCraftedItem().Recipes.ContainsKey(BeltItem.GetItemData());
             }
-            if(!isMachineBlocking)
+            if (!isMachineBlocking)
             {
                 Vector3 toPosition = BeltInSequence.GetItemPosition();
                 BeltInSequence.isSpaceTaken = true;
@@ -73,16 +65,15 @@ public class Belt : MonoBehaviour
             }
         }
     }
-
     private Belt GetNextBelt()
     {
         Transform currentBeltTransform = transform;
         RaycastHit2D hit = Physics2D.Raycast(transform.position + transform.up, currentBeltTransform.up, 0.1f);
 
-        if(hit.collider != null)
+        if (hit.collider != null)
         {
             Belt belt = hit.collider.GetComponent<Belt>();
-            if(belt != null)
+            if (belt != null)
                 return belt;
         }
 

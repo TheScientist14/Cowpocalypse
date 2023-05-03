@@ -7,7 +7,7 @@ public class Machine : Belt
     [SerializeField] private ItemData CraftedItem;
 
     private ItemData CurrentCraftedItem;
-    public Dictionary<ItemData, int> Stocks { get; private set; }
+    public Dictionary<ItemData, int> Stock { get; private set; }
 
 
     private void Start()

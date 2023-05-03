@@ -19,11 +19,11 @@ public class Splitter : Belt
 
     private void Update()
     {
-        if(OutputBelts[0] == null)
+        if (OutputBelts[0] == null)
             OutputBelts[0] = (GetLeftBelt());
         if (OutputBelts[1] == null)
             OutputBelts[1] = GetUpBelt();
-        if(OutputBelts[2] == null)
+        if (OutputBelts[2] == null)
             OutputBelts[2] = GetRightBelt();
 
         if (BeltItem != null && BeltItem.GetItem() != null)
@@ -44,7 +44,8 @@ public class Splitter : Belt
                 {
                     Machine machine = OutputBelts[CurrentOutput].GetComponent<Machine>();
                     isMachineBlocking = !machine.GetCraftedItem().Recipes.ContainsKey(BeltItem.GetItemData());
-                if(!isMachineBlocking)
+                }
+                if (!isMachineBlocking)
                 {
                     ItemMoving = true;
                     Vector3 toPosition = OutputBelts[CurrentOutput].GetItemPosition();
@@ -63,12 +64,12 @@ public class Splitter : Belt
                     BeltItem = null;
                     CurrentOutput++;
                 }
+                else if (!ItemMoving)
+                    CurrentOutput++;
             }
-            else if(!ItemMoving)
+            else
                 CurrentOutput++;
         }
-        else
-            CurrentOutput++;
     }
 
     private Belt GetLeftBelt()
