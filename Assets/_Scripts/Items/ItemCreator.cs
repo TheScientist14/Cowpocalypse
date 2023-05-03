@@ -34,7 +34,7 @@ public class ItemCreator : MonoBehaviour
                 item.AddParent(FindAsset<ItemData>(values[i]));
             }
             
-            AssetDatabase.CreateAsset(item, $"Assets/Scriptable Objects/Items/{item.Name.Trim()}.asset");
+            AssetDatabase.CreateAsset(item, $"Assets/Items/{item.Name.Trim()}.asset");
             AssetDatabase.SaveAssets();
         }
     }
@@ -51,5 +51,16 @@ public class ItemCreator : MonoBehaviour
         
         var path = AssetDatabase.GUIDToAssetPath(guid);
         return AssetDatabase.LoadAssetAtPath<T>(path);
+    }
+    public static T[] LoadAllItemsAtPath<T>(string path) where T :UnityEngine.Object
+    {
+        string[] itemAssetPaths = AssetDatabase.FindAssets("t:"+typeof(T).ToString(), new[] { path });
+        T[] items = new T[itemAssetPaths.Length];
+        for (int i = 0; i < itemAssetPaths.Length; i++)
+        {
+            string itemAssetPath = AssetDatabase.GUIDToAssetPath(itemAssetPaths[i]);
+            items[i] = AssetDatabase.LoadAssetAtPath<T>(itemAssetPath);
+        }
+        return items;
     }
 }
