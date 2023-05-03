@@ -64,10 +64,8 @@ public class Splitter : Belt
                     BeltItem = null;
                     CurrentOutput++;
                 }
-                else if (!ItemMoving)
-                    CurrentOutput++;
             }
-            else
+            else if (!ItemMoving)
                 CurrentOutput++;
         }
     }
