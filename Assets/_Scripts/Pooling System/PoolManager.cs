@@ -23,30 +23,31 @@ namespace _Scripts.Pooling_System
         public bool NotEnabled => false;
 
         [EnableIf("NotEnabled")] [SerializeField]
-        private List<Item> _itemPool = new();
+        private List<Item> itemPool = new();
 
         [EnableIf("NotEnabled")] [SerializeField]
-        private List<Item> _existingItems = new();
+        private List<Item> existingItems = new();
 
         private void Awake()
         {
             for (int i = 0; i < numberOfPooledObjects; i++)
             {
                 Item newItem = new GameObject().AddComponent<Item>();
+                newItem.AddComponent<SpriteRenderer>();
                 newItem.transform.parent = transform;
                 newItem.gameObject.SetActive(false);
-                _itemPool.Add(newItem);
+                itemPool.Add(newItem);
             }
         }
 
         [Button("SpawnObject")]
-        public void SpawnObject()
+        public void SpawnObject(ItemData itemData)
         {
-            _itemPool[0].gameObject.SetActive(true);
-            _existingItems.Add(_itemPool[0]);
-            _itemPool.RemoveAt(0);
-
-            if (_itemPool.Count <= minPoolSize)
+            
+            itemPool[0].gameObject.SetActive(true);
+            existingItems.Add(itemPool[0]);
+            itemPool.RemoveAt(0);
+            if (itemPool.Count <= minPoolSize)
             {
                 StartCoroutine(AddToPool(numberToAdd * numberToAddMultiplier));
             }
@@ -56,11 +57,11 @@ namespace _Scripts.Pooling_System
         public bool DespawnObject(Item prmItem)
         {
             prmItem.gameObject.SetActive(false);
-            if (_existingItems.Contains(prmItem))
+            if (existingItems.Contains(prmItem))
             {
-                _existingItems.Remove(prmItem);
+                existingItems.Remove(prmItem);
 
-                _itemPool.Add(prmItem);
+                itemPool.Add(prmItem);
                 return true;
             }
 
@@ -74,7 +75,7 @@ namespace _Scripts.Pooling_System
                 Item newItem = new GameObject().AddComponent<Item>();
                 newItem.transform.parent = transform;
                 newItem.gameObject.SetActive(false);
-                _itemPool.Add(newItem);
+                itemPool.Add(newItem);
             }
             
             yield break;
