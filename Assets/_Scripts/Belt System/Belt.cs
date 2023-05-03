@@ -45,7 +45,10 @@ public class Belt : MonoBehaviour
             if (BeltInSequence.GetComponent<Machine>())
             {
                 Machine machine = BeltInSequence.GetComponent<Machine>();
-                isMachineBlocking = !machine.GetCraftedItem().Recipes.ContainsKey(BeltItem.GetItemData());
+                if(machine.GetCraftedItem() != null)
+                    isMachineBlocking = !machine.GetCraftedItem().Recipes.ContainsKey(BeltItem.GetItemData());
+                else
+                    isMachineBlocking = true;
             }
             if (!isMachineBlocking)
             {

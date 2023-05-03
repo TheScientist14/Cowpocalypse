@@ -1,4 +1,5 @@
 using _Scripts.Pooling_System;
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -6,6 +7,7 @@ using UnityEngine;
 public class Machine : Belt
 {
     [SerializeField] private GameObject ItemObject;
+    [Expandable]
     [SerializeField] private ItemData CraftedItem;
 
     public Dictionary<ItemData, int> Stock { get; private set; }
@@ -38,17 +40,16 @@ public class Machine : Belt
             Stock[item] -= CraftedItem.Recipes[item];
         }
         yield return new WaitForSeconds(CraftedItem.CraftDuration);
-        GameObject craftedObject = Instantiate(ItemObject);
-        Item craftedItem = craftedObject.GetComponent<Item>();
-        craftedItem.SetItemData(CraftedItem);
+        Item craftedItem = PoolManager.instance.SpawnObject(CraftedItem, transform.position);
     }
 
     public void SetCafteditem(ItemData craftedItemData)
     {
         CraftedItem = craftedItemData;
         Stock.Clear();
-        foreach(ItemData item in CraftedItem.Recipes.Keys)
-            Stock.Add(item, 0);
+        if(CraftedItem != null)
+            foreach(ItemData item in CraftedItem.Recipes.Keys)
+                Stock.Add(item, 0);
     }
 
     public ItemData GetCraftedItem()
