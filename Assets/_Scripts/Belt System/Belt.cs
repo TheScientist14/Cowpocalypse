@@ -51,7 +51,7 @@ public class Belt : MonoBehaviour
             {
                 Vector3 toPosition = BeltInSequence.GetItemPosition();
                 BeltInSequence.isSpaceTaken = true;
-                float step = BeltManager.Instance.speed * Time.fixedDeltaTime;
+                float step = BeltManager.instance.speed * Time.fixedDeltaTime;
 
                 while (BeltItem.GetItem().transform.position != toPosition)
                 {

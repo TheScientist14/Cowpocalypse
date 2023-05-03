@@ -11,18 +11,18 @@ namespace _Scripts.Pooling_System
         [Header("Start number of pooled items")]
         [ShowNonSerializedField] private int _numberOfPooledObjects = 10;
         [Header("Limit of pooled items left in the pool before adding new ones (value between 0 and 1)")]
-        [SerializeField] private float minPoolSize;
+        [SerializeField] private float minPoolSize = 0.2f;
         [Header("The multiplier for adding pooled items (value between 0 and 1")]
-        [SerializeField] private float percentageToAdd;
+        [SerializeField] private float percentageToAdd= 0.5f;
 
         //TODO : uncoment sprite line (line 43)
         
         public bool NotEnabled => false;
 
-        [EnableIf("NotEnabled")] [SerializeField]
+        [ReadOnly] [SerializeField]
         private List<Item> itemPool = new();
 
-        [EnableIf("NotEnabled")] [SerializeField]
+        [ReadOnly] [SerializeField]
         private List<Item> existingItems = new();
 
         private void Awake()
@@ -30,7 +30,7 @@ namespace _Scripts.Pooling_System
             for (int i = 0; i < _numberOfPooledObjects; i++)
             {
                 Item newItem = new GameObject().AddComponent<Item>();
-                newItem.AddComponent<SpriteRenderer>();
+                newItem.AddComponent<SpriteRenderer>().sortingOrder = 1;
                 newItem.transform.parent = transform;
                 newItem.gameObject.SetActive(false);
                 itemPool.Add(newItem);
@@ -40,7 +40,11 @@ namespace _Scripts.Pooling_System
         public Item SpawnObject(ItemData itemData, Vector3 prmPosition)
         {
             itemPool[0].SetItemData(itemData);
-            //itemPool[0].GetComponent<SpriteRenderer>().sprite = itemData.sprite;
+            if (itemData.Sprite)
+            {
+               itemPool[0].GetComponent<SpriteRenderer>().sprite = itemData.Sprite; 
+            }
+            
             itemPool[0].transform.position = prmPosition;
             itemPool[0].gameObject.SetActive(true);
             existingItems.Add(itemPool[0]);
