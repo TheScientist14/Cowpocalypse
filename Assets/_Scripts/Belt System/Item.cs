@@ -5,6 +5,7 @@ using UnityEngine;
 public class Item : MonoBehaviour
 {
     public GameObject item;
+    public ItemData itemData;
 
     private void Awake()
     {
