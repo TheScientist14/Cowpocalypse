@@ -31,5 +31,4 @@ public class Item : MonoBehaviour
     {
         item = setItem;
     }
-
 }
