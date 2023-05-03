@@ -52,8 +52,8 @@ public class Belt : MonoBehaviour
 
             while (BeltItem.GetItem().transform.position != toPosition)
             {
-                BeltItem.GetItem().transform.position = Vector3.MoveTowards(BeltItem.transform.position, toPosition, step);
-                yield return null;
+                Machine machine = BeltInSequence.GetComponent<Machine>();
+                isMachineBlocking = !machine.GetCraftedItem().Recipes.ContainsKey(BeltItem.GetItemData());
             }
             if(!isMachineBlocking)
             {

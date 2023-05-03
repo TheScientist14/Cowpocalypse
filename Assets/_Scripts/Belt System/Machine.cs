@@ -9,7 +9,6 @@ public class Machine : Belt
     private ItemData CurrentCraftedItem;
     public Dictionary<ItemData, int> Stocks { get; private set; }
 
-    // Start is called before the first frame update
 
     private void Start()
     {
@@ -36,7 +35,5 @@ public class Machine : Belt
     public ItemData GetCraftedItem()
     {
         return CraftedItem;
-        yield return new WaitForSeconds(CraftedItem.CraftDuration);
-
     }
 }
