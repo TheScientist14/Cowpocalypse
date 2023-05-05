@@ -14,6 +14,7 @@ public class Spawner : Belt
     void Start()
     {
         gameObject.name = $"Spawner: {BeltID++}";
+        PoolManager.instance.AddSpawnerToList(gameObject);
         StartCoroutine(Spawn());
     }
 

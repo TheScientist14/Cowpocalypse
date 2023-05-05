@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using NaughtyAttributes;
@@ -17,26 +18,44 @@ namespace _Scripts.Pooling_System
         [Tooltip("The multiplier for adding pooled items (value between 0 and 1)")]
         [SerializeField] private float percentageToAdd= 0.5f;
         
-        [HorizontalLine(color: EColor.Red)]
+        [HorizontalLine(color: EColor.Green)]
 
         [Header("Info")]
         
         [Tooltip("The total number of pooled items (in use and idle)")]
-        [ReadOnly][SerializeField] private int totalNumberOfPooledItems = 0;
-        
-        [HorizontalLine(color: EColor.Green)]
-        
+        [ReadOnly] [SerializeField] private int totalNumberOfPooledItems = 0;
+
+        [ReadOnly] [SerializeField] private List<GameObject> spawners;
+
         [ReadOnly] [SerializeField]
         private List<Item> itemPool = new();
 
         [ReadOnly] [SerializeField]
         private List<Item> existingItems = new();
 
+        
+        //Add a starting amount of spawnable items to the pool
         private void Awake()
         {
             StartCoroutine(AddToPool(_startNumberOfPooledObjects));
         }
+
+        //Checks if the number of items are sufficient in order to spawn at least one item per spawner, used for debugging purposes not releasing with this
+        private void Start()
+        {
+            if (itemPool.Count <= spawners.Count)
+            {
+                StartCoroutine(AddToPool(spawners.Count));
+            }
+        }
         
+        
+        /// <summary>
+        /// Spawns an item using the pooling system, DO NOT INSTANTIATE
+        /// </summary>
+        /// <param name="itemData"></param>
+        /// <param name="prmPosition"></param>
+        /// <returns></returns>
         public Item SpawnObject(ItemData itemData, Vector3 prmPosition)
         {
             itemPool[0].SetItemData(itemData);
@@ -57,7 +76,11 @@ namespace _Scripts.Pooling_System
             return existingItems[^1];
         }
 
-
+        /// <summary>
+        /// Despawns an object using the pool system, DO NOT USE DESTROY
+        /// </summary>
+        /// <param name="prmItem"></param>
+        /// <returns></returns>
         public bool DespawnObject(Item prmItem)
         {
             prmItem.gameObject.SetActive(false);
@@ -72,6 +95,12 @@ namespace _Scripts.Pooling_System
             return false;
         }
 
+        /// <summary>
+        /// Adds items to the pool, ie. increasing the amount of spawnable items
+        /// </summary>
+        /// <param name="numberOfItemsToAdd"></param>
+        /// <returns></returns>
+        
         private IEnumerator AddToPool(int numberOfItemsToAdd)
         {
             for (int i = 0; i < numberOfItemsToAdd; i++)
@@ -85,5 +114,39 @@ namespace _Scripts.Pooling_System
                 yield return new WaitForEndOfFrame();
             }
         }
+
+        #region Accessors
+        
+        /// <summary>
+        ///  Returns the total number of pooled items, counts the items being used/displayed and those that aren't
+        /// </summary>
+        public int GetTotalNumberOfPooledItems => totalNumberOfPooledItems;
+
+        /// <summary>
+        /// Returns the List of all the spawners
+        /// </summary>
+        public List<GameObject> GetSpawners => spawners;
+
+        /// <summary>
+        /// returns the List of items not being used/displayed
+        /// </summary>
+        public List<Item> GetItemPool => itemPool;
+
+        /// <summary>
+        /// Returns the List of items being used/displayed
+        /// </summary>
+        public List<Item> GetExistingItems => existingItems;
+
+        /// <summary>
+        /// Adds spawners to the list of GameObjects that can spawn Items
+        /// </summary>
+        /// <param name="prmSpawner"></param>
+        public void AddSpawnerToList(GameObject prmSpawner)
+        {
+            spawners.Add(prmSpawner);
+        }
+
+        #endregion
+        
     }
 }
