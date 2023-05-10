@@ -12,7 +12,7 @@ public class Belt : MonoBehaviour
     public bool isSpaceTaken;
     public bool isMachineBlocking;
 
-    [SerializeField] private Machine MachineInSequence;
+    public Machine MachineInSequence;
 
     private void Start()
     {
@@ -29,13 +29,6 @@ public class Belt : MonoBehaviour
 
         if (BeltItem != null && BeltItem.GetItem() != null)
             StartCoroutine(StartBeltMove());
-    }
-
-    public Vector3 GetItemPosition()
-    {
-        float padding = 0f;
-        Vector3 position = transform.position;
-        return new Vector3(position.x, position.y + padding, position.z);
     }
 
     public virtual IEnumerator StartBeltMove()
@@ -56,7 +49,6 @@ public class Belt : MonoBehaviour
             {
                 if(MachineInSequence != null)
                 {
-                    print("Belt add to stock");
                     MachineInSequence.AddToStock(BeltItem);
                     isSpaceTaken = false;
                     BeltItem = null;

@@ -42,32 +42,48 @@ public class Splitter : Belt
             {
                 if (OutputBelts[CurrentOutput].GetComponent<Machine>())
                 {
-                    Machine machine = OutputBelts[CurrentOutput].GetComponent<Machine>();
-                    isMachineBlocking = !machine.GetCraftedItem().Recipes.ContainsKey(BeltItem.GetItemData());
+                    MachineInSequence = OutputBelts[CurrentOutput].GetComponent<Machine>();
+                    if (MachineInSequence.GetCraftedItem() != null)
+                        isMachineBlocking = !MachineInSequence.GetCraftedItem().Recipes.ContainsKey(BeltItem.GetItemData());
+                    else
+                        isMachineBlocking = true;
                 }
                 if (!isMachineBlocking)
                 {
-                    ItemMoving = true;
-                    Vector3 toPosition = OutputBelts[CurrentOutput].transform.position;
-                    OutputBelts[CurrentOutput].isSpaceTaken = true;
-                    float step = BeltManager.instance.speed * Time.fixedDeltaTime;
-
-                    while (BeltItem.GetItem().transform.position != toPosition)
+                    if (MachineInSequence != null)
                     {
-                        BeltItem.GetItem().transform.position = Vector3.MoveTowards(BeltItem.transform.position, toPosition, step);
-                        yield return null;
+                        MachineInSequence.AddToStock(BeltItem);
+                        isSpaceTaken = false;
+                        BeltItem = null;
+                        CurrentOutput++;
+                        MachineInSequence = null;
                     }
+                    else
+                    {
+                        ItemMoving = true;
+                        Vector3 toPosition = OutputBelts[CurrentOutput].transform.position;
+                        OutputBelts[CurrentOutput].isSpaceTaken = true;
+                        float step = BeltManager.instance.speed * Time.fixedDeltaTime;
 
-                    ItemMoving = false;
-                    isSpaceTaken = false;
-                    OutputBelts[CurrentOutput].BeltItem = BeltItem;
-                    BeltItem = null;
-                    CurrentOutput++;
+                        while (BeltItem.GetItem().transform.position != toPosition)
+                        {
+                            BeltItem.GetItem().transform.position = Vector3.MoveTowards(BeltItem.transform.position, toPosition, step);
+                            yield return null;
+                        }
+
+                        ItemMoving = false;
+                        isSpaceTaken = false;
+                        OutputBelts[CurrentOutput].BeltItem = BeltItem;
+                        BeltItem = null;
+                        CurrentOutput++;
+                    }
                 }
             }
             else if (!ItemMoving)
                 CurrentOutput++;
         }
+        else if (!ItemMoving)
+            CurrentOutput++;
     }
 
     private Belt GetLeftBelt()
