@@ -34,7 +34,7 @@ public class ItemCreator : MonoBehaviour
                 item.AddParent(FindAsset<ItemData>(values[i]));
             }
             
-            AssetDatabase.CreateAsset(item, $"Assets/Items/{item.Name.Trim()}.asset");
+            AssetDatabase.CreateAsset(item, $"Assets/Scriptable Objects/Items/{item.Name.Trim()}.asset");
             AssetDatabase.SaveAssets();
         }
     }

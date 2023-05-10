@@ -15,7 +15,7 @@ MonoBehaviour:
   <Price>k__BackingField: 250
   <Name>k__BackingField: Robot Sensors
   <CraftDuration>k__BackingField: 1
-  <Sprite>k__BackingField: {fileID: 0}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: bcec4232ba82d354c8137d6f05255f47, type: 3}
   <Tier>k__BackingField: {fileID: 11400000, guid: 8094ace0322e98647bda4816c6da0ff4, type: 2}
   _parents:
   - {fileID: 11400000, guid: 741e2118d43240d4ea18274303e1140f, type: 2}

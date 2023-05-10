@@ -15,7 +15,7 @@ MonoBehaviour:
   <Price>k__BackingField: 80
   <Name>k__BackingField: Robot Navigation
   <CraftDuration>k__BackingField: 1
-  <Sprite>k__BackingField: {fileID: 0}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 912434bf9c6c647419edb6bb6394c6d4, type: 3}
   <Tier>k__BackingField: {fileID: 11400000, guid: 8094ace0322e98647bda4816c6da0ff4, type: 2}
   _parents:
   - {fileID: 11400000, guid: d7ec898ff06bb004694c8b74de76afad, type: 2}

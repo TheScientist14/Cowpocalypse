@@ -16,5 +16,5 @@ MonoBehaviour:
   <MultiplierPerLevel>k__BackingField: 1.2
   <BaseValue>k__BackingField: 1
   <MaxLevelInclusive>k__BackingField: 10
-  <Icon>k__BackingField: {fileID: 21300000, guid: 03a0f27e9b08047889b3f5e7f0c23ff7, type: 3}
+  <Icon>k__BackingField: {fileID: 21300000, guid: a1d496109e86b084f86242cbaef67536, type: 3}
   <Prices>k__BackingField: 0a0000001e00000064000000c80000008a020000800c0000401f0000204e000050c30000a0860100
