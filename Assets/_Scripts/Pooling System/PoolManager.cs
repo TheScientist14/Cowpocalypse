@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using NaughtyAttributes;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace _Scripts.Pooling_System
 {
@@ -17,7 +18,8 @@ namespace _Scripts.Pooling_System
         [SerializeField] private float minPoolSize = 0.2f;
         [Tooltip("The multiplier for adding pooled items (value between 0 and 1)")]
         [SerializeField] private float percentageToAdd= 0.5f;
-        
+        [Tooltip("The multiplier for the size of the Items")]
+        [SerializeField] private float itemScaleSize = 0.2f;
         [HorizontalLine(color: EColor.Green)]
 
         [Header("Info")]
@@ -108,6 +110,7 @@ namespace _Scripts.Pooling_System
                 Item newItem = new GameObject().AddComponent<Item>();
                 newItem.AddComponent<SpriteRenderer>().sortingOrder = 1;
                 newItem.transform.parent = transform;
+                newItem.gameObject.transform.localScale = Vector3.one * itemScaleSize;
                 newItem.gameObject.SetActive(false);
                 itemPool.Add(newItem);
                 totalNumberOfPooledItems++;
