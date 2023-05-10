@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using System.IO;
 using System.Net;
@@ -15,6 +16,9 @@ namespace _Scripts.Save_System
     {
         private static string _filename = "Cowpocalypse.noext";
         private string _path;
+        
+        ItemData[] _sOs = ItemCreator.LoadAllItemsAtPath<ItemData>("Assets/Scriptable objects/Items/");
+        
         public UnityEvent savedGame;
         public UnityEvent loadedGame;
 
