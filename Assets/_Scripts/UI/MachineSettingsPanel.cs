@@ -10,6 +10,7 @@ public class MachineSettingsPanel : Panel
     public void SetItemData(ItemData item)
     {
         _recipeRessourceUI.ItemData = item;
+        //Instead of displaying the cost we display one, being the nb of items being produced
         _recipeRessourceUI.Number = 1;
         var ch = _resourcesToCraft.Length;
         int i = 0;
