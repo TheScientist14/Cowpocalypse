@@ -48,7 +48,7 @@ public class Splitter : Belt
                 if (!isMachineBlocking)
                 {
                     ItemMoving = true;
-                    Vector3 toPosition = OutputBelts[CurrentOutput].GetItemPosition();
+                    Vector3 toPosition = OutputBelts[CurrentOutput].transform.position;
                     OutputBelts[CurrentOutput].isSpaceTaken = true;
                     float step = BeltManager.instance.speed * Time.fixedDeltaTime;
 
