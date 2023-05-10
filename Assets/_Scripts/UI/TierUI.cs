@@ -11,7 +11,7 @@ public class TierUI : MonoBehaviour
     [SerializeField]
     private LayoutGroup _layout;
     [SerializeField]
-    private GameObject _prefab;
+    private RessourceUI _prefab;
 
     public TextUI TierName { get => _tierName; }
     public void InstantiateRecipes(IEnumerable<ItemData> itemsInTier)
@@ -19,9 +19,9 @@ public class TierUI : MonoBehaviour
         //To-Do Fetch resources of the tier
         foreach (ItemData item in itemsInTier)
         {
-            var obj=Instantiate(_prefab, _layout.transform);
+            RessourceUI obj =Instantiate(_prefab, _layout.transform);
             //PoolManager.instance.SpawnObject(item);
-            obj.name = item.name;
+            obj.ItemData = item;
         }
     }
 }
