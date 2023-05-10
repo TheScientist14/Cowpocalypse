@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 
+[RequireComponent (typeof (ObservableSound))]
 public class Belt : MonoBehaviour
 {
     public static int BeltID = 0;
@@ -11,6 +12,7 @@ public class Belt : MonoBehaviour
     public Item BeltItem;
     public bool isSpaceTaken;
     public bool isMachineBlocking;
+
 
     private void Start()
     {
@@ -82,4 +84,5 @@ public class Belt : MonoBehaviour
 
         return null;
     }
+   
 }
