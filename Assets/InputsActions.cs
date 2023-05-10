@@ -75,7 +75,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": ""Drag"",
                     ""type"": ""Value"",
-                    ""id"": ""c93300cc-0c35-40d8-ab10-317c25b4e298"",
+                    ""id"": ""343aba71-8628-47cc-9091-9a9b6b9c2006"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
@@ -175,7 +175,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""7e269523-5df9-4ab6-a2da-8b7738d1f8c7"",
                     ""path"": ""<Touchscreen>/touch0/position"",
-                    ""interactions"": ""MultiTap"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Touchscreen"",
                     ""action"": ""DoubleClickButton"",
@@ -186,7 +186,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""cdb8f697-2d3a-48e6-9027-a67084435114"",
                     ""path"": ""<Mouse>/leftButton"",
-                    ""interactions"": ""MultiTap"",
+                    ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KBM"",
                     ""action"": ""DoubleClickButton"",
@@ -217,7 +217,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""MouseDrag"",
-                    ""id"": ""737e2ede-fc7c-4d1d-ab9f-f8c9cdd5e927"",
+                    ""id"": ""27c70f53-47cb-4628-8cdd-69648dddcd9a"",
                     ""path"": ""Drag"",
                     ""interactions"": ""MouseDrag"",
                     ""processors"": """",
@@ -228,7 +228,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Button"",
-                    ""id"": ""05d34325-a681-48c7-990d-a0f67d97346e"",
+                    ""id"": ""9d82472f-7eb7-4d28-a644-c215fec62659"",
                     ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -239,7 +239,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""CurrentPos"",
-                    ""id"": ""ab9bb93e-76ae-4baf-abe8-a6fb9674251e"",
+                    ""id"": ""c9d07509-221e-4c84-8007-aabaaf0084c1"",
                     ""path"": ""<Mouse>/position"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -250,9 +250,9 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""TouchDrag"",
-                    ""id"": ""c7f9986c-5960-4b23-ba3e-3e7e6a182781"",
+                    ""id"": ""0b2d57fc-8735-48db-a443-1e7d930ba765"",
                     ""path"": ""Drag"",
-                    ""interactions"": """",
+                    ""interactions"": ""MouseDrag"",
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Drag"",
@@ -261,7 +261,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Button"",
-                    ""id"": ""8851b579-193d-4f3d-a055-b7d3b63403a8"",
+                    ""id"": ""7c0ba52c-ec2d-4f1f-934c-67f1e5703519"",
                     ""path"": ""<Touchscreen>/touch0/press"",
                     ""interactions"": """",
                     ""processors"": """",
@@ -272,7 +272,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""CurrentPos"",
-                    ""id"": ""185c6e28-5877-4031-8c41-c424ba9f9630"",
+                    ""id"": ""c5ff47bd-6be5-48b3-99b5-aacf33559088"",
                     ""path"": ""<Touchscreen>/touch0/position"",
                     ""interactions"": """",
                     ""processors"": """",
