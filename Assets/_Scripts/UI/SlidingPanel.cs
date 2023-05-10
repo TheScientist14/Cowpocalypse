@@ -41,11 +41,13 @@ public class SlidingPanel : MonoBehaviour
             Collapse();
     }*/
 
+    [ContextMenu("Collaspe")]
     public void Collapse()
     {
         Toggler(false);
     }
 
+    [ContextMenu("Expand")]
     public void Expand()
     {
         Toggler(true);

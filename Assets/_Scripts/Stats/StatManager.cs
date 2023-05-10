@@ -12,4 +12,13 @@ public class StatManager : MonoBehaviour
     {
         Stats = _statsData.Select(statData => new Stat { StatData = statData }).ToList();
     }
+
+    [ContextMenu("Log stat values")]
+    public void LogValues()
+    {
+        foreach (var stat in Stats)
+        {
+            Debug.Log($"{stat.StatData.Name} : {stat.CurrentLevel}, {stat.Value}");
+        }
+    }
 }

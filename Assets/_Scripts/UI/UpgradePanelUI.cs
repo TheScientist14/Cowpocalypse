@@ -6,7 +6,7 @@ public class UpgradePanelUI : MonoBehaviour
 {
     [SerializeField] RectTransform _panel;
     [SerializeField] StatManager _statManager;
-    [FormerlySerializedAs("_statPrefab")] [SerializeField] StatUI _statUIPrefab;
+    [SerializeField] StatUI _statUIPrefab;
 
     void Start()
     {
