@@ -25,7 +25,7 @@ namespace _Scripts.Pooling_System
         [Tooltip("The total number of pooled items (in use and idle)")]
         [ReadOnly] [SerializeField] private int totalNumberOfPooledItems = 0;
 
-        [ReadOnly] [SerializeField] private List<GameObject> spawners;
+        [ReadOnly] [SerializeField] private List<GameObject> spawners = new ();
 
         [ReadOnly] [SerializeField]
         private List<Item> itemPool = new();
