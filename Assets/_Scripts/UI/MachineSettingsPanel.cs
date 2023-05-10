@@ -7,8 +7,21 @@ public class MachineSettingsPanel : Panel
     private RessourceUI _recipeRessourceUI;
     [SerializeField]
     private RessourceUI[] _resourcesToCraft;
+    private Machine _machine;
+
+    public Machine OpenedMachine
+    {
+        get => _machine;
+        set
+        {
+            _machine = value;
+            SetItemData(_machine.GetCraftedItem());
+        }
+    }
+
     public void SetItemData(ItemData item)
     {
+        _machine.SetCafteditem(item);
         _recipeRessourceUI.ItemData = item;
         //Instead of displaying the cost we display one, being the nb of items being produced
         _recipeRessourceUI.Number = 1;
