@@ -2,14 +2,50 @@
     "name": "InputsActions",
     "maps": [
         {
-            "name": "Movement",
+            "name": "Player",
             "id": "14bb221c-fc2c-453c-a021-ba41a8af4998",
             "actions": [
                 {
-                    "name": "Walk",
+                    "name": "ZoomValue",
+                    "type": "Value",
+                    "id": "83aed690-5381-4292-b67a-ca86e34ffb3a",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "ClickPosition",
+                    "type": "Value",
+                    "id": "8e6dfc17-5552-4d1a-91e1-c00b293162d2",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "Tap",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "DoubleClickPosition",
                     "type": "Button",
-                    "id": "a54c52fd-b678-412e-9653-4bb4cfae7965",
+                    "id": "a0c3497e-bd7a-4c9a-b2bb-3a1a63f52f0a",
                     "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "MultiTap",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "LongPressButton",
+                    "type": "Button",
+                    "id": "66145a7b-3fa2-4b91-9e79-b4a907eec7d3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "PointerPosition",
+                    "type": "PassThrough",
+                    "id": "2dd3d8d3-9e5a-4b4c-9c31-d0c700a5134e",
+                    "expectedControlType": "Vector2",
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
@@ -18,23 +54,166 @@
             "bindings": [
                 {
                     "name": "",
-                    "id": "4d8ca572-bc2f-45c1-a3cb-1de0c7804a74",
-                    "path": "<Keyboard>/w",
+                    "id": "ca2c8752-ee04-487c-9175-4a90ce7891d2",
+                    "path": "<Mouse>/scroll",
                     "interactions": "",
                     "processors": "",
                     "groups": "KBM",
-                    "action": "Walk",
+                    "action": "ZoomValue",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Pinch",
+                    "id": "16992aac-a28d-4c53-8e6e-c80903a91968",
+                    "path": "Pinch",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "ZoomValue",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "m_FirstFingerPositionValueId",
+                    "id": "c4960551-ab97-43c2-87b8-45ce1a2831e4",
+                    "path": "<Touchscreen>/touch0/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Touchscreen",
+                    "action": "ZoomValue",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "m_SecondFingerPositionValueId",
+                    "id": "5179b7f8-d51a-4153-a650-22a2720d3522",
+                    "path": "<Touchscreen>/touch1/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Touchscreen",
+                    "action": "ZoomValue",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "cdd605dd-e4d8-4a36-8748-85c07065dc77",
+                    "path": "<Touchscreen>/touch0/position",
+                    "interactions": "Tap",
+                    "processors": "",
+                    "groups": "Touchscreen",
+                    "action": "ClickPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "1053ba86-48af-409b-9bb6-278a37479381",
-                    "path": "<Touchscreen>/Press",
+                    "id": "9f0fd21f-3910-48e7-8dde-cdb18b4443be",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "ClickPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "14f6a610-98a3-4c82-89b2-bf8968f18374",
+                    "path": "<Touchscreen>/touch0/press",
+                    "interactions": "Press",
+                    "processors": "",
+                    "groups": "Touchscreen",
+                    "action": "LongPressButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "52b7bb6f-3a48-4991-b51d-c4d1185d0784",
+                    "path": "<Mouse>/rightButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "LongPressButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7e269523-5df9-4ab6-a2da-8b7738d1f8c7",
+                    "path": "<Touchscreen>/touch0/position",
                     "interactions": "",
                     "processors": "",
                     "groups": "Touchscreen",
-                    "action": "Walk",
+                    "action": "DoubleClickPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "cdb8f697-2d3a-48e6-9027-a67084435114",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "DoubleClickPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "One Modifier",
+                    "id": "be38f45d-7922-4410-9eea-73bacebc23fd",
+                    "path": "OneModifier",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "DoubleClickPosition",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "modifier",
+                    "id": "36acc5ae-4b95-4dc6-8a8e-47fb5aae56f1",
+                    "path": "<Keyboard>/ctrl",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "DoubleClickPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "binding",
+                    "id": "e47ead8b-afcb-4e08-8245-0886fbabd48b",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "DoubleClickPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "a8a5110a-e146-47b5-82cc-44641903de12",
+                    "path": "<Mouse>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "PointerPosition",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "8f4e9f8a-a647-427f-b6ec-5fe5896262c5",
+                    "path": "<Touchscreen>/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Touchscreen",
+                    "action": "PointerPosition",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
