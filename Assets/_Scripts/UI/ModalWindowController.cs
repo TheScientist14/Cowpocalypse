@@ -12,8 +12,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
     [SerializeField, Header("MachineSettingsPanel")]
     private MachineSettingsPanel _machineSettingsPanel;
     [SerializeField, Header("RecipeUnlockPanel")]
-    private Panel _recipeUnlockPanel;
-    
+    private AllTiersPanel _recipeUnlockPanel;
     public bool _inCatalog => _recipeUnlockPanel.CurrentlyOpened;
     private bool InMachineSettings=>_machineSettingsPanel.CurrentlyOpened;
 
@@ -30,11 +29,12 @@ public class ModalWindowController : Singleton<ModalWindowController>
     }
     public void OpenCatalogFromMachineSettings()
     {
-        OpenCatalog();
+        OpenCatalog(1);
     }
 
-    private void OpenCatalog()
+    private void OpenCatalog(int tiersToSkip=0)
     {
+        _recipeUnlockPanel.ChangeTiersDisplayed(tiersToSkip);
         /*_inCatalog = true;*/
         _recipeUnlockPanel.ChangeVisibility(true);
     }

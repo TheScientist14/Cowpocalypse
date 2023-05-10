@@ -10,6 +10,7 @@ public class MachineSettingsPanel : Panel
     public void SetItemData(ItemData item)
     {
         _recipeRessourceUI.ItemData = item;
+        _recipeRessourceUI.Number = 1;
         var ch = _resourcesToCraft.Length;
         int i = 0;
         foreach (var recipe in item.Recipes)
