@@ -12,6 +12,8 @@ public class Belt : MonoBehaviour
     public bool isSpaceTaken;
     public bool isMachineBlocking;
 
+    public Machine MachineInSequence;
+
     private void Start()
     {
         isMachineBlocking = false;
@@ -29,13 +31,6 @@ public class Belt : MonoBehaviour
             StartCoroutine(StartBeltMove());
     }
 
-    public Vector3 GetItemPosition()
-    {
-        float padding = 0f;
-        Vector3 position = transform.position;
-        return new Vector3(position.x, position.y + padding, position.z);
-    }
-
     public virtual IEnumerator StartBeltMove()
     {
         isSpaceTaken = true;
@@ -44,27 +39,35 @@ public class Belt : MonoBehaviour
         {
             if (BeltInSequence.GetComponent<Machine>())
             {
-                Machine machine = BeltInSequence.GetComponent<Machine>();
-                if(machine.GetCraftedItem() != null)
-                    isMachineBlocking = !machine.GetCraftedItem().Recipes.ContainsKey(BeltItem.GetItemData());
+                MachineInSequence = BeltInSequence.GetComponent<Machine>();
+                if(MachineInSequence.GetCraftedItem() != null)
+                    isMachineBlocking = !MachineInSequence.GetCraftedItem().Recipes.ContainsKey(BeltItem.GetItemData());
                 else
                     isMachineBlocking = true;
             }
             if (!isMachineBlocking)
             {
-                Vector3 toPosition = BeltInSequence.GetItemPosition();
-                BeltInSequence.isSpaceTaken = true;
-                float step = BeltManager.instance.speed * Time.fixedDeltaTime;
-
-                while (BeltItem.GetItem().transform.position != toPosition)
+                if(MachineInSequence != null)
                 {
-                    BeltItem.GetItem().transform.position = Vector3.MoveTowards(BeltItem.transform.position, toPosition, step);
-                    yield return null;
+                    MachineInSequence.AddToStock(BeltItem);
+                    isSpaceTaken = false;
+                    BeltItem = null;
                 }
+                else
+                {
+                    Vector3 toPosition = BeltInSequence.transform.position;
+                    BeltInSequence.isSpaceTaken = true;
+                    float step = BeltManager.instance.speed * Time.fixedDeltaTime;
 
-                isSpaceTaken = false;
-                BeltInSequence.BeltItem = BeltItem;
-                BeltItem = null;
+                    while (BeltItem.GetItem().transform.position != toPosition)
+                    {
+                        BeltItem.GetItem().transform.position = Vector3.MoveTowards(BeltItem.transform.position, toPosition, step);
+                        yield return null;
+                    }
+                    isSpaceTaken = false;
+                    BeltInSequence.BeltItem = BeltItem;
+                    BeltItem = null;
+                }
             }
         }
     }
@@ -77,7 +80,11 @@ public class Belt : MonoBehaviour
         {
             Belt belt = hit.collider.GetComponent<Belt>();
             if (belt != null)
+            {
+                if (belt.GetComponent<Machine>())
+                    MachineInSequence = belt.GetComponent<Machine>();
                 return belt;
+            }
         }
 
         return null;
