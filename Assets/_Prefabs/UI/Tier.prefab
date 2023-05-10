@@ -66,7 +66,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Tier 1
+  m_text: Basic
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
@@ -146,6 +146,7 @@ GameObject:
   - component: {fileID: 1714938274185840144}
   - component: {fileID: 1714938274185840145}
   - component: {fileID: 425439555327257973}
+  - component: {fileID: 881515879262819341}
   m_Layer: 5
   m_Name: Recipes
   m_TagString: Untagged
@@ -186,16 +187,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Padding:
-    m_Left: 0
-    m_Right: 0
+    m_Left: 20
+    m_Right: 20
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 4
+  m_ChildAlignment: 1
   m_StartCorner: 0
-  m_StartAxis: 0
+  m_StartAxis: 1
   m_CellSize: {x: 100, y: 100}
   m_Spacing: {x: 50, y: 20}
-  m_Constraint: 1
+  m_Constraint: 0
   m_ConstraintCount: 7
 --- !u!114 &425439555327257973
 MonoBehaviour:
@@ -210,7 +211,27 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_HorizontalFit: 0
-  m_VerticalFit: 2
+  m_VerticalFit: 1
+--- !u!114 &881515879262819341
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1714938274185840151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 306cc8c2b49d7114eaa3623786fc2126, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreLayout: 0
+  m_MinWidth: -1
+  m_MinHeight: -1
+  m_PreferredWidth: -1
+  m_PreferredHeight: -1
+  m_FlexibleWidth: -1
+  m_FlexibleHeight: 1
+  m_LayoutPriority: 1
 --- !u!1 &1714938275157818326
 GameObject:
   m_ObjectHideFlags: 0
@@ -265,11 +286,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_IgnoreLayout: 0
   m_MinWidth: -1
-  m_MinHeight: 270
+  m_MinHeight: 405
   m_PreferredWidth: -1
   m_PreferredHeight: -1
   m_FlexibleWidth: -1
-  m_FlexibleHeight: -1
+  m_FlexibleHeight: 1
   m_LayoutPriority: 1
 --- !u!114 &5588278184072608689
 MonoBehaviour:
@@ -284,7 +305,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _tierName:
-    _value: Tier 1
+    _value: Basic
     _text: {fileID: 1714938273468588185}
   _layout: {fileID: 1714938274185840145}
-  _prefab: {fileID: 9133027545470972643, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
+  _prefab: {fileID: 5338728772489972039, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}

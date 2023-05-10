@@ -12,8 +12,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
     [SerializeField, Header("MachineSettingsPanel")]
     private MachineSettingsPanel _machineSettingsPanel;
     [SerializeField, Header("RecipeUnlockPanel")]
-    private Panel _recipeUnlockPanel;
-    
+    private AllTiersPanel _recipeUnlockPanel;
     public bool _inCatalog => _recipeUnlockPanel.CurrentlyOpened;
     private bool InMachineSettings=>_machineSettingsPanel.CurrentlyOpened;
 
@@ -30,11 +29,12 @@ public class ModalWindowController : Singleton<ModalWindowController>
     }
     public void OpenCatalogFromMachineSettings()
     {
-        OpenCatalog();
+        OpenCatalog(1);
     }
 
-    private void OpenCatalog()
+    private void OpenCatalog(int tiersToSkip=0)
     {
+        _recipeUnlockPanel.ChangeTiersDisplayed(tiersToSkip);
         /*_inCatalog = true;*/
         _recipeUnlockPanel.ChangeVisibility(true);
     }
@@ -48,6 +48,8 @@ public class ModalWindowController : Singleton<ModalWindowController>
     {
         /*_inMachineSettings = true;*/
         _machineSettingsPanel.ChangeVisibility(true);
+        Debug.LogWarning("Integrate with machine settings data stored to show the display accordinginly to selected machine");
+        //_machineSettingsPanel.SetItemData(macine.ItemData);
     }
     public void CloseMachineSettings()
     {
@@ -75,7 +77,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
             if (InMachineSettings)
             {
                 Debug.LogWarning("Integrate with machine production logic using stored itemData");
-                _machineSettingsPanel.RecipeRessourceUI.ItemData = ressourceUI.ItemData;
+                _machineSettingsPanel.SetItemData(ressourceUI.ItemData);
                 CloseCatalog();
             }
             else
