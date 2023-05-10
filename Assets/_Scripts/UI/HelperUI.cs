@@ -11,7 +11,14 @@ public class TextUI
     [SerializeField]
     private TMP_Text _text;
 
-    public string Value { get => _value; set => _value = value; }
+    public string Value
+    {
+        get => _value; set
+        {
+            _value = value;
+            UpdateText();
+        }
+    }
     void UpdateText()
     {
         _text.text = _value;

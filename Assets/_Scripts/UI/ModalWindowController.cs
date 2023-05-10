@@ -1,6 +1,4 @@
-using DG.Tweening;
 using NaughtyAttributes;
-using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -12,66 +10,53 @@ public class ModalWindowController : Singleton<ModalWindowController>
     [SerializeField]
     private TextUI _windowName;
     [SerializeField, Header("MachineSettingsPanel")]
-    private RectTransform _machineSettingsPanel;
+    private MachineSettingsPanel _machineSettingsPanel;
     [SerializeField, Header("RecipeUnlockPanel")]
-    private RectTransform _recipeUnlockPanel;
-    [SerializeField]
-    private Button _back;
-    [Header("Transition settings")]
-    [SerializeField, Range(0, 10f)]
-    private float _duration;
-    [SerializeField]
-    private Ease _ease;
-    private RessourceUI _lastClickedResource;
-    public bool _inMachineSettings = false;
-    public bool _inCatalog = false;
+    private Panel _recipeUnlockPanel;
+    
+    public bool _inCatalog => _recipeUnlockPanel.CurrentlyOpened;
+    private bool InMachineSettings=>_machineSettingsPanel.CurrentlyOpened;
+
     private void Start()
     {
-        ChangeVisibility(_recipeUnlockPanel, false, 0f, 0f);
-        ChangeVisibility(_machineSettingsPanel, false, 0f, 0f);
-    }
-    [Button("Switch")]
-    public void SwitchPanel()
-    {
-        ShowPanel(!_machineSettingsPanel.gameObject.activeSelf);
+        _recipeUnlockPanel.ChangeVisibility(false, 0f, 0f);
+        _machineSettingsPanel.ChangeVisibility(false, 0f, 0f);
     }
     #region CalledFromUi
     public void OpenCatalogFromGame()
-    {
-        _inMachineSettings = false;
+    {/*
+        _inMachineSettings = false;*/
         OpenCatalog();
     }
     public void OpenCatalogFromMachineSettings()
     {
-        _back.gameObject.SetActive(true);
         OpenCatalog();
     }
 
     private void OpenCatalog()
     {
-        _inCatalog = true;
-        ChangeVisibility(_recipeUnlockPanel, true);
+        /*_inCatalog = true;*/
+        _recipeUnlockPanel.ChangeVisibility(true);
     }
 
     public void CloseCatalog()
     {
-        _inCatalog = false;
-        _back.gameObject.SetActive(false);
-        ChangeVisibility(_recipeUnlockPanel, false);
+        /*_inCatalog = false;*/
+        _recipeUnlockPanel.ChangeVisibility(false);
     }
     public void OpenMachineSettings()
     {
-        _inMachineSettings = true;
-        ChangeVisibility(_machineSettingsPanel, true);
+        /*_inMachineSettings = true;*/
+        _machineSettingsPanel.ChangeVisibility(true);
     }
     public void CloseMachineSettings()
     {
-        _inMachineSettings = false;
-        ChangeVisibility(_machineSettingsPanel, false);
+        /*_inMachineSettings = false;*/
+        _machineSettingsPanel.ChangeVisibility(false);
     }
     public void CloseAll()
     {
-        _inMachineSettings = false;
+        /*_inMachineSettings = false;*/
         CloseMachineSettings();
         CloseCatalog();
     }
@@ -79,7 +64,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
     {
         if (_inCatalog)
             CloseCatalog();
-        else if (_inMachineSettings)
+        else if (InMachineSettings)
             CloseMachineSettings();
     }
     #endregion
@@ -87,14 +72,15 @@ public class ModalWindowController : Singleton<ModalWindowController>
     {
         if (_inCatalog)
         {
-            if (_inMachineSettings)
+            if (InMachineSettings)
             {
-                //SetRecipe in machine settings
+                Debug.LogWarning("Integrate with machine production logic using stored itemData");
+                _machineSettingsPanel.RecipeRessourceUI.ItemData = ressourceUI.ItemData;
                 CloseCatalog();
             }
             else
             {
-                //Unlock
+                Debug.LogWarning("Integrate unlocking logic");
             }
         }
         else
@@ -105,31 +91,14 @@ public class ModalWindowController : Singleton<ModalWindowController>
                 OpenCatalogFromMachineSettings();   */
         }
     }
-    /// <summary>
-    /// 
-    /// </summary>
-    /// <param name="showMachineSettings"></param>
-    /// <param name="origin">When we trigger call from a ressourceUI we might need to pass it trought this method to operate things</param>
-    public void ShowPanel(bool showMachineSettings, RessourceUI origin = null)
+    [Button("Switch")]
+    public void SwitchPanel()
     {
-        ChangeVisibility(_machineSettingsPanel, showMachineSettings);
-        ChangeVisibility(_recipeUnlockPanel, !showMachineSettings);
-        _lastClickedResource = origin;
+        ShowPanel(!_machineSettingsPanel.gameObject.activeSelf);
     }
-
-    private void ChangeVisibility(RectTransform rt, bool show, float delay = 0f, float? durationOverride = null)
+    public void ShowPanel(bool showMachineSettings)
     {
-        if (rt.gameObject.activeSelf == show)
-            return;
-        var dur = durationOverride.HasValue ? durationOverride.Value : _duration;
-        rt.gameObject.SetActive(true);
-        rt.localScale = !show ? Vector3.one : Vector3.zero;
-        rt.DOScale(show ? Vector3.one : Vector3.zero, dur)
-            .SetEase(_ease)
-            .OnComplete(() =>
-        rt.gameObject.SetActive(show)
-        ).SetDelay(delay);
+        _machineSettingsPanel.ChangeVisibility(showMachineSettings);
+        _recipeUnlockPanel.ChangeVisibility(!showMachineSettings);
     }
-
-
 }
