@@ -8,7 +8,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AllTierUi : MonoBehaviour
+public class AllTiersPanel : Panel
 {
     [SerializeField]
     private LayoutGroup _layout;
@@ -24,6 +24,11 @@ public class AllTierUi : MonoBehaviour
     {
         var SOs = ItemCreator.LoadAllItemsAtPath<ItemData>("Assets/Scriptable objects/Items/");
         IEnumerable<IGrouping<ItemTier, ItemData>> s = SOs.GroupBy(x => x.Tier).OrderBy(t => t.Key.Level);
+        var ch=_layout.transform.childCount;
+        for (int i = 0; i < ch; i++)
+        {
+            DestroyImmediate(_layout.transform.GetChild(0).gameObject);
+        }
         foreach (IGrouping<ItemTier, ItemData> tier in s)
         {
             var inst = PrefabUtility.InstantiatePrefab(_tierPrefab, _layout.transform).GetComponent<TierUI>();
