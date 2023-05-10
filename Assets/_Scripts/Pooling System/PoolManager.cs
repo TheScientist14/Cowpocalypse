@@ -10,32 +10,33 @@ namespace _Scripts.Pooling_System
 {
     public class PoolManager : Singleton<PoolManager>
     {
-        [Header("Parameters")]
-        
-        [Tooltip("Start number of pooled items")]
-        [SerializeField] private int _startNumberOfPooledObjects = 10;
+        [Header("Parameters")] [Tooltip("Start number of pooled items")] [SerializeField]
+        private int _startNumberOfPooledObjects = 10;
+
         [Tooltip("Limit of pooled items left in the pool before adding new ones (value between 0 and 1)")]
-        [SerializeField] private float minPoolSize = 0.2f;
-        [Tooltip("The multiplier for adding pooled items (value between 0 and 1)")]
-        [SerializeField] private float percentageToAdd= 0.5f;
-        [Tooltip("The multiplier for the size of the Items")]
-        [SerializeField] private float itemScaleSize = 0.2f;
+        [SerializeField]
+        private float minPoolSize = 0.2f;
+
+        [Tooltip("The multiplier for adding pooled items (value between 0 and 1)")] [SerializeField]
+        private float percentageToAdd = 0.5f;
+
+        [Tooltip("The multiplier for the size of the Items")] [SerializeField]
+        private float itemScaleSize = 0.2f;
+
         [HorizontalLine(color: EColor.Green)]
-
         [Header("Info")]
-        
         [Tooltip("The total number of pooled items (in use and idle)")]
-        [ReadOnly] [SerializeField] private int totalNumberOfPooledItems = 0;
+        [ReadOnly]
+        [SerializeField]
+        private int totalNumberOfPooledItems = 0;
 
-        [ReadOnly] [SerializeField] private List<GameObject> spawners = new ();
+        [ReadOnly] [SerializeField] private List<GameObject> spawners = new();
 
-        [ReadOnly] [SerializeField]
-        private List<Item> itemPool = new();
+        [ReadOnly] [SerializeField] private List<Item> itemPool = new();
 
-        [ReadOnly] [SerializeField]
-        private List<Item> existingItems = new();
+        [ReadOnly] [SerializeField] private List<Item> existingItems = new();
 
-        
+
         //Add a starting amount of spawnable items to the pool
         private void Awake()
         {
@@ -50,8 +51,8 @@ namespace _Scripts.Pooling_System
                 StartCoroutine(AddToPool(spawners.Count));
             }
         }
-        
-        
+
+
         /// <summary>
         /// Spawns an item using the pooling system, DO NOT INSTANTIATE
         /// </summary>
@@ -63,9 +64,9 @@ namespace _Scripts.Pooling_System
             itemPool[0].SetItemData(itemData);
             if (itemData.Sprite)
             {
-               itemPool[0].GetComponent<SpriteRenderer>().sprite = itemData.Sprite; 
+                itemPool[0].GetComponent<SpriteRenderer>().sprite = itemData.Sprite;
             }
-            
+
             itemPool[0].transform.position = prmPosition;
             itemPool[0].gameObject.SetActive(true);
             existingItems.Add(itemPool[0]);
@@ -102,7 +103,6 @@ namespace _Scripts.Pooling_System
         /// </summary>
         /// <param name="numberOfItemsToAdd"></param>
         /// <returns></returns>
-        
         private IEnumerator AddToPool(int numberOfItemsToAdd)
         {
             for (int i = 0; i < numberOfItemsToAdd; i++)
@@ -119,7 +119,7 @@ namespace _Scripts.Pooling_System
         }
 
         #region Accessors
-        
+
         /// <summary>
         ///  Returns the total number of pooled items, counts the items being used/displayed and those that aren't
         /// </summary>
@@ -150,6 +150,5 @@ namespace _Scripts.Pooling_System
         }
 
         #endregion
-        
     }
 }

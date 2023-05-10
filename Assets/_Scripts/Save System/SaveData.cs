@@ -15,6 +15,7 @@ namespace _Scripts.Save_System
     [System.Serializable]
     public class SaveData
     {
+        //TODO: link array/list of belts in stead of find objects
         private List<BeltSaveData> _beltDatas = new ();
         private List<MachineSaveData> _machineDatas = new();
         private PlayerSaveData _playerSaveData;
@@ -53,6 +54,11 @@ namespace _Scripts.Save_System
         {
             return new Vector3(_x, _y, _z);
         }
+
+        public string GetName()
+        {
+            return _name;
+        }
     }
     
     [Serializable]
@@ -83,6 +89,7 @@ namespace _Scripts.Save_System
             {
                 _itemSaveData = null;
             }
+            
         }
 
         public Vector3 GetPos()
@@ -94,10 +101,9 @@ namespace _Scripts.Save_System
             return new Vector3(_rotX, _rotY, _rotZ);
         }
 
-        public ItemSaveData GetItem()
+        public ItemSaveData? GetItem()
         {
-            System.Diagnostics.Debug.Assert(_itemSaveData != null);
-            return (ItemSaveData)_itemSaveData;
+           return _itemSaveData;
         }
     }
     

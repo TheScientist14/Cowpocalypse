@@ -274,6 +274,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c1b238450a274a78b0290cdd44a665cd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  beltPrefab: {fileID: 4732986801910414389, guid: 39b3afbc04efd43489d67a26e6c013a1, type: 3}
+  savedGame:
+    m_PersistentCalls:
+      m_Calls: []
+  loadedGame:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &416520787
 Transform:
   m_ObjectHideFlags: 0
