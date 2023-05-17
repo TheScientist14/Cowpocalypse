@@ -111,7 +111,6 @@ public class ModalWindowController : Singleton<ModalWindowController>
         {
             if (InMachineSettings)
             {
-                Debug.LogWarning("Integrate with machine production logic using stored itemData");
                 _machineSettingsPanel.SetItemData(ressourceUI.ItemData);
                 ClosePanel(_recipeUnlockPanel);
             }
