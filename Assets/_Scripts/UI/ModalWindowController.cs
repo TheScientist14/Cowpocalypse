@@ -41,19 +41,17 @@ public class ModalWindowController : Singleton<ModalWindowController>
         _recipeUnlockPanel.ChangeTiersDisplayed(tiersToSkip);
         OpenPanel(_recipeUnlockPanel, title);
     }
-    public void CloseCatalog()
+    public void OpenMachineSettings(Vector2 screenPosition, Machine machine)
     {
-        ClosePanel(_recipeUnlockPanel);
-    }
-    public void OpenMachineSettings(Machine machine = null)
-    {
+
+        //We might try to open a new panel when clicking on a different machine outside of the panel, if tryting to open in any other circunstances we don't refresh UI
+        if (PointIsOutsideOfPanel(screenPosition) && machine != _machineSettingsPanel.OpenedMachine)
+            CloseAll();
+        else
+            return;
         OpenPanel(_machineSettingsPanel, "Machine settings");
         _machineSettingsPanel.OpenedMachine = machine;
-        Debug.LogWarning("Integrate with machine settings data stored to show the display accordinginly to selected machine");
-    }
-    public void CloseMachineSettings()
-    {
-        ClosePanel(_machineSettingsPanel);
+        Debug.LogWarning("Integrate with machine settings stocks");
     }
     private void OpenPanel(Panel panel, string title)
     {
@@ -115,7 +113,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
             {
                 Debug.LogWarning("Integrate with machine production logic using stored itemData");
                 _machineSettingsPanel.SetItemData(ressourceUI.ItemData);
-                CloseCatalog();
+                ClosePanel(_recipeUnlockPanel);
             }
             else
             {
@@ -130,14 +128,27 @@ public class ModalWindowController : Singleton<ModalWindowController>
                 OpenCatalogFromMachineSettings();   */
         }
     }
+
+    internal void CheckClickedOutside(Vector2 position)
+    {
+        if (PointIsOutsideOfPanel(position))
+            CloseAll();
+    }
+
+    private bool PointIsOutsideOfPanel(Vector2 position)
+    {
+        return _openedPanels.Count == 0 || !RectTransformUtility.RectangleContainsScreenPoint((transform as RectTransform), position);
+    }
+
+
     /*    [Button("Switch")]
-        public void SwitchPanel()
-        {
-            ShowPanel(!_machineSettingsPanel.gameObject.activeSelf);
-        }
-        public void ShowPanel(bool showMachineSettings)
-        {
-            _machineSettingsPanel.ChangeVisibility(showMachineSettings);
-            _recipeUnlockPanel.ChangeVisibility(!showMachineSettings);
-        }*/
+   public void SwitchPanel()
+   {
+       ShowPanel(!_machineSettingsPanel.gameObject.activeSelf);
+   }
+   public void ShowPanel(bool showMachineSettings)
+   {
+       _machineSettingsPanel.ChangeVisibility(showMachineSettings);
+       _recipeUnlockPanel.ChangeVisibility(!showMachineSettings);
+   }*/
 }

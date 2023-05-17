@@ -26,7 +26,6 @@ public class CameraController : MonoBehaviour
         m_InputAction.Player.ZoomValue.performed += ctx => UpdateZoom(ctx.ReadValue<float>());
         m_InputAction.Player.Drag.started += _ => InitMoveCamera();
         m_InputAction.Player.Drag.performed += ctx => MovePosition(ctx.ReadValue<Vector2>());
-        m_InputAction.Player.ClickButton.started += _ => Debug.Log("Click");
     }
 
     void UpdateZoom(float iZoomDelta)

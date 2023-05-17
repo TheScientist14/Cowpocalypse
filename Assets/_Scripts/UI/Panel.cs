@@ -18,7 +18,7 @@ public class Panel : MonoBehaviour
     {
         rt = transform as RectTransform;
     }
-    public void ChangeVisibility(bool show, float delay = 0f, float? durationOverride = null)
+    public virtual void ChangeVisibility(bool show, float delay = 0f, float? durationOverride = null)
     {
         if (rt.gameObject.activeSelf == show)
             return;
