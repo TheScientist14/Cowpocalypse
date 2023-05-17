@@ -28,7 +28,7 @@ namespace _Scripts.UI
             var sequence = DOTween.Sequence();
             sequence.Append(_camera.DOOrthoSize(5, 2));
             sequence.Append(_titleRect.DOAnchorPosY(280, 0.25f).SetEase(Ease.OutBack));
-            sequence.Append(_camera.DOShakePosition(0.25f, 1f, 1));
+            sequence.Append(_camera.DOShakePosition(2f));
             sequence.Append(_buttons.DOFade(1, 2));
             sequence.Insert(3, _buttonsRect.DOAnchorPosX(0, 2));
         }
