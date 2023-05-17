@@ -12,31 +12,12 @@ public class AllTiersPanel : Panel
 {
     [SerializeField]
     private LayoutGroup _layout;
-    [SerializeField]
-    private TierUI _tierPrefab;
 
     private void Start()
     {
         InstantiateTiers();
     }
-    [Button("Instantiate tiers")]
-    private void InstantiateTiers()
-    {
-        var SOs = ItemCreator.LoadAllItemsAtPath<ItemData>("Assets/Scriptable objects/Items/");
-        IEnumerable<IGrouping<ItemTier, ItemData>> s = SOs.GroupBy(x => x.Tier).OrderBy(t => t.Key.Level);
-        var ch = _layout.transform.childCount;
-        for (int i = 0; i < ch; i++)
-        {
-            DestroyImmediate(_layout.transform.GetChild(0).gameObject);
-        }
-        foreach (IGrouping<ItemTier, ItemData> tier in s)
-        {
-            var inst = PrefabUtility.InstantiatePrefab(_tierPrefab, _layout.transform).GetComponent<TierUI>();
-            inst.TierName.Value = tier.Key.Name;
-            inst.InstantiateRecipes(tier);
-        }
-    }
-    public void ChangeTiersDisplayed(int firstTiersToHide, int lastTiersToHide=100000)
+    public void ChangeTiersDisplayed(int firstTiersToHide, int lastTiersToHide = 100000)
     {
         var tr = _layout.transform;
         int childCount = tr.childCount;
@@ -54,6 +35,25 @@ public class AllTiersPanel : Panel
         for (; i < childCount; i++)
         {
             tr.GetChild(i).gameObject.SetActive(false);
+        }
+    }
+    [SerializeField, Header("Editor helpers")]
+    private TierUI _tierPrefab;
+    [Button("Instantiate tiers")]
+    private void InstantiateTiers()
+    {
+        var SOs = ItemCreator.LoadAllResourceAtPath<ItemData>();
+        IEnumerable<IGrouping<ItemTier, ItemData>> s = SOs.GroupBy(x => x.Tier).OrderBy(t => t.Key.Level);
+        var ch = _layout.transform.childCount;
+        for (int i = 0; i < ch; i++)
+        {
+            DestroyImmediate(_layout.transform.GetChild(0).gameObject);
+        }
+        foreach (IGrouping<ItemTier, ItemData> tier in s)
+        {
+            var inst = PrefabUtility.InstantiatePrefab(_tierPrefab, _layout.transform).GetComponent<TierUI>();
+            inst.TierName.Value = tier.Key.Name;
+            inst.InstantiateRecipes(tier);
         }
     }
 }
