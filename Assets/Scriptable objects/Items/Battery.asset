@@ -15,7 +15,7 @@ MonoBehaviour:
   <Price>k__BackingField: 80
   <Name>k__BackingField: Battery
   <CraftDuration>k__BackingField: 1
-  <Sprite>k__BackingField: {fileID: 0}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 020aa331db7b5604ab6898ef144ab013, type: 3}
   <Tier>k__BackingField: {fileID: 11400000, guid: 93fc46660ca20ae4ca918aa03ded848c, type: 2}
   _parents:
   - {fileID: 11400000, guid: d0a6f8a16175aeb4e8a9a1ab986df682, type: 2}

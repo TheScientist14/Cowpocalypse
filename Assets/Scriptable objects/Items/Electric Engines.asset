@@ -15,7 +15,7 @@ MonoBehaviour:
   <Price>k__BackingField: 300
   <Name>k__BackingField: Electric Engines
   <CraftDuration>k__BackingField: 1
-  <Sprite>k__BackingField: {fileID: 0}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 14411a47166641840a2c9ddc3361c03a, type: 3}
   <Tier>k__BackingField: {fileID: 11400000, guid: 93fc46660ca20ae4ca918aa03ded848c, type: 2}
   _parents:
   - {fileID: 11400000, guid: 1ac5d9787dc1ced4ba24357f2943c2da, type: 2}

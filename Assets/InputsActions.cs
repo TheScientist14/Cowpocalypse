@@ -37,16 +37,16 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": true
                 },
                 {
-                    ""name"": ""ClickPosition"",
-                    ""type"": ""Value"",
+                    ""name"": ""ClickButton"",
+                    ""type"": ""Button"",
                     ""id"": ""8e6dfc17-5552-4d1a-91e1-c00b293162d2"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": ""Tap"",
-                    ""initialStateCheck"": true
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""DoubleClickPosition"",
+                    ""name"": ""DoubleClickButton"",
                     ""type"": ""Button"",
                     ""id"": ""a0c3497e-bd7a-4c9a-b2bb-3a1a63f52f0a"",
                     ""expectedControlType"": ""Button"",
@@ -71,13 +71,22 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Drag"",
+                    ""type"": ""Value"",
+                    ""id"": ""343aba71-8628-47cc-9091-9a9b6b9c2006"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
                 {
                     ""name"": """",
                     ""id"": ""ca2c8752-ee04-487c-9175-4a90ce7891d2"",
-                    ""path"": ""<Mouse>/scroll"",
+                    ""path"": ""<Mouse>/scroll/y"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KBM"",
@@ -125,18 +134,18 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                     ""interactions"": ""Tap"",
                     ""processors"": """",
                     ""groups"": ""Touchscreen"",
-                    ""action"": ""ClickPosition"",
+                    ""action"": ""ClickButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
                     ""id"": ""9f0fd21f-3910-48e7-8dde-cdb18b4443be"",
-                    ""path"": ""<Mouse>/position"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KBM"",
-                    ""action"": ""ClickPosition"",
+                    ""action"": ""ClickButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -169,7 +178,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Touchscreen"",
-                    ""action"": ""DoubleClickPosition"",
+                    ""action"": ""DoubleClickButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -180,42 +189,9 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KBM"",
-                    ""action"": ""DoubleClickPosition"",
+                    ""action"": ""DoubleClickButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""One Modifier"",
-                    ""id"": ""be38f45d-7922-4410-9eea-73bacebc23fd"",
-                    ""path"": ""OneModifier"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""DoubleClickPosition"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""modifier"",
-                    ""id"": ""36acc5ae-4b95-4dc6-8a8e-47fb5aae56f1"",
-                    ""path"": ""<Keyboard>/ctrl"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KBM"",
-                    ""action"": ""DoubleClickPosition"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""binding"",
-                    ""id"": ""e47ead8b-afcb-4e08-8245-0886fbabd48b"",
-                    ""path"": ""<Mouse>/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""KBM"",
-                    ""action"": ""DoubleClickPosition"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",
@@ -238,6 +214,72 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                     ""action"": ""PointerPosition"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""MouseDrag"",
+                    ""id"": ""27c70f53-47cb-4628-8cdd-69648dddcd9a"",
+                    ""path"": ""Drag"",
+                    ""interactions"": ""MouseDrag"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drag"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Button"",
+                    ""id"": ""9d82472f-7eb7-4d28-a644-c215fec62659"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""Drag"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""CurrentPos"",
+                    ""id"": ""c9d07509-221e-4c84-8007-aabaaf0084c1"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""Drag"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""TouchDrag"",
+                    ""id"": ""0b2d57fc-8735-48db-a443-1e7d930ba765"",
+                    ""path"": ""Drag"",
+                    ""interactions"": ""MouseDrag"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Drag"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Button"",
+                    ""id"": ""7c0ba52c-ec2d-4f1f-934c-67f1e5703519"",
+                    ""path"": ""<Touchscreen>/touch0/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Touchscreen"",
+                    ""action"": ""Drag"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""CurrentPos"",
+                    ""id"": ""c5ff47bd-6be5-48b3-99b5-aacf33559088"",
+                    ""path"": ""<Touchscreen>/touch0/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Touchscreen"",
+                    ""action"": ""Drag"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -275,10 +317,11 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
         // Player
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_ZoomValue = m_Player.FindAction("ZoomValue", throwIfNotFound: true);
-        m_Player_ClickPosition = m_Player.FindAction("ClickPosition", throwIfNotFound: true);
-        m_Player_DoubleClickPosition = m_Player.FindAction("DoubleClickPosition", throwIfNotFound: true);
+        m_Player_ClickButton = m_Player.FindAction("ClickButton", throwIfNotFound: true);
+        m_Player_DoubleClickButton = m_Player.FindAction("DoubleClickButton", throwIfNotFound: true);
         m_Player_LongPressButton = m_Player.FindAction("LongPressButton", throwIfNotFound: true);
         m_Player_PointerPosition = m_Player.FindAction("PointerPosition", throwIfNotFound: true);
+        m_Player_Drag = m_Player.FindAction("Drag", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -341,19 +384,21 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
     private readonly InputActionMap m_Player;
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_ZoomValue;
-    private readonly InputAction m_Player_ClickPosition;
-    private readonly InputAction m_Player_DoubleClickPosition;
+    private readonly InputAction m_Player_ClickButton;
+    private readonly InputAction m_Player_DoubleClickButton;
     private readonly InputAction m_Player_LongPressButton;
     private readonly InputAction m_Player_PointerPosition;
+    private readonly InputAction m_Player_Drag;
     public struct PlayerActions
     {
         private @InputsActions m_Wrapper;
         public PlayerActions(@InputsActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @ZoomValue => m_Wrapper.m_Player_ZoomValue;
-        public InputAction @ClickPosition => m_Wrapper.m_Player_ClickPosition;
-        public InputAction @DoubleClickPosition => m_Wrapper.m_Player_DoubleClickPosition;
+        public InputAction @ClickButton => m_Wrapper.m_Player_ClickButton;
+        public InputAction @DoubleClickButton => m_Wrapper.m_Player_DoubleClickButton;
         public InputAction @LongPressButton => m_Wrapper.m_Player_LongPressButton;
         public InputAction @PointerPosition => m_Wrapper.m_Player_PointerPosition;
+        public InputAction @Drag => m_Wrapper.m_Player_Drag;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -366,18 +411,21 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
             @ZoomValue.started += instance.OnZoomValue;
             @ZoomValue.performed += instance.OnZoomValue;
             @ZoomValue.canceled += instance.OnZoomValue;
-            @ClickPosition.started += instance.OnClickPosition;
-            @ClickPosition.performed += instance.OnClickPosition;
-            @ClickPosition.canceled += instance.OnClickPosition;
-            @DoubleClickPosition.started += instance.OnDoubleClickPosition;
-            @DoubleClickPosition.performed += instance.OnDoubleClickPosition;
-            @DoubleClickPosition.canceled += instance.OnDoubleClickPosition;
+            @ClickButton.started += instance.OnClickButton;
+            @ClickButton.performed += instance.OnClickButton;
+            @ClickButton.canceled += instance.OnClickButton;
+            @DoubleClickButton.started += instance.OnDoubleClickButton;
+            @DoubleClickButton.performed += instance.OnDoubleClickButton;
+            @DoubleClickButton.canceled += instance.OnDoubleClickButton;
             @LongPressButton.started += instance.OnLongPressButton;
             @LongPressButton.performed += instance.OnLongPressButton;
             @LongPressButton.canceled += instance.OnLongPressButton;
             @PointerPosition.started += instance.OnPointerPosition;
             @PointerPosition.performed += instance.OnPointerPosition;
             @PointerPosition.canceled += instance.OnPointerPosition;
+            @Drag.started += instance.OnDrag;
+            @Drag.performed += instance.OnDrag;
+            @Drag.canceled += instance.OnDrag;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -385,18 +433,21 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
             @ZoomValue.started -= instance.OnZoomValue;
             @ZoomValue.performed -= instance.OnZoomValue;
             @ZoomValue.canceled -= instance.OnZoomValue;
-            @ClickPosition.started -= instance.OnClickPosition;
-            @ClickPosition.performed -= instance.OnClickPosition;
-            @ClickPosition.canceled -= instance.OnClickPosition;
-            @DoubleClickPosition.started -= instance.OnDoubleClickPosition;
-            @DoubleClickPosition.performed -= instance.OnDoubleClickPosition;
-            @DoubleClickPosition.canceled -= instance.OnDoubleClickPosition;
+            @ClickButton.started -= instance.OnClickButton;
+            @ClickButton.performed -= instance.OnClickButton;
+            @ClickButton.canceled -= instance.OnClickButton;
+            @DoubleClickButton.started -= instance.OnDoubleClickButton;
+            @DoubleClickButton.performed -= instance.OnDoubleClickButton;
+            @DoubleClickButton.canceled -= instance.OnDoubleClickButton;
             @LongPressButton.started -= instance.OnLongPressButton;
             @LongPressButton.performed -= instance.OnLongPressButton;
             @LongPressButton.canceled -= instance.OnLongPressButton;
             @PointerPosition.started -= instance.OnPointerPosition;
             @PointerPosition.performed -= instance.OnPointerPosition;
             @PointerPosition.canceled -= instance.OnPointerPosition;
+            @Drag.started -= instance.OnDrag;
+            @Drag.performed -= instance.OnDrag;
+            @Drag.canceled -= instance.OnDrag;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -435,9 +486,10 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
     public interface IPlayerActions
     {
         void OnZoomValue(InputAction.CallbackContext context);
-        void OnClickPosition(InputAction.CallbackContext context);
-        void OnDoubleClickPosition(InputAction.CallbackContext context);
+        void OnClickButton(InputAction.CallbackContext context);
+        void OnDoubleClickButton(InputAction.CallbackContext context);
         void OnLongPressButton(InputAction.CallbackContext context);
         void OnPointerPosition(InputAction.CallbackContext context);
+        void OnDrag(InputAction.CallbackContext context);
     }
 }

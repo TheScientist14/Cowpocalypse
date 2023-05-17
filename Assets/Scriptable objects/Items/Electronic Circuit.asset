@@ -15,7 +15,7 @@ MonoBehaviour:
   <Price>k__BackingField: 50
   <Name>k__BackingField: Electronic Circuit
   <CraftDuration>k__BackingField: 1
-  <Sprite>k__BackingField: {fileID: 0}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 829f045860ba48743b4ca9f517c0c228, type: 3}
   <Tier>k__BackingField: {fileID: 11400000, guid: 93fc46660ca20ae4ca918aa03ded848c, type: 2}
   _parents:
   - {fileID: 11400000, guid: d0a6f8a16175aeb4e8a9a1ab986df682, type: 2}

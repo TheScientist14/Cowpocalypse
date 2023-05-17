@@ -15,7 +15,7 @@ MonoBehaviour:
   <Price>k__BackingField: 800
   <Name>k__BackingField: Robot Body
   <CraftDuration>k__BackingField: 1
-  <Sprite>k__BackingField: {fileID: 0}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 3fe51c2a1697c1d49ad9f2e6c7e0fb90, type: 3}
   <Tier>k__BackingField: {fileID: 11400000, guid: 8094ace0322e98647bda4816c6da0ff4, type: 2}
   _parents:
   - {fileID: 11400000, guid: ba1a89d381b948448903523d8c263b0a, type: 2}

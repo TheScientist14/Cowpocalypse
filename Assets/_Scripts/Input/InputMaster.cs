@@ -11,6 +11,7 @@ public class InputMaster : Singleton<InputMaster>
     private void Awake()
     {
         inputAction = new InputsActions();
+        inputAction.Enable();
     }
     private void OnEnable()
     {

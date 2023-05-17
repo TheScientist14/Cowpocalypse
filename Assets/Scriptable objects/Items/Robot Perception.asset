@@ -15,7 +15,7 @@ MonoBehaviour:
   <Price>k__BackingField: 800
   <Name>k__BackingField: Robot Perception
   <CraftDuration>k__BackingField: 1
-  <Sprite>k__BackingField: {fileID: 0}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: a70f741e427c5d54b8414ffded5bb556, type: 3}
   <Tier>k__BackingField: {fileID: 11400000, guid: 358849f1bafe3e948beba0d4d8a77cd5, type: 2}
   _parents:
   - {fileID: 11400000, guid: 96ae2a0dec2272b4fb8e200d2d5280b0, type: 2}

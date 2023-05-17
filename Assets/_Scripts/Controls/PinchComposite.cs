@@ -2,14 +2,13 @@
 // values of type TValue.
 // NOTE: It is possible to define a composite that returns different kinds of values
 //       but doing so requires deriving directly from InputBindingComposite.
-#if UNITY_EDITOR
-using UnityEditor;
-using UnityEngine.InputSystem.Editor;
 using UnityEngine.InputSystem.Layouts;
 using UnityEngine.InputSystem.Utilities;
 using UnityEngine.InputSystem;
 using UnityEngine;
 
+#if UNITY_EDITOR
+using UnityEditor;
 [InitializeOnLoad] // Automatically register in editor.
 #endif
 // Determine how GetBindingDisplayString() formats the composite by applying

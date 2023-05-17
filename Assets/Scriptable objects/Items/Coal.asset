@@ -15,7 +15,7 @@ MonoBehaviour:
   <Price>k__BackingField: 3
   <Name>k__BackingField: Coal
   <CraftDuration>k__BackingField: 1
-  <Sprite>k__BackingField: {fileID: 0}
+  <Sprite>k__BackingField: {fileID: 21300000, guid: 1c6c2c15d82f6654194249119cf3021c, type: 3}
   <Tier>k__BackingField: {fileID: 11400000, guid: eb0e99ed3c637264f9e7594590779baa, type: 2}
   _parents: []
   _amounts: 
