@@ -1,12 +1,16 @@
+using System;
+using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using UnityEditor;
 using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class ItemCreator : MonoBehaviour
 {
     [SerializeField] TextAsset _csv;
 
+#if UNITY_EDITOR
     [ContextMenu("Read CSV")]
     public void ReadCSV()
     {
@@ -22,7 +26,7 @@ public class ItemCreator : MonoBehaviour
             item.Tier = FindAsset<ItemTier>($"Tier {values[2]}");
             item.Sprite = FindAsset<Sprite>(item.Name);
             item.CraftDuration = float.Parse(values[3], CultureInfo.InvariantCulture);
-            
+
             for (var i = 4; i < values.Length; i++)
             {
                 if (int.TryParse(values[i], out var value))
@@ -33,7 +37,7 @@ public class ItemCreator : MonoBehaviour
 
                 item.AddParent(FindAsset<ItemData>(values[i]));
             }
-            
+
             AssetDatabase.CreateAsset(item, $"Assets/Items/{item.Name.Trim()}.asset");
             AssetDatabase.SaveAssets();
         }
@@ -48,13 +52,14 @@ public class ItemCreator : MonoBehaviour
             Debug.LogWarning($"Search : \"t:{typeof(T).Name} {name.Trim()}\" returned no results.");
             return null;
         }
-        
+
         var path = AssetDatabase.GUIDToAssetPath(guid);
         return AssetDatabase.LoadAssetAtPath<T>(path);
     }
-    public static T[] LoadAllItemsAtPath<T>(string path) where T :UnityEngine.Object
+    [Obsolete("For editor only, be careful")]
+    public static T[] LoadAllItemsAtPath<T>(string path) where T : UnityEngine.Object
     {
-        string[] itemAssetPaths = AssetDatabase.FindAssets("t:"+typeof(T).ToString(), new[] { path });
+        string[] itemAssetPaths = AssetDatabase.FindAssets("t:" + typeof(T).ToString(), new[] { path });
         T[] items = new T[itemAssetPaths.Length];
         for (int i = 0; i < itemAssetPaths.Length; i++)
         {
@@ -62,5 +67,11 @@ public class ItemCreator : MonoBehaviour
             items[i] = AssetDatabase.LoadAssetAtPath<T>(itemAssetPath);
         }
         return items;
+    }
+#endif
+    public static IEnumerable<T> LoadAllResourceAtPath<T>(string path = "Scriptable objects/Items/") where T : UnityEngine.Object
+    {
+        var ressources = Resources.LoadAll<T>(/*"Assets/Resources/"+ */path);
+        return ressources;
     }
 }
