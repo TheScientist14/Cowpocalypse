@@ -7,8 +7,8 @@ public class ScriptablesWorldAudio : ScriptableObject
     [Range(0, 1f)]
     public float volume = 1f;
 
-    public AudioClip _selectAudio;
-    public AudioClip _confirmAudio;
-    public AudioClip _swipeAudio;
+    public AudioClip _sound1;
+    public AudioClip _sound2;
+    public AudioClip _sound3;
 
 }

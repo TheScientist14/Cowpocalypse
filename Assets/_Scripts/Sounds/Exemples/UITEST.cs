@@ -13,7 +13,7 @@ public class UITEST : MonoBehaviour
     void Start()
     {
         _observableSound = GetComponent<ObservableSound>();
-        PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Select);
+        PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound1);
     }
 
     protected void PlaySound(ScriptablesWorldAudio _audioScript, EnumWorldSounds _action)

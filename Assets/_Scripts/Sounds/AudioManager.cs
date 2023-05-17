@@ -6,10 +6,11 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour, IObserver
 {
     [SerializeField]
-    private GameObject UITest;
+    private GameObject PlayingObject;
     private float volume;
     [SerializeField]
     private AudioSource audioSource;
+    private float audioLength;
 
     public void OnNotify(ScriptablesWorldAudio _audioScript, EnumWorldSounds _action)
     {
@@ -19,16 +20,17 @@ public class AudioManager : MonoBehaviour, IObserver
 
         switch (_action)
         {
-            case EnumWorldSounds.Select:
-                PlayWorldSound(_audioScript._selectAudio);
+            case EnumWorldSounds.Sound1:
+                PlayWorldSound(_audioScript._sound1);
                 Debug.Log("Select audio");
                 break;
-            case EnumWorldSounds.Swipe:
-                PlayWorldSound(_audioScript._swipeAudio);
+            case EnumWorldSounds.Sound2:
+                PlayWorldSound(_audioScript._sound2);
+                float lenght = _audioScript._sound2.length;
                 Debug.Log("Swipe audio");
                 break;
-            case EnumWorldSounds.Confirm:
-                PlayWorldSound(_audioScript._confirmAudio);
+            case EnumWorldSounds.Sound3:
+                PlayWorldSound(_audioScript._sound3);
                 Debug.Log("Confirm audio");
                 break;
             default:
@@ -39,18 +41,36 @@ public class AudioManager : MonoBehaviour, IObserver
     private void OnEnable()
     {
         // enable observers
-        UITest.GetComponent<ObservableSound>().AddObserver(this);
+        PlayingObject.GetComponent<ObservableSound>().AddObserver(this);
     }
 
     private void OnDisable()
     {
         // disable observers
-        if(UITest != null)
-            UITest.GetComponent<ObservableSound>().RemoveObserver(this);
+        if(PlayingObject != null)
+            PlayingObject.GetComponent<ObservableSound>().RemoveObserver(this);
     }
 
     private void PlayWorldSound(AudioClip _audioClip)
     {
-        audioSource.PlayOneShot(_audioClip, volume);
+        print("play");
+        audioLength = _audioClip.length;
+        audioSource.clip = _audioClip;
+        audioSource.Play();
+    }
+
+    public float GetMusicLength()
+    {
+        return audioLength;
+    }
+
+    public void SetMusicLoop(bool loop)
+    {
+        audioSource.loop = true;
+    }
+
+    public void SetMusicVolume(float volume)
+    {
+        audioSource.volume = volume;
     }
 }

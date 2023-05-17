@@ -1,6 +1,6 @@
 public enum EnumWorldSounds
 {
-    Swipe,
-    Select,
-    Confirm
+    Sound1,
+    Sound2,
+    Sound3
 }
