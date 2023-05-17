@@ -778,8 +778,8 @@ MonoBehaviour:
   _machineSettingsPanel: {fileID: 4986044546508140141}
   _recipeUnlockPanel: {fileID: 579903066836447626}
   _titlePanel: {fileID: 1998337983}
-  _closeButton: {fileID: 1572891503}
-  _returnButton: {fileID: 1468740511}
+  _closeButton: {fileID: 2757988671199479908}
+  _returnButton: {fileID: 5777954624175681828}
 --- !u!114 &579903065588776004
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1290,6 +1290,7 @@ GameObject:
   - component: {fileID: 579903066663312908}
   - component: {fileID: 579903066663312909}
   - component: {fileID: 1572891503}
+  - component: {fileID: 2757988671199479908}
   m_Layer: 5
   m_Name: Cross
   m_TagString: Untagged
@@ -1414,6 +1415,21 @@ MonoBehaviour:
   _duration: 0
   _ease: 1
   _button: {fileID: 579903066663312909}
+--- !u!114 &2757988671199479908
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579903066663312911}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5583d65e51947ca4dbd866366ccec548, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _duration: 0
+  _ease: 1
+  _button: {fileID: 579903066663312909}
 --- !u!1 &579903066782013495
 GameObject:
   m_ObjectHideFlags: 0
@@ -1503,6 +1519,7 @@ GameObject:
   - component: {fileID: 579903066796064395}
   - component: {fileID: 579903066796064396}
   - component: {fileID: 1468740511}
+  - component: {fileID: 5777954624175681828}
   m_Layer: 5
   m_Name: Return
   m_TagString: Untagged
@@ -1613,6 +1630,21 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
 --- !u!114 &1468740511
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579903066796064398}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5583d65e51947ca4dbd866366ccec548, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _duration: 0
+  _ease: 1
+  _button: {fileID: 579903066796064396}
+--- !u!114 &5777954624175681828
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -16513,6 +16545,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 579903065588776005}
     m_Modifications:
+    - target: {fileID: 826069114358325473, guid: c122d9961e9aaa44091ed91292bc4e84, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 29183467, guid: 26df369bdd0461b4992082c94918c2a4, type: 3}
     - target: {fileID: 2175194906841147489, guid: c122d9961e9aaa44091ed91292bc4e84, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

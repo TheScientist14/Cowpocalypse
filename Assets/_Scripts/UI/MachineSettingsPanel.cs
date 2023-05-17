@@ -8,7 +8,13 @@ public class MachineSettingsPanel : Panel
     [SerializeField]
     private RessourceUI[] _resourcesToCraft;
     private Machine _machine;
-
+    public override void ChangeVisibility(bool show, float delay = 0, float? durationOverride = null)
+    {
+        base.ChangeVisibility(show, delay, durationOverride);
+        //Clear in case we try to acces machine from closed settings
+        if (!show)
+            _machine = null;
+    }
     public Machine OpenedMachine
     {
         get => _machine;
