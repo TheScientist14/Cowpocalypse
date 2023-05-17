@@ -5,23 +5,18 @@ using UnityEngine.UI;
 
 public class Panel : MonoBehaviour
 {
-    [SerializeField]
-    private Button _OptionalCloseButton;
     [Header("Transition settings")]
     [SerializeField, Range(0, 10f)]
-    private float _duration;
+    private float _duration=1f;
     [SerializeField]
-    private Ease _ease;
+    private Ease _ease=Ease.Linear;
     private RectTransform rt;
     private bool _currentlyOpened = false;
-
     public bool CurrentlyOpened { get => _currentlyOpened; }
 
     private void Awake()
     {
         rt = transform as RectTransform;
-        if (_OptionalCloseButton != null)
-            _OptionalCloseButton.onClick.AddListener(() => ChangeVisibility(false));
     }
     public void ChangeVisibility(bool show, float delay = 0f, float? durationOverride = null)
     {
@@ -35,8 +30,6 @@ public class Panel : MonoBehaviour
             .OnComplete(() =>
         rt.gameObject.SetActive(show)
         ).SetDelay(delay);
-        if (_OptionalCloseButton != null)
-            _OptionalCloseButton.gameObject.SetActive(show);
         _currentlyOpened = show;
     }
 }
