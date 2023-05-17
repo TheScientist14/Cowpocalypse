@@ -10,6 +10,19 @@ namespace _Scripts.UI
         [SerializeField] Transform _titleTransform;
         [SerializeField] RectTransform _buttonsRect;
         [SerializeField] CanvasGroup _buttons;
+        [SerializeField] GameObject _optionPanel;
+        [SerializeField] GameObject _WarningPanel;
+
+        private ObservableSound _observableSound;
+        [SerializeField]
+        private ScriptablesWorldAudio _scriptablesWorldAudio;
+        private AudioManager _audioManager;
+
+        private void Awake()
+        {
+            _observableSound = GetComponent<ObservableSound>();
+            _audioManager = GameObject.Find("AudioManagerUI").GetComponent<AudioManager>();
+        }
 
         void Start()
         {
@@ -28,17 +41,43 @@ namespace _Scripts.UI
 
         public void NewGame()
         {
+            PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound2);
             SceneManager.LoadScene(1);
+        }
+
+        public void Play()
+        {
+            PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound1);
+            _WarningPanel.SetActive(true);
         }
 
         public void Load()
         {
+            PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound1);
             Debug.Log("Load !");
+        }
+
+        public void Options()
+        {
+            PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound1);
+            _optionPanel.SetActive(true);
+        }
+
+        public void NoPopup()
+        {
+            PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound1);
+            _WarningPanel.SetActive(false);
         }
 
         public void Quit()
         {
+            PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound1);
             Application.Quit();
+        }
+
+        protected void PlaySound(ScriptablesWorldAudio _audioScript, EnumWorldSounds _action)
+        {
+            _observableSound.NotifyObserver(_audioScript, _action);
         }
     }
 }

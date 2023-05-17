@@ -6,17 +6,18 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour, IObserver
 {
     [SerializeField]
-    private GameObject PlayingObject;
-    private float volume;
+    private GameObject[] _playingObjects;
+    private float _volume;
     [SerializeField]
-    private AudioSource audioSource;
-    private float audioLength;
+    private AudioSource _audioSource;
+    private float _audioLength;
+    private int _playingObjectsLenght;
 
     public void OnNotify(ScriptablesWorldAudio _audioScript, EnumWorldSounds _action)
     {
         Debug.Log("OnNotify");
 
-        volume = _audioScript.volume;
+        _volume = _audioScript.volume;
 
         switch (_action)
         {
@@ -40,37 +41,43 @@ public class AudioManager : MonoBehaviour, IObserver
 
     private void OnEnable()
     {
-        // enable observers
-        PlayingObject.GetComponent<ObservableSound>().AddObserver(this);
+        foreach (GameObject _playingObject in _playingObjects)
+        {
+            // enable observers
+            _playingObject.GetComponent<ObservableSound>().AddObserver(this);
+        }
     }
 
     private void OnDisable()
     {
-        // disable observers
-        if(PlayingObject != null)
-            PlayingObject.GetComponent<ObservableSound>().RemoveObserver(this);
+        foreach (GameObject _playingObject in _playingObjects)
+        {
+            // disable observers
+            if (_playingObject != null)
+                _playingObject.GetComponent<ObservableSound>().RemoveObserver(this);
+        }
     }
 
     private void PlayWorldSound(AudioClip _audioClip)
     {
         print("play");
-        audioLength = _audioClip.length;
-        audioSource.clip = _audioClip;
-        audioSource.Play();
+        _audioLength = _audioClip.length;
+        _audioSource.clip = _audioClip;
+        _audioSource.Play();
     }
 
     public float GetMusicLength()
     {
-        return audioLength;
+        return _audioLength;
     }
 
     public void SetMusicLoop(bool loop)
     {
-        audioSource.loop = true;
+        _audioSource.loop = true;
     }
 
     public void SetMusicVolume(float volume)
     {
-        audioSource.volume = volume;
+        _audioSource.volume = volume;
     }
 }

@@ -547,7 +547,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1005536329883783694, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1005536329883783694, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
       propertyPath: m_AnchorMin.x
@@ -555,15 +555,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1005536329883783694, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1005536329883783694, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1005536329883783694, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1005536329883783694, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -595,11 +595,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1005536329883783694, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 206.33333
       objectReference: {fileID: 0}
     - target: {fileID: 1005536329883783694, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -224
       objectReference: {fileID: 0}
     - target: {fileID: 1005536329883783694, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -668,7 +668,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1005536329883783694, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1005536329883783694, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
       propertyPath: m_AnchorMin.x
@@ -676,15 +676,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1005536329883783694, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1005536329883783694, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1005536329883783694, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 1005536329883783694, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
       propertyPath: m_LocalPosition.x
@@ -716,11 +716,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1005536329883783694, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 206.33333
       objectReference: {fileID: 0}
     - target: {fileID: 1005536329883783694, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -344
       objectReference: {fileID: 0}
     - target: {fileID: 1005536329883783694, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -907,7 +907,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8876461041565785533, guid: 3609a2c3a4f787440b3a3bd61d8b4d99, type: 3}
       propertyPath: m_Name
-      value: Recipe
+      value: MachineSettingsView
       objectReference: {fileID: 0}
     - target: {fileID: 8876461041565785533, guid: 3609a2c3a4f787440b3a3bd61d8b4d99, type: 3}
       propertyPath: m_IsActive
@@ -1096,7 +1096,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fb21b0824cb4b243aa7e8b3ebf3d382, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _OptionalCloseButton: {fileID: 0}
   _duration: 1
   _ease: 1
   _recipeRessourceUI: {fileID: 2724229026191084054}
