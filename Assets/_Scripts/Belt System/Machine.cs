@@ -3,6 +3,7 @@ using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Machine : Belt
 {
@@ -10,11 +11,12 @@ public class Machine : Belt
     [SerializeField] private ItemData CraftedItem;
 
     public Dictionary<ItemData, int> Stock { get; private set; }
-
-
+    public StockUpdateEvent stockUpdated { get; private set; } = new StockUpdateEvent();
+    public class StockUpdateEvent : UnityEvent<Dictionary<ItemData, int>> { }
     private void Start()
     {
         Stock = new Dictionary<ItemData, int>();
+        stockUpdated.Invoke(Stock);
         gameObject.name = $"Machine: {BeltID++}";
 
         SetCafteditem(CraftedItem);
@@ -43,7 +45,7 @@ public class Machine : Belt
 
         foreach (ItemData item in CraftedItem.Recipes.Keys)
             Stock[item] -= CraftedItem.Recipes[item];
-
+        stockUpdated.Invoke(Stock);
         yield return new WaitForSeconds(CraftedItem.CraftDuration);
         Item craftedItem = PoolManager.instance.SpawnObject(CraftedItem, transform.position);
         StartCoroutine(Output(craftedItem));
@@ -83,8 +85,9 @@ public class Machine : Belt
     {
         CraftedItem = craftedItemData;
         Stock.Clear();
-        if(CraftedItem != null)
-            foreach(ItemData item in CraftedItem.Recipes.Keys)
+        stockUpdated.Invoke(Stock);
+        if (CraftedItem != null)
+            foreach (ItemData item in CraftedItem.Recipes.Keys)
                 Stock.Add(item, 0);
     }
 
@@ -95,9 +98,10 @@ public class Machine : Belt
 
     public void AddToStock(Item item)
     {
-        print("AddToStock");
         Stock.TryGetValue(item.GetItemData(), out int amount);
         Stock[item.GetItemData()] = Stock[item.GetItemData()] + 1;
+        print("AddToStock : " + Stock[item.GetItemData()] + " of type : " + item.GetItemData().name);
+        stockUpdated.Invoke(Stock);
         StartCoroutine(MoveQueuedItems(item));
     }
 }
