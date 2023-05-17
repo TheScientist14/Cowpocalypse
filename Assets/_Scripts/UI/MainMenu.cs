@@ -10,7 +10,6 @@ namespace _Scripts.UI
         [SerializeField] Transform _titleTransform;
         [SerializeField] RectTransform _buttonsRect;
         [SerializeField] CanvasGroup _buttons;
-        [SerializeField] GameObject _panel;
 
         void Start()
         {
@@ -29,30 +28,14 @@ namespace _Scripts.UI
 
         public void NewGame()
         {
-            _panel.SetActive(true);
-        }
-        
-        public void NewGame_Yes()
-        {
             SceneManager.LoadScene(1);
         }
 
-        public void NewGame_No()
-        {
-            _panel.SetActive(false);
-        }
-        
         public void Load()
         {
             Debug.Log("Load !");
         }
-        
-        public void Options()
-        {
-            Debug.Log("Options !");
-        }
-        
-        
+
         public void Quit()
         {
             Application.Quit();
