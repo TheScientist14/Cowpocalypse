@@ -9,25 +9,25 @@ public class OnPointerClick : MonoBehaviour
     [SerializeField] private LayerMask _layers;
     [SerializeField, Tooltip("Negative value for -2XCamera Z")] private float _distance = -1f;
     [SerializeField] private UnityEvent<GameObject> _onClick;
-    InputsActions a;
+    InputsActions _inputAction;
     private void Awake()
     {
-        a = InputMaster.instance.InputAction;
+        _inputAction = InputMaster.instance.InputAction;
         if (_distance < 0f)
             _distance = -2f * _camera.transform.position.z;
     }
     private void OnEnable()
     {
-        a.Player.ClickButton.started += ctx => CheckValue();
+        _inputAction.Player.ClickButton.started += ctx => CheckValue();
     }
     private void OnDisable()
     {
-        a.Player.ClickButton.started -= ctx => CheckValue();
+        _inputAction.Player.ClickButton.started -= ctx => CheckValue();
     }
     void CheckValue()
     {
-        Debug.Log("hit : " + a.Player.PointerPosition.ReadValue<Vector2>());
-        Vector3 mousePosScreen = a.Player.PointerPosition.ReadValue<Vector2>();
+        Debug.Log("hit : " + _inputAction.Player.PointerPosition.ReadValue<Vector2>());
+        Vector3 mousePosScreen = _inputAction.Player.PointerPosition.ReadValue<Vector2>();
 
         // Set the z position to the distance from the camera
         mousePosScreen.z = -_camera.transform.position.z;
@@ -36,7 +36,7 @@ public class OnPointerClick : MonoBehaviour
         Vector3 mousePosWorld = _camera.ScreenToWorldPoint(mousePosScreen);
 
         // Check if there is any collider at the mouse position
-        Collider2D collider = Physics2D.OverlapPoint(mousePosWorld,_layers);
+        Collider2D collider = Physics2D.OverlapPoint(mousePosWorld, _layers);
 
         if (collider != null)
         {
@@ -44,7 +44,7 @@ public class OnPointerClick : MonoBehaviour
         }
         return;
         //Ray approach
-        Ray ray = _camera.ScreenPointToRay(a.Player.PointerPosition.ReadValue<Vector2>());
+        Ray ray = _camera.ScreenPointToRay(_inputAction.Player.PointerPosition.ReadValue<Vector2>());
         RaycastHit2D hit = Physics2D.Raycast(ray.origin, ray.direction, _distance, _layers);
         Debug.Log("hit : " + hit.collider);
         if (hit && hit.collider != null)
