@@ -1,8 +1,6 @@
-﻿using System;
-using DG.Tweening;
-using TMPro;
+﻿using DG.Tweening;
 using UnityEngine;
-using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 namespace _Scripts.UI
 {
@@ -12,13 +10,14 @@ namespace _Scripts.UI
         [SerializeField] Transform _titleTransform;
         [SerializeField] RectTransform _buttonsRect;
         [SerializeField] CanvasGroup _buttons;
+        [SerializeField] GameObject _panel;
 
         void Start()
         {
             _camera.orthographicSize = 2;
             _titleTransform.position = new Vector2(0, 7);
             _buttons.alpha = 0;
-            _buttonsRect.anchoredPosition = new Vector2(-300, 0);
+            _buttonsRect.anchoredPosition = new Vector2(-400, 0);
             
             var sequence = DOTween.Sequence();
             sequence.Append(_camera.DOOrthoSize(5, 2));
@@ -30,15 +29,23 @@ namespace _Scripts.UI
 
         public void NewGame()
         {
-            Debug.Log("New game !");
+            _panel.SetActive(true);
         }
         
+        public void NewGame_Yes()
+        {
+            SceneManager.LoadScene(1);
+        }
+
+        public void NewGame_No()
+        {
+            _panel.SetActive(false);
+        }
         
         public void Load()
         {
             Debug.Log("Load !");
         }
-        
         
         public void Options()
         {
@@ -48,7 +55,7 @@ namespace _Scripts.UI
         
         public void Quit()
         {
-            Debug.Log("Quit !");
+            Application.Quit();
         }
     }
 }
