@@ -43,7 +43,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 },
                 {
                     ""name"": ""DoubleClickButton"",
@@ -141,7 +141,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9f0fd21f-3910-48e7-8dde-cdb18b4443be"",
-                    ""path"": ""<Mouse>/position"",
+                    ""path"": ""<Mouse>/leftButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""KBM"",

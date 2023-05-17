@@ -12,6 +12,7 @@ public class CameraController : MonoBehaviour
 
     private Camera m_Camera;
 
+    private Vector2 m_InitMouseScreenPos;
     private Vector3 m_InitMouseWorldPos;
     private Vector3 m_InitTransformWorldPos;
 
@@ -25,25 +26,26 @@ public class CameraController : MonoBehaviour
         m_InputAction.Player.ZoomValue.performed += ctx => UpdateZoom(ctx.ReadValue<float>());
         m_InputAction.Player.Drag.started += _ => InitMoveCamera();
         m_InputAction.Player.Drag.performed += ctx => MovePosition(ctx.ReadValue<Vector2>());
+        m_InputAction.Player.ClickButton.started += _ => Debug.Log("Click");
     }
 
     void UpdateZoom(float iZoomDelta)
     {
         m_Camera.orthographicSize -= iZoomDelta * m_ZoomSpeed;
         m_Camera.orthographicSize = Mathf.Clamp(m_Camera.orthographicSize, m_MinZoom, m_MaxZoom);
-        // #TODO: zoom on cursor
     }
 
     void InitMoveCamera()
     {
-        m_InitMouseWorldPos = m_Camera.ScreenToWorldPoint(m_InputAction.Player.PointerPosition.ReadValue<Vector2>());
+        m_InitMouseScreenPos = m_InputAction.Player.PointerPosition.ReadValue<Vector2>();
+        m_InitMouseWorldPos = m_Camera.ScreenToWorldPoint(m_InitMouseScreenPos);
         m_InitTransformWorldPos = transform.position;
-        // m_InputAction.Player.PointerPosition.performed += ctx => MovePosition(ctx.ReadValue<Vector2>());
     }
 
-    void MovePosition(Vector2 iMouseScreenPos)
+    void MovePosition(Vector2 iMouseDeltaScreen)
     {
-        Vector3 deltaPosWC = m_Camera.ScreenToWorldPoint(iMouseScreenPos) - m_Camera.ScreenToWorldPoint(Vector2.zero);
-        transform.position = m_InitTransformWorldPos - deltaPosWC;
+        transform.position = m_InitTransformWorldPos;
+        Vector3 deltaPosWC = m_InitMouseWorldPos - m_Camera.ScreenToWorldPoint(m_InitMouseScreenPos + iMouseDeltaScreen);
+        transform.Translate(deltaPosWC, Space.Self);
     }
 }

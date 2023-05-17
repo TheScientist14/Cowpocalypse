@@ -30,15 +30,7 @@ public class DragComposite : InputBindingComposite<Vector2>
 
     public override Vector2 ReadValue(ref InputBindingCompositeContext context)
     {
-        bool isPressed = context.ReadValueAsButton(Button);
-        if(!isPressed)
-        {
-            isDragging = false;
-            return Vector2.zero;
-        }
-
         Vector2 curPos = context.ReadValue<Vector2, Vector2MagnitudeComparer>(CurrentPos);
-
         if(!isDragging)
         {
             oldPos = curPos;
@@ -51,7 +43,11 @@ public class DragComposite : InputBindingComposite<Vector2>
 
     public override float EvaluateMagnitude(ref InputBindingCompositeContext context)
     {
-        return context.EvaluateMagnitude(Button);
+        float magnitude = context.EvaluateMagnitude(Button);
+        if(magnitude <= 0)
+            isDragging = false;
+
+        return magnitude;
     }
 
     static DragComposite()
@@ -60,5 +56,5 @@ public class DragComposite : InputBindingComposite<Vector2>
     }
 
     [RuntimeInitializeOnLoadMethod]
-    private static void Init(){ }
+    private static void Init() { }
 }
