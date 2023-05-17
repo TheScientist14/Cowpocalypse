@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using _Scripts.Pooling_System;
 using System;
+using System.Linq;
 using Unity.VisualScripting;
 using UnityEngine;
 using Object = UnityEngine.Object;
@@ -24,14 +25,19 @@ namespace _Scripts.Save_System
         {
             foreach (Belt belt in Object.FindObjectsOfType(typeof(Belt)))
             {
-                var transform = belt.gameObject.transform;
+                var transform = belt.transform;
                 _beltDatas.Add(new BeltSaveData(transform.position, transform.rotation.eulerAngles, belt.BeltItem));
             }
-            Debug.Log(PoolManager.instance.GetExistingItems.Count);
-            Debug.Log(_beltDatas[0]);
+
+            foreach (Machine machines in Object.FindObjectsOfType(typeof(Machine)))
+            {
+                var transform = machines.transform;
+                _machineDatas.Add(new MachineSaveData(machines.GetCraftedItem().Name,transform.position, transform.rotation.eulerAngles, machines.Stock));
+            }
         }
 
         public List<BeltSaveData> BeltDatas => _beltDatas;
+        public List<MachineSaveData> MachineDatas => _machineDatas;
     }
 
     [Serializable]
@@ -50,15 +56,9 @@ namespace _Scripts.Save_System
             _z = prmPos.z;
         }
 
-        public Vector3 GetPos()
-        {
-            return new Vector3(_x, _y, _z);
-        }
+        public Vector3 GetPos => new Vector3(_x, _y, _z);
 
-        public string GetName()
-        {
-            return _name;
-        }
+        public string GetName => _name;
     }
     
     [Serializable]
@@ -92,32 +92,56 @@ namespace _Scripts.Save_System
             
         }
 
-        public Vector3 GetPos()
-        {
-            return new Vector3(_x, _y, _z);
-        }
-        public Vector3 GetRot()
-        {
-            return new Vector3(_rotX, _rotY, _rotZ);
-        }
+        public Vector3 GetPos => new (_x, _y, _z);
+        
+        public Vector3 GetRot => new (_rotX, _rotY, _rotZ);
 
-        public ItemSaveData? GetItem()
-        {
-           return _itemSaveData;
-        }
+        public ItemSaveData? GetItem =>_itemSaveData;
+        
     }
     
     [Serializable]
-    internal struct MachineSaveData
+    public struct MachineSaveData
     {
-        private string _name;
         private float _x;
         private float _y;
         private float _z;
+        private float _rotX;
+        private float _rotY;
+        private float _rotZ;
+        
+        private string _itemToCraftName;
+
+        private List<String> _itemNames;
+        private List<int> _itemQuantity;
+
+        public MachineSaveData(string prmItemToCraftName, Vector3 prmPos,Vector3 prmRot, Dictionary<ItemData, int> prmStock)
+        {
+            _itemToCraftName = prmItemToCraftName;
+            _x = prmPos.x;
+            _y = prmPos.y;
+            _z = prmPos.z;
+            _rotX = prmRot.x;
+            _rotY = prmRot.y;
+            _rotZ = prmRot.z;
+
+            _itemNames = prmStock.Keys.Select((itemData)=>itemData.Name).ToList();
+            _itemQuantity = prmStock.Values.ToList();
+
+        }
+
+        public string ItemToCraftName => _itemToCraftName;
+
+        public Vector3 GetPos => new (_x,_y,_z);
+        public Vector3 GetRot => new (_rotX,_rotY,_rotZ);
+
+        public IEnumerable<string> ItemNames => _itemNames;
+
+        public IEnumerable<int> ItemQuantity => _itemQuantity;
     }
 
     [Serializable]
-    internal struct PlayerSaveData
+    public struct PlayerSaveData
     {
         
     }

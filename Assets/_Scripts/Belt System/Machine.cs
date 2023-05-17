@@ -10,7 +10,7 @@ public class Machine : Belt
     [Expandable]
     [SerializeField] private ItemData CraftedItem;
 
-    public Dictionary<ItemData, int> Stock { get; private set; }
+    public Dictionary<ItemData, int> Stock { get; set; }
     public StockUpdateEvent stockUpdated { get; private set; } = new StockUpdateEvent();
     public class StockUpdateEvent : UnityEvent<Dictionary<ItemData, int>> { }
     private void Start()
