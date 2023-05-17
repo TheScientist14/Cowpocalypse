@@ -6,6 +6,7 @@ namespace _Scripts.UI
     {
         [SerializeField] Rigidbody2D _rigidbody2D;
         [SerializeField] float _speed;
+        [SerializeField] AudioSource _audioSource;
 
         void Start()
         {
@@ -16,6 +17,11 @@ namespace _Scripts.UI
         void OnCollisionEnter2D(Collision2D other)
         {
             _rigidbody2D.AddTorque(Random.Range(-30, 30));
+        }
+
+        void OnMouseDown()
+        {
+            _audioSource.Play();
         }
     }
 }
