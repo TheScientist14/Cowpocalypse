@@ -305,9 +305,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 8575688160252748340}
   _image: {fileID: 6270722240276786202}
-  _numberDisplay:
-    _value: 80
-    _text: {fileID: 4509536460691861126}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &106215581129923567
 GameObject:
   m_ObjectHideFlags: 0
@@ -2200,9 +2204,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 8181290301563984664}
   _image: {fileID: 2207498805177287094}
-  _numberDisplay:
-    _value: 500
-    _text: {fileID: 607184592391121944}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &776161414314380874
 GameObject:
   m_ObjectHideFlags: 0
@@ -2373,9 +2381,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 2424770689707475386}
   _image: {fileID: 7633868569698912430}
-  _numberDisplay:
-    _value: 10000
-    _text: {fileID: 2443579187354807529}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &826929191846071838
 GameObject:
   m_ObjectHideFlags: 0
@@ -2816,9 +2828,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 1878506967314317263}
   _image: {fileID: 5736964282476318791}
-  _numberDisplay:
-    _value: 150
-    _text: {fileID: 7573109405065837882}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &1259496141821750620
 GameObject:
   m_ObjectHideFlags: 0
@@ -3124,9 +3140,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 1497480805995092705}
   _image: {fileID: 3732378997067613279}
-  _numberDisplay:
-    _value: 30
-    _text: {fileID: 363584084684839421}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &1519882927862855480
 GameObject:
   m_ObjectHideFlags: 0
@@ -3297,9 +3317,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 6124775008811379749}
   _image: {fileID: 8530571829563210483}
-  _numberDisplay:
-    _value: 35
-    _text: {fileID: 7518971656153205381}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &1615026645564804573
 GameObject:
   m_ObjectHideFlags: 0
@@ -4010,9 +4034,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 3619416924795633692}
   _image: {fileID: 1864487595856016826}
-  _numberDisplay:
-    _value: 80
-    _text: {fileID: 7935946799074870074}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &2412881541616734402
 GameObject:
   m_ObjectHideFlags: 0
@@ -4183,9 +4211,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 2461029084010604192}
   _image: {fileID: 6142610163548458587}
-  _numberDisplay:
-    _value: 300
-    _text: {fileID: 3340484238633942122}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &2449113783247269221
 GameObject:
   m_ObjectHideFlags: 0
@@ -4356,9 +4388,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 8780324308821835536}
   _image: {fileID: 5200161923106080700}
-  _numberDisplay:
-    _value: 250
-    _text: {fileID: 6208235128389041861}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &2580857243199310323
 GameObject:
   m_ObjectHideFlags: 0
@@ -4529,9 +4565,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 2137233049947318808}
   _image: {fileID: 5724325242475686660}
-  _numberDisplay:
-    _value: 1
-    _text: {fileID: 6717004666585039006}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &2676973051291705163
 GameObject:
   m_ObjectHideFlags: 0
@@ -4837,9 +4877,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 3564035764729509556}
   _image: {fileID: 2278644046409379074}
-  _numberDisplay:
-    _value: 45
-    _text: {fileID: 7195189033071378229}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &2923178542579733601
 GameObject:
   m_ObjectHideFlags: 0
@@ -5145,9 +5189,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 5601094767912658719}
   _image: {fileID: 4694632530958757796}
-  _numberDisplay:
-    _value: 120
-    _text: {fileID: 1660518168751268765}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &3044762270879986376
 GameObject:
   m_ObjectHideFlags: 0
@@ -5318,9 +5366,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 175098015531410687}
   _image: {fileID: 7547432565304912471}
-  _numberDisplay:
-    _value: 900
-    _text: {fileID: 4952522087981957087}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &3136711090962460326
 GameObject:
   m_ObjectHideFlags: 0
@@ -5626,9 +5678,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 1337388708463391756}
   _image: {fileID: 9077497349929142934}
-  _numberDisplay:
-    _value: 18
-    _text: {fileID: 3236172146538328564}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &3420643709829691502
 GameObject:
   m_ObjectHideFlags: 0
@@ -5799,9 +5855,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 2180816650915101217}
   _image: {fileID: 7607916495730968295}
-  _numberDisplay:
-    _value: 2
-    _text: {fileID: 694052010901095018}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &3453193938487432504
 GameObject:
   m_ObjectHideFlags: 0
@@ -5972,9 +6032,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 6321773772198351026}
   _image: {fileID: 8040103003058889897}
-  _numberDisplay:
-    _value: 200
-    _text: {fileID: 4601916505930326368}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &3460902000103734545
 GameObject:
   m_ObjectHideFlags: 0
@@ -6145,9 +6209,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 1620764662623952484}
   _image: {fileID: 4170682691735494772}
-  _numberDisplay:
-    _value: 600
-    _text: {fileID: 6740508309620800596}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &3463792924564571917
 GameObject:
   m_ObjectHideFlags: 0
@@ -6318,9 +6386,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 977851235670680180}
   _image: {fileID: 4495506988340752482}
-  _numberDisplay:
-    _value: 400
-    _text: {fileID: 6668692750508545556}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &3513660733215051008
 GameObject:
   m_ObjectHideFlags: 0
@@ -6491,9 +6563,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 1088793894144676929}
   _image: {fileID: 5232729071546093434}
-  _numberDisplay:
-    _value: 800
-    _text: {fileID: 493701308037194410}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &3520923188700940324
 GameObject:
   m_ObjectHideFlags: 0
@@ -6664,9 +6740,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 5502703865340595481}
   _image: {fileID: 9120726606922339099}
-  _numberDisplay:
-    _value: 25
-    _text: {fileID: 2748883691972581989}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &3533866135143881071
 GameObject:
   m_ObjectHideFlags: 0
@@ -7107,9 +7187,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 4154085817056322409}
   _image: {fileID: 4039685881901410766}
-  _numberDisplay:
-    _value: 600
-    _text: {fileID: 4495414875014405140}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &3804863280632209992
 GameObject:
   m_ObjectHideFlags: 0
@@ -7280,9 +7364,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 811238127365773887}
   _image: {fileID: 4259450583157977248}
-  _numberDisplay:
-    _value: 100
-    _text: {fileID: 5956515028856264735}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &3890009786702514107
 GameObject:
   m_ObjectHideFlags: 0
@@ -7588,9 +7676,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 5284962353440753583}
   _image: {fileID: 1427428762883134324}
-  _numberDisplay:
-    _value: 300
-    _text: {fileID: 6984176193808642216}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &4081493211255170018
 GameObject:
   m_ObjectHideFlags: 0
@@ -7761,9 +7853,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 1730214037396404446}
   _image: {fileID: 3989196966218518896}
-  _numberDisplay:
-    _value: 10
-    _text: {fileID: 3629827219432453781}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &4082666049239273433
 GameObject:
   m_ObjectHideFlags: 0
@@ -8204,9 +8300,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 6556982130570283779}
   _image: {fileID: 4755556755111414758}
-  _numberDisplay:
-    _value: 200
-    _text: {fileID: 4460777500906785840}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &4374945958090897333
 GameObject:
   m_ObjectHideFlags: 0
@@ -8377,9 +8477,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 5637503128206166204}
   _image: {fileID: 1456151340065469839}
-  _numberDisplay:
-    _value: 400
-    _text: {fileID: 5399261735384089566}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &4432559140831972367
 GameObject:
   m_ObjectHideFlags: 0
@@ -8685,9 +8789,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 4556718321149135975}
   _image: {fileID: 7135496317519691238}
-  _numberDisplay:
-    _value: 800
-    _text: {fileID: 1344319156765582651}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &4488105431981979343
 GameObject:
   m_ObjectHideFlags: 0
@@ -8858,9 +8966,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 1577288658997639174}
   _image: {fileID: 3546436974384078401}
-  _numberDisplay:
-    _value: 6
-    _text: {fileID: 7978586356144332271}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &4721685441003415281
 GameObject:
   m_ObjectHideFlags: 0
@@ -9067,9 +9179,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 5865573639036783338}
   _image: {fileID: 1009287864976243544}
-  _numberDisplay:
-    _value: 500
-    _text: {fileID: 4524436975903108573}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &4799270601248365030
 GameObject:
   m_ObjectHideFlags: 0
@@ -9240,9 +9356,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 3808380848567687960}
   _image: {fileID: 1243530809084430933}
-  _numberDisplay:
-    _value: 800
-    _text: {fileID: 8783986765159431024}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &4849849081104757858
 GameObject:
   m_ObjectHideFlags: 0
@@ -9548,9 +9668,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 9087149257878014231}
   _image: {fileID: 5556026346256378070}
-  _numberDisplay:
-    _value: 25
-    _text: {fileID: 7502826122807037249}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &4938977825200594393
 GameObject:
   m_ObjectHideFlags: 0
@@ -9721,9 +9845,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 6058407139561934060}
   _image: {fileID: 680702394983030098}
-  _numberDisplay:
-    _value: 8
-    _text: {fileID: 7180523374852013661}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &5020694314144354227
 GameObject:
   m_ObjectHideFlags: 0
@@ -9894,9 +10022,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 1878560017293908607}
   _image: {fileID: 2606231921230555348}
-  _numberDisplay:
-    _value: 5
-    _text: {fileID: 159610630794429840}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &5217178817147108730
 GameObject:
   m_ObjectHideFlags: 0
@@ -10067,9 +10199,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 8211008304444513126}
   _image: {fileID: 6648133552963261247}
-  _numberDisplay:
-    _value: 4
-    _text: {fileID: 6237006072302357630}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &5353442259448570637
 GameObject:
   m_ObjectHideFlags: 0
@@ -10375,9 +10511,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 384781101778327118}
   _image: {fileID: 1727737306955487483}
-  _numberDisplay:
-    _value: 1000
-    _text: {fileID: 2460565981199327902}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &5384729113639997717
 GameObject:
   m_ObjectHideFlags: 0
@@ -10548,9 +10688,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 3366847456157126127}
   _image: {fileID: 1144924523322804107}
-  _numberDisplay:
-    _value: 15
-    _text: {fileID: 6517736265818519182}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &5488433798460079181
 GameObject:
   m_ObjectHideFlags: 0
@@ -10721,9 +10865,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 4451463607129210777}
   _image: {fileID: 4939023004418502446}
-  _numberDisplay:
-    _value: 200
-    _text: {fileID: 1738788497914885514}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &5616141502498218398
 GameObject:
   m_ObjectHideFlags: 0
@@ -11029,9 +11177,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 390510683314007500}
   _image: {fileID: 384228288803774026}
-  _numberDisplay:
-    _value: 250
-    _text: {fileID: 8713001264090210146}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &5851131397344586912
 GameObject:
   m_ObjectHideFlags: 0
@@ -12552,9 +12704,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 6291045868132256485}
   _image: {fileID: 5499363006283484402}
-  _numberDisplay:
-    _value: 300
-    _text: {fileID: 906526010963967113}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &6685938668576947910
 GameObject:
   m_ObjectHideFlags: 0
@@ -12995,9 +13151,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 8365164594409264140}
   _image: {fileID: 1082479236228167910}
-  _numberDisplay:
-    _value: 150
-    _text: {fileID: 5263496390681077102}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &7053373572213875810
 GameObject:
   m_ObjectHideFlags: 0
@@ -13168,9 +13328,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 634393909457689154}
   _image: {fileID: 1250929625145587347}
-  _numberDisplay:
-    _value: 50
-    _text: {fileID: 1572735424641911910}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &7087980287638637435
 GameObject:
   m_ObjectHideFlags: 0
@@ -13341,9 +13505,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 4360307209525675111}
   _image: {fileID: 234717705219353725}
-  _numberDisplay:
-    _value: 60
-    _text: {fileID: 764254668259993927}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &7201215006612969995
 GameObject:
   m_ObjectHideFlags: 0
@@ -13784,9 +13952,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 8619742510145375543}
   _image: {fileID: 2373133002707927337}
-  _numberDisplay:
-    _value: 28
-    _text: {fileID: 6428498554528744770}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &7391998833790522501
 GameObject:
   m_ObjectHideFlags: 0
@@ -13957,9 +14129,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 414419048873444093}
   _image: {fileID: 610373134247970117}
-  _numberDisplay:
-    _value: 1200
-    _text: {fileID: 6778051596622012758}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &7713652422401066001
 GameObject:
   m_ObjectHideFlags: 0
@@ -15210,9 +15386,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 6641354491772270549}
   _image: {fileID: 6624710750648216749}
-  _numberDisplay:
-    _value: 150
-    _text: {fileID: 8420369102227432192}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &8503435796258832349
 GameObject:
   m_ObjectHideFlags: 0
@@ -15518,9 +15698,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 3184096167393604478}
   _image: {fileID: 8149697392732998981}
-  _numberDisplay:
-    _value: 7
-    _text: {fileID: 8717543652961364350}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &8591608194656280312
 GameObject:
   m_ObjectHideFlags: 0
@@ -15691,9 +15875,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 4365710039052287843}
   _image: {fileID: 7932064864032443388}
-  _numberDisplay:
-    _value: 3
-    _text: {fileID: 8981030748816478679}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &8990749734668288676
 GameObject:
   m_ObjectHideFlags: 0
@@ -15999,9 +16187,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 3662310507956453031}
   _image: {fileID: 7973329141628906031}
-  _numberDisplay:
-    _value: 200
-    _text: {fileID: 4541640496308497270}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &9034445053752380468
 GameObject:
   m_ObjectHideFlags: 0
@@ -16172,9 +16364,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _button: {fileID: 1047655735240536561}
   _image: {fileID: 9138124270781387030}
-  _numberDisplay:
-    _value: 12
-    _text: {fileID: 1943915910256060200}
+  _requiredCount:
+    _value: 
+    _text: {fileID: 0}
+  _requiredPrefix: /
+  _currentCount:
+    _value: 
+    _text: {fileID: 0}
 --- !u!1 &9125373837110953464
 GameObject:
   m_ObjectHideFlags: 0
@@ -16551,51 +16747,51 @@ PrefabInstance:
       objectReference: {fileID: 29183467, guid: 26df369bdd0461b4992082c94918c2a4, type: 3}
     - target: {fileID: 2175194906841147489, guid: c122d9961e9aaa44091ed91292bc4e84, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2175194906841147489, guid: c122d9961e9aaa44091ed91292bc4e84, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2175194906841147489, guid: c122d9961e9aaa44091ed91292bc4e84, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 2175194906841147489, guid: c122d9961e9aaa44091ed91292bc4e84, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 2175194906841147489, guid: c122d9961e9aaa44091ed91292bc4e84, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 206.33333
       objectReference: {fileID: 0}
     - target: {fileID: 2175194906841147489, guid: c122d9961e9aaa44091ed91292bc4e84, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -344
       objectReference: {fileID: 0}
     - target: {fileID: 2283521513492738207, guid: c122d9961e9aaa44091ed91292bc4e84, type: 3}
       propertyPath: m_AnchorMax.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2283521513492738207, guid: c122d9961e9aaa44091ed91292bc4e84, type: 3}
       propertyPath: m_AnchorMin.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2283521513492738207, guid: c122d9961e9aaa44091ed91292bc4e84, type: 3}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 2283521513492738207, guid: c122d9961e9aaa44091ed91292bc4e84, type: 3}
       propertyPath: m_SizeDelta.y
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 2283521513492738207, guid: c122d9961e9aaa44091ed91292bc4e84, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 206.33333
       objectReference: {fileID: 0}
     - target: {fileID: 2283521513492738207, guid: c122d9961e9aaa44091ed91292bc4e84, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -224
       objectReference: {fileID: 0}
     - target: {fileID: 3739512400303885333, guid: c122d9961e9aaa44091ed91292bc4e84, type: 3}
       propertyPath: m_AnchorMax.y

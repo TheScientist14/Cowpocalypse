@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.UI;
 
 public class MachineSettingsPanel : Panel
@@ -7,6 +9,7 @@ public class MachineSettingsPanel : Panel
     private RessourceUI _recipeRessourceUI;
     [SerializeField]
     private RessourceUI[] _resourcesToCraft;
+    private Dictionary<ItemData, RessourceUI> _itemToRessource = new Dictionary<ItemData, RessourceUI>();
     private Machine _machine;
     public override void ChangeVisibility(bool show, float delay = 0, float? durationOverride = null)
     {
@@ -20,8 +23,20 @@ public class MachineSettingsPanel : Panel
         get => _machine;
         set
         {
+            if (_machine != null)
+                _machine.stockUpdated.RemoveListener(UpdateStock);
+            value.stockUpdated.AddListener(UpdateStock);
             _machine = value;
             SetItemData(_machine.GetCraftedItem());
+            UpdateStock(_machine.Stock);
+        }
+    }
+
+    private void UpdateStock(Dictionary<ItemData, int> stock)
+    {
+        foreach (var kvp in stock)
+        {
+            _itemToRessource[kvp.Key].UpdateValue(kvp.Value, null);
         }
     }
 
@@ -30,15 +45,17 @@ public class MachineSettingsPanel : Panel
         _machine.SetCafteditem(item);
         _recipeRessourceUI.ItemData = item;
         //Instead of displaying the cost we display one, being the nb of items being produced
-        _recipeRessourceUI.Number = 1;
+        _recipeRessourceUI.UpdateValue(max: 1);
+        _itemToRessource = new Dictionary<ItemData, RessourceUI>();
         var ch = _resourcesToCraft.Length;
         int i = 0;
         foreach (var recipe in item.Recipes)
         {
-            var child = _resourcesToCraft[i];
+            RessourceUI child = _resourcesToCraft[i];
+            _itemToRessource.Add(recipe.Key, child);
             child.gameObject.SetActive(true);
             child.ItemData = recipe.Key;
-            child.Number = recipe.Value;
+            child.UpdateValue(_machine.Stock[recipe.Key],recipe.Value);
             i++;
         }
         for (; i < ch; i++)
