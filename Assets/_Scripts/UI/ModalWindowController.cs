@@ -1,6 +1,9 @@
 using NaughtyAttributes;
+using NaughtyAttributes.Test;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,67 +11,100 @@ using UnityEngine.UI;
 public class ModalWindowController : Singleton<ModalWindowController>
 {
     [SerializeField]
-    private TextUI _windowName;
-    [SerializeField, Header("MachineSettingsPanel")]
     private MachineSettingsPanel _machineSettingsPanel;
-    [SerializeField, Header("RecipeUnlockPanel")]
+    [SerializeField]
     private AllTiersPanel _recipeUnlockPanel;
+    [SerializeField]
+    private TitlePanel _titlePanel;
+    [SerializeField] private ButtonPanel _closeButton;
+    [SerializeField] private ButtonPanel _returnButton;
+    private Stack<Panel> _openedPanels = new Stack<Panel>();
     public bool _inCatalog => _recipeUnlockPanel.CurrentlyOpened;
     private bool InMachineSettings => _machineSettingsPanel.CurrentlyOpened;
-
+    private void Awake()
+    {
+        _returnButton.Button.onClick.AddListener(CloseLast);
+        _closeButton.Button.onClick.AddListener(CloseAll);
+    }
     private void Start()
     {
         _recipeUnlockPanel.ChangeVisibility(false, 0f, 0f);
         _machineSettingsPanel.ChangeVisibility(false, 0f, 0f);
+        _titlePanel.ChangeVisibility(false, 0f, 0f);
     }
     #region CalledFromUi
-    public void OpenCatalogFromGame()
-    {/*
-        _inMachineSettings = false;*/
-        OpenCatalog();
-    }
-    public void OpenCatalogFromMachineSettings()
-    {
-        OpenCatalog(1);
-    }
+    public void OpenCatalogFromGame() => OpenCatalog("Recipe unlocks");
 
-    private void OpenCatalog(int tiersToSkip = 0)
+    public void OpenCatalogFromMachineSettings() => OpenCatalog("Recipe to craft", 1);
+    private void OpenCatalog(string title, int tiersToSkip = 0)
     {
         _recipeUnlockPanel.ChangeTiersDisplayed(tiersToSkip);
-        /*_inCatalog = true;*/
-        _recipeUnlockPanel.ChangeVisibility(true);
+        OpenPanel(_recipeUnlockPanel, title);
     }
-
     public void CloseCatalog()
     {
-        /*_inCatalog = false;*/
-        _recipeUnlockPanel.ChangeVisibility(false);
+        ClosePanel(_recipeUnlockPanel);
     }
     public void OpenMachineSettings(Machine machine = null)
     {
-        /*_inMachineSettings = true;*/
-        _machineSettingsPanel.ChangeVisibility(true);
+        OpenPanel(_machineSettingsPanel, "Machine settings");
         _machineSettingsPanel.OpenedMachine = machine;
         Debug.LogWarning("Integrate with machine settings data stored to show the display accordinginly to selected machine");
-        //_machineSettingsPanel.SetItemData(macine.ItemData);
     }
     public void CloseMachineSettings()
     {
-        /*_inMachineSettings = false;*/
-        _machineSettingsPanel.ChangeVisibility(false);
+        ClosePanel(_machineSettingsPanel);
+    }
+    private void OpenPanel(Panel panel, string title)
+    {
+        _openedPanels.Push(panel);
+        panel.ChangeVisibility(true);
+        _titlePanel.Title.Value = title;
+        _titlePanel.ChangeVisibility(true);
+        UpdateUiWithStackCount();
+    }
+    private void ClosePanel(Panel panel)
+    {
+        if (_openedPanels.Peek() == panel)
+        {
+            ClosePanelInStack(_openedPanels.Pop());
+        }
+        else
+        {
+            var removed = new List<Panel>(_openedPanels);
+            removed.Remove(panel);
+            _openedPanels = new Stack<Panel>(removed);
+            ClosePanelInStack(panel);
+        }
     }
     public void CloseAll()
     {
-        /*_inMachineSettings = false;*/
-        CloseMachineSettings();
-        CloseCatalog();
+        while (_openedPanels.Count > 0)
+            ClosePanelInStack(_openedPanels.Pop());
     }
     public void CloseLast()
     {
-        if (_inCatalog)
-            CloseCatalog();
-        else if (InMachineSettings)
-            CloseMachineSettings();
+        ClosePanelInStack(_openedPanels.Pop());
+    }
+    void ClosePanelInStack(Panel panel)
+    {
+        panel.ChangeVisibility(false);
+        UpdateUiWithStackCount();
+    }
+
+    private void UpdateUiWithStackCount()
+    {
+        switch (_openedPanels.Count)
+        {
+            case 0: CloseEverything(); break;
+            case 1: _returnButton.ChangeVisibility(false); break;
+            default: _returnButton.ChangeVisibility(true); break;
+        }
+    }
+
+    private void CloseEverything()
+    {
+        _titlePanel.ChangeVisibility(false);
     }
     #endregion
     internal void RessourceClicked(RessourceUI ressourceUI)
@@ -94,14 +130,14 @@ public class ModalWindowController : Singleton<ModalWindowController>
                 OpenCatalogFromMachineSettings();   */
         }
     }
-    [Button("Switch")]
-    public void SwitchPanel()
-    {
-        ShowPanel(!_machineSettingsPanel.gameObject.activeSelf);
-    }
-    public void ShowPanel(bool showMachineSettings)
-    {
-        _machineSettingsPanel.ChangeVisibility(showMachineSettings);
-        _recipeUnlockPanel.ChangeVisibility(!showMachineSettings);
-    }
+    /*    [Button("Switch")]
+        public void SwitchPanel()
+        {
+            ShowPanel(!_machineSettingsPanel.gameObject.activeSelf);
+        }
+        public void ShowPanel(bool showMachineSettings)
+        {
+            _machineSettingsPanel.ChangeVisibility(showMachineSettings);
+            _recipeUnlockPanel.ChangeVisibility(!showMachineSettings);
+        }*/
 }
