@@ -20,6 +20,9 @@ namespace _Scripts.Save_System
 
         [ShowAssetPreview(128, 128)] [SerializeField]
         private GameObject machinePrefab;
+        
+        [ShowAssetPreview(128, 128)] [SerializeField]
+        private GameObject splitterPrefab;
 
         private const string Filename = "Cowpocalypse.noext";
         private static string _path;
@@ -35,14 +38,14 @@ namespace _Scripts.Save_System
 
         private void Awake()
         {
-            var _sOs = ItemCreator.LoadAllItemsAtPath<ItemData>("Assets/Scriptable objects/Items/");
+            var sOs = ItemCreator.LoadAllResourceAtPath<ItemData>();
 
-            _itemDatas = _sOs.ToDictionary(i => i.Name);
+            _itemDatas = sOs.ToDictionary(i => i.Name);
 
             _path = Application.persistentDataPath + "/" + Filename;
         }
 
-        [Button("Save Game")]
+        [Button("Save Game async")]
         private void SaveGame()
         {
 #pragma warning disable CS4014 // Don't want to await, it should block gameplay;
@@ -68,11 +71,25 @@ namespace _Scripts.Save_System
             savedGame.Invoke();
         }
 
+        [Button("Save Game non async")]
+        public void SaveNonAsync()
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+
+            SaveData data = new SaveData();
+            
+            using (FileStream stream = new FileStream(_path, FileMode.Create))
+            {
+                formatter.Serialize(stream, data);
+            }
+        }
+
         [Button("Load Game")]
         public void LoadGame()
         {
             LoadMachines();
             LoadBelts();
+            LoadSplitters();
 
             loadedGame.Invoke();
             Debug.Log("Game Loaded");
@@ -126,11 +143,31 @@ namespace _Scripts.Save_System
                 machine.Stock = new Dictionary<ItemData, int>(machineSaveData.ItemNames.Zip(
                     machineSaveData.ItemQuantity, (e1, e2) => new KeyValuePair<ItemData, int>(_itemDatas[e1], e2)));
                 machine.SetCafteditem(_itemDatas[machineSaveData.ItemToCraftName]);
+                
+                if (machineSaveData.GetItem.GetValueOrDefault().GetName != null)
+                {
+                    machine.BeltItem = PoolManager.instance.SpawnObject(
+                        _itemDatas[machineSaveData.GetItem.GetValueOrDefault().GetName],
+                        machineSaveData.GetItem.GetValueOrDefault().GetPos);
+                }
             }
         }
 
-        public void LoadSpawners()
+        public void LoadSplitters()
         {
+            foreach (SplitterSaveData splitterSaveData in GetSavedGameData().SplitterDatas)
+            {
+                Splitter splitter =
+                    Instantiate(splitterPrefab, splitterSaveData.GetPos, Quaternion.Euler(splitterSaveData.GetRot))
+                        .GetComponent<Splitter>();
+
+                if (splitterSaveData.GetItem.GetValueOrDefault().GetName != null)
+                {
+                    splitter.BeltItem = PoolManager.instance.SpawnObject(
+                        _itemDatas[splitterSaveData.GetItem.GetValueOrDefault().GetName],
+                        splitterSaveData.GetItem.GetValueOrDefault().GetPos);
+                }
+            }
         }
     }
 }
