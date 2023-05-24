@@ -1,15 +1,13 @@
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using JetBrains.Annotations;
 using Unity.VisualScripting;
 using UnityEngine;
 using Object = UnityEngine.Object;
 
 namespace _Scripts.Save_System
 {
-    // need to save items --> pool
-    // need to save machines --> idk
-    // need to save player stats --> idk
     
     [Serializable]
     public class SaveData
@@ -18,34 +16,52 @@ namespace _Scripts.Save_System
         private List<BeltSaveData> _beltDatas = new();
         private List<MachineSaveData> _machineDatas = new();
         private List<SplitterSaveData> _splitterDatas = new();
+        private List<SplitterSaveData> _mergerDatas = new();
         private PlayerSaveData _playerSaveData;
 
         public SaveData()
         {
-            foreach (Belt belt in Object.FindObjectsOfType(typeof(Belt))
+            foreach (var o in Object.FindObjectsOfType(typeof(Belt))
                          .Where(b => !b.GetType().IsSubclassOf(typeof(Belt))))
             {
+                var belt = (Belt)o;
                 var transform = belt.transform;
                 _beltDatas.Add(new BeltSaveData(transform.position, transform.rotation.eulerAngles, belt.BeltItem));
             }
 
-            foreach (Machine machines in Object.FindObjectsOfType(typeof(Machine)))
+            foreach (var o in Object.FindObjectsOfType(typeof(Machine)))
             {
+                var machines = (Machine)o;
                 var transform = machines.transform;
-                _machineDatas.Add(new MachineSaveData(machines.GetCraftedItem().Name, transform.position,
-                    transform.rotation.eulerAngles, machines.Stock, machines.BeltItem));
+                _machineDatas.Add(new MachineSaveData( transform.position,
+                    transform.rotation.eulerAngles, machines.Stock, machines.BeltItem, machines.GetCraftedItem() ? machines.GetCraftedItem().Name : ""));
             }
             
-            foreach (Splitter splitter in Object.FindObjectsOfType(typeof(Splitter)))
+            foreach (var o in Object.FindObjectsOfType(typeof(Splitter)))
             {
+                var splitter = (Splitter)o;
                 var transform = splitter.transform;
                 _splitterDatas.Add(new SplitterSaveData(transform.position, transform.rotation.eulerAngles, splitter.BeltItem));
             }
+
+            List<StatSaveData> stats = new List<StatSaveData>();
+            
+            foreach (var stat in StatManager.instance.Stats)
+            {
+                stats.Add(new StatSaveData(stat.CurrentLevel));
+            }
+            
+            //TODO : add connection to wallet money
+            _playerSaveData = new PlayerSaveData(stats);
         }
 
         public List<BeltSaveData> BeltDatas => _beltDatas;
         public List<MachineSaveData> MachineDatas => _machineDatas;
         public List<SplitterSaveData> SplitterDatas => _splitterDatas;
+
+        public List<SplitterSaveData> MergerDatas => _mergerDatas;
+
+        public PlayerSaveData PlayerSaveData => _playerSaveData;
     }
 
     #region DataStruct
@@ -145,6 +161,44 @@ namespace _Scripts.Save_System
         
         public ItemSaveData? GetItem => _itemSaveData;
     }
+    
+    [Serializable]
+    public struct MergerSaveData
+    {
+        private float _x;
+        private float _y;
+        private float _z;
+        private float _rotX;
+        private float _rotY;
+        private float _rotZ;
+
+        [Serialize] private ItemSaveData? _itemSaveData;
+
+        public MergerSaveData(Vector3 prmPos, Vector3 prmRot, Item prmItem)
+        {
+            _x = prmPos.x;
+            _y = prmPos.y;
+            _z = prmPos.z;
+            _rotX = prmRot.x;
+            _rotY = prmRot.y;
+            _rotZ = prmRot.z;
+            if (prmItem != null)
+            {
+                _itemSaveData = new ItemSaveData(prmItem.GetItemData().Name, prmItem.gameObject.transform.position);
+            }
+            else
+            {
+                _itemSaveData = null;
+            }
+        }
+
+
+        public Vector3 GetPos => new(_x, _y, _z);
+
+        public Vector3 GetRot => new(_rotX, _rotY, _rotZ);
+        
+        public ItemSaveData? GetItem => _itemSaveData;
+    }
 
     [Serializable]
     public struct MachineSaveData
@@ -155,7 +209,7 @@ namespace _Scripts.Save_System
         private float _rotX;
         private float _rotY;
         private float _rotZ;
-
+        
         private string _itemToCraftName;
 
         private List<String> _itemNames;
@@ -163,8 +217,8 @@ namespace _Scripts.Save_System
 
         [Serialize] private ItemSaveData? _itemSaveData;
 
-        public MachineSaveData(string prmItemToCraftName, Vector3 prmPos, Vector3 prmRot,
-            Dictionary<ItemData, int> prmStock, Item prmItem)
+        public MachineSaveData( Vector3 prmPos, Vector3 prmRot,
+            Dictionary<ItemData, int> prmStock, Item prmItem, string prmItemToCraftName)
         {
             _itemToCraftName = prmItemToCraftName;
             _x = prmPos.x;
@@ -202,6 +256,31 @@ namespace _Scripts.Save_System
     [Serializable]
     public struct PlayerSaveData
     {
+        private List<StatSaveData> _stats;
+        private int _money;
+
+        public PlayerSaveData(List<StatSaveData> stats, int money = 0)
+        {
+            _stats = stats;
+            _money = money;
+        }
+
+        public List<StatSaveData> Stats => _stats;
+
+        public int Gold => _money;
+    }
+
+    [Serializable]
+    public struct StatSaveData
+    {
+        private int _currentLevel;
+
+        public StatSaveData(int currentLevel)
+        {
+            _currentLevel = currentLevel;
+        }
+
+        public int CurrentLevel => _currentLevel;
     }
 
     #endregion

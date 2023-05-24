@@ -43,8 +43,21 @@ namespace _Scripts.Save_System
             _itemDatas = sOs.ToDictionary(i => i.Name);
 
             _path = Application.persistentDataPath + "/" + Filename;
+            
+            savedGame.AddListener(OnGameSaved);
+            loadedGame.AddListener(OnGameLoaded);
         }
 
+        private void OnGameSaved()
+        {
+            Debug.Log("Game Saved");
+        }
+
+        private void OnGameLoaded()
+        {
+            Debug.Log("Game Loaded");
+        }
+        
         [Button("Save Game async")]
         private void SaveGame()
         {
@@ -82,6 +95,7 @@ namespace _Scripts.Save_System
             {
                 formatter.Serialize(stream, data);
             }
+            savedGame.Invoke();
         }
 
         [Button("Load Game")]
@@ -90,9 +104,9 @@ namespace _Scripts.Save_System
             LoadMachines();
             LoadBelts();
             LoadSplitters();
+            LoadPlayer();
 
             loadedGame.Invoke();
-            Debug.Log("Game Loaded");
         }
         
         public SaveData GetSavedGameData()
@@ -142,8 +156,12 @@ namespace _Scripts.Save_System
 
                 machine.Stock = new Dictionary<ItemData, int>(machineSaveData.ItemNames.Zip(
                     machineSaveData.ItemQuantity, (e1, e2) => new KeyValuePair<ItemData, int>(_itemDatas[e1], e2)));
-                machine.SetCafteditem(_itemDatas[machineSaveData.ItemToCraftName]);
                 
+                if (machineSaveData.ItemToCraftName != "")
+                {
+                    machine.SetCafteditem(_itemDatas[machineSaveData.ItemToCraftName]);
+                }
+
                 if (machineSaveData.GetItem.GetValueOrDefault().GetName != null)
                 {
                     machine.BeltItem = PoolManager.instance.SpawnObject(
@@ -168,6 +186,18 @@ namespace _Scripts.Save_System
                         splitterSaveData.GetItem.GetValueOrDefault().GetPos);
                 }
             }
+        }
+
+        public void LoadPlayer()
+        {
+            PlayerSaveData playerSaveData = GetSavedGameData().PlayerSaveData;
+
+            for (int i = 0; i < playerSaveData.Stats.Count; i++)
+            {
+                StatManager.instance.Stats[i].CurrentLevel = playerSaveData.Stats[i].CurrentLevel;
+            }
+            
+            //TODO : Add Wallet integration;
         }
     }
 }
