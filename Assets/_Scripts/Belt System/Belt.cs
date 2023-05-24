@@ -1,3 +1,4 @@
+using _Scripts.Pooling_System;
 using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
@@ -24,10 +25,10 @@ public class Belt : MonoBehaviour
 
     private void Update()
     {
-        if (BeltInSequence == null)
+        if(BeltInSequence == null)
             BeltInSequence = GetNextBelt();
 
-        if (BeltItem != null && BeltItem.GetItem() != null)
+        if(BeltItem != null && BeltItem.GetItem() != null)
             StartCoroutine(StartBeltMove());
     }
 
@@ -35,9 +36,9 @@ public class Belt : MonoBehaviour
     {
         isSpaceTaken = true;
 
-        if (BeltItem.GetItem() != null && BeltInSequence != null && BeltInSequence.isSpaceTaken == false)
+        if(BeltItem.GetItem() != null && BeltInSequence != null && BeltInSequence.isSpaceTaken == false)
         {
-            if (BeltInSequence.GetComponent<Machine>())
+            if(BeltInSequence.GetComponent<Machine>())
             {
                 MachineInSequence = BeltInSequence.GetComponent<Machine>();
                 if(MachineInSequence.GetCraftedItem() != null)
@@ -45,7 +46,7 @@ public class Belt : MonoBehaviour
                 else
                     isMachineBlocking = true;
             }
-            if (!isMachineBlocking)
+            if(!isMachineBlocking)
             {
                 if(MachineInSequence != null)
                 {
@@ -59,7 +60,7 @@ public class Belt : MonoBehaviour
                     BeltInSequence.isSpaceTaken = true;
                     float step = BeltManager.instance.speed * Time.fixedDeltaTime;
 
-                    while (BeltItem.GetItem().transform.position != toPosition)
+                    while(BeltItem.GetItem().transform.position != toPosition)
                     {
                         BeltItem.GetItem().transform.position = Vector3.MoveTowards(BeltItem.transform.position, toPosition, step);
                         yield return null;
@@ -76,17 +77,22 @@ public class Belt : MonoBehaviour
         Transform currentBeltTransform = transform;
         RaycastHit2D hit = Physics2D.Raycast(transform.position + transform.up, currentBeltTransform.up, 0.1f);
 
-        if (hit.collider != null)
+        if(hit.collider != null)
         {
             Belt belt = hit.collider.GetComponent<Belt>();
-            if (belt != null)
+            if(belt != null)
             {
-                if (belt.GetComponent<Machine>())
+                if(belt.GetComponent<Machine>())
                     MachineInSequence = belt.GetComponent<Machine>();
                 return belt;
             }
         }
 
         return null;
+    }
+
+    private void OnDestroy()
+    {
+        PoolManager.instance.DespawnObject(BeltItem);
     }
 }

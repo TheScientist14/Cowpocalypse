@@ -77,7 +77,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 72bd971c278e06c44926ec906a53b7f2, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 42a89c66f06cd5749aa09511e77a8bee, type: 3}
   m_Color: {r: 0.41509432, g: 0.41509432, b: 0.41509432, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -130,10 +130,10 @@ MonoBehaviour:
   BeltItem: {fileID: 0}
   isSpaceTaken: 0
   isMachineBlocking: 0
+  MachineInSequence: {fileID: 0}
   SpawnedItem: {fileID: 6682846507357518520, guid: 83aeadbc4d8345a4da486ce2364cc1c5, type: 3}
   SpawnedItemData: {fileID: 0}
   SpawnRate: 5
-  _audioConstruction: {fileID: 0}
 --- !u!114 &5596085840803485462
 MonoBehaviour:
   m_ObjectHideFlags: 0
