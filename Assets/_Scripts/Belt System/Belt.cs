@@ -93,6 +93,7 @@ public class Belt : MonoBehaviour
 
     private void OnDestroy()
     {
-        PoolManager.instance.DespawnObject(BeltItem);
+        if(BeltItem != null)
+            PoolManager.instance.DespawnObject(BeltItem);
     }
 }
