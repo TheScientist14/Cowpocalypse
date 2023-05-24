@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4481687256583466999}
   - component: {fileID: -3767882059337263534}
   - component: {fileID: -3421431852118544989}
-  - component: {fileID: 5596085840803485462}
   - component: {fileID: 4064202076468548081}
   m_Layer: 0
   m_Name: Spawner
@@ -130,22 +129,11 @@ MonoBehaviour:
   BeltItem: {fileID: 0}
   isSpaceTaken: 0
   isMachineBlocking: 0
+  MachineInSequence: {fileID: 0}
+  _scriptablesRelativeAudio: {fileID: 0}
   SpawnedItem: {fileID: 6682846507357518520, guid: 83aeadbc4d8345a4da486ce2364cc1c5, type: 3}
   SpawnedItemData: {fileID: 0}
   SpawnRate: 5
-  _audioConstruction: {fileID: 0}
---- !u!114 &5596085840803485462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4732986801910414389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3eeab2d6b5e5f641a562e2ac340a2a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &4064202076468548081
 AudioSource:
   m_ObjectHideFlags: 0

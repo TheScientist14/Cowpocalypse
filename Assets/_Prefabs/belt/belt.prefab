@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4481687256583466999}
   - component: {fileID: -3256090582210429120}
   - component: {fileID: -3767882059337263534}
-  - component: {fileID: -8659753721627009597}
   - component: {fileID: 3846152190829792146}
   m_Layer: 0
   m_Name: belt
@@ -104,6 +103,8 @@ MonoBehaviour:
   BeltItem: {fileID: 0}
   isSpaceTaken: 0
   isMachineBlocking: 0
+  MachineInSequence: {fileID: 0}
+  _scriptablesRelativeAudio: {fileID: 11400000, guid: 835ed91ede956f04299125ceae77c349, type: 2}
 --- !u!61 &-3767882059337263534
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -130,18 +131,6 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
---- !u!114 &-8659753721627009597
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4732986801910414389}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3eeab2d6b5e5f641a562e2ac340a2a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!82 &3846152190829792146
 AudioSource:
   m_ObjectHideFlags: 0
