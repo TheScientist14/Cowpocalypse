@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using NaughtyAttributes;
 
-public class StatManager : MonoBehaviour
+public class StatManager : Singleton<StatManager>
 {
+    [Expandable]
     [SerializeField] List<StatData> _statsData;
 
     public List<Stat> Stats { get; private set; }
@@ -13,7 +15,7 @@ public class StatManager : MonoBehaviour
         Stats = _statsData.Select(statData => new Stat { StatData = statData }).ToList();
     }
 
-    [ContextMenu("Log stat values")]
+    [ContextMenu("Log stat values")][Button("Log Values")]
     public void LogValues()
     {
         foreach (var stat in Stats)
@@ -21,4 +23,12 @@ public class StatManager : MonoBehaviour
             Debug.Log($"{stat.StatData.Name} : {stat.CurrentLevel}, {stat.Value}");
         }
     }
+
+
+    [Button("Add Values")]
+    private void AddLevelToStat()
+    {
+        Stats[0].CurrentLevel++;
+    }
+    
 }
