@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using _Scripts;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -15,8 +16,7 @@ public class PauseButtonBehaviour : MonoBehaviour
 
     public void PauseGame()
     {
-        // #TODO : Pause game
-        Debug.LogWarning("TODO: Pause game");
+        StateMachine.instance.SetState(new PauseState());
         m_PauseMenuPanel.SetActive(true);
     }
 }

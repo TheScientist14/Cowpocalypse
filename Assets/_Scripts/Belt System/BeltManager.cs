@@ -1,9 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
-using UnityEditor.U2D.Path;
+using _Scripts;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class BeltManager : Singleton<BeltManager>
@@ -22,7 +18,6 @@ public class BeltManager : Singleton<BeltManager>
 
     [SerializeField] private Camera m_Camera;
     private Grid GameGrid;
-
 
     private void Start()
     {
@@ -161,14 +156,11 @@ public class BeltManager : Singleton<BeltManager>
 
     public void EnableBuildMode()
     {
-        m_InputAction.Player.DragBuildMode.Enable();
-        m_InputAction.Player.Drag.Disable();
+        StateMachine.instance.SetState(new BuildState());
     }
 
     private void DisableBuildMode()
     {
-        m_InputAction.Player.DragBuildMode.Disable();
-        m_InputAction.Player.Drag.Enable();
+        StateMachine.instance.SetState(new FreeViewState());
     }
-
 }

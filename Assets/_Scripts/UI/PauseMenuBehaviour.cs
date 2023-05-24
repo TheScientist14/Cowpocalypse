@@ -1,6 +1,7 @@
 using _Scripts.Save_System;
 using System.Collections;
 using System.Collections.Generic;
+using _Scripts;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
@@ -24,8 +25,7 @@ public class PauseMenuBehaviour : MonoBehaviour
 
     public void ClosePauseMenu()
     {
-        // #TODO : Resume game
-        Debug.LogWarning("TODO: Resume game");
+        StateMachine.instance.SetState(new FreeViewState());
         gameObject.SetActive(false);
     }
 
