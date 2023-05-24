@@ -1,3 +1,4 @@
+using _Scripts.Save_System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
@@ -7,11 +8,18 @@ using UnityEngine.Events;
 public class PauseMenuBehaviour : MonoBehaviour
 {
     [SerializeField] ConfirmBehaviour m_ConfirmationWidget;
+    [SerializeField] GameObject m_OptionsPanel;
 
     // Start is called before the first frame update
     void Start()
     {
         gameObject.SetActive(false);
+        m_OptionsPanel.SetActive(false);
+    }
+
+    void OnEnable()
+    {
+        m_OptionsPanel.SetActive(false);
     }
 
     public void ClosePauseMenu()
@@ -23,8 +31,8 @@ public class PauseMenuBehaviour : MonoBehaviour
 
     public void SaveGame()
     {
-        // #TODO : Save game
-        Debug.LogWarning("TODO: Save game");
+        Debug.Log("Saving...");
+        SaveSystem.instance.SaveGame();
     }
 
     public void LoadGame()
@@ -33,10 +41,16 @@ public class PauseMenuBehaviour : MonoBehaviour
         Debug.LogWarning("TODO: Load game");
     }
 
+    // we assume settings panel is covering the pause menu completely
     public void ShowSettings()
     {
-        // #TODO : Show settings
-        Debug.LogWarning("TODO: Show settings");
+        if(m_OptionsPanel == null)
+        {
+            Debug.LogWarning("Settings panel unbound to pause menu panel");
+            return;
+        }
+
+        m_OptionsPanel.gameObject.SetActive(true);
     }
 
     private void _Quit()
@@ -51,6 +65,7 @@ public class PauseMenuBehaviour : MonoBehaviour
     {
         if(m_ConfirmationWidget == null)
         {
+            Debug.LogWarning("No confirmation panel, skipping user confirmation.");
             _Quit();
             return;
         }

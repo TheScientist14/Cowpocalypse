@@ -16,7 +16,7 @@ public class PauseButtonBehaviour : MonoBehaviour
     public void PauseGame()
     {
         // #TODO : Pause game
-        Debug.LogWarning("TODO: Resume game");
+        Debug.LogWarning("TODO: Pause game");
         m_PauseMenuPanel.SetActive(true);
     }
 }

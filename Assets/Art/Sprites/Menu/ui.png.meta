@@ -771,10 +771,10 @@ TextureImporter:
       name: 4Z_2101.w017.n001.358B.p15.358-removebg-preview_31
       rect:
         serializedVersion: 2
-        x: 639
-        y: 76
+        x: 665
+        y: 82
         width: 39
-        height: 37
+        height: 38
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
