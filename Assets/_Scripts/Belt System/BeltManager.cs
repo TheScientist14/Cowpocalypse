@@ -8,7 +8,10 @@ using UnityEngine.InputSystem;
 
 public class BeltManager : Singleton<BeltManager>
 {
+    public InputAction DebugBeltSpawn;
+
     public GameObject TestPrefab;
+    public GameObject BeltPrefab;
 
     public static BeltManager Instance;
     public float speed = 2f;
@@ -24,16 +27,26 @@ public class BeltManager : Singleton<BeltManager>
 
     private void Start()
     {
+        //Debug-----------------
+        DebugBeltSpawn.started += context => SpawnBelts();
+        DebugBeltSpawn.Enable();
+        //-----------------------
+
         GameGrid = GetComponent<Grid>();
         m_InputAction = InputMaster.instance.InputAction;
-        m_InputAction.Player.Drag.started += context => InitDrag();
-        m_InputAction.Player.Drag.canceled += ctx => EndDrag(ctx.ReadValue<Vector2>());
-        m_InputAction.Player.Drag.performed += context => DuringDrag();
+        m_InputAction.Player.DragBuildMode.started += context => InitDrag();
+        m_InputAction.Player.DragBuildMode.canceled += ctx => EndDrag(ctx.ReadValue<Vector2>());
+        m_InputAction.Player.DragBuildMode.performed += context => DuringDrag();
         lineRenderer = GetComponent<LineRenderer>();
+
+        DisableBuildMode();
     }
 
     private void InitDrag()
     {
+        if(DraggingPhase >= 2)
+            DraggingPhase = 0;
+
         lineRenderer.enabled = true;
         DraggingPhase++;
         Vector3 m_InitMouseWorldPos = m_Camera.ScreenToWorldPoint(m_InputAction.Player.PointerPosition.ReadValue<Vector2>());
@@ -49,8 +62,7 @@ public class BeltManager : Singleton<BeltManager>
 
     private void EndDrag(Vector2 endPosition)
     {
-        if (DraggingPhase >= 2)
-            DraggingPhase = 0;
+
     }
 
     private void DuringDrag()
@@ -103,5 +115,55 @@ public class BeltManager : Singleton<BeltManager>
         Vector3Int newPosition = GameGrid.WorldToCell(position);
         position = GameGrid.GetCellCenterWorld(newPosition);
         return position;
+    }
+
+    private void SpawnBelts()
+    {
+        int x = (int)lineRenderer.GetPosition(0).x;
+        int y = (int)lineRenderer.GetPosition(0).y;
+        float cellSize = GameGrid.cellSize.x;
+        GameObject spawnedBelt;
+
+        spawnedBelt = SpawnBelt(lineRenderer.GetPosition(0), lineRenderer.GetPosition(1));
+
+        while(spawnedBelt.transform.position != lineRenderer.GetPosition(1) - spawnedBelt.transform.up * cellSize)
+            spawnedBelt = SpawnBelt(spawnedBelt.transform.position + spawnedBelt.transform.up * cellSize, lineRenderer.GetPosition(1));
+        print(DraggingPhase);
+        if(DraggingPhase == 2)
+        {
+            BeltIsVertical = !BeltIsVertical;
+            while (spawnedBelt.transform.position != lineRenderer.GetPosition(2))
+            {
+                spawnedBelt = SpawnBelt(spawnedBelt.transform.position + spawnedBelt.transform.up * cellSize, lineRenderer.GetPosition(2));
+            }
+            //Prevent bug
+            Destroy(spawnedBelt);
+        }
+    }
+
+    private GameObject SpawnBelt(Vector3 position, Vector3 direction)
+    {
+        GameObject belt = Instantiate(BeltPrefab, position, Quaternion.identity);
+        belt.transform.LookAt(direction);
+        
+        if(!BeltIsVertical)
+            belt.transform.Rotate(Vector3.forward, 90, Space.Self);
+        belt.transform.Rotate(Vector3.right, 90, Space.Self);
+        if(belt.transform.position == direction)
+            belt.transform.Rotate(Vector3.left, 90, Space.Self);
+        DisableBuildMode();
+        return belt;
+    }
+
+    public void EnableBuildMode()
+    {
+        m_InputAction.Player.DragBuildMode.Enable();
+        m_InputAction.Player.Drag.Disable();
+    }
+
+    private void DisableBuildMode()
+    {
+        m_InputAction.Player.DragBuildMode.Disable();
+        m_InputAction.Player.Drag.Enable();
     }
 }

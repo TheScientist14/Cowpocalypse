@@ -80,6 +80,15 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""DragBuildMode"",
+                    ""type"": ""Value"",
+                    ""id"": ""6f678e6b-484c-4e01-a9f5-2c84b5a43492"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -280,6 +289,72 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                     ""action"": ""Drag"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""MouseDrag"",
+                    ""id"": ""8aaaba86-46e5-4bd5-b55b-3fbf42964246"",
+                    ""path"": ""Drag"",
+                    ""interactions"": ""MouseDrag"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DragBuildMode"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Button"",
+                    ""id"": ""8e5e21e7-7d90-4c66-a466-e1beda5f12ed"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""DragBuildMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""CurrentPos"",
+                    ""id"": ""d7a22523-701d-4012-95c6-a90b1ef2c2d7"",
+                    ""path"": ""<Mouse>/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""DragBuildMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""TouchDrag"",
+                    ""id"": ""2c937e56-6ae3-4de6-ad77-108ef0cd78c6"",
+                    ""path"": ""Drag"",
+                    ""interactions"": ""MouseDrag"",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""DragBuildMode"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Button"",
+                    ""id"": ""e07ba544-f49c-451a-b3b8-ceeb2e9bc534"",
+                    ""path"": ""<Touchscreen>/touch0/press"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Touchscreen"",
+                    ""action"": ""DragBuildMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""CurrentPos"",
+                    ""id"": ""73301451-59e8-40da-9f89-399ce935ec7a"",
+                    ""path"": ""<Touchscreen>/touch0/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Touchscreen"",
+                    ""action"": ""DragBuildMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -322,6 +397,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
         m_Player_LongPressButton = m_Player.FindAction("LongPressButton", throwIfNotFound: true);
         m_Player_PointerPosition = m_Player.FindAction("PointerPosition", throwIfNotFound: true);
         m_Player_Drag = m_Player.FindAction("Drag", throwIfNotFound: true);
+        m_Player_DragBuildMode = m_Player.FindAction("DragBuildMode", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -389,6 +465,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_LongPressButton;
     private readonly InputAction m_Player_PointerPosition;
     private readonly InputAction m_Player_Drag;
+    private readonly InputAction m_Player_DragBuildMode;
     public struct PlayerActions
     {
         private @InputsActions m_Wrapper;
@@ -399,6 +476,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
         public InputAction @LongPressButton => m_Wrapper.m_Player_LongPressButton;
         public InputAction @PointerPosition => m_Wrapper.m_Player_PointerPosition;
         public InputAction @Drag => m_Wrapper.m_Player_Drag;
+        public InputAction @DragBuildMode => m_Wrapper.m_Player_DragBuildMode;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -426,6 +504,9 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
             @Drag.started += instance.OnDrag;
             @Drag.performed += instance.OnDrag;
             @Drag.canceled += instance.OnDrag;
+            @DragBuildMode.started += instance.OnDragBuildMode;
+            @DragBuildMode.performed += instance.OnDragBuildMode;
+            @DragBuildMode.canceled += instance.OnDragBuildMode;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -448,6 +529,9 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
             @Drag.started -= instance.OnDrag;
             @Drag.performed -= instance.OnDrag;
             @Drag.canceled -= instance.OnDrag;
+            @DragBuildMode.started -= instance.OnDragBuildMode;
+            @DragBuildMode.performed -= instance.OnDragBuildMode;
+            @DragBuildMode.canceled -= instance.OnDragBuildMode;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -491,5 +575,6 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
         void OnLongPressButton(InputAction.CallbackContext context);
         void OnPointerPosition(InputAction.CallbackContext context);
         void OnDrag(InputAction.CallbackContext context);
+        void OnDragBuildMode(InputAction.CallbackContext context);
     }
 }
