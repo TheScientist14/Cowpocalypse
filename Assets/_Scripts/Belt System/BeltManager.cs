@@ -10,7 +10,6 @@ public class BeltManager : Singleton<BeltManager>
 {
     public InputAction DebugBeltSpawn;
 
-    public GameObject TestPrefab;
     public GameObject BeltPrefab;
 
     public static BeltManager Instance;
@@ -33,10 +32,15 @@ public class BeltManager : Singleton<BeltManager>
         //-----------------------
 
         GameGrid = GetComponent<Grid>();
+
         m_InputAction = InputMaster.instance.InputAction;
+
         m_InputAction.Player.DragBuildMode.started += context => InitDrag();
         m_InputAction.Player.DragBuildMode.canceled += ctx => EndDrag(ctx.ReadValue<Vector2>());
         m_InputAction.Player.DragBuildMode.performed += context => DuringDrag();
+
+        m_InputAction.Player.ClickBuildMode.started += context => InitDrag();
+
         lineRenderer = GetComponent<LineRenderer>();
 
         DisableBuildMode();
@@ -166,4 +170,5 @@ public class BeltManager : Singleton<BeltManager>
         m_InputAction.Player.DragBuildMode.Disable();
         m_InputAction.Player.Drag.Enable();
     }
+
 }

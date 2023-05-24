@@ -89,6 +89,15 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""ClickBuildMode"",
+                    ""type"": ""Button"",
+                    ""id"": ""d77b3c51-a9a6-44ee-97c4-a11cd2304021"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -355,6 +364,28 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                     ""action"": ""DragBuildMode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""dc60821b-0759-4c64-a680-1177b9ef283c"",
+                    ""path"": ""<Touchscreen>/touch0/position"",
+                    ""interactions"": ""Tap"",
+                    ""processors"": """",
+                    ""groups"": ""Touchscreen"",
+                    ""action"": ""ClickBuildMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f8ad2ef7-262b-4acc-96be-c37636fa90a2"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""ClickBuildMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -398,6 +429,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
         m_Player_PointerPosition = m_Player.FindAction("PointerPosition", throwIfNotFound: true);
         m_Player_Drag = m_Player.FindAction("Drag", throwIfNotFound: true);
         m_Player_DragBuildMode = m_Player.FindAction("DragBuildMode", throwIfNotFound: true);
+        m_Player_ClickBuildMode = m_Player.FindAction("ClickBuildMode", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -466,6 +498,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_PointerPosition;
     private readonly InputAction m_Player_Drag;
     private readonly InputAction m_Player_DragBuildMode;
+    private readonly InputAction m_Player_ClickBuildMode;
     public struct PlayerActions
     {
         private @InputsActions m_Wrapper;
@@ -477,6 +510,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
         public InputAction @PointerPosition => m_Wrapper.m_Player_PointerPosition;
         public InputAction @Drag => m_Wrapper.m_Player_Drag;
         public InputAction @DragBuildMode => m_Wrapper.m_Player_DragBuildMode;
+        public InputAction @ClickBuildMode => m_Wrapper.m_Player_ClickBuildMode;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -507,6 +541,9 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
             @DragBuildMode.started += instance.OnDragBuildMode;
             @DragBuildMode.performed += instance.OnDragBuildMode;
             @DragBuildMode.canceled += instance.OnDragBuildMode;
+            @ClickBuildMode.started += instance.OnClickBuildMode;
+            @ClickBuildMode.performed += instance.OnClickBuildMode;
+            @ClickBuildMode.canceled += instance.OnClickBuildMode;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -532,6 +569,9 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
             @DragBuildMode.started -= instance.OnDragBuildMode;
             @DragBuildMode.performed -= instance.OnDragBuildMode;
             @DragBuildMode.canceled -= instance.OnDragBuildMode;
+            @ClickBuildMode.started -= instance.OnClickBuildMode;
+            @ClickBuildMode.performed -= instance.OnClickBuildMode;
+            @ClickBuildMode.canceled -= instance.OnClickBuildMode;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -576,5 +616,6 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
         void OnPointerPosition(InputAction.CallbackContext context);
         void OnDrag(InputAction.CallbackContext context);
         void OnDragBuildMode(InputAction.CallbackContext context);
+        void OnClickBuildMode(InputAction.CallbackContext context);
     }
 }

@@ -67,6 +67,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "ClickBuildMode",
+                    "type": "Button",
+                    "id": "d77b3c51-a9a6-44ee-97c4-a11cd2304021",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -333,6 +342,28 @@
                     "action": "DragBuildMode",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "dc60821b-0759-4c64-a680-1177b9ef283c",
+                    "path": "<Touchscreen>/touch0/position",
+                    "interactions": "Tap",
+                    "processors": "",
+                    "groups": "Touchscreen",
+                    "action": "ClickBuildMode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f8ad2ef7-262b-4acc-96be-c37636fa90a2",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "ClickBuildMode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         }
