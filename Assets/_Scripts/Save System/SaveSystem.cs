@@ -196,8 +196,8 @@ namespace _Scripts.Save_System
             {
                 StatManager.instance.Stats[i].CurrentLevel = playerSaveData.Stats[i].CurrentLevel;
             }
-            
-            //TODO : Add Wallet integration;
+
+            Wallet.instance.Money = playerSaveData.Money;
         }
     }
 }

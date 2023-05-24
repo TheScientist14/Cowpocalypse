@@ -51,8 +51,7 @@ namespace _Scripts.Save_System
                 stats.Add(new StatSaveData(stat.CurrentLevel));
             }
             
-            //TODO : add connection to wallet money
-            _playerSaveData = new PlayerSaveData(stats);
+            _playerSaveData = new PlayerSaveData(stats, Wallet.instance.Money);
         }
 
         public List<BeltSaveData> BeltDatas => _beltDatas;
@@ -267,7 +266,7 @@ namespace _Scripts.Save_System
 
         public List<StatSaveData> Stats => _stats;
 
-        public int Gold => _money;
+        public int Money => _money;
     }
 
     [Serializable]
