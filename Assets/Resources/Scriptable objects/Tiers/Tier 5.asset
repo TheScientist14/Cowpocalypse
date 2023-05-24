@@ -14,3 +14,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <Level>k__BackingField: 5
   <Name>k__BackingField: Basic robot
+  <UnlockPrice>k__BackingField: 25000

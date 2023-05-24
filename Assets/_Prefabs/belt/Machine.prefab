@@ -75,8 +75,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 2
-  m_Sprite: {fileID: 21300000, guid: 72bd971c278e06c44926ec906a53b7f2, type: 3}
-  m_Color: {r: 0, g: 0.296113, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: c06e0eefa18176f45a85fdd5d914f128, type: 3}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -127,4 +127,6 @@ MonoBehaviour:
   BeltInSequence: {fileID: 0}
   BeltItem: {fileID: 0}
   isSpaceTaken: 0
-  CraftSpeed: 1
+  isMachineBlocking: 0
+  MachineInSequence: {fileID: 0}
+  CraftedItem: {fileID: 0}

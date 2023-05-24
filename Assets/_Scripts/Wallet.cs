@@ -1,8 +1,11 @@
 ﻿using System;
 using UnityEngine;
+using NaughtyAttributes;
 
-public class Wallet : MonoBehaviour
+public class Wallet : Singleton<Wallet>
 {
+    [ReadOnly]
+    [SerializeField]
     int _money;
         
     public int Money
@@ -20,7 +23,7 @@ public class Wallet : MonoBehaviour
 
     public Action<int> MoneyChanged;
 
-    [ContextMenu("Add 100")]
+    [ContextMenu("Add 100")][Button("Add 100")]
     public void Add()
     {
         Money += 100;
