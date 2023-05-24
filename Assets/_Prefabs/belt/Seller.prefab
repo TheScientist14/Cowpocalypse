@@ -131,6 +131,8 @@ MonoBehaviour:
   isSpaceTaken: 0
   isMachineBlocking: 0
   MachineInSequence: {fileID: 0}
+  _scriptablesRelativeAudio: {fileID: 0}
+  _thescriptablesRelativeAudio: {fileID: 11400000, guid: f433c23c27f58754bbe42b0252f00a01, type: 2}
 --- !u!114 &911009989506443643
 MonoBehaviour:
   m_ObjectHideFlags: 0

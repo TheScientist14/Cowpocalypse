@@ -10,9 +10,9 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 64b9056f8512f174dbb3d52bf13b1bd7, type: 3}
-  m_Name: SpawnerTEST
+  m_Name: MachineSound
   m_EditorClassIdentifier: 
   volume: 1
-  _spawnAudio: {fileID: 8300000, guid: 058f9d4ef7276e8428b87ed7cab35b48, type: 3}
-  _activateAudio: {fileID: 8300000, guid: 0f393320c09d273458990445598c8592, type: 3}
-  _problemAudio: {fileID: 8300000, guid: 058f9d4ef7276e8428b87ed7cab35b48, type: 3}
+  _spawnAudio: {fileID: 8300000, guid: 7e792c19c98f74e40a16958367bd1607, type: 3}
+  _activateAudio: {fileID: 8300000, guid: 64d1d7321b340d846ba60fb4ae5ecda6, type: 3}
+  _problemAudio: {fileID: 0}

@@ -14,6 +14,7 @@ public class MachineTEST : MonoBehaviour
     void Start()
     {
         _audioSource = GetComponent<AudioSource>();
+        // to call the sound
         CallSound(EnumRelativeSounds.Spawn);
     }
 
