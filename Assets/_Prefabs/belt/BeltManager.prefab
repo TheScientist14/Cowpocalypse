@@ -63,9 +63,8 @@ MonoBehaviour:
       m_Action: Debug Belt Spawn
       m_Flags: 0
     m_Flags: 0
-  TestPrefab: {fileID: 0}
   BeltPrefab: {fileID: 4732986801910414389, guid: 39b3afbc04efd43489d67a26e6c013a1, type: 3}
-  speed: 2
+  speed: 0.2
   m_Camera: {fileID: 0}
 --- !u!120 &4475892929583025520
 LineRenderer:
