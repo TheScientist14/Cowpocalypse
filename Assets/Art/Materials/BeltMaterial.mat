@@ -41,7 +41,7 @@ Material:
     - _Float: 0.195
     - _Size: 0.195
     - _TimeMult: 1
-    - _speed: 0.5
+    - _speed: 0.2
     - _time: 0.5
     m_Colors: []
   m_BuildTextureStacks: []
