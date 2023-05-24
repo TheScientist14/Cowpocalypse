@@ -23,7 +23,7 @@ public class Wallet : Singleton<Wallet>
 
     public Action<int> MoneyChanged;
 
-    [ContextMenu("Add 100")]
+    [ContextMenu("Add 100")][Button("Add 100")]
     public void Add()
     {
         Money += 100;
