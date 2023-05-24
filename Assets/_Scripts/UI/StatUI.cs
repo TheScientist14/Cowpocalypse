@@ -1,5 +1,4 @@
-﻿using System;
-using TMPro;
+﻿using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -35,7 +34,7 @@ public class StatUI : MonoBehaviour, IPointerDownHandler
 
     void Draw()
     {
-        _priceText.text = $"$ {Stat.StatData.Prices[Stat.CurrentLevel - 1]}";
+        _priceText.text = Stat.IsMaxedOut ? "MAX" : $"$ {Stat.StatData.Prices[Stat.CurrentLevel - 1]}";
         _statIcon.sprite = Stat.StatData.Icon;
         _lvlImage.fillAmount = (float) (Stat.CurrentLevel - 1) / Stat.StatData.MaxLevelInclusive;
     }
