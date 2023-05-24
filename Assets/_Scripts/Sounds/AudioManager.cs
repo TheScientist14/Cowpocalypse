@@ -75,9 +75,4 @@ public class AudioManager : MonoBehaviour, IObserver
     {
         _audioSource.loop = true;
     }
-
-    public void SetMusicVolume(float volume)
-    {
-        _audioSource.volume = volume;
-    }
 }
