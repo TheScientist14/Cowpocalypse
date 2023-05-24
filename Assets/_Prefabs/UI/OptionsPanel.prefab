@@ -992,6 +992,8 @@ MonoBehaviour:
   _musicFill: {fileID: 3842081732744068889}
   _soundsFill: {fileID: 3842081731996378854}
   _step: 10
+  _scriptablesWorldAudio: {fileID: 11400000, guid: 19dbf4f3c9a4b474d92e900db4dd54a6, type: 2}
+  _updateAudio: {fileID: 0}
 --- !u!1 &3842081732744068967
 GameObject:
   m_ObjectHideFlags: 0

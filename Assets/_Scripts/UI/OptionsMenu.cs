@@ -16,7 +16,7 @@ namespace _Scripts.UI
 
         [SerializeField][Expandable]
         private ScriptablesWorldAudio _scriptablesWorldAudio;
-        [SerializeField]
+
         private UpdateAudio _updateAudio;
         private ObservableSound _observableSound;
         private AudioManager _audioManager;
@@ -30,12 +30,14 @@ namespace _Scripts.UI
             _observableSound = GetComponent<ObservableSound>();
             _audioManager = GameObject.Find("AudioManagerUI").GetComponent<AudioManager>();
 
+            _updateAudio = GameObject.Find("UpdateAudio").GetComponent<UpdateAudio>();
+
             Refresh();
         }
 
         public void Quit()
         {
-            PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound1);
+            PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound2);
             gameObject.SetActive(false);
         }
 
@@ -60,7 +62,6 @@ namespace _Scripts.UI
         public void SoundsDown()
         {
             _soundsValue = Mathf.Max(0f, _soundsValue - _step);
-            PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound2);
             Refresh();
         }
 

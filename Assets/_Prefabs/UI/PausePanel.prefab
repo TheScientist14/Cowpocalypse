@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5891567553117405225}
   - component: {fileID: 5891567553117405230}
   - component: {fileID: 5891567553117405224}
+  - component: {fileID: -7197488221554859067}
   m_Layer: 5
   m_Name: PausePanel
   m_TagString: Untagged
@@ -98,6 +99,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ConfirmationWidget: {fileID: 0}
   m_OptionsPanel: {fileID: 7026627872623513704}
+  _scriptablesWorldAudio: {fileID: 11400000, guid: 19dbf4f3c9a4b474d92e900db4dd54a6, type: 2}
+--- !u!114 &-7197488221554859067
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5891567553117405228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b3eeab2d6b5e5f641a562e2ac340a2a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5891567553368955967
 GameObject:
   m_ObjectHideFlags: 0
