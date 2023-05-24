@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NaughtyAttributes;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,10 +14,13 @@ namespace _Scripts.UI
         float _musicValue;
         float _soundsValue;
 
-        [SerializeField]
+        [SerializeField][Expandable]
         private ScriptablesWorldAudio _scriptablesWorldAudio;
+        [SerializeField]
+        private UpdateAudio _updateAudio;
         private ObservableSound _observableSound;
         private AudioManager _audioManager;
+
 
         void Awake()
         {
@@ -68,6 +72,8 @@ namespace _Scripts.UI
             
             _musicFill.fillAmount = _musicValue / 100;
             _soundsFill.fillAmount = _soundsValue / 100;
+
+            _updateAudio.UpdateAllAudio();
         }
 
         protected void PlaySound(ScriptablesWorldAudio _audioScript, EnumWorldSounds _action)

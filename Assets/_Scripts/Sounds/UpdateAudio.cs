@@ -1,41 +1,55 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class UpdateAudio : MonoBehaviour
 {
     private float worldSoundVolume;
     private float relativeSoundVolume;
+    private AudioManager[] _audioManagers;
 
-    [SerializeField] private ScriptablesWorldAudio[] worldAudios;
-    [SerializeField] private ScriptablesRelativeAudio[] relativeAudios;
-
-    // Start is called before the first frame update
-    void Start()
-    {
-        worldSoundVolume = PlayerPrefs.GetFloat("Music", 100f);
-        relativeSoundVolume = PlayerPrefs.GetFloat("Sounds", 100f);
-    }
 
     // call this to change audios in the map
-    public void GetAllAudio()
+    public void UpdateAllAudio()
     {
-        worldAudios = GameObject.FindObjectsOfType<ScriptablesWorldAudio>();
-        relativeAudios = GameObject.FindObjectsOfType<ScriptablesRelativeAudio>();
+        // get player's prefs info
+        worldSoundVolume = PlayerPrefs.GetFloat("Music", 100f);
+        relativeSoundVolume = PlayerPrefs.GetFloat("Sounds", 100f);
 
-        SetAudioVolume();
+        _audioManagers = GameObject.FindObjectsOfType<AudioManager>();
+
+        Debug.Log("Player prefs: " + worldSoundVolume);
+
+        // get all audios and set parameters
+        foreach (var worldAudio in ItemCreator.LoadAllResourceAtPath<ScriptablesWorldAudio>("Scriptable objects/Sounds/Worlds"))
+        {
+            SetWorldAudioVolume(worldAudio);
+        }
+        foreach (var relativeAudio in ItemCreator.LoadAllResourceAtPath<ScriptablesRelativeAudio>("Scriptable objects/Sounds/Relatives"))
+        {
+            SetRelativeAudioVolume(relativeAudio);
+        }
     }
 
     // do not call
-    private void SetAudioVolume()
+    private void SetWorldAudioVolume(ScriptablesWorldAudio wSO)
     {
-        foreach (var worldAudio in worldAudios)
+        // change sound for next sound that will be play
+        wSO.volume = worldSoundVolume / 100f;
+
+        // apply anytime in the music
+        foreach (var audioMan in _audioManagers)
         {
-            worldAudio.volume = worldSoundVolume;
+            audioMan.SetMusicVolume(worldSoundVolume / 100f);
         }
-        foreach (var relativeAudio in relativeAudios)
-        {
-            relativeAudio.volume = relativeSoundVolume;
-        }
+
+        Debug.Log("Volume du scriptable: " + wSO.volume);
+    }
+
+    private void SetRelativeAudioVolume(ScriptablesRelativeAudio rSO)
+    {
+        rSO.volume = relativeSoundVolume / 100f;
     }
 }

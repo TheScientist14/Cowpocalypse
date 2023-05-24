@@ -7,32 +7,25 @@ public class AudioManager : MonoBehaviour, IObserver
 {
     [SerializeField]
     private GameObject[] _playingObjects;
-    private float _volume;
     [SerializeField]
     private AudioSource _audioSource;
     private float _audioLength;
-    private int _playingObjectsLenght;
 
     public void OnNotify(ScriptablesWorldAudio _audioScript, EnumWorldSounds _action)
     {
-        Debug.Log("OnNotify");
-
-        _volume = _audioScript.volume;
+        _audioSource.volume = _audioScript.volume;
 
         switch (_action)
         {
             case EnumWorldSounds.Sound1:
-                PlayWorldSound(_audioScript._sound1);
-                Debug.Log("Select audio");
+                PlayWorldSound(_audioScript._sound1, _audioScript.volume);
                 break;
             case EnumWorldSounds.Sound2:
-                PlayWorldSound(_audioScript._sound2);
+                PlayWorldSound(_audioScript._sound2, _audioScript.volume);
                 float lenght = _audioScript._sound2.length;
-                Debug.Log("Swipe audio");
                 break;
             case EnumWorldSounds.Sound3:
-                PlayWorldSound(_audioScript._sound3);
-                Debug.Log("Confirm audio");
+                PlayWorldSound(_audioScript._sound3, _audioScript.volume);
                 break;
             default:
                break;
@@ -58,11 +51,11 @@ public class AudioManager : MonoBehaviour, IObserver
         }
     }
 
-    private void PlayWorldSound(AudioClip _audioClip)
+    private void PlayWorldSound(AudioClip _audioClip, float volume)
     {
-        print("play");
         _audioLength = _audioClip.length;
         _audioSource.clip = _audioClip;
+        SetMusicVolume(volume);
         _audioSource.Play();
     }
 
@@ -74,5 +67,10 @@ public class AudioManager : MonoBehaviour, IObserver
     public void SetMusicLoop(bool loop)
     {
         _audioSource.loop = true;
+    }
+
+    public void SetMusicVolume(float volume)
+    {
+        _audioSource.volume = volume;
     }
 }
