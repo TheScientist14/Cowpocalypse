@@ -105,6 +105,7 @@ MonoBehaviour:
   isSpaceTaken: 0
   isMachineBlocking: 0
   MachineInSequence: {fileID: 0}
+  _scriptablesRelativeAudio: {fileID: 11400000, guid: 835ed91ede956f04299125ceae77c349, type: 2}
 --- !u!61 &-3767882059337263534
 BoxCollider2D:
   m_ObjectHideFlags: 0

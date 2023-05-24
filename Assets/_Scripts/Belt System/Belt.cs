@@ -15,12 +15,20 @@ public class Belt : MonoBehaviour
 
     public Machine MachineInSequence;
 
+    [SerializeField]
+    private ScriptablesRelativeAudio _scriptablesRelativeAudio;
+    private AudioSource _audioSource;
+    private float _volume;
+
     private void Start()
     {
         isMachineBlocking = false;
         BeltInSequence = null;
         BeltInSequence = GetNextBelt();
         gameObject.name = $"Belt: {BeltID++}";
+
+        _audioSource = GetComponent<AudioSource>();
+        CallSound(EnumRelativeSounds.Activate);
     }
 
     private void Update()
@@ -95,4 +103,45 @@ public class Belt : MonoBehaviour
     {
         PoolManager.instance.DespawnObject(BeltItem);
     }
+
+    private void CallSound(EnumRelativeSounds _action)
+    {
+        _volume = _scriptablesRelativeAudio.volume;
+
+        switch (_action)
+        {
+            case EnumRelativeSounds.Spawn:
+                PlayRelativeSound(_scriptablesRelativeAudio._spawnAudio, false);
+                Debug.Log("Spawn audio");
+                break;
+            case EnumRelativeSounds.Activate:
+                PlayRelativeSound(_scriptablesRelativeAudio._activateAudio, true);
+                Debug.Log("Activate audio");
+                break;
+            case EnumRelativeSounds.Problem:
+                PlayRelativeSound(_scriptablesRelativeAudio._problemAudio, false);
+                Debug.Log("Problem audio");
+                break;
+            default:
+                break;
+        }
+    }
+
+    private void PlayRelativeSound(AudioClip _audioClip, bool loop)
+    {
+        _audioSource.loop = loop;
+        if (loop)
+        {
+            _audioSource.volume = _volume / 2;
+        }
+        else
+        {
+            _audioSource.volume = _volume;
+        }
+        _audioSource.clip = _audioClip;
+        _audioSource.Play();
+
+        Debug.Log(_audioClip);
+    }
+
 }

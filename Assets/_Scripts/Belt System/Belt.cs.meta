@@ -3,7 +3,11 @@ guid: 05b9f740fffdcf042977eedbb674d609
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - BeltInSequence: {instanceID: 0}
+  - BeltItem: {instanceID: 0}
+  - MachineInSequence: {instanceID: 0}
+  - _scriptablesRelativeAudio: {fileID: 11400000, guid: 835ed91ede956f04299125ceae77c349, type: 2}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 
