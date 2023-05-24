@@ -107,26 +107,41 @@ public class ModalWindowController : Singleton<ModalWindowController>
     #endregion
     internal void RessourceClicked(RessourceUI ressourceUI)
     {
-        if (_inCatalog)
+        if (ressourceUI.ItemData.Unlocked)
         {
-            if (InMachineSettings)
-            {
-                Debug.LogWarning("Integrate with machine production logic using stored itemData");
-                _machineSettingsPanel.SetItemData(ressourceUI.ItemData);
-                ClosePanel(_recipeUnlockPanel);
-            }
-            else
-            {
-                Debug.LogWarning("Integrate unlocking logic");
-            }
+            Debug.Log($"{ressourceUI.ItemData.Name} already unlocked.");
+            return;
         }
-        else
+
+        if (!_inCatalog)
         {
             Debug.LogError("Got a RessourceClicked event, but we're not in catalog");
+            return;
             //Same call made from UIEvents
             /*if (_inMachineSettings)
                 OpenCatalogFromMachineSettings();   */
         }
+
+        if (InMachineSettings)
+        {
+            Debug.LogWarning("Integrate with machine production logic using stored itemData");
+            _machineSettingsPanel.SetItemData(ressourceUI.ItemData);
+            ClosePanel(_recipeUnlockPanel);
+            return;
+        }
+
+        if (Wallet.instance.Money < ressourceUI.ItemData.Tier.UnlockPrice)
+        {
+            // TODO: ajout d'un feedback (son, message ou autre) pour prévenir le joueur qu'il n'as pas assez d'argent
+            Debug.LogWarning(
+                $"Not enough cash to unlock {ressourceUI.ItemData.Name}. Need ${ressourceUI.ItemData.Tier.UnlockPrice - Wallet.instance.Money} more.");
+            return;
+        }
+
+        Wallet.instance.Money -= ressourceUI.ItemData.Tier.UnlockPrice;
+        ressourceUI.ItemData.Unlocked = true;
+        Debug.Log($"Successfully unlocked {ressourceUI.ItemData.Name}.");
+        //TODO: rajouter les item unlocked dans le save system
     }
 
     internal void CheckClickedOutside(Vector2 position)

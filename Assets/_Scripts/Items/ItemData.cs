@@ -12,9 +12,11 @@ public class ItemData : ScriptableObject, ISerializationCallbackReceiver
     
     [SerializeField] List<ItemData> _parents = new List<ItemData>();
     [SerializeField] List<int> _amounts = new List<int>();
-
+    
     public Dictionary<ItemData, int> Recipes { get; } = new Dictionary<ItemData, int>();
 
+    public bool Unlocked { get; set; }
+    
     public void OnBeforeSerialize() { }
 
     public void OnAfterDeserialize()
