@@ -32,7 +32,7 @@ public class PauseMenuBehaviour : MonoBehaviour
     public void SaveGame()
     {
         Debug.Log("Saving...");
-        SaveSystem.instance.SaveGame();
+        SaveSystem.instance.SaveGameAsync().Wait();
     }
 
     public void LoadGame()

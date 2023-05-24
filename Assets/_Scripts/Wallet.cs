@@ -1,8 +1,11 @@
 ﻿using System;
 using UnityEngine;
+using NaughtyAttributes;
 
-public class Wallet : MonoBehaviour
+public class Wallet : Singleton<Wallet>
 {
+    [ReadOnly]
+    [SerializeField]
     int _money;
         
     public int Money
