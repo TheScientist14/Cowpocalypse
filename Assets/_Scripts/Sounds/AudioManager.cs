@@ -15,7 +15,7 @@ public class AudioManager : MonoBehaviour, IObserver
     {
         _audioSource.volume = _audioScript.volume;
 
-        switch (_action)
+        switch(_action)
         {
             case EnumWorldSounds.Sound1:
                 PlayWorldSound(_audioScript._sound1, _audioScript.volume);
@@ -28,25 +28,31 @@ public class AudioManager : MonoBehaviour, IObserver
                 PlayWorldSound(_audioScript._sound3, _audioScript.volume);
                 break;
             default:
-               break;
+                break;
         }
     }
 
     private void OnEnable()
     {
-        foreach (GameObject _playingObject in _playingObjects)
+        foreach(GameObject _playingObject in _playingObjects)
         {
             // enable observers
-            _playingObject.GetComponent<ObservableSound>().AddObserver(this);
+            ObservableSound observableSound = _playingObject.GetComponent<ObservableSound>();
+            if(observableSound == null)
+            {
+                Debug.LogError(_playingObject.name + " has no ObservableSound component");
+                continue;
+            }
+            observableSound.AddObserver(this);
         }
     }
 
     private void OnDisable()
     {
-        foreach (GameObject _playingObject in _playingObjects)
+        foreach(GameObject _playingObject in _playingObjects)
         {
             // disable observers
-            if (_playingObject != null)
+            if(_playingObject != null)
                 _playingObject.GetComponent<ObservableSound>().RemoveObserver(this);
         }
     }
