@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.UI;
 
 public class ModalWindowController : Singleton<ModalWindowController>
@@ -21,6 +22,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
     [SerializeField] private ButtonPanel _closeButton;
     [SerializeField] private ButtonPanel _returnButton;
     private Stack<Panel> _openedPanels = new Stack<Panel>();
+    private Stack<string> _openedPanelTitles = new Stack<string>();
     public bool _inCatalog => _recipeUnlockPanel.CurrentlyOpened;
     private bool InMachineSettings => _machineSettingsPanel.CurrentlyOpened;
     private void Awake()
@@ -58,10 +60,18 @@ public class ModalWindowController : Singleton<ModalWindowController>
     }
     private void OpenPanel(Panel panel, string title)
     {
+        float delay = 0f;
+        if(_openedPanels.Count > 0)
+        {
+            _openedPanels.Peek().ChangeVisibility(false, 0, 0.2f);
+            delay = 0.2f;
+        }
+
         _openedPanels.Push(panel);
-        panel.ChangeVisibility(true);
+        _openedPanelTitles.Push(title);
+        panel.ChangeVisibility(true, delay);
         _titlePanel.Title.Value = title;
-        _titlePanel.ChangeVisibility(true);
+        _titlePanel.ChangeVisibility(true, delay);
         _windowBackground.enabled = true;
         UpdateUiWithStackCount();
     }
@@ -69,28 +79,46 @@ public class ModalWindowController : Singleton<ModalWindowController>
     {
         if(_openedPanels.Peek() == panel)
         {
+            _openedPanelTitles.Pop(); // important to pop title before
             ClosePanelInStack(_openedPanels.Pop());
         }
         else
         {
-            var removed = new List<Panel>(_openedPanels);
-            removed.Remove(panel);
-            _openedPanels = new Stack<Panel>(removed);
+            var removedPanel = new List<Panel>(_openedPanels);
+            var removedTitle = new List<string>(_openedPanelTitles);
+            int idxPanelToRemove = removedPanel.IndexOf(panel);
+            Assert.IsTrue(idxPanelToRemove >= 0);
+            removedPanel.RemoveAt(idxPanelToRemove);
+            removedTitle.RemoveAt(idxPanelToRemove);
+            _openedPanels = new Stack<Panel>(removedPanel);
+            _openedPanelTitles = new Stack<string>(removedTitle);
             ClosePanelInStack(panel);
         }
     }
     public void CloseAll()
     {
         while(_openedPanels.Count > 0)
-            ClosePanelInStack(_openedPanels.Pop());
+        {
+            _openedPanelTitles.Pop(); // important to pop title before
+            _openedPanels.Pop().ChangeVisibility(false);
+        }
+        UpdateUiWithStackCount();
     }
     public void CloseLast()
     {
+        _openedPanelTitles.Pop(); // important to pop title before
         ClosePanelInStack(_openedPanels.Pop());
     }
+
+    // show again the panel under the closed one (current top one)
     void ClosePanelInStack(Panel panel)
     {
-        panel.ChangeVisibility(false);
+        panel.ChangeVisibility(false, 0, 0.2f);
+        if(_openedPanels.Count > 0)
+        {
+            _openedPanels.Peek().ChangeVisibility(true, 0.2f);
+            _titlePanel.Title.Value = _openedPanelTitles.Peek();
+        }
         UpdateUiWithStackCount();
     }
 

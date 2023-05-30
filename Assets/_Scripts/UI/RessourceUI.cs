@@ -14,9 +14,9 @@ public class RessourceUI : MonoBehaviour
     private ItemData _itemData;
     public void UpdateValue(int? current = null, int? max = null)
     {
-        if (max.HasValue)
+        if(max.HasValue)
         {
-            if (current.HasValue)
+            if(current.HasValue)
             {
                 _currentCount.Value = current.Value.ToString();
                 _requiredCount.Value = _requiredPrefix + max.Value.ToString();
@@ -27,7 +27,7 @@ public class RessourceUI : MonoBehaviour
                 _requiredCount.Value = max.Value.ToString();
             }
         }
-        else if (current.HasValue)
+        else if(current.HasValue)
         {
             _currentCount.Value = current.Value.ToString();
         }
@@ -37,6 +37,14 @@ public class RessourceUI : MonoBehaviour
         get => _itemData; set
         {
             _itemData = value;
+            if(_itemData == null)
+            {
+                _currentCount.Value = "NO";
+                _requiredCount.Value = "NE";
+                _image.sprite = null;
+                gameObject.name = "None";
+                return;
+            }
             _image.sprite = _itemData.Sprite;
             gameObject.name = _itemData.name;
             UpdateValue(max: _itemData.Price);

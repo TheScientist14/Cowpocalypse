@@ -32,7 +32,7 @@ public class Spawner : Belt
         while(true)
         {
             yield return new WaitForSeconds(SpawnRate);
-            if (isSpaceTaken == false)
+            if(isSpaceTaken == false)
             {
                 CallTheSound(EnumRelativeSounds.Activate);
                 BeltItem = PoolManager.instance.SpawnObject(SpawnedItemData, transform.position);
@@ -43,9 +43,15 @@ public class Spawner : Belt
 
     public void CallTheSound(EnumRelativeSounds _action)
     {
+        if(_thescriptablesRelativeAudio == null)
+        {
+            Debug.LogWarning(gameObject.name + " has no scriptables relative audio");
+            return;
+        }
+
         _thevolume = _thescriptablesRelativeAudio.volume;
 
-        switch (_action)
+        switch(_action)
         {
             case EnumRelativeSounds.Spawn:
                 PlayTheRelativeSound(_thescriptablesRelativeAudio._spawnAudio, false);
@@ -67,7 +73,7 @@ public class Spawner : Belt
     protected void PlayTheRelativeSound(AudioClip _audioClip, bool loop)
     {
         _theaudioSource.loop = loop;
-        if (loop)
+        if(loop)
         {
             _theaudioSource.volume = _thevolume / 2;
         }
