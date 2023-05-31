@@ -1,31 +1,22 @@
-﻿using UnityEngine;
-
-namespace _Scripts
+﻿namespace _Scripts
 {
     public class StateMachine : Singleton<StateMachine>
     {
-        [SerializeField] State _startingState;
-
         State _currentState;
 
         void Start()
         {
-            SetState(_startingState);
+            SetState(new FreeViewState());
         }
 
         void Update()
         {
-            if (_currentState == null)
-                return;
-            
-            _currentState.Update();
+            _currentState?.Update();
         }
 
         public void SetState(State state)
         {
-            if (_currentState != null)
-                _currentState.Exit();
-            
+            _currentState?.Exit();
             _currentState = state;
             _currentState.Enter();
         }
