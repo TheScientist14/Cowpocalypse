@@ -1,4 +1,6 @@
-﻿public class StateMachine : Singleton<StateMachine>
+﻿using UnityEngine;
+
+public class StateMachine : Singleton<StateMachine>
 {
     State _currentState;
 
