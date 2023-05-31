@@ -10,14 +10,23 @@ public class Machine : Belt
     [Expandable]
     [SerializeField] private ItemData CraftedItem;
 
+    [SerializeField]
+    private ScriptablesRelativeAudio _thescriptablesRelativeAudio;
+    private AudioSource _theaudioSource;
+    private float _thevolume;
+
     public Dictionary<ItemData, int> Stock { get; set; }
     public StockUpdateEvent stockUpdated { get; private set; } = new StockUpdateEvent();
     public class StockUpdateEvent : UnityEvent<Dictionary<ItemData, int>> { }
+
     private void Start()
     {
         Stock = new Dictionary<ItemData, int>();
         stockUpdated.Invoke(Stock);
         gameObject.name = $"Machine: {BeltID++}";
+
+        _theaudioSource = GetComponent<AudioSource>();
+        CallSound(EnumRelativeSounds.Spawn);
 
         SetCafteditem(CraftedItem);
     }
@@ -47,6 +56,8 @@ public class Machine : Belt
             Stock[item] -= CraftedItem.Recipes[item];
         stockUpdated.Invoke(Stock);
         yield return new WaitForSeconds(CraftedItem.CraftDuration);
+        // play sound
+        CallSound(EnumRelativeSounds.Activate);
         Item craftedItem = PoolManager.instance.SpawnObject(CraftedItem, transform.position);
         StartCoroutine(Output(craftedItem));
     }
@@ -104,4 +115,45 @@ public class Machine : Belt
         stockUpdated.Invoke(Stock);
         StartCoroutine(MoveQueuedItems(item));
     }
+
+    public void CallSound(EnumRelativeSounds _action)
+    {
+        _thevolume = _thescriptablesRelativeAudio.volume;
+
+        switch (_action)
+        {
+            case EnumRelativeSounds.Spawn:
+                PlayRelativeSound(_thescriptablesRelativeAudio._spawnAudio, false);
+                Debug.Log("Spawn audio");
+                break;
+            case EnumRelativeSounds.Activate:
+                PlayRelativeSound(_thescriptablesRelativeAudio._activateAudio, false);
+                Debug.Log("Activate audio");
+                break;
+            case EnumRelativeSounds.Problem:
+                PlayRelativeSound(_thescriptablesRelativeAudio._problemAudio, false);
+                Debug.Log("Problem audio");
+                break;
+            default:
+                break;
+        }
+    }
+
+    protected void PlayRelativeSound(AudioClip _audioClip, bool loop)
+    {
+        _theaudioSource.loop = loop;
+        if (loop)
+        {
+            _theaudioSource.volume = _thevolume / 2;
+        }
+        else
+        {
+            _theaudioSource.volume = _thevolume;
+        }
+        _theaudioSource.clip = _audioClip;
+        _theaudioSource.Play();
+
+        Debug.Log(_audioClip);
+    }
+
 }

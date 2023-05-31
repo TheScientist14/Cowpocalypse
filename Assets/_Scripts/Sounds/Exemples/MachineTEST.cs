@@ -14,6 +14,7 @@ public class MachineTEST : MonoBehaviour
     void Start()
     {
         _audioSource = GetComponent<AudioSource>();
+        // to call the sound
         CallSound(EnumRelativeSounds.Spawn);
     }
 
@@ -24,15 +25,15 @@ public class MachineTEST : MonoBehaviour
         switch (_action)
         {
             case EnumRelativeSounds.Spawn:
-                PlayRelativeSound(_scriptablesRelativeAudio._spawnAudio);
+                PlayRelativeSound(_scriptablesRelativeAudio._spawnAudio, false);
                 Debug.Log("Spawn audio");
                 break;
             case EnumRelativeSounds.Activate:
-                PlayRelativeSound(_scriptablesRelativeAudio._activateAudio);
+                PlayRelativeSound(_scriptablesRelativeAudio._activateAudio, false);
                 Debug.Log("Activate audio");
                 break;
             case EnumRelativeSounds.Problem:
-                PlayRelativeSound(_scriptablesRelativeAudio._problemAudio);
+                PlayRelativeSound(_scriptablesRelativeAudio._problemAudio, false);
                 Debug.Log("Problem audio");
                 break;
             default:
@@ -40,9 +41,20 @@ public class MachineTEST : MonoBehaviour
         }
     }
 
-    protected void PlayRelativeSound(AudioClip _audioClip)
+    protected void PlayRelativeSound(AudioClip _audioClip, bool loop)
     {
-        _audioSource.PlayOneShot(_audioClip, _volume);
+        _audioSource.loop = loop;
+        if (loop)
+        {
+            _audioSource.volume = _volume / 2;
+        }
+        else
+        {
+            _audioSource.volume = _volume;
+        }
+        _audioSource.clip = _audioClip;
+        _audioSource.Play();
+
         Debug.Log(_audioClip);
     }
 

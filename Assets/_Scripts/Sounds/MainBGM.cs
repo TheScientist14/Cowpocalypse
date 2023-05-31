@@ -1,3 +1,4 @@
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,7 @@ public class MainBGM : MonoBehaviour
 
     private ObservableSound _observableSound;
     [SerializeField]
+    [Expandable]
     private ScriptablesWorldAudio _scriptablesWorldAudio;
     private AudioManager _audioManager;
 
@@ -33,15 +35,12 @@ public class MainBGM : MonoBehaviour
         switch (idMusic)
         {
             case 0:
-                print("Music 1");
                 PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound1);
                 break;
             case 1:
-                print("Music 2");
                 PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound2);
                 break;
             case 2:
-                print("Music 3");
                 PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound3);
                 break;
             default:

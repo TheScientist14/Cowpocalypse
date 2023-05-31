@@ -9,7 +9,7 @@ public class BeltManager : Singleton<BeltManager>
     public GameObject BeltPrefab;
 
     public static BeltManager Instance;
-    public float speed = 2f;
+    public float speed = 0.2f;
     private InputsActions m_InputAction;
     private LineRenderer lineRenderer;
 

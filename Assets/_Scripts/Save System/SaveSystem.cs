@@ -15,14 +15,17 @@ namespace _Scripts.Save_System
 {
     public class SaveSystem : Singleton<SaveSystem>
     {
-        [ShowAssetPreview(128, 128)] [SerializeField]
+        [ShowAssetPreview()] [SerializeField]
         private GameObject beltPrefab;
 
-        [ShowAssetPreview(128, 128)] [SerializeField]
+        [ShowAssetPreview()] [SerializeField]
         private GameObject machinePrefab;
         
-        [ShowAssetPreview(128, 128)] [SerializeField]
+        [ShowAssetPreview()] [SerializeField]
         private GameObject splitterPrefab;
+        
+        [ShowAssetPreview()] [SerializeField]
+        private GameObject mergerPrefab;
 
         private const string Filename = "Cowpocalypse.noext";
         private static string _path;
@@ -105,6 +108,7 @@ namespace _Scripts.Save_System
             LoadBelts();
             LoadSplitters();
             LoadPlayer();
+            LoadMerger();
 
             loadedGame.Invoke();
         }
@@ -185,6 +189,24 @@ namespace _Scripts.Save_System
                         _itemDatas[splitterSaveData.GetItem.GetValueOrDefault().GetName],
                         splitterSaveData.GetItem.GetValueOrDefault().GetPos);
                 }
+            }
+        }
+
+        public void LoadMerger()
+        {
+            foreach (MergerSaveData mergerSaveData in GetSavedGameData().MergerDatas)
+            {
+                Merger merger =
+                    Instantiate(mergerPrefab, mergerSaveData.GetPos, Quaternion.Euler(mergerSaveData.GetRot))
+                        .GetComponent<Merger>();
+                
+                if (mergerSaveData.GetItem.GetValueOrDefault().GetName != null)
+                {
+                    merger.BeltItem = PoolManager.instance.SpawnObject(
+                        _itemDatas[mergerSaveData.GetItem.GetValueOrDefault().GetName],
+                        mergerSaveData.GetItem.GetValueOrDefault().GetPos);
+                }
+                
             }
         }
 

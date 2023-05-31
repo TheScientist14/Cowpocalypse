@@ -1,4 +1,5 @@
-﻿using System;
+﻿using NaughtyAttributes;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,10 +14,13 @@ namespace _Scripts.UI
         float _musicValue;
         float _soundsValue;
 
-        [SerializeField]
+        [SerializeField][Expandable]
         private ScriptablesWorldAudio _scriptablesWorldAudio;
+
+        private UpdateAudio _updateAudio;
         private ObservableSound _observableSound;
         private AudioManager _audioManager;
+
 
         void Awake()
         {
@@ -26,12 +30,14 @@ namespace _Scripts.UI
             _observableSound = GetComponent<ObservableSound>();
             _audioManager = GameObject.Find("AudioManagerUI").GetComponent<AudioManager>();
 
+            _updateAudio = GameObject.Find("UpdateAudio").GetComponent<UpdateAudio>();
+
             Refresh();
         }
 
         public void Quit()
         {
-            PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound1);
+            PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound2);
             gameObject.SetActive(false);
         }
 
@@ -56,7 +62,6 @@ namespace _Scripts.UI
         public void SoundsDown()
         {
             _soundsValue = Mathf.Max(0f, _soundsValue - _step);
-            PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound2);
             Refresh();
         }
 
@@ -68,6 +73,8 @@ namespace _Scripts.UI
             
             _musicFill.fillAmount = _musicValue / 100;
             _soundsFill.fillAmount = _soundsValue / 100;
+
+            _updateAudio.UpdateAllAudio();
         }
 
         protected void PlaySound(ScriptablesWorldAudio _audioScript, EnumWorldSounds _action)

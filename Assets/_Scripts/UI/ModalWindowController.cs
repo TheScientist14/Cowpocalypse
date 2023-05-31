@@ -11,6 +11,8 @@ using UnityEngine.UI;
 public class ModalWindowController : Singleton<ModalWindowController>
 {
     [SerializeField]
+    private Image _windowBackground;
+    [SerializeField]
     private MachineSettingsPanel _machineSettingsPanel;
     [SerializeField]
     private AllTiersPanel _recipeUnlockPanel;
@@ -31,6 +33,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
         _recipeUnlockPanel.ChangeVisibility(false, 0f, 0f);
         _machineSettingsPanel.ChangeVisibility(false, 0f, 0f);
         _titlePanel.ChangeVisibility(false, 0f, 0f);
+        _windowBackground.enabled = false;
     }
     #region CalledFromUi
     public void OpenCatalogFromGame() => OpenCatalog("Recipe unlocks");
@@ -45,7 +48,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
     {
 
         //We might try to open a new panel when clicking on a different machine outside of the panel, if tryting to open in any other circunstances we don't refresh UI
-        if (PointIsOutsideOfPanel(screenPosition) && machine != _machineSettingsPanel.OpenedMachine)
+        if(PointIsOutsideOfPanel(screenPosition) && machine != _machineSettingsPanel.OpenedMachine)
             CloseAll();
         else
             return;
@@ -59,11 +62,12 @@ public class ModalWindowController : Singleton<ModalWindowController>
         panel.ChangeVisibility(true);
         _titlePanel.Title.Value = title;
         _titlePanel.ChangeVisibility(true);
+        _windowBackground.enabled = true;
         UpdateUiWithStackCount();
     }
     private void ClosePanel(Panel panel)
     {
-        if (_openedPanels.Peek() == panel)
+        if(_openedPanels.Peek() == panel)
         {
             ClosePanelInStack(_openedPanels.Pop());
         }
@@ -77,7 +81,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
     }
     public void CloseAll()
     {
-        while (_openedPanels.Count > 0)
+        while(_openedPanels.Count > 0)
             ClosePanelInStack(_openedPanels.Pop());
     }
     public void CloseLast()
@@ -92,7 +96,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
 
     private void UpdateUiWithStackCount()
     {
-        switch (_openedPanels.Count)
+        switch(_openedPanels.Count)
         {
             case 0: CloseEverything(); break;
             case 1: _returnButton.ChangeVisibility(false); break;
@@ -103,17 +107,18 @@ public class ModalWindowController : Singleton<ModalWindowController>
     private void CloseEverything()
     {
         _titlePanel.ChangeVisibility(false);
+        _windowBackground.enabled = false;
     }
     #endregion
     internal void RessourceClicked(RessourceUI ressourceUI)
     {
-        if (ressourceUI.ItemData.Unlocked)
+        if(ressourceUI.ItemData.Unlocked)
         {
             Debug.Log($"{ressourceUI.ItemData.Name} already unlocked.");
             return;
         }
 
-        if (!_inCatalog)
+        if(!_inCatalog)
         {
             Debug.LogError("Got a RessourceClicked event, but we're not in catalog");
             return;
@@ -122,7 +127,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
                 OpenCatalogFromMachineSettings();   */
         }
 
-        if (InMachineSettings)
+        if(InMachineSettings)
         {
             Debug.LogWarning("Integrate with machine production logic using stored itemData");
             _machineSettingsPanel.SetItemData(ressourceUI.ItemData);
@@ -130,7 +135,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
             return;
         }
 
-        if (Wallet.instance.Money < ressourceUI.ItemData.Tier.UnlockPrice)
+        if(Wallet.instance.Money < ressourceUI.ItemData.Tier.UnlockPrice)
         {
             // TODO: ajout d'un feedback (son, message ou autre) pour prévenir le joueur qu'il n'as pas assez d'argent
             Debug.LogWarning(
@@ -146,7 +151,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
 
     internal void CheckClickedOutside(Vector2 position)
     {
-        if (PointIsOutsideOfPanel(position))
+        if(PointIsOutsideOfPanel(position))
             CloseAll();
     }
 

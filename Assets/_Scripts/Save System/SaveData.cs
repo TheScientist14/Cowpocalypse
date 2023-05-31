@@ -16,7 +16,7 @@ namespace _Scripts.Save_System
         private List<BeltSaveData> _beltDatas = new();
         private List<MachineSaveData> _machineDatas = new();
         private List<SplitterSaveData> _splitterDatas = new();
-        private List<SplitterSaveData> _mergerDatas = new();
+        private List<MergerSaveData> _mergerDatas = new();
         private PlayerSaveData _playerSaveData;
 
         public SaveData()
@@ -44,6 +44,13 @@ namespace _Scripts.Save_System
                 _splitterDatas.Add(new SplitterSaveData(transform.position, transform.rotation.eulerAngles, splitter.BeltItem));
             }
 
+            foreach (var o in Object.FindObjectsOfType(typeof(Merger)))
+            {
+                var merger = (Merger)o;
+                var transform = merger.transform;
+                _mergerDatas.Add(new MergerSaveData(transform.position, transform.rotation.eulerAngles, merger.BeltItem));
+            }
+
             List<StatSaveData> stats = new List<StatSaveData>();
             
             foreach (var stat in StatManager.instance.Stats)
@@ -58,7 +65,7 @@ namespace _Scripts.Save_System
         public List<MachineSaveData> MachineDatas => _machineDatas;
         public List<SplitterSaveData> SplitterDatas => _splitterDatas;
 
-        public List<SplitterSaveData> MergerDatas => _mergerDatas;
+        public List<MergerSaveData> MergerDatas => _mergerDatas;
 
         public PlayerSaveData PlayerSaveData => _playerSaveData;
     }

@@ -17,6 +17,11 @@ public class Stat
                 return;
 
             _currentLevel = value;
+            
+            if (StatData.Name == "Belt speed")
+            {
+                Shader.SetGlobalFloat("_speed", Value);
+            }
         }
     }
 
