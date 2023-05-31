@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GridManager : MonoBehaviour
+public class GridManager : Singleton<GridManager>
 {
     // contains the instances of belt to 
     private Dictionary<Vector2Int, Belt> m_WorldGrid;

@@ -21,6 +21,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
     private TitlePanel _titlePanel;
     [SerializeField] private ButtonPanel _closeButton;
     [SerializeField] private ButtonPanel _returnButton;
+    [SerializeField] private Button _deleteMachineButton;
     private Stack<Panel> _openedPanels = new Stack<Panel>();
     private Stack<string> _openedPanelTitles = new Stack<string>();
     public bool _inCatalog => _recipeUnlockPanel.CurrentlyOpened;
@@ -29,6 +30,8 @@ public class ModalWindowController : Singleton<ModalWindowController>
     {
         _returnButton.Button.onClick.AddListener(CloseLast);
         _closeButton.Button.onClick.AddListener(CloseAll);
+        _deleteMachineButton.onClick.AddListener(CloseAll);
+        _deleteMachineButton.onClick.AddListener(DeleteMachine);
     }
     private void Start()
     {
@@ -136,6 +139,12 @@ public class ModalWindowController : Singleton<ModalWindowController>
     {
         _titlePanel.ChangeVisibility(false);
         _windowBackground.enabled = false;
+    }
+
+    private void DeleteMachine()
+    {
+        Assert.IsNotNull(_machineSettingsPanel.OpenedMachine);
+        Destroy(_machineSettingsPanel.OpenedMachine.gameObject);
     }
     #endregion
     internal void RessourceClicked(RessourceUI ressourceUI)

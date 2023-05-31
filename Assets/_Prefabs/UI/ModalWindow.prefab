@@ -785,6 +785,7 @@ MonoBehaviour:
   _titlePanel: {fileID: 1998337983}
   _closeButton: {fileID: 2757988671199479908}
   _returnButton: {fileID: 5777954624175681828}
+  _deleteMachineButton: {fileID: 6018945907621663610}
 --- !u!114 &579903065588776004
 MonoBehaviour:
   m_ObjectHideFlags: 0

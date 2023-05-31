@@ -1,5 +1,7 @@
 using _Scripts;
 using UnityEngine;
+using UnityEngine.Assertions;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
 public class BeltManager : Singleton<BeltManager>
@@ -7,6 +9,7 @@ public class BeltManager : Singleton<BeltManager>
     public InputAction DebugBeltSpawn;
 
     public GameObject BeltPrefab;
+    private GameObject OtherMachinePrefab;
 
     public static BeltManager Instance;
     public float speed = 0.2f;
@@ -22,8 +25,8 @@ public class BeltManager : Singleton<BeltManager>
     private void Start()
     {
         //Debug-----------------
-        DebugBeltSpawn.started += context => SpawnBelts();
-        DebugBeltSpawn.Enable();
+        // DebugBeltSpawn.started += context => SpawnBelts();
+        // DebugBeltSpawn.Enable();
         //-----------------------
 
         GameGrid = GetComponent<Grid>();
@@ -34,11 +37,12 @@ public class BeltManager : Singleton<BeltManager>
         m_InputAction.Player.DragBuildMode.canceled += ctx => EndDrag(ctx.ReadValue<Vector2>());
         m_InputAction.Player.DragBuildMode.performed += context => DuringDrag();
 
-        m_InputAction.Player.ClickBuildMode.started += context => InitDrag();
+        m_InputAction.Player.ClickBuildMode.started += context => PlaceSimpleMachine();
 
         lineRenderer = GetComponent<LineRenderer>();
 
         DisableBuildMode();
+        EndPlaceMachine();
     }
 
     private void InitDrag()
@@ -68,7 +72,7 @@ public class BeltManager : Singleton<BeltManager>
     {
         Vector3 currentDragPosition = m_Camera.ScreenToWorldPoint(m_InputAction.Player.PointerPosition.ReadValue<Vector2>());
         currentDragPosition = PlaceInGrid(currentDragPosition);
-        if (DraggingPhase > 2)
+        if(DraggingPhase > 2)
             DraggingPhase = 1;
         if(DraggingPhase == 1)
             MakeFirstLine(currentDragPosition);
@@ -95,7 +99,7 @@ public class BeltManager : Singleton<BeltManager>
     private void MakeFirstLine(Vector3 end)
     {
         Vector3 realEnd;
-        if(Mathf.Abs(Mathf.Abs(end.x) -  Mathf.Abs(lineRenderer.GetPosition(0).x)) > Mathf.Abs(Mathf.Abs(end.y) - Mathf.Abs(lineRenderer.GetPosition(0).y)))
+        if(Mathf.Abs(Mathf.Abs(end.x) - Mathf.Abs(lineRenderer.GetPosition(0).x)) > Mathf.Abs(Mathf.Abs(end.y) - Mathf.Abs(lineRenderer.GetPosition(0).y)))
         {
             BeltIsVertical = false;
             realEnd = new Vector3(end.x, lineRenderer.GetPosition(0).y, 0);
@@ -131,7 +135,7 @@ public class BeltManager : Singleton<BeltManager>
         if(DraggingPhase == 2)
         {
             BeltIsVertical = !BeltIsVertical;
-            while (spawnedBelt.transform.position != lineRenderer.GetPosition(2))
+            while(spawnedBelt.transform.position != lineRenderer.GetPosition(2))
             {
                 spawnedBelt = SpawnBelt(spawnedBelt.transform.position + spawnedBelt.transform.up * cellSize, lineRenderer.GetPosition(2));
             }
@@ -144,13 +148,19 @@ public class BeltManager : Singleton<BeltManager>
     {
         GameObject belt = Instantiate(BeltPrefab, position, Quaternion.identity);
         belt.transform.LookAt(direction);
-        
+
         if(!BeltIsVertical)
             belt.transform.Rotate(Vector3.forward, 90, Space.Self);
         belt.transform.Rotate(Vector3.right, 90, Space.Self);
         if(belt.transform.position == direction)
             belt.transform.Rotate(Vector3.left, 90, Space.Self);
         DisableBuildMode();
+
+        Belt b = belt.GetComponent<Belt>();
+        Assert.IsNotNull(b);
+        Vector3Int cellPos = GameGrid.WorldToCell(position);
+        GridManager.instance.SetBeltAt(new Vector2Int(cellPos.x, cellPos.y), b, true);
+
         return belt;
     }
 
@@ -163,4 +173,37 @@ public class BeltManager : Singleton<BeltManager>
     {
         StateMachine.instance.SetState(new FreeViewState());
     }
+    private void PlaceSimpleMachine()
+    {
+        Assert.IsNotNull(OtherMachinePrefab);
+        Vector3 mouseWorldPos = m_Camera.ScreenToWorldPoint(m_InputAction.Player.PointerPosition.ReadValue<Vector2>());
+        Vector3 machineWorldPosInGrid = PlaceInGrid(mouseWorldPos);
+        SpawnMachine(machineWorldPosInGrid, Vector3.up);
+        EndPlaceMachine();
+    }
+
+    private GameObject SpawnMachine(Vector3 position, Vector3 direction)
+    {
+        GameObject belt = Instantiate(OtherMachinePrefab, position, Quaternion.identity);
+
+        Belt b = belt.GetComponent<Belt>();
+        Assert.IsNotNull(b);
+        Vector3Int cellPos = GameGrid.WorldToCell(position);
+        GridManager.instance.SetBeltAt(new Vector2Int(cellPos.x, cellPos.y), b, true);
+
+        return belt;
+    }
+
+    public void StartPlaceMachine(GameObject iMachineToPlace)
+    {
+        OtherMachinePrefab = iMachineToPlace;
+        m_InputAction.Player.ClickBuildMode.Enable();
+        m_InputAction.Player.ClickButton.Disable();
+    }
+    public void EndPlaceMachine()
+    {
+        m_InputAction.Player.ClickBuildMode.Disable();
+        m_InputAction.Player.ClickButton.Enable();
+    }
+
 }
