@@ -1,4 +1,4 @@
-﻿public class BuildState : State
+﻿public class BuildBeltState : State
 {
     InputsActions _inputAction;
     

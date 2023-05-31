@@ -109,19 +109,19 @@ public class Belt : MonoBehaviour
     {
         _volume = _scriptablesRelativeAudio.volume;
 
-        switch (_action)
+        switch(_action)
         {
             case EnumRelativeSounds.Spawn:
                 PlayRelativeSound(_scriptablesRelativeAudio._spawnAudio, false);
-                Debug.Log("Spawn audio");
+                // Debug.Log("Spawn audio");
                 break;
             case EnumRelativeSounds.Activate:
                 PlayRelativeSound(_scriptablesRelativeAudio._activateAudio, true);
-                Debug.Log("Activate audio");
+                // Debug.Log("Activate audio");
                 break;
             case EnumRelativeSounds.Problem:
                 PlayRelativeSound(_scriptablesRelativeAudio._problemAudio, false);
-                Debug.Log("Problem audio");
+                // Debug.Log("Problem audio");
                 break;
             default:
                 break;
@@ -131,7 +131,7 @@ public class Belt : MonoBehaviour
     private void PlayRelativeSound(AudioClip _audioClip, bool loop)
     {
         _audioSource.loop = loop;
-        if (loop)
+        if(loop)
         {
             _audioSource.volume = _volume / 2;
         }
@@ -142,7 +142,7 @@ public class Belt : MonoBehaviour
         _audioSource.clip = _audioClip;
         _audioSource.Play();
 
-        Debug.Log(_audioClip);
+        // Debug.Log(_audioClip);
     }
 
 }

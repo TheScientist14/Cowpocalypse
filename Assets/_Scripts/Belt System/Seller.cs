@@ -37,19 +37,19 @@ public class Seller : Belt
     {
         _thevolume = _thescriptablesRelativeAudio.volume;
 
-        switch (_action)
+        switch(_action)
         {
             case EnumRelativeSounds.Spawn:
                 PlayRelativeSound(_thescriptablesRelativeAudio._spawnAudio, false);
-                Debug.Log("Spawn audio");
+                // Debug.Log("Spawn audio");
                 break;
             case EnumRelativeSounds.Activate:
                 PlayRelativeSound(_thescriptablesRelativeAudio._activateAudio, false);
-                Debug.Log("Activate audio");
+                // Debug.Log("Activate audio");
                 break;
             case EnumRelativeSounds.Problem:
                 PlayRelativeSound(_thescriptablesRelativeAudio._problemAudio, false);
-                Debug.Log("Problem audio");
+                // Debug.Log("Problem audio");
                 break;
             default:
                 break;
@@ -59,7 +59,7 @@ public class Seller : Belt
     protected void PlayRelativeSound(AudioClip _audioClip, bool loop)
     {
         _theaudioSource.loop = loop;
-        if (loop)
+        if(loop)
         {
             _theaudioSource.volume = _thevolume / 2;
         }
@@ -70,7 +70,7 @@ public class Seller : Belt
         _theaudioSource.clip = _audioClip;
         _theaudioSource.Play();
 
-        Debug.Log(_audioClip);
+        // Debug.Log(_audioClip);
     }
 
 }

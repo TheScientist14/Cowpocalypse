@@ -16,6 +16,7 @@ public class StateMachine : Singleton<StateMachine>
 
     public void SetState(State state)
     {
+        // Debug.Log("Current state : " + state.GetType().Name);
         _currentState?.Exit();
         _currentState = state;
         _currentState.Enter();

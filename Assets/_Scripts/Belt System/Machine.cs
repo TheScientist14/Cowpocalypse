@@ -38,7 +38,7 @@ public class Machine : Belt
         Vector3 toPosition = transform.position;
         float step = BeltManager.instance.speed * Time.fixedDeltaTime;
 
-        while (queuedItem.GetItem().transform.position != toPosition)
+        while(queuedItem.GetItem().transform.position != toPosition)
         {
             queuedItem.GetItem().transform.position = Vector3.MoveTowards(queuedItem.transform.position, toPosition, step);
             yield return null;
@@ -46,13 +46,13 @@ public class Machine : Belt
 
         PoolManager.instance.DespawnObject(queuedItem);
 
-        foreach (ItemData item in CraftedItem.Recipes.Keys)
+        foreach(ItemData item in CraftedItem.Recipes.Keys)
         {
-            if (Stock[item] < CraftedItem.Recipes[item])
+            if(Stock[item] < CraftedItem.Recipes[item])
                 yield break;
         }
 
-        foreach (ItemData item in CraftedItem.Recipes.Keys)
+        foreach(ItemData item in CraftedItem.Recipes.Keys)
             Stock[item] -= CraftedItem.Recipes[item];
         stockUpdated.Invoke(Stock);
         yield return new WaitForSeconds(CraftedItem.CraftDuration);
@@ -64,23 +64,23 @@ public class Machine : Belt
 
     private IEnumerator Output(Item item)
     {
-        if (BeltInSequence != null && BeltInSequence.isSpaceTaken == false)
+        if(BeltInSequence != null && BeltInSequence.isSpaceTaken == false)
         {
-            if (BeltInSequence.GetComponent<Machine>())
+            if(BeltInSequence.GetComponent<Machine>())
             {
                 Machine machine = BeltInSequence.GetComponent<Machine>();
-                if (machine.GetCraftedItem() != null)
+                if(machine.GetCraftedItem() != null)
                     isMachineBlocking = !machine.GetCraftedItem().Recipes.ContainsKey(item.GetItemData());
                 else
                     isMachineBlocking = true;
             }
-            if (!isMachineBlocking)
+            if(!isMachineBlocking)
             {
                 Vector3 toPosition = BeltInSequence.transform.position;
                 BeltInSequence.isSpaceTaken = true;
                 float step = BeltManager.instance.speed * Time.fixedDeltaTime;
 
-                while (item.GetItem().transform.position != toPosition)
+                while(item.GetItem().transform.position != toPosition)
                 {
                     item.GetItem().transform.position = Vector3.MoveTowards(item.transform.position, toPosition, step);
                     yield return null;
@@ -97,8 +97,8 @@ public class Machine : Belt
         CraftedItem = craftedItemData;
         Stock.Clear();
         stockUpdated.Invoke(Stock);
-        if (CraftedItem != null)
-            foreach (ItemData item in CraftedItem.Recipes.Keys)
+        if(CraftedItem != null)
+            foreach(ItemData item in CraftedItem.Recipes.Keys)
                 Stock.Add(item, 0);
     }
 
@@ -120,19 +120,19 @@ public class Machine : Belt
     {
         _thevolume = _thescriptablesRelativeAudio.volume;
 
-        switch (_action)
+        switch(_action)
         {
             case EnumRelativeSounds.Spawn:
                 PlayRelativeSound(_thescriptablesRelativeAudio._spawnAudio, false);
-                Debug.Log("Spawn audio");
+                // Debug.Log("Spawn audio");
                 break;
             case EnumRelativeSounds.Activate:
                 PlayRelativeSound(_thescriptablesRelativeAudio._activateAudio, false);
-                Debug.Log("Activate audio");
+                // Debug.Log("Activate audio");
                 break;
             case EnumRelativeSounds.Problem:
                 PlayRelativeSound(_thescriptablesRelativeAudio._problemAudio, false);
-                Debug.Log("Problem audio");
+                // Debug.Log("Problem audio");
                 break;
             default:
                 break;
@@ -142,7 +142,7 @@ public class Machine : Belt
     protected void PlayRelativeSound(AudioClip _audioClip, bool loop)
     {
         _theaudioSource.loop = loop;
-        if (loop)
+        if(loop)
         {
             _theaudioSource.volume = _thevolume / 2;
         }
@@ -153,7 +153,7 @@ public class Machine : Belt
         _theaudioSource.clip = _audioClip;
         _theaudioSource.Play();
 
-        Debug.Log(_audioClip);
+        // Debug.Log(_audioClip);
     }
 
 }

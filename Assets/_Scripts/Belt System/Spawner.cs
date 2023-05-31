@@ -55,15 +55,15 @@ public class Spawner : Belt
         {
             case EnumRelativeSounds.Spawn:
                 PlayTheRelativeSound(_thescriptablesRelativeAudio._spawnAudio, false);
-                Debug.Log("Spawn audio");
+                // Debug.Log("Spawn audio");
                 break;
             case EnumRelativeSounds.Activate:
                 PlayTheRelativeSound(_thescriptablesRelativeAudio._activateAudio, false);
-                Debug.Log("Activate audio");
+                // Debug.Log("Activate audio");
                 break;
             case EnumRelativeSounds.Problem:
                 PlayTheRelativeSound(_thescriptablesRelativeAudio._problemAudio, false);
-                Debug.Log("Problem audio");
+                // Debug.Log("Problem audio");
                 break;
             default:
                 break;
@@ -84,7 +84,7 @@ public class Spawner : Belt
         _theaudioSource.clip = _audioClip;
         _theaudioSource.Play();
 
-        Debug.Log(_audioClip);
+        // Debug.Log(_audioClip);
     }
 
 }

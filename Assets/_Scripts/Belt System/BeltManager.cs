@@ -50,6 +50,7 @@ public class BeltManager : Singleton<BeltManager>
         /*if(DraggingPhase >= 2)
             DraggingPhase = 0;*/
 
+        Debug.Log("Dragging");
         lineRenderer.enabled = true;
         // DraggingPhase++;
         Vector3 m_InitMouseWorldPos = m_Camera.ScreenToWorldPoint(m_InputAction.Player.PointerPosition.ReadValue<Vector2>());
@@ -66,7 +67,9 @@ public class BeltManager : Singleton<BeltManager>
     private void EndDrag(Vector2 endPosition)
     {
         SpawnBelts();
+        lineRenderer.enabled = false;
         lineRenderer.positionCount = 0;
+
     }
 
     private void DuringDrag()
@@ -169,7 +172,7 @@ public class BeltManager : Singleton<BeltManager>
 
     public void EnableBuildMode()
     {
-        StateMachine.instance.SetState(new BuildState());
+        StateMachine.instance.SetState(new BuildBeltState());
     }
 
     private void DisableBuildMode()
@@ -199,16 +202,13 @@ public class BeltManager : Singleton<BeltManager>
 
     public void StartPlaceMachine(GameObject iMachineToPlace)
     {
-        // #TODO replace with state machine
         OtherMachinePrefab = iMachineToPlace;
-        m_InputAction.Player.ClickBuildMode.Enable();
-        m_InputAction.Player.ClickButton.Disable();
+        StateMachine.instance.SetState(new BuildMachineState());
+        // SetUpCallbacks();
     }
     public void EndPlaceMachine()
     {
-        // #TODO replace with state machine
-        m_InputAction.Player.ClickBuildMode.Disable();
-        m_InputAction.Player.ClickButton.Enable();
+        StateMachine.instance.SetState(new FreeViewState());
     }
 
 }
