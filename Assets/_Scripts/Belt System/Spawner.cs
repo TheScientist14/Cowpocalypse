@@ -7,7 +7,6 @@ using System;
 
 public class Spawner : Belt
 {
-    public GameObject SpawnedItem;
     [Expandable]
     public ItemData SpawnedItemData;
     public float SpawnRate;

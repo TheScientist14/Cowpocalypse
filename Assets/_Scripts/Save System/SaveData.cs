@@ -18,6 +18,8 @@ namespace _Scripts.Save_System
         private List<SplitterSaveData> _splitterDatas = new();
         private List<MergerSaveData> _mergerDatas = new();
         private PlayerSaveData _playerSaveData;
+        
+        //TODO : Save which item is unlocked.
 
         public SaveData()
         {
