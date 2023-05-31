@@ -3,11 +3,12 @@ using UnityEngine;
 
 public class WalletUI : MonoBehaviour
 {
-    [SerializeField] Wallet _wallet;
+    Wallet _wallet;
     [SerializeField] TextMeshProUGUI _walletText;
 
     void OnEnable()
     {
+        _wallet = Wallet.instance;
         _wallet.MoneyChanged += OnMoneyChanged;
     }
 
