@@ -15,6 +15,9 @@ namespace _Scripts.Save_System
 {
     public class SaveSystem : Singleton<SaveSystem>
     {
+        [SerializeField]
+        private GameObject saveIconPrefab;
+
         [ShowAssetPreview()] [SerializeField]
         private GameObject beltPrefab;
 
@@ -38,6 +41,7 @@ namespace _Scripts.Save_System
         public UnityEvent loadedGame;
 
         private JobHandle _jobHandle;
+        private GameObject _saveIcon;
 
         private void Awake()
         {
@@ -54,6 +58,7 @@ namespace _Scripts.Save_System
         private void OnGameSaved()
         {
             Debug.Log("Game Saved");
+            _saveIcon.SetActive(false);
         }
 
         private void OnGameLoaded()
@@ -71,6 +76,15 @@ namespace _Scripts.Save_System
 
         public async Task SaveGameAsync()
         {
+            if (_saveIcon == null)
+            {
+                _saveIcon = Instantiate(saveIconPrefab);
+            }
+            else
+            {
+                _saveIcon.SetActive(true);
+            }
+            
             Debug.Log("Game Save async Started : { Thread : " + Thread.CurrentThread.ManagedThreadId + " }");
             SaveData data = new SaveData();
             await Task.Run(() =>
