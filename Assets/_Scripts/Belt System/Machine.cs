@@ -28,7 +28,7 @@ public class Machine : Belt
         _theaudioSource = GetComponent<AudioSource>();
         CallSound(EnumRelativeSounds.Spawn);
 
-        SetCafteditem(CraftedItem);
+        SetCrafteditem(CraftedItem);
     }
 
     public IEnumerator MoveQueuedItems(Item queuedItem)
@@ -92,7 +92,7 @@ public class Machine : Belt
         }
     }
 
-    public void SetCafteditem(ItemData craftedItemData)
+    public void SetCrafteditem(ItemData craftedItemData)
     {
         CraftedItem = craftedItemData;
         Stock.Clear();

@@ -17,40 +17,42 @@ public class Splitter : Belt
         gameObject.name = $"Splitter: {BeltID++}";
     }
 
-    private void Update()
+    new void Update()
     {
-        if (OutputBelts[0] == null)
+        base.Update();
+
+        if(OutputBelts[0] == null)
             OutputBelts[0] = (GetLeftBelt());
-        if (OutputBelts[1] == null)
+        if(OutputBelts[1] == null)
             OutputBelts[1] = GetUpBelt();
-        if (OutputBelts[2] == null)
+        if(OutputBelts[2] == null)
             OutputBelts[2] = GetRightBelt();
 
-        if (BeltItem != null && BeltItem.GetItem() != null)
+        if(BeltItem != null && BeltItem.GetItem() != null)
             StartCoroutine(StartBeltMove());
     }
 
     public override IEnumerator StartBeltMove()
     {
         isSpaceTaken = true;
-        if (CurrentOutput > 2)
+        if(CurrentOutput > 2)
             CurrentOutput = 0;
 
-        if (OutputBelts[CurrentOutput] != null)
+        if(OutputBelts[CurrentOutput] != null)
         {
-            if (OutputBelts[CurrentOutput].isSpaceTaken == false)
+            if(OutputBelts[CurrentOutput].isSpaceTaken == false)
             {
-                if (OutputBelts[CurrentOutput].GetComponent<Machine>())
+                if(OutputBelts[CurrentOutput].GetComponent<Machine>())
                 {
                     MachineInSequence = OutputBelts[CurrentOutput].GetComponent<Machine>();
-                    if (MachineInSequence.GetCraftedItem() != null)
+                    if(MachineInSequence.GetCraftedItem() != null)
                         isMachineBlocking = !MachineInSequence.GetCraftedItem().Recipes.ContainsKey(BeltItem.GetItemData());
                     else
                         isMachineBlocking = true;
                 }
-                if (!isMachineBlocking)
+                if(!isMachineBlocking)
                 {
-                    if (MachineInSequence != null)
+                    if(MachineInSequence != null)
                     {
                         MachineInSequence.AddToStock(BeltItem);
                         isSpaceTaken = false;
@@ -65,7 +67,7 @@ public class Splitter : Belt
                         OutputBelts[CurrentOutput].isSpaceTaken = true;
                         float step = BeltManager.instance.speed * Time.fixedDeltaTime;
 
-                        while (BeltItem.GetItem().transform.position != toPosition)
+                        while(BeltItem.GetItem().transform.position != toPosition)
                         {
                             BeltItem.GetItem().transform.position = Vector3.MoveTowards(BeltItem.transform.position, toPosition, step);
                             yield return null;
@@ -79,10 +81,10 @@ public class Splitter : Belt
                     }
                 }
             }
-            else if (!ItemMoving)
+            else if(!ItemMoving)
                 CurrentOutput++;
         }
-        else if (!ItemMoving)
+        else if(!ItemMoving)
             CurrentOutput++;
     }
 
@@ -91,10 +93,10 @@ public class Splitter : Belt
         Transform currentBeltTransform = transform;
         RaycastHit2D hit = Physics2D.Raycast(transform.position + -transform.right, -currentBeltTransform.right, 0.1f);
 
-        if (hit.collider != null)
+        if(hit.collider != null)
         {
             Belt belt = hit.collider.GetComponent<Belt>();
-            if (belt != null)
+            if(belt != null)
                 return belt;
         }
 
@@ -106,10 +108,10 @@ public class Splitter : Belt
         Transform currentBeltTransform = transform;
         RaycastHit2D hit = Physics2D.Raycast(transform.position + transform.up, currentBeltTransform.up, 0.1f);
 
-        if (hit.collider != null)
+        if(hit.collider != null)
         {
             Belt belt = hit.collider.GetComponent<Belt>();
-            if (belt != null)
+            if(belt != null)
                 return belt;
         }
 
@@ -121,10 +123,10 @@ public class Splitter : Belt
         Transform currentBeltTransform = transform;
         RaycastHit2D hit = Physics2D.Raycast(transform.position + transform.right, currentBeltTransform.right, 0.1f);
 
-        if (hit.collider != null)
+        if(hit.collider != null)
         {
             Belt belt = hit.collider.GetComponent<Belt>();
-            if (belt != null)
+            if(belt != null)
                 return belt;
         }
 

@@ -21,7 +21,7 @@ public class Seller : Belt
     }
 
     // Update is called once per frame
-    void Update()
+    new void Update()
     {
         if(BeltItem == null)
             return;

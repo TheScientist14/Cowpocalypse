@@ -44,7 +44,7 @@ public class MachineSettingsPanel : Panel
 
     public void SetItemData(ItemData item)
     {
-        _machine.SetCafteditem(item);
+        _machine.SetCrafteditem(item);
         _recipeRessourceUI.ItemData = item;
         //Instead of displaying the cost we display one, being the nb of items being produced
         _itemToRessource = new Dictionary<ItemData, RessourceUI>();

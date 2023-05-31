@@ -177,7 +177,7 @@ namespace _Scripts.Save_System
                 
                 if (machineSaveData.ItemToCraftName != "")
                 {
-                    machine.SetCafteditem(_itemDatas[machineSaveData.ItemToCraftName]);
+                    machine.SetCrafteditem(_itemDatas[machineSaveData.ItemToCraftName]);
                 }
 
                 if (machineSaveData.GetItem.GetValueOrDefault().GetName != null)

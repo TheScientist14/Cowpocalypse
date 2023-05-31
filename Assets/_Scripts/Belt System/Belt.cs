@@ -20,10 +20,11 @@ public class Belt : MonoBehaviour
     private AudioSource _audioSource;
     private float _volume;
 
+    private Coroutine m_Coroutine;
+
     private void Start()
     {
         isMachineBlocking = false;
-        BeltInSequence = null;
         BeltInSequence = GetNextBelt();
         gameObject.name = $"Belt: {BeltID++}";
 
@@ -31,13 +32,16 @@ public class Belt : MonoBehaviour
         CallSound(EnumRelativeSounds.Activate);
     }
 
-    private void Update()
+    protected void Update()
     {
         if(BeltInSequence == null)
             BeltInSequence = GetNextBelt();
 
-        if(BeltItem != null && BeltItem.GetItem() != null)
-            StartCoroutine(StartBeltMove());
+        if(BeltInSequence == null)
+            return;
+
+        if(BeltItem != null && BeltItem.GetItem() != null && m_Coroutine == null)
+            m_Coroutine = StartCoroutine(StartBeltMove());
     }
 
     public virtual IEnumerator StartBeltMove()
@@ -46,9 +50,8 @@ public class Belt : MonoBehaviour
 
         if(BeltItem.GetItem() != null && BeltInSequence != null && BeltInSequence.isSpaceTaken == false)
         {
-            if(BeltInSequence.GetComponent<Machine>())
+            if(MachineInSequence)
             {
-                MachineInSequence = BeltInSequence.GetComponent<Machine>();
                 if(MachineInSequence.GetCraftedItem() != null)
                     isMachineBlocking = !MachineInSequence.GetCraftedItem().Recipes.ContainsKey(BeltItem.GetItemData());
                 else
@@ -80,8 +83,10 @@ public class Belt : MonoBehaviour
             }
         }
     }
+
     public Belt GetNextBelt()
     {
+        isMachineBlocking = false;
         Transform currentBeltTransform = transform;
         RaycastHit2D hit = Physics2D.Raycast(transform.position + transform.up, currentBeltTransform.up, 0.1f);
 
