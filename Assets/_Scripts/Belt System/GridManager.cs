@@ -46,7 +46,7 @@ public class GridManager : Singleton<GridManager>
         if(prevBelt != null)
         {
             if(iDoOverride && prevBelt.GetComponent<Spawner>() == null) // cannot override spawners
-                Destroy(GetBeltAt(iCellPos));
+                Destroy(prevBelt.gameObject);
             else
                 return false;
         }
