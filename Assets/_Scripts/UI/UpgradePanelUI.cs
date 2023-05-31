@@ -4,12 +4,14 @@ using UnityEngine.Serialization;
 
 public class UpgradePanelUI : MonoBehaviour
 {
+    StatManager _statManager;
+    
     [SerializeField] RectTransform _panel;
-    [SerializeField] StatManager _statManager;
     [SerializeField] StatUI _statUIPrefab;
 
     void Start()
     {
+        _statManager = StatManager.instance;
         foreach (var stat in _statManager.Stats)
         {
             var statUI = Instantiate(_statUIPrefab, _panel);

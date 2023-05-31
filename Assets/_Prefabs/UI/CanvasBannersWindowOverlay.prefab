@@ -1133,6 +1133,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3926909845864777589}
+  - component: {fileID: 3657278972151866467}
   m_Layer: 5
   m_Name: Banners
   m_TagString: Untagged
@@ -1162,6 +1163,20 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &3657278972151866467
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3926909845864777590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 52d8491305bd9e943bbeffdf78d2a109, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _panel: {fileID: 2307148179882105658}
+  _statUIPrefab: {fileID: 1925933621281400141, guid: e593aeadb80f5e2419bbc2d91d2bc95e, type: 3}
 --- !u!1 &5495114014507399269
 GameObject:
   m_ObjectHideFlags: 0
@@ -1623,7 +1638,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8c7933eb94a34430be153575420fd320, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _wallet: {fileID: 0}
   _walletText: {fileID: 6880411536942782100}
 --- !u!114 &6880411536942782100
 MonoBehaviour:
@@ -2093,6 +2107,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 47d243faf543a0a44a933d389c5256dc, type: 3}
+--- !u!224 &2307148179882105658 stripped
+RectTransform:
+  m_CorrespondingSourceObject: {fileID: 794928214039560190, guid: 47d243faf543a0a44a933d389c5256dc, type: 3}
+  m_PrefabInstance: {fileID: 3102001526400132292}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &6667870452431077856 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 8612445087847605540, guid: 47d243faf543a0a44a933d389c5256dc, type: 3}
@@ -3369,7 +3388,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6370459910435237719, guid: 83f2f7ef77424ec48816bd4d0f2c1ce1, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 500
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6370459910435237719, guid: 83f2f7ef77424ec48816bd4d0f2c1ce1, type: 3}
       propertyPath: m_AnchoredPosition.y
