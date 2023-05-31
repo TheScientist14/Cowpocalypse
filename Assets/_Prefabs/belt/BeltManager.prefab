@@ -46,23 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a6a8f608a974b5448ec6322e1c639a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  DebugBeltSpawn:
-    m_Name: Debug Belt Spawn
-    m_Type: 0
-    m_ExpectedControlType: 
-    m_Id: 97a8e5d3-4f59-4b76-982b-4a7362e287cf
-    m_Processors: 
-    m_Interactions: 
-    m_SingletonActionBindings:
-    - m_Name: 
-      m_Id: d4644297-3563-4ba8-a208-1f47c0f9e027
-      m_Path: <Keyboard>/enter
-      m_Interactions: 
-      m_Processors: 
-      m_Groups: 
-      m_Action: Debug Belt Spawn
-      m_Flags: 0
-    m_Flags: 0
+  Validate: {fileID: 0}
   BeltPrefab: {fileID: 4732986801910414389, guid: 39b3afbc04efd43489d67a26e6c013a1, type: 3}
   speed: 0.2
   m_Camera: {fileID: 0}

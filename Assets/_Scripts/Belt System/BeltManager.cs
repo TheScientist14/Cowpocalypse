@@ -3,14 +3,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 public class BeltManager : Singleton<BeltManager>
 {
-    public Button Validate;
-
     public GameObject BeltPrefab;
     private GameObject OtherMachinePrefab;
 
@@ -22,6 +17,8 @@ public class BeltManager : Singleton<BeltManager>
     // private int DraggingPhase = 0;
     private bool BeltIsVertical;
 
+    private bool IsInDeleteMode = false;
+
     [SerializeField] private Camera m_Camera;
     private Grid GameGrid;
 
@@ -31,11 +28,7 @@ public class BeltManager : Singleton<BeltManager>
 
         m_InputAction = InputMaster.instance.InputAction;
 
-        m_InputAction.Player.DragBuildMode.started += context => InitDrag();
-        m_InputAction.Player.DragBuildMode.canceled += ctx => EndDrag(ctx.ReadValue<Vector2>());
-        m_InputAction.Player.DragBuildMode.performed += context => DuringDrag();
-
-        m_InputAction.Player.ClickBuildMode.started += context => PlaceSimpleMachine();
+        _InitCallbacks();
 
         // Validate.onClick.AddListener(SpawnBelts);
 
@@ -43,6 +36,15 @@ public class BeltManager : Singleton<BeltManager>
 
         DisableBuildMode();
         EndPlaceMachine();
+    }
+
+    private void _InitCallbacks()
+    {
+        m_InputAction.Player.DragBuildMode.started += context => InitDrag();
+        m_InputAction.Player.DragBuildMode.canceled += ctx => EndDrag(ctx.ReadValue<Vector2>());
+        m_InputAction.Player.DragBuildMode.performed += context => DuringDrag();
+
+        m_InputAction.Player.ClickBuildMode.started += context => PlaceOrDeleteMachine();
     }
 
     private void InitDrag()
@@ -137,6 +139,9 @@ public class BeltManager : Singleton<BeltManager>
 
         while(spawnedBelt.transform.position != lineRenderer.GetPosition(1) - spawnedBelt.transform.up * cellSize)
             spawnedBelt = SpawnBelt(spawnedBelt.transform.position + spawnedBelt.transform.up * cellSize, lineRenderer.GetPosition(1));
+
+        StartCoroutine(DelayDisableBuildMode());
+
         // print(DraggingPhase);
         /*if(DraggingPhase == 2)
         {
@@ -150,6 +155,12 @@ public class BeltManager : Singleton<BeltManager>
         }*/
     }
 
+    IEnumerator DelayDisableBuildMode()
+    {
+        yield return new WaitForEndOfFrame();
+        DisableBuildMode();
+    }
+
     private GameObject SpawnBelt(Vector3 position, Vector3 direction)
     {
         GameObject belt = Instantiate(BeltPrefab, position, Quaternion.identity);
@@ -160,7 +171,6 @@ public class BeltManager : Singleton<BeltManager>
         belt.transform.Rotate(Vector3.right, 90, Space.Self);
         if(belt.transform.position == direction)
             belt.transform.Rotate(Vector3.left, 90, Space.Self);
-        DisableBuildMode();
 
         Belt b = belt.GetComponent<Belt>();
         Assert.IsNotNull(b);
@@ -173,6 +183,7 @@ public class BeltManager : Singleton<BeltManager>
     public void EnableBuildMode()
     {
         StateMachine.instance.SetState(new BuildBeltState());
+        _InitCallbacks();
     }
 
     private void DisableBuildMode()
@@ -211,4 +222,24 @@ public class BeltManager : Singleton<BeltManager>
         StateMachine.instance.SetState(new FreeViewState());
     }
 
+    private void PlaceOrDeleteMachine()
+    {
+        if(IsInDeleteMode)
+            DeleteMachineOnCursor();
+        else
+            PlaceSimpleMachine();
+    }
+
+    private void DeleteMachineOnCursor()
+    {
+        Vector3 mouseWorldPos = m_Camera.ScreenToWorldPoint(m_InputAction.Player.PointerPosition.ReadValue<Vector2>());
+        Vector3Int cellPos = GameGrid.WorldToCell(mouseWorldPos);
+        GridManager.instance.SetBeltAt(new Vector2Int(cellPos.x, cellPos.y), null, true); // do not delete spawners
+    }
+
+    public void SwitchDeleteMode()
+    {
+        StateMachine.instance.SetState(IsInDeleteMode ? new FreeViewState() : new DeleteState());
+        IsInDeleteMode = !IsInDeleteMode;
+    }
 }
