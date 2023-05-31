@@ -1,7 +1,4 @@
-﻿namespace _Scripts
+﻿public class FreeViewState : State
 {
-    public class FreeViewState : State
-    {
-        
-    }
+    
 }

@@ -33,7 +33,7 @@ public class PauseMenuBehaviour : MonoBehaviour
 
     public void ClosePauseMenu()
     {
-        // #TODO : Resume game
+        StateMachine.instance.SetState(new FreeViewState());
         Debug.LogWarning("TODO: Resume game");
         PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound2);
         gameObject.SetActive(false);
