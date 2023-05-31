@@ -14,7 +14,7 @@ public class MachineSettingsPanel : Panel
     public override void ChangeVisibility(bool show, float delay = 0, float? durationOverride = null)
     {
         base.ChangeVisibility(show, delay, durationOverride);
-        //Clear in case we try to acces machine from closed settings
+        //Clear in case we try to access machine from closed settings
         if(!show)
             _machine = null;
     }
@@ -27,6 +27,8 @@ public class MachineSettingsPanel : Panel
                 _machine.stockUpdated.RemoveListener(UpdateStock);
             value.stockUpdated.AddListener(UpdateStock);
             _machine = value;
+            if(_machine == null)
+                return;
             SetItemData(_machine.GetCraftedItem());
             UpdateStock(_machine.Stock);
         }

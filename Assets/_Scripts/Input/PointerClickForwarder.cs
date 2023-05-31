@@ -26,14 +26,7 @@ public class PointerClickForwarder : MonoBehaviour
     }
     void CheckValue(Vector3 mousePosition)
     {
-        // Set the z position to the distance from the camera
-        mousePosition.z = -_camera.transform.position.z;
-
-        // Convert the mouse position from screen space to world space
-        Vector3 mousePosWorld = _camera.ScreenToWorldPoint(mousePosition);
-
-        // Check if there is any collider at the mouse position
-        Collider2D collider = Physics2D.OverlapPoint(mousePosWorld, _layers);
+        Collider2D collider = GetClickedObject(mousePosition);
         _onClick.Invoke(mousePosition, collider?.gameObject);
         //Ray approach
         /*Ray ray = _camera.ScreenPointToRay(_inputAction.Player.PointerPosition.ReadValue<Vector2>());
@@ -43,5 +36,17 @@ public class PointerClickForwarder : MonoBehaviour
         {
             _onClick.Invoke(mousePosition,hit.collider.gameObject);
         }*/
+    }
+
+    Collider2D GetClickedObject(Vector3 mousePosition)
+    {
+        // Set the z position to the distance from the camera
+        mousePosition.z = -_camera.transform.position.z;
+
+        // Convert the mouse position from screen space to world space
+        Vector3 mousePosWorld = _camera.ScreenToWorldPoint(mousePosition);
+
+        // Check if there is any collider at the mouse position
+        return Physics2D.OverlapPoint(mousePosWorld, _layers);
     }
 }

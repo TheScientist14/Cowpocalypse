@@ -33,6 +33,15 @@
                     "initialStateCheck": false
                 },
                 {
+                    "name": "TripleClickButton",
+                    "type": "Button",
+                    "id": "71d0baa8-5fcd-4990-b973-44ae6895d669",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "MultiTap(tapCount=3)",
+                    "initialStateCheck": false
+                },
+                {
                     "name": "LongPressButton",
                     "type": "Button",
                     "id": "66145a7b-3fa2-4b91-9e79-b4a907eec7d3",
@@ -126,7 +135,7 @@
                 {
                     "name": "",
                     "id": "cdd605dd-e4d8-4a36-8748-85c07065dc77",
-                    "path": "<Touchscreen>/touch0/position",
+                    "path": "<Touchscreen>/touch0/tap",
                     "interactions": "Tap",
                     "processors": "",
                     "groups": "Touchscreen",
@@ -170,7 +179,7 @@
                 {
                     "name": "",
                     "id": "7e269523-5df9-4ab6-a2da-8b7738d1f8c7",
-                    "path": "<Touchscreen>/touch0/position",
+                    "path": "<Touchscreen>/touch0/tap",
                     "interactions": "",
                     "processors": "",
                     "groups": "Touchscreen",
@@ -346,7 +355,7 @@
                 {
                     "name": "",
                     "id": "dc60821b-0759-4c64-a680-1177b9ef283c",
-                    "path": "<Touchscreen>/touch0/position",
+                    "path": "<Touchscreen>/touch0/tap",
                     "interactions": "Tap",
                     "processors": "",
                     "groups": "Touchscreen",
@@ -362,6 +371,28 @@
                     "processors": "",
                     "groups": "KBM",
                     "action": "ClickBuildMode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "613c4e9c-fad5-4d23-9bcf-b477f38577e1",
+                    "path": "<Mouse>/leftButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM",
+                    "action": "TripleClickButton",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f76554e1-9e03-478d-aa70-dd7e14648404",
+                    "path": "<Touchscreen>/touch0/tap",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Touchscreen",
+                    "action": "TripleClickButton",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

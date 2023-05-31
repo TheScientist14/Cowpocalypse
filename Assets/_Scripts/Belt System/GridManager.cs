@@ -9,7 +9,7 @@ public class GridManager : Singleton<GridManager>
     private Dictionary<Vector2Int, Belt> m_WorldGrid;
 
     // Start is called before the first frame update
-    void Start()
+    void Awake()
     {
         m_WorldGrid = new Dictionary<Vector2Int, Belt>();
     }

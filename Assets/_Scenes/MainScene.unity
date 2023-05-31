@@ -1002,17 +1002,13 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 3926909844329453006, guid: 2f41322951505894f8ff5f5ba1392085, type: 3}
-      propertyPath: _deleteMachineButton
-      value: 
-      objectReference: {fileID: 799792592}
     - target: {fileID: 3926909844688297209, guid: 2f41322951505894f8ff5f5ba1392085, type: 3}
       propertyPath: m_Size
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3926909845165786486, guid: 2f41322951505894f8ff5f5ba1392085, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 2782.3723
+      value: 2748.7935
       objectReference: {fileID: 0}
     - target: {fileID: 3926909845652533690, guid: 2f41322951505894f8ff5f5ba1392085, type: 3}
       propertyPath: m_AnchorMax.x
@@ -1024,6 +1020,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3926909845652533690, guid: 2f41322951505894f8ff5f5ba1392085, type: 3}
       propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3926909845847861897, guid: 2f41322951505894f8ff5f5ba1392085, type: 3}
+      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4039095260390916981, guid: 2f41322951505894f8ff5f5ba1392085, type: 3}
@@ -1720,7 +1720,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7357614054047876827, guid: 2f41322951505894f8ff5f5ba1392085, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 500
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7357614054047876827, guid: 2f41322951505894f8ff5f5ba1392085, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -2014,6 +2014,10 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9182154736885575460, guid: 2f41322951505894f8ff5f5ba1392085, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2f41322951505894f8ff5f5ba1392085, type: 3}
 --- !u!114 &2442516 stripped
@@ -2041,10 +2045,6 @@ PrefabInstance:
     - target: {fileID: 7420794641469528612, guid: 5a735a23e34276548b9e5fc8798a9b54, type: 3}
       propertyPath: m_Name
       value: Camera
-      objectReference: {fileID: 0}
-    - target: {fileID: 7420794641469528634, guid: 5a735a23e34276548b9e5fc8798a9b54, type: 3}
-      propertyPath: far clip plane
-      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 7420794641469528635, guid: 5a735a23e34276548b9e5fc8798a9b54, type: 3}
       propertyPath: m_RootOrder
@@ -2299,9 +2299,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6ff40ac3a32ce4f47bd1d9bccc6d8b98, type: 3}
---- !u!114 &799792592 stripped
+--- !u!114 &864900633 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7923100715965053686, guid: 2f41322951505894f8ff5f5ba1392085, type: 3}
+  m_CorrespondingSourceObject: {fileID: 202677723858627079, guid: 2f41322951505894f8ff5f5ba1392085, type: 3}
   m_PrefabInstance: {fileID: 2442515}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
@@ -3193,26 +3193,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3138b7e5b9beecf40bd5a66462d2fc52, type: 3}
---- !u!1 &1865205681 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7420794641469528612, guid: 5a735a23e34276548b9e5fc8798a9b54, type: 3}
-  m_PrefabInstance: {fileID: 410542366}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1865205686
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1865205681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13f28eab3728b394c9df36e644d935c2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ZoomSpeed: 0.003
-  m_MinZoom: 1
-  m_MaxZoom: 10
 --- !u!114 &1876927364 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4475892929583025527, guid: 87b3511342a548f40b371e06fe515219, type: 3}
@@ -3400,6 +3380,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4475892929583025527, guid: 87b3511342a548f40b371e06fe515219, type: 3}
+      propertyPath: Validate
+      value: 
+      objectReference: {fileID: 864900633}
     - target: {fileID: 4475892929583025527, guid: 87b3511342a548f40b371e06fe515219, type: 3}
       propertyPath: m_Camera
       value: 

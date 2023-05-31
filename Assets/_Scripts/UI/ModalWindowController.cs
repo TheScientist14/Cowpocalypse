@@ -51,8 +51,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
     }
     public void OpenMachineSettings(Vector2 screenPosition, Machine machine)
     {
-
-        //We might try to open a new panel when clicking on a different machine outside of the panel, if tryting to open in any other circunstances we don't refresh UI
+        // we might try to open a new panel when clicking on a different machine outside of the panel, if trying to open in any other circunstances we don't refresh UI
         if(PointIsOutsideOfPanel(screenPosition) && machine != _machineSettingsPanel.OpenedMachine)
             CloseAll();
         else
@@ -60,6 +59,10 @@ public class ModalWindowController : Singleton<ModalWindowController>
         OpenPanel(_machineSettingsPanel, "Machine settings");
         _machineSettingsPanel.OpenedMachine = machine;
         Debug.LogWarning("Integrate with machine settings stocks");
+    }
+    public void OpenBeltSettings(Belt belt)
+    {
+
     }
     private void OpenPanel(Panel panel, string title)
     {
@@ -130,7 +133,10 @@ public class ModalWindowController : Singleton<ModalWindowController>
         switch(_openedPanels.Count)
         {
             case 0: CloseEverything(); break;
-            case 1: _returnButton.ChangeVisibility(false); break;
+            case 1:
+                _returnButton.ChangeVisibility(false);
+                InputMaster.instance.enabled = false;
+                break;
             default: _returnButton.ChangeVisibility(true); break;
         }
     }
@@ -139,6 +145,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
     {
         _titlePanel.ChangeVisibility(false);
         _windowBackground.enabled = false;
+        // InputMaster.instance.InputAction.Enable();
     }
 
     private void DeleteMachine()

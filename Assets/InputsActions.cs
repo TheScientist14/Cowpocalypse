@@ -55,6 +55,15 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
+                    ""name"": ""TripleClickButton"",
+                    ""type"": ""Button"",
+                    ""id"": ""71d0baa8-5fcd-4990-b973-44ae6895d669"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""MultiTap(tapCount=3)"",
+                    ""initialStateCheck"": false
+                },
+                {
                     ""name"": ""LongPressButton"",
                     ""type"": ""Button"",
                     ""id"": ""66145a7b-3fa2-4b91-9e79-b4a907eec7d3"",
@@ -148,7 +157,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""cdd605dd-e4d8-4a36-8748-85c07065dc77"",
-                    ""path"": ""<Touchscreen>/touch0/position"",
+                    ""path"": ""<Touchscreen>/touch0/tap"",
                     ""interactions"": ""Tap"",
                     ""processors"": """",
                     ""groups"": ""Touchscreen"",
@@ -192,7 +201,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""7e269523-5df9-4ab6-a2da-8b7738d1f8c7"",
-                    ""path"": ""<Touchscreen>/touch0/position"",
+                    ""path"": ""<Touchscreen>/touch0/tap"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Touchscreen"",
@@ -368,7 +377,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""dc60821b-0759-4c64-a680-1177b9ef283c"",
-                    ""path"": ""<Touchscreen>/touch0/position"",
+                    ""path"": ""<Touchscreen>/touch0/tap"",
                     ""interactions"": ""Tap"",
                     ""processors"": """",
                     ""groups"": ""Touchscreen"",
@@ -384,6 +393,28 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""KBM"",
                     ""action"": ""ClickBuildMode"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""613c4e9c-fad5-4d23-9bcf-b477f38577e1"",
+                    ""path"": ""<Mouse>/leftButton"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM"",
+                    ""action"": ""TripleClickButton"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f76554e1-9e03-478d-aa70-dd7e14648404"",
+                    ""path"": ""<Touchscreen>/touch0/tap"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Touchscreen"",
+                    ""action"": ""TripleClickButton"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -425,6 +456,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
         m_Player_ZoomValue = m_Player.FindAction("ZoomValue", throwIfNotFound: true);
         m_Player_ClickButton = m_Player.FindAction("ClickButton", throwIfNotFound: true);
         m_Player_DoubleClickButton = m_Player.FindAction("DoubleClickButton", throwIfNotFound: true);
+        m_Player_TripleClickButton = m_Player.FindAction("TripleClickButton", throwIfNotFound: true);
         m_Player_LongPressButton = m_Player.FindAction("LongPressButton", throwIfNotFound: true);
         m_Player_PointerPosition = m_Player.FindAction("PointerPosition", throwIfNotFound: true);
         m_Player_Drag = m_Player.FindAction("Drag", throwIfNotFound: true);
@@ -494,6 +526,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_ZoomValue;
     private readonly InputAction m_Player_ClickButton;
     private readonly InputAction m_Player_DoubleClickButton;
+    private readonly InputAction m_Player_TripleClickButton;
     private readonly InputAction m_Player_LongPressButton;
     private readonly InputAction m_Player_PointerPosition;
     private readonly InputAction m_Player_Drag;
@@ -506,6 +539,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
         public InputAction @ZoomValue => m_Wrapper.m_Player_ZoomValue;
         public InputAction @ClickButton => m_Wrapper.m_Player_ClickButton;
         public InputAction @DoubleClickButton => m_Wrapper.m_Player_DoubleClickButton;
+        public InputAction @TripleClickButton => m_Wrapper.m_Player_TripleClickButton;
         public InputAction @LongPressButton => m_Wrapper.m_Player_LongPressButton;
         public InputAction @PointerPosition => m_Wrapper.m_Player_PointerPosition;
         public InputAction @Drag => m_Wrapper.m_Player_Drag;
@@ -529,6 +563,9 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
             @DoubleClickButton.started += instance.OnDoubleClickButton;
             @DoubleClickButton.performed += instance.OnDoubleClickButton;
             @DoubleClickButton.canceled += instance.OnDoubleClickButton;
+            @TripleClickButton.started += instance.OnTripleClickButton;
+            @TripleClickButton.performed += instance.OnTripleClickButton;
+            @TripleClickButton.canceled += instance.OnTripleClickButton;
             @LongPressButton.started += instance.OnLongPressButton;
             @LongPressButton.performed += instance.OnLongPressButton;
             @LongPressButton.canceled += instance.OnLongPressButton;
@@ -557,6 +594,9 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
             @DoubleClickButton.started -= instance.OnDoubleClickButton;
             @DoubleClickButton.performed -= instance.OnDoubleClickButton;
             @DoubleClickButton.canceled -= instance.OnDoubleClickButton;
+            @TripleClickButton.started -= instance.OnTripleClickButton;
+            @TripleClickButton.performed -= instance.OnTripleClickButton;
+            @TripleClickButton.canceled -= instance.OnTripleClickButton;
             @LongPressButton.started -= instance.OnLongPressButton;
             @LongPressButton.performed -= instance.OnLongPressButton;
             @LongPressButton.canceled -= instance.OnLongPressButton;
@@ -612,6 +652,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
         void OnZoomValue(InputAction.CallbackContext context);
         void OnClickButton(InputAction.CallbackContext context);
         void OnDoubleClickButton(InputAction.CallbackContext context);
+        void OnTripleClickButton(InputAction.CallbackContext context);
         void OnLongPressButton(InputAction.CallbackContext context);
         void OnPointerPosition(InputAction.CallbackContext context);
         void OnDrag(InputAction.CallbackContext context);
