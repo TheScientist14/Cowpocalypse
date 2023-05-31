@@ -28,23 +28,18 @@ public class BeltManager : Singleton<BeltManager>
 
         m_InputAction = InputMaster.instance.InputAction;
 
-        _InitCallbacks();
-
-        // Validate.onClick.AddListener(SpawnBelts);
-
-        lineRenderer = GetComponent<LineRenderer>();
-
-        DisableBuildMode();
-        EndPlaceMachine();
-    }
-
-    private void _InitCallbacks()
-    {
         m_InputAction.Player.DragBuildMode.started += context => InitDrag();
         m_InputAction.Player.DragBuildMode.canceled += ctx => EndDrag(ctx.ReadValue<Vector2>());
         m_InputAction.Player.DragBuildMode.performed += context => DuringDrag();
 
         m_InputAction.Player.ClickBuildMode.started += context => PlaceOrDeleteMachine();
+
+        // Validate.onClick.AddListener(SpawnBelts);
+
+        lineRenderer = GetComponent<LineRenderer>();
+
+        /*DisableBuildMode();
+        EndPlaceMachine();*/
     }
 
     private void InitDrag()
@@ -128,8 +123,6 @@ public class BeltManager : Singleton<BeltManager>
 
     private void SpawnBelts()
     {
-        /*if(DraggingPhase == 0)
-            return;*/
         int x = (int)lineRenderer.GetPosition(0).x;
         int y = (int)lineRenderer.GetPosition(0).y;
         float cellSize = GameGrid.cellSize.x;
@@ -141,18 +134,6 @@ public class BeltManager : Singleton<BeltManager>
             spawnedBelt = SpawnBelt(spawnedBelt.transform.position + spawnedBelt.transform.up * cellSize, lineRenderer.GetPosition(1));
 
         StartCoroutine(DelayDisableBuildMode());
-
-        // print(DraggingPhase);
-        /*if(DraggingPhase == 2)
-        {
-            BeltIsVertical = !BeltIsVertical;
-            while(spawnedBelt.transform.position != lineRenderer.GetPosition(2))
-            {
-                spawnedBelt = SpawnBelt(spawnedBelt.transform.position + spawnedBelt.transform.up * cellSize, lineRenderer.GetPosition(2));
-            }
-            //Prevent bug
-            Destroy(spawnedBelt);
-        }*/
     }
 
     IEnumerator DelayDisableBuildMode()
@@ -175,20 +156,23 @@ public class BeltManager : Singleton<BeltManager>
         Belt b = belt.GetComponent<Belt>();
         Assert.IsNotNull(b);
         Vector3Int cellPos = GameGrid.WorldToCell(position);
-        GridManager.instance.SetBeltAt(new Vector2Int(cellPos.x, cellPos.y), b, true);
+        if(!GridManager.instance.SetBeltAt(new Vector2Int(cellPos.x, cellPos.y), b, true))
+        {
+            Destroy(belt);
+            return null;
+        }
 
         return belt;
     }
 
     public void EnableBuildMode()
     {
-        StateMachine.instance.SetState(new BuildBeltState());
-        _InitCallbacks();
+        InputStateMachine.instance.SetState(new BuildBeltState());
     }
 
     private void DisableBuildMode()
     {
-        StateMachine.instance.SetState(new FreeViewState());
+        InputStateMachine.instance.SetState(new FreeViewState());
     }
     private void PlaceSimpleMachine()
     {
@@ -206,7 +190,12 @@ public class BeltManager : Singleton<BeltManager>
         Belt b = belt.GetComponent<Belt>();
         Assert.IsNotNull(b);
         Vector3Int cellPos = GameGrid.WorldToCell(position);
-        GridManager.instance.SetBeltAt(new Vector2Int(cellPos.x, cellPos.y), b, true);
+
+        if(!GridManager.instance.SetBeltAt(new Vector2Int(cellPos.x, cellPos.y), b, true))
+        {
+            Destroy(belt);
+            return null;
+        }
 
         return belt;
     }
@@ -214,12 +203,12 @@ public class BeltManager : Singleton<BeltManager>
     public void StartPlaceMachine(GameObject iMachineToPlace)
     {
         OtherMachinePrefab = iMachineToPlace;
-        StateMachine.instance.SetState(new BuildMachineState());
+        InputStateMachine.instance.SetState(new BuildMachineState());
         // SetUpCallbacks();
     }
     public void EndPlaceMachine()
     {
-        StateMachine.instance.SetState(new FreeViewState());
+        InputStateMachine.instance.SetState(new FreeViewState());
     }
 
     private void PlaceOrDeleteMachine()
@@ -239,7 +228,7 @@ public class BeltManager : Singleton<BeltManager>
 
     public void SwitchDeleteMode()
     {
-        StateMachine.instance.SetState(IsInDeleteMode ? new FreeViewState() : new DeleteState());
+        InputStateMachine.instance.SetState(IsInDeleteMode ? new FreeViewState() : new DeleteState());
         IsInDeleteMode = !IsInDeleteMode;
     }
 }

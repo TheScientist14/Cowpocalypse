@@ -13,7 +13,7 @@ public class PauseButtonBehaviour : MonoBehaviour
 
     public void PauseGame()
     {
-        StateMachine.instance.SetState(new PauseState());
+        InputStateMachine.instance.SetState(new PauseState());
         m_PauseMenuPanel.SetActive(true);
     }
 }

@@ -201,16 +201,16 @@ TextureImporter:
       edges: []
       weights: []
     - serializedVersion: 2
-      name: 4Z_2101.w017.n001.358B.p15.358-removebg-preview_4
+      name: panelNoFrame
       rect:
         serializedVersion: 2
-        x: 512
+        x: 513
         y: 278
-        width: 50
+        width: 48
         height: 49
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
+      border: {x: 11, y: 5, z: 10, w: 6}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -909,7 +909,6 @@ TextureImporter:
       4Z_2101.w017.n001.358B.p15.358-removebg-preview_33: -1106777931
       4Z_2101.w017.n001.358B.p15.358-removebg-preview_34: 1146260814
       4Z_2101.w017.n001.358B.p15.358-removebg-preview_35: 1887014202
-      4Z_2101.w017.n001.358B.p15.358-removebg-preview_4: -1804429513
       4Z_2101.w017.n001.358B.p15.358-removebg-preview_5: -663934775
       4Z_2101.w017.n001.358B.p15.358-removebg-preview_6: 1819447276
       4Z_2101.w017.n001.358B.p15.358-removebg-preview_7: 2028825306
@@ -917,6 +916,7 @@ TextureImporter:
       4Z_2101.w017.n001.358B.p15.358-removebg-preview_9: -166917685
       Panel: 29183467
       SimpleButton: 1486010137
+      panelNoFrame: -1804429513
       returnArrowRound: -1811368381
       settingsWheelRound: 2034692998
   spritePackingTag: 

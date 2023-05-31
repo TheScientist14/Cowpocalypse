@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class StateMachine : Singleton<StateMachine>
+public class InputStateMachine : Singleton<InputStateMachine>
 {
     State _currentState;
 
@@ -16,7 +16,7 @@ public class StateMachine : Singleton<StateMachine>
 
     public void SetState(State state)
     {
-        // Debug.Log("Current state : " + state.GetType().Name);
+        Debug.Log("Current state : " + state.GetType().Name);
         _currentState?.Exit();
         _currentState = state;
         _currentState.Enter();

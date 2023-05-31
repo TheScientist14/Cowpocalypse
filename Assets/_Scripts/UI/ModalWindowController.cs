@@ -21,7 +21,6 @@ public class ModalWindowController : Singleton<ModalWindowController>
     private TitlePanel _titlePanel;
     [SerializeField] private ButtonPanel _closeButton;
     [SerializeField] private ButtonPanel _returnButton;
-    [SerializeField] private Button _deleteMachineButton;
     private Stack<Panel> _openedPanels = new Stack<Panel>();
     private Stack<string> _openedPanelTitles = new Stack<string>();
     public bool _inCatalog => _recipeUnlockPanel.CurrentlyOpened;
@@ -30,8 +29,6 @@ public class ModalWindowController : Singleton<ModalWindowController>
     {
         _returnButton.Button.onClick.AddListener(CloseLast);
         _closeButton.Button.onClick.AddListener(CloseAll);
-        _deleteMachineButton.onClick.AddListener(CloseAll);
-        _deleteMachineButton.onClick.AddListener(DeleteMachine);
     }
     private void Start()
     {
@@ -41,7 +38,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
         _windowBackground.enabled = false;
     }
     #region CalledFromUi
-    public void OpenCatalogFromGame() => OpenCatalog("Recipe unlocks");
+    // public void OpenCatalogFromGame() => OpenCatalog("Recipe unlocks");
 
     public void OpenCatalogFromMachineSettings() => OpenCatalog("Recipe to craft", 1);
     private void OpenCatalog(string title, int tiersToSkip = 0)
@@ -58,20 +55,17 @@ public class ModalWindowController : Singleton<ModalWindowController>
             return;
         OpenPanel(_machineSettingsPanel, "Machine settings");
         _machineSettingsPanel.OpenedMachine = machine;
-        Debug.LogWarning("Integrate with machine settings stocks");
+        // Debug.LogWarning("Integrate with machine settings stocks");
     }
-    public void OpenBeltSettings(Belt belt)
-    {
 
-    }
     private void OpenPanel(Panel panel, string title)
     {
         float delay = 0f;
-        if(_openedPanels.Count > 0)
+        /*if(_openedPanels.Count > 0)
         {
-            _openedPanels.Peek().ChangeVisibility(false, 0, 0.2f);
-            delay = 0.2f;
-        }
+            // _openedPanels.Peek().ChangeVisibility(false, 0, 0.2f);
+            // delay = 0.2f;
+        }*/
 
         _openedPanels.Push(panel);
         _openedPanelTitles.Push(title);
@@ -79,6 +73,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
         _titlePanel.Title.Value = title;
         _titlePanel.ChangeVisibility(true, delay);
         _windowBackground.enabled = true;
+        InputStateMachine.instance.SetState(new MachineSettingsState());
         UpdateUiWithStackCount();
     }
     private void ClosePanel(Panel panel)
@@ -135,7 +130,6 @@ public class ModalWindowController : Singleton<ModalWindowController>
             case 0: CloseEverything(); break;
             case 1:
                 _returnButton.ChangeVisibility(false);
-                InputMaster.instance.enabled = false;
                 break;
             default: _returnButton.ChangeVisibility(true); break;
         }
@@ -145,7 +139,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
     {
         _titlePanel.ChangeVisibility(false);
         _windowBackground.enabled = false;
-        // InputMaster.instance.InputAction.Enable();
+        InputStateMachine.instance.SetState(new FreeViewState());
     }
 
     private void DeleteMachine()
@@ -156,9 +150,27 @@ public class ModalWindowController : Singleton<ModalWindowController>
     #endregion
     internal void RessourceClicked(RessourceUI ressourceUI)
     {
-        if(ressourceUI.ItemData.Unlocked)
+        if(!ressourceUI.ItemData.Unlocked)
         {
-            Debug.Log($"{ressourceUI.ItemData.Name} already unlocked.");
+            if(Wallet.instance.Money < ressourceUI.ItemData.Tier.UnlockPrice)
+            {
+                // TODO: ajout d'un feedback (son, message ou autre) pour prévenir le joueur qu'il n'as pas assez d'argent
+                Debug.LogWarning(
+                    $"Not enough cash to unlock {ressourceUI.ItemData.Name}. Need ${ressourceUI.ItemData.Tier.UnlockPrice - Wallet.instance.Money} more.");
+                return;
+            }
+
+            Wallet.instance.Money -= ressourceUI.ItemData.Tier.UnlockPrice;
+            ressourceUI.ItemData.Unlocked = true;
+            Debug.Log($"Successfully unlocked {ressourceUI.ItemData.Name}.");
+            //TODO: rajouter les item unlocked dans le save system
+            return;
+        }
+
+        if(InMachineSettings)
+        {
+            _machineSettingsPanel.SetItemData(ressourceUI.ItemData);
+            ClosePanel(_recipeUnlockPanel);
             return;
         }
 
@@ -166,31 +178,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
         {
             Debug.LogError("Got a RessourceClicked event, but we're not in catalog");
             return;
-            //Same call made from UIEvents
-            /*if (_inMachineSettings)
-                OpenCatalogFromMachineSettings();   */
         }
-
-        if(InMachineSettings)
-        {
-            Debug.LogWarning("Integrate with machine production logic using stored itemData");
-            _machineSettingsPanel.SetItemData(ressourceUI.ItemData);
-            ClosePanel(_recipeUnlockPanel);
-            return;
-        }
-
-        if(Wallet.instance.Money < ressourceUI.ItemData.Tier.UnlockPrice)
-        {
-            // TODO: ajout d'un feedback (son, message ou autre) pour prévenir le joueur qu'il n'as pas assez d'argent
-            Debug.LogWarning(
-                $"Not enough cash to unlock {ressourceUI.ItemData.Name}. Need ${ressourceUI.ItemData.Tier.UnlockPrice - Wallet.instance.Money} more.");
-            return;
-        }
-
-        Wallet.instance.Money -= ressourceUI.ItemData.Tier.UnlockPrice;
-        ressourceUI.ItemData.Unlocked = true;
-        Debug.Log($"Successfully unlocked {ressourceUI.ItemData.Name}.");
-        //TODO: rajouter les item unlocked dans le save system
     }
 
     internal void CheckClickedOutside(Vector2 position)

@@ -33,7 +33,7 @@ public class PauseMenuBehaviour : MonoBehaviour
 
     public void ClosePauseMenu()
     {
-        StateMachine.instance.SetState(new FreeViewState());
+        InputStateMachine.instance.SetState(new FreeViewState());
         PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound2);
         gameObject.SetActive(false);
     }
