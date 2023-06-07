@@ -9,28 +9,28 @@ public class ForwardClickToModalWindow : MonoBehaviour
 
     public void CheckMachineClicked(Vector2 pos, GameObject go)
     {
-        if (go != null)
+        if(go != null)
         {
             Belt belt = go.GetComponent<Belt>();
-            if (belt != null)
+            if(belt != null)
             {
                 int machineType = TestMachineType(go);
-                if (machineType == -1)
+                if(machineType == -1)
                 {
                     return;
                 }
 
-                if (IsDoubleClick())
+                if(IsDoubleClick())
                 {
                     Debug.Log(go.name);
                     // Double-click detected on the Belt
                     _beltManager.RotateBelt(go, machineType); // Rotate belt
+                    return;
                 }
-                return;
             }
 
             Machine machine = go.GetComponent<Machine>();
-            if (machine != null)
+            if(machine != null)
             {
                 _window.OpenMachineSettings(pos, machine);
                 return;
@@ -45,7 +45,7 @@ public class ForwardClickToModalWindow : MonoBehaviour
     {
         bool isDoubleClick = false;
 
-        if (Time.time - lastClickTime < doubleClickThreshold)
+        if(Time.time - lastClickTime < doubleClickThreshold)
         {
             isDoubleClick = true;
         }

@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class PauseMenuBehaviour : MonoBehaviour
 {
@@ -43,14 +44,17 @@ public class PauseMenuBehaviour : MonoBehaviour
         Debug.Log("Saving...");
         PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound3);
 
+        ClosePauseMenu();
         SaveSystem.instance.SaveGame();
     }
 
     public void LoadGame()
     {
-        // #TODO : Load game
         PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound3);
-        Debug.LogWarning("TODO: Load game");
+        Debug.LogWarning("Loading game...");
+
+        ClosePauseMenu();
+        SaveSystem.instance.LoadGame();
     }
 
     // we assume settings panel is covering the pause menu completely
