@@ -90,7 +90,11 @@ public class Merger : Belt
     public void CloseInput()
     {
         foreach(Belt belt in InputBelts)
+        {
+            if(belt == null)
+                continue;
             belt.isMachineBlocking = true;
+        }
     }
 
     public void ChooseInput()

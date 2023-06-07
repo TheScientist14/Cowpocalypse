@@ -179,6 +179,7 @@ public class BeltManager : Singleton<BeltManager>
         Assert.IsNotNull(OtherMachinePrefab);
         Vector3 mouseWorldPos = m_Camera.ScreenToWorldPoint(m_InputAction.Player.PointerPosition.ReadValue<Vector2>());
         Vector3 machineWorldPosInGrid = PlaceInGrid(mouseWorldPos);
+        machineWorldPosInGrid.z = 0;
         SpawnMachine(machineWorldPosInGrid, Vector3.up);
         EndPlaceMachine();
     }
