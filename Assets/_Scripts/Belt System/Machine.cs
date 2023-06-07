@@ -33,15 +33,14 @@ public class Machine : Belt
 
     public IEnumerator MoveQueuedItems(Item queuedItem)
     {
-        print("StartBeltMove");
+        Debug.Log("StartMachineMove");
 
         Vector3 toPosition = transform.position;
-        float step = BeltManager.instance.speed * Time.fixedDeltaTime;
 
         while(queuedItem.GetItem().transform.position != toPosition)
         {
-            queuedItem.GetItem().transform.position = Vector3.MoveTowards(queuedItem.transform.position, toPosition, step);
-            yield return null;
+            queuedItem.GetItem().transform.position = Vector3.MoveTowards(queuedItem.transform.position, toPosition, BeltManager.instance.speed * Time.fixedDeltaTime);
+            yield return new WaitForFixedUpdate();
         }
 
         PoolManager.instance.DespawnObject(queuedItem);

@@ -20,7 +20,7 @@ public class Belt : MonoBehaviour
     private AudioSource _audioSource;
     private float _volume;
 
-    private Coroutine m_Coroutine;
+    private bool m_IsRunning;
 
     private void Start()
     {
@@ -40,8 +40,11 @@ public class Belt : MonoBehaviour
         if(BeltInSequence == null)
             return;
 
-        if(BeltItem != null && BeltItem.GetItem() != null && m_Coroutine == null)
-            m_Coroutine = StartCoroutine(StartBeltMove());
+        if(BeltItem != null && BeltItem.GetItem() != null && !m_IsRunning)
+        {
+            m_IsRunning = true;
+            StartCoroutine(StartBeltMove());
+        }
     }
 
     public virtual IEnumerator StartBeltMove()
@@ -69,12 +72,11 @@ public class Belt : MonoBehaviour
                 {
                     Vector3 toPosition = BeltInSequence.transform.position;
                     BeltInSequence.isSpaceTaken = true;
-                    float step = BeltManager.instance.speed * Time.fixedDeltaTime;
 
                     while(BeltItem.GetItem().transform.position != toPosition)
                     {
-                        BeltItem.GetItem().transform.position = Vector3.MoveTowards(BeltItem.transform.position, toPosition, step);
-                        yield return null;
+                        BeltItem.GetItem().transform.position = Vector3.MoveTowards(BeltItem.transform.position, toPosition, BeltManager.instance.speed * Time.fixedDeltaTime);
+                        yield return new WaitForFixedUpdate();
                     }
                     isSpaceTaken = false;
                     BeltInSequence.BeltItem = BeltItem;
@@ -82,6 +84,7 @@ public class Belt : MonoBehaviour
                 }
             }
         }
+        m_IsRunning = false;
     }
 
     public Belt GetNextBelt()
