@@ -46,9 +46,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6a6a8f608a974b5448ec6322e1c639a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Validate: {fileID: 0}
   BeltPrefab: {fileID: 4732986801910414389, guid: 39b3afbc04efd43489d67a26e6c013a1, type: 3}
-  speed: 0.2
+  BeltList:
+  - {fileID: 4732986801910414389, guid: 39b3afbc04efd43489d67a26e6c013a1, type: 3}
+  - {fileID: 4732986801910414389, guid: 3138b7e5b9beecf40bd5a66462d2fc52, type: 3}
+  - {fileID: 8504238527581414455, guid: d88ecdf69dd0588478fbf63f8bde920e, type: 3}
+  - {fileID: 45940641016382040, guid: 06e1ce65c9fe45949a064b3f6d62ca07, type: 3}
+  - {fileID: 4732986801910414389, guid: 6ff40ac3a32ce4f47bd1d9bccc6d8b98, type: 3}
+  - {fileID: 8504238527581414455, guid: d2fd8be8225616a458214792f8a5bd97, type: 3}
+  speed: 1
   m_Camera: {fileID: 0}
 --- !u!120 &4475892929583025520
 LineRenderer:

@@ -9,6 +9,9 @@ public class BeltManager : Singleton<BeltManager>
     public GameObject BeltPrefab;
     private GameObject OtherMachinePrefab;
 
+    [SerializeField]
+    private List<GameObject> BeltList; // 1 = belt, 2 = machine, 3 = merger, 4 = seller, 5 = spawner, 6 = spliter
+
     public static BeltManager Instance;
     public float speed = 0.2f;
     private InputsActions m_InputAction;
@@ -231,5 +234,28 @@ public class BeltManager : Singleton<BeltManager>
     {
         InputStateMachine.instance.SetState(IsInDeleteMode ? new FreeViewState() : new DeleteState());
         IsInDeleteMode = !IsInDeleteMode;
+    }
+
+    public void RotateBelt(GameObject go, int machineType)
+    {
+        Quaternion savedRotation = go.transform.rotation;
+        Vector3 savedPosition = go.transform.position;
+        Transform savedParent = go.transform.parent;
+
+        GameObject newBeltPrefab = BeltList[machineType];
+
+        // Instantiate a new belt object with the saved rotation plus an additional 90 degrees rotation on the Z-axis
+        GameObject newBeltObject = Instantiate(newBeltPrefab, savedPosition, savedRotation * Quaternion.Euler(0f, 0f, 90f));
+
+        // Optionally, you can parent the new belt to the same transform as the previous belt
+        newBeltObject.transform.parent = savedParent;
+
+        // Destroy the previous belt object and assign the new belt to the grid
+        Vector3Int GridPos = GameGrid.WorldToCell(savedPosition);
+        bool isAssigned = GridManager.instance.SetBeltAt(new Vector2Int(GridPos.x, GridPos.y), newBeltObject.GetComponent<Belt>(), true);
+        if (!isAssigned)
+        {
+            Destroy(newBeltObject);
+        }
     }
 }
