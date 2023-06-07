@@ -1008,7 +1008,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3926909845165786486, guid: 2f41322951505894f8ff5f5ba1392085, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 2750.03
+      value: 2836.4663
       objectReference: {fileID: 0}
     - target: {fileID: 3926909845652533690, guid: 2f41322951505894f8ff5f5ba1392085, type: 3}
       propertyPath: m_AnchorMax.x
@@ -2066,6 +2066,10 @@ PrefabInstance:
       propertyPath: _window
       value: 
       objectReference: {fileID: 2442516}
+    - target: {fileID: 222898898, guid: 5a735a23e34276548b9e5fc8798a9b54, type: 3}
+      propertyPath: _beltManager
+      value: 
+      objectReference: {fileID: 1876927364}
     - target: {fileID: 7420794641469528612, guid: 5a735a23e34276548b9e5fc8798a9b54, type: 3}
       propertyPath: m_Name
       value: Camera
@@ -3338,10 +3342,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4475892929583025527, guid: 87b3511342a548f40b371e06fe515219, type: 3}
-      propertyPath: speed
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4475892929583025527, guid: 87b3511342a548f40b371e06fe515219, type: 3}
       propertyPath: Validate
       value: 
       objectReference: {fileID: 0}
@@ -3349,6 +3349,14 @@ PrefabInstance:
       propertyPath: m_Camera
       value: 
       objectReference: {fileID: 410542367}
+    - target: {fileID: 4475892929583025527, guid: 87b3511342a548f40b371e06fe515219, type: 3}
+      propertyPath: BeltList.Array.size
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4475892929583025527, guid: 87b3511342a548f40b371e06fe515219, type: 3}
+      propertyPath: BeltList.Array.data[4]
+      value: 
+      objectReference: {fileID: 8504238527581414455, guid: d2fd8be8225616a458214792f8a5bd97, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 87b3511342a548f40b371e06fe515219, type: 3}
 --- !u!1001 &4674514191496485639
