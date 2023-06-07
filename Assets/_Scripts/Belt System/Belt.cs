@@ -55,10 +55,17 @@ public class Belt : MonoBehaviour
         {
             if(MachineInSequence)
             {
-                if(MachineInSequence.GetCraftedItem() != null)
-                    isMachineBlocking = !MachineInSequence.GetCraftedItem().Recipes.ContainsKey(BeltItem.GetItemData());
-                else
-                    isMachineBlocking = true;
+                isMachineBlocking = true;
+                if (MachineInSequence.GetCraftedItem() != null)
+                {
+                    if (MachineInSequence.GetCraftedItem().Recipes.ContainsKey(BeltItem.GetItemData()))
+                    {
+                        MachineInSequence.Stock.TryGetValue(BeltItem.GetItemData(), out int amount);
+                        MachineInSequence.GetCraftedItem().Recipes.TryGetValue(BeltItem.GetItemData(), out int maxAmount);
+                        if (amount <= maxAmount)
+                            isMachineBlocking = false;
+                    }
+                }
             }
             if(!isMachineBlocking)
             {

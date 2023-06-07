@@ -93,7 +93,11 @@ public class Merger : Belt
         {
             if(belt == null)
                 continue;
-            belt.isMachineBlocking = true;
+            if(belt.BeltInSequence.GetComponent<Merger>() != null)
+            {
+                if (belt.BeltInSequence.GetComponent<Merger>() == this)
+                    belt.isMachineBlocking = true;
+            }
         }
     }
 

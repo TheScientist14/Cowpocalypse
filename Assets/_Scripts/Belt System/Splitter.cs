@@ -67,17 +67,18 @@ public class Splitter : Belt
                         OutputBelts[CurrentOutput].isSpaceTaken = true;
                         float step = BeltManager.instance.speed * Time.fixedDeltaTime;
 
-                        while(BeltItem.GetItem().transform.position != toPosition)
+                        /*while(BeltItem.GetItem().transform.position != toPosition)
                         {
                             BeltItem.GetItem().transform.position = Vector3.MoveTowards(BeltItem.transform.position, toPosition, step);
                             yield return null;
-                        }
+                        }*/
 
                         ItemMoving = false;
                         isSpaceTaken = false;
                         OutputBelts[CurrentOutput].BeltItem = BeltItem;
                         BeltItem = null;
                         CurrentOutput++;
+                        yield return null;
                     }
                 }
             }

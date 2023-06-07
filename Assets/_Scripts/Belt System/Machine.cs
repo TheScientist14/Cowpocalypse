@@ -45,11 +45,19 @@ public class Machine : Belt
 
         PoolManager.instance.DespawnObject(queuedItem);
 
-        foreach(ItemData item in CraftedItem.Recipes.Keys)
+        bool NextBeltBlock = true;
+
+        while(NextBeltBlock == true)
         {
-            if(Stock[item] < CraftedItem.Recipes[item])
-                yield break;
+            foreach (ItemData item in CraftedItem.Recipes.Keys)
+            {
+                if (Stock[item] < CraftedItem.Recipes[item] || BeltInSequence == null || BeltInSequence.isSpaceTaken == true)
+                    yield return null;
+                else
+                    NextBeltBlock = false;
+            }
         }
+
 
         foreach(ItemData item in CraftedItem.Recipes.Keys)
             Stock[item] -= CraftedItem.Recipes[item];
@@ -63,31 +71,36 @@ public class Machine : Belt
 
     private IEnumerator Output(Item item)
     {
-        if(BeltInSequence != null && BeltInSequence.isSpaceTaken == false)
+        bool outputed = false;
+        while(outputed == false)
         {
-            if(BeltInSequence.GetComponent<Machine>())
+            print("Trying Output");
+            if (BeltInSequence != null && BeltInSequence.isSpaceTaken == false)
             {
-                Machine machine = BeltInSequence.GetComponent<Machine>();
-                if(machine.GetCraftedItem() != null)
-                    isMachineBlocking = !machine.GetCraftedItem().Recipes.ContainsKey(item.GetItemData());
-                else
-                    isMachineBlocking = true;
-            }
-            if(!isMachineBlocking)
-            {
-                Vector3 toPosition = BeltInSequence.transform.position;
-                BeltInSequence.isSpaceTaken = true;
-                float step = BeltManager.instance.speed * Time.fixedDeltaTime;
-
-                while(item.GetItem().transform.position != toPosition)
+                if (BeltInSequence.GetComponent<Machine>())
                 {
-                    item.GetItem().transform.position = Vector3.MoveTowards(item.transform.position, toPosition, step);
-                    yield return null;
+                    isMachineBlocking = true;
+                    if (MachineInSequence.GetCraftedItem() != null)
+                    {
+                        if (MachineInSequence.GetCraftedItem().Recipes.ContainsKey(BeltItem.GetItemData()))
+                        {
+                            MachineInSequence.Stock.TryGetValue(BeltItem.GetItemData(), out int amount);
+                            MachineInSequence.GetCraftedItem().Recipes.TryGetValue(BeltItem.GetItemData(), out int maxAmount);
+                            if (amount <= maxAmount)
+                                isMachineBlocking = false;
+                        }
+                    }
                 }
-
-                isSpaceTaken = false;
-                BeltInSequence.BeltItem = item;
+                if (!isMachineBlocking)
+                {
+                    Vector3 toPosition = BeltInSequence.transform.position;
+                    BeltInSequence.isSpaceTaken = true;
+                    isSpaceTaken = false;
+                    BeltInSequence.BeltItem = item;
+                    outputed = true;
+                }
             }
+            yield return null;
         }
     }
 
