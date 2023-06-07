@@ -1,0 +1,68 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &6990053111912614391
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6990053111912614389}
+  - component: {fileID: 6990053111912614388}
+  m_Layer: 0
+  m_Name: SaveManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6990053111912614389
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6990053111912614391}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 587.3521, y: 203.57729, z: -4.911657}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6990053111912614388
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6990053111912614391}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1b238450a274a78b0290cdd44a665cd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  saveIconPrefab: {fileID: 9167905607567024168, guid: 62e9bf53015f7a3428f7bec7d3ee35d0, type: 3}
+  beltPrefab: {fileID: 4732986801910414389, guid: 39b3afbc04efd43489d67a26e6c013a1, type: 3}
+  machinePrefab: {fileID: 4732986801910414389, guid: 3138b7e5b9beecf40bd5a66462d2fc52, type: 3}
+  splitterPrefab: {fileID: 8504238527581414455, guid: d2fd8be8225616a458214792f8a5bd97, type: 3}
+  mergerPrefab: {fileID: 8504238527581414455, guid: d88ecdf69dd0588478fbf63f8bde920e, type: 3}
+  belts:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  savedGame:
+    m_PersistentCalls:
+      m_Calls: []
+  loadedGame:
+    m_PersistentCalls:
+      m_Calls: []

@@ -43,7 +43,7 @@ public class PauseMenuBehaviour : MonoBehaviour
         Debug.Log("Saving...");
         PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound3);
 
-        SaveSystem.instance.SaveGameAsync().Wait();
+        SaveSystem.instance.SaveGame();
     }
 
     public void LoadGame()
