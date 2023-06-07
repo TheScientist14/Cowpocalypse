@@ -12,7 +12,6 @@ namespace _Scripts.Save_System
     [Serializable]
     public class SaveData
     {
-        //TODO: link array/list of belts in stead of find objects
         private List<BeltSaveData> _beltDatas = new();
         private List<MachineSaveData> _machineDatas = new();
         private List<SplitterSaveData> _splitterDatas = new();
@@ -20,8 +19,6 @@ namespace _Scripts.Save_System
         private List<SellerSaveData> _sellerDatas = new();
         private PlayerSaveData _playerSaveData;
         
-        //TODO : Save which item is unlocked.
-        //TODO : Save Shops
 
         public SaveData()
         {
