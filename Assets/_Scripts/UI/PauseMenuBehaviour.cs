@@ -71,10 +71,8 @@ public class PauseMenuBehaviour : MonoBehaviour
 
     private void _Quit()
     {
-        Application.Quit();
-#if UNITY_EDITOR
-        UnityEditor.EditorApplication.isPlaying = false;
-#endif
+        InputStateMachine.instance.SetState(new FreeViewState());
+        SceneManager.LoadScene(0);
     }
 
     public void Quit()

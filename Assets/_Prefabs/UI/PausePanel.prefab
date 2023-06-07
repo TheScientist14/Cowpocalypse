@@ -1120,7 +1120,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Quit
+  m_text: Main menu
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3cbc3587fac016847825e9b26521b36a, type: 2}
   m_sharedMaterial: {fileID: 7801693171831284549, guid: 3cbc3587fac016847825e9b26521b36a, type: 2}
@@ -1470,6 +1470,10 @@ PrefabInstance:
     - target: {fileID: 3842081732559498525, guid: 9d0704f37b5e95941b8593ec1dab8964, type: 3}
       propertyPath: m_Name
       value: OptionsPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 3842081732559498525, guid: 9d0704f37b5e95941b8593ec1dab8964, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3842081732559498526, guid: 9d0704f37b5e95941b8593ec1dab8964, type: 3}
       propertyPath: m_RootOrder

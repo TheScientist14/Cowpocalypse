@@ -1,6 +1,8 @@
-﻿using DG.Tweening;
+﻿using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 namespace _Scripts.UI
 {
@@ -35,8 +37,9 @@ namespace _Scripts.UI
             sequence.Append(_camera.DOOrthoSize(5, 2));
             sequence.Append(_titleTransform.DOMoveY(3, 0.25f).SetEase(Ease.OutBack));
             sequence.Append(_camera.DOShakePosition(2f));
-            sequence.Append(_buttons.DOFade(1, 2));
+            sequence.Append(_buttons.DOFade(1, 2).SetEase(Ease.Linear));
             sequence.Insert(3, _buttonsRect.DOAnchorPosX(0, 2));
+            sequence.onComplete = () => _buttons.interactable = true;
         }
 
         public void NewGame()
