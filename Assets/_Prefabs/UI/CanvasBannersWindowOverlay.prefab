@@ -558,6 +558,7 @@ GameObject:
   - component: {fileID: 4012846478642175262}
   - component: {fileID: 1529920521653182983}
   - component: {fileID: 9207364742466527160}
+  - component: {fileID: 8320400021334072586}
   m_Layer: 5
   m_Name: DeleteButton
   m_TagString: Untagged
@@ -680,6 +681,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8320400021334072586
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2962333363980832739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: db586a6e4669a5e4aaadcdfad7213a15, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &3378599842479722727
 GameObject:
   m_ObjectHideFlags: 0

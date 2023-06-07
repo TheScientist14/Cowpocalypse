@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.Events;
 
 public class BeltManager : Singleton<BeltManager>
 {
@@ -21,6 +22,8 @@ public class BeltManager : Singleton<BeltManager>
 
     [SerializeField] private Camera m_Camera;
     private Grid GameGrid;
+
+    public UnityEvent<bool> deleteMode;
 
     private void Start()
     {
@@ -231,5 +234,6 @@ public class BeltManager : Singleton<BeltManager>
     {
         InputStateMachine.instance.SetState(IsInDeleteMode ? new FreeViewState() : new DeleteState());
         IsInDeleteMode = !IsInDeleteMode;
+        deleteMode.Invoke(IsInDeleteMode);
     }
 }
