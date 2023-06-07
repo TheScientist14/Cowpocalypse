@@ -20,6 +20,7 @@ namespace _Scripts.Save_System
         private PlayerSaveData _playerSaveData;
         
         //TODO : Save which item is unlocked.
+        //TODO : Save Shops
 
         public SaveData()
         {
@@ -289,6 +290,12 @@ namespace _Scripts.Save_System
         }
 
         public int CurrentLevel => _currentLevel;
+    }
+
+    [Serializable]
+    public struct Shop
+    {
+        
     }
 
     #endregion

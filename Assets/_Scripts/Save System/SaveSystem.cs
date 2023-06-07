@@ -66,14 +66,14 @@ namespace _Scripts.Save_System
         }
         
         [Button("Save Game async")]
-        private void SaveGame()
+        public void SaveGame()
         {
 #pragma warning disable CS4014 // Don't want to await, it should block gameplay;
             SaveGameAsync();
 #pragma warning restore CS4014
         }
 
-        public async Task SaveGameAsync()
+        private async Task SaveGameAsync()
         {
             if (_saveIcon == null)
             {

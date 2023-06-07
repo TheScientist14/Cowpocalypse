@@ -14,14 +14,16 @@ public class GridManager : Singleton<GridManager>
     // Start is called before the first frame update
     void Awake()
     {
-        m_WorldGrid = new Dictionary<Vector2Int, Belt>();
-        if(gridGeometry != null)
-            InitGrid();
+       InitGrid();
     }
 
     // search for existing belt in the world
-    private void InitGrid()
+    public void InitGrid()
     {
+        m_WorldGrid = new Dictionary<Vector2Int, Belt>();
+        if(gridGeometry == null)
+            return;
+
         Belt[] belts = FindObjectsOfType<Belt>();
         foreach(Belt belt in belts)
         {
