@@ -37,6 +37,7 @@ public class AllTiersPanel : Panel
             tr.GetChild(i).gameObject.SetActive(false);
         }
     }
+    
     [SerializeField, Header("Editor helpers")]
     private TierUI _tierPrefab;
     [Button("Instantiate tiers")]
@@ -47,11 +48,11 @@ public class AllTiersPanel : Panel
         var ch = _layout.transform.childCount;
         for (int i = 0; i < ch; i++)
         {
-            DestroyImmediate(_layout.transform.GetChild(0).gameObject);
+            Destroy(_layout.transform.GetChild(0).gameObject);
         }
         foreach (IGrouping<ItemTier, ItemData> tier in s)
         {
-            var inst = PrefabUtility.InstantiatePrefab(_tierPrefab, _layout.transform).GetComponent<TierUI>();
+            var inst = Instantiate(_tierPrefab, _layout.transform);
             inst.TierName.Value = tier.Key.Name;
             inst.InstantiateRecipes(tier);
         }
