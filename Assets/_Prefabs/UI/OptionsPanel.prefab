@@ -994,6 +994,7 @@ MonoBehaviour:
   _musicFill: {fileID: 3842081732744068889}
   _soundsFill: {fileID: 3842081731996378854}
   _step: 10
+  _versionText: {fileID: 3842081732756740753}
   _scriptablesWorldAudio: {fileID: 11400000, guid: 19dbf4f3c9a4b474d92e900db4dd54a6, type: 2}
 --- !u!114 &8376359724596778222
 MonoBehaviour:

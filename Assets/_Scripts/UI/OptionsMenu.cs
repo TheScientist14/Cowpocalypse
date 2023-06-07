@@ -1,6 +1,8 @@
 ﻿using NaughtyAttributes;
 using System;
+using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.UI;
 
 namespace _Scripts.UI
@@ -10,6 +12,7 @@ namespace _Scripts.UI
         [SerializeField] Image _musicFill;
         [SerializeField] Image _soundsFill;
         [SerializeField] float _step;
+        [SerializeField] TextMeshProUGUI _versionText;
 
         float _musicValue;
         float _soundsValue;
@@ -31,6 +34,8 @@ namespace _Scripts.UI
             _audioManager = GameObject.Find("AudioManagerUI").GetComponent<AudioManager>();
 
             _updateAudio = GameObject.Find("UpdateAudio").GetComponent<UpdateAudio>();
+
+            _versionText.text = $"v{Application.version}";
 
             Refresh();
         }
