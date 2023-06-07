@@ -17,6 +17,7 @@ namespace _Scripts.Save_System
         private List<MachineSaveData> _machineDatas = new();
         private List<SplitterSaveData> _splitterDatas = new();
         private List<MergerSaveData> _mergerDatas = new();
+        private List<SellerSaveData> _sellerDatas = new();
         private PlayerSaveData _playerSaveData;
         
         //TODO : Save which item is unlocked.
@@ -54,6 +55,13 @@ namespace _Scripts.Save_System
                 _mergerDatas.Add(new MergerSaveData(transform.position, transform.rotation.eulerAngles, merger.BeltItem));
             }
 
+            foreach (var o in Object.FindObjectsOfType(typeof(Seller)))
+            {
+                var seller = (Seller)o;
+                var transform = seller.transform;
+                _sellerDatas.Add(new SellerSaveData(transform.position, transform.rotation.eulerAngles, seller.BeltItem));
+            }
+
             List<StatSaveData> stats = new List<StatSaveData>();
             
             foreach (var stat in StatManager.instance.Stats)
@@ -67,8 +75,8 @@ namespace _Scripts.Save_System
         public List<BeltSaveData> BeltDatas => _beltDatas;
         public List<MachineSaveData> MachineDatas => _machineDatas;
         public List<SplitterSaveData> SplitterDatas => _splitterDatas;
-
         public List<MergerSaveData> MergerDatas => _mergerDatas;
+        public List<SellerSaveData> SellerDatas => _sellerDatas;
 
         public PlayerSaveData PlayerSaveData => _playerSaveData;
     }
@@ -293,9 +301,40 @@ namespace _Scripts.Save_System
     }
 
     [Serializable]
-    public struct Shop
+    public struct SellerSaveData
     {
+        private float _x;
+        private float _y;
+        private float _z;
+        private float _rotX;
+        private float _rotY;
+        private float _rotZ;
         
+        [Serialize] private ItemSaveData? _itemSaveData;
+        
+        public SellerSaveData(Vector3 prmPos, Vector3 prmRot, Item prmItem)
+        {
+            _x = prmPos.x;
+            _y = prmPos.y;
+            _z = prmPos.z;
+            _rotX = prmRot.x;
+            _rotY = prmRot.y;
+            _rotZ = prmRot.z;
+            if (prmItem != null)
+            {
+                _itemSaveData = new ItemSaveData(prmItem.GetItemData().Name, prmItem.gameObject.transform.position);
+            }
+            else
+            {
+                _itemSaveData = null;
+            }
+        }
+        
+        public Vector3 GetPos => new(_x, _y, _z);
+
+        public Vector3 GetRot => new(_rotX, _rotY, _rotZ);
+        
+        public ItemSaveData? GetItem => _itemSaveData;
     }
 
     #endregion

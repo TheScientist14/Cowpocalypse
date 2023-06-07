@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.Events;
+using UnityEngine.Serialization;
 
 public class BeltManager : Singleton<BeltManager>
 {
@@ -17,6 +18,8 @@ public class BeltManager : Singleton<BeltManager>
     public float speed = 0.2f;
     private InputsActions m_InputAction;
     private LineRenderer lineRenderer;
+
+    [SerializeField]private GameObject mapParentObject;
 
     // private int DraggingPhase = 0;
     private bool BeltIsVertical;
@@ -150,7 +153,7 @@ public class BeltManager : Singleton<BeltManager>
 
     private GameObject SpawnBelt(Vector3 position, Vector3 direction)
     {
-        GameObject belt = Instantiate(BeltPrefab, position, Quaternion.identity);
+        GameObject belt = Instantiate(BeltPrefab, position, Quaternion.identity, mapParentObject.transform);
         belt.transform.LookAt(direction);
 
         if(!BeltIsVertical)
@@ -192,7 +195,7 @@ public class BeltManager : Singleton<BeltManager>
 
     private GameObject SpawnMachine(Vector3 position, Vector3 direction)
     {
-        GameObject belt = Instantiate(OtherMachinePrefab, position, Quaternion.identity);
+        GameObject belt = Instantiate(OtherMachinePrefab, position, Quaternion.identity, mapParentObject.transform);
 
         Belt b = belt.GetComponent<Belt>();
         Assert.IsNotNull(b);
