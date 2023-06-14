@@ -25,6 +25,7 @@ public class Belt : MonoBehaviour
     private void Start()
     {
         isMachineBlocking = false;
+        m_IsRunning = false;
         BeltInSequence = GetNextBelt();
         gameObject.name = $"Belt: {BeltID++}";
 
@@ -39,7 +40,7 @@ public class Belt : MonoBehaviour
 
         if(BeltInSequence == null)
             return;
-
+        
         if(BeltItem != null && BeltItem.GetItem() != null && !m_IsRunning)
         {
             m_IsRunning = true;
@@ -85,9 +86,15 @@ public class Belt : MonoBehaviour
                         BeltItem.GetItem().transform.position = Vector3.MoveTowards(BeltItem.transform.position, toPosition, BeltManager.instance.speed * Time.fixedDeltaTime);
                         yield return new WaitForFixedUpdate();
                     }
+                    if(BeltInSequence != null)
+                    {
+                        BeltInSequence.BeltItem = BeltItem;
+                        BeltItem = null;
+                    }
+                    else
+                        PoolManager.instance.DespawnObject(BeltItem);
                     isSpaceTaken = false;
-                    BeltInSequence.BeltItem = BeltItem;
-                    BeltItem = null;
+
                 }
             }
         }

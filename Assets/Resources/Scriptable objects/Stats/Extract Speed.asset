@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Extract Speed
   m_EditorClassIdentifier: 
   <Name>k__BackingField: Extract speed
-  <MultiplierPerLevel>k__BackingField: 1.2
+  <MultiplierPerLevel>k__BackingField: -0.8
   <BaseValue>k__BackingField: 1
   <MaxLevelInclusive>k__BackingField: 10
   <Icon>k__BackingField: {fileID: 21300000, guid: a8a0b3431cb883d449b62e487c75d443, type: 3}

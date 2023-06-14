@@ -51,6 +51,7 @@ public class StatUI : MonoBehaviour, IPointerDownHandler
 
         _wallet.Money -= price;
         Stat.CurrentLevel++;
+        BeltManager.instance.UpdateStat(Stat);
         Draw();
     }
 }

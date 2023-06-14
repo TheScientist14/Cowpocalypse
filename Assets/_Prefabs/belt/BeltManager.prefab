@@ -55,7 +55,16 @@ MonoBehaviour:
   - {fileID: 4732986801910414389, guid: 6ff40ac3a32ce4f47bd1d9bccc6d8b98, type: 3}
   - {fileID: 8504238527581414455, guid: d2fd8be8225616a458214792f8a5bd97, type: 3}
   speed: 1
+  mapParentObject: {fileID: 0}
+  MachineBaseprice: 10
+  MachinePriceMultiplier: 1.2
+  MaxShop: 3
+  SpawnRate: 1
+  CraftingSpeedMultiplier: 1
   m_Camera: {fileID: 0}
+  deleteMode:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!120 &4475892929583025520
 LineRenderer:
   m_ObjectHideFlags: 0

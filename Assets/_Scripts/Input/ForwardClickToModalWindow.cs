@@ -3,7 +3,7 @@ using UnityEngine;
 public class ForwardClickToModalWindow : MonoBehaviour
 {
     [SerializeField] private ModalWindowController _window;
-    [SerializeField] private BeltManager _beltManager;
+
     private float lastClickTime;
     private const float doubleClickThreshold = 0.3f; // Adjust this value to define the double-click speed
 
@@ -24,7 +24,7 @@ public class ForwardClickToModalWindow : MonoBehaviour
                 {
                     Debug.Log(go.name);
                     // Double-click detected on the Belt
-                    _beltManager.RotateBelt(go, machineType); // Rotate belt
+                    BeltManager.instance.RotateBelt(go, machineType); // Rotate belt
                     return;
                 }
             }

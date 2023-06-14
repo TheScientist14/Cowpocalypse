@@ -62,7 +62,7 @@ public class Machine : Belt
         foreach(ItemData item in CraftedItem.Recipes.Keys)
             Stock[item] -= CraftedItem.Recipes[item];
         stockUpdated.Invoke(Stock);
-        yield return new WaitForSeconds(CraftedItem.CraftDuration);
+        yield return new WaitForSeconds(CraftedItem.CraftDuration * BeltManager.instance.GetCraftingSpeedMultiplier());
         // play sound
         CallSound(EnumRelativeSounds.Activate);
         Item craftedItem = PoolManager.instance.SpawnObject(CraftedItem, transform.position);

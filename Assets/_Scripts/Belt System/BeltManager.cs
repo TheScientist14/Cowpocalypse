@@ -14,12 +14,19 @@ public class BeltManager : Singleton<BeltManager>
     [SerializeField]
     private List<GameObject> BeltList; // 1 = belt, 2 = machine, 3 = merger, 4 = seller, 5 = spawner, 6 = spliter
 
-    public static BeltManager Instance;
     public float speed = 0.2f;
     private InputsActions m_InputAction;
     private LineRenderer lineRenderer;
 
-    [SerializeField]private GameObject mapParentObject;
+    [SerializeField] private GameObject mapParentObject;
+
+    [SerializeField] private float MachineBaseprice;
+    [SerializeField] private float MachinePriceMultiplier;
+    private int MachineCount;
+    [SerializeField] private int MaxShop;
+    private int ShopCount;
+    [SerializeField] float SpawnRate;
+    [SerializeField] private float CraftingSpeedMultiplier;
 
     // private int DraggingPhase = 0;
     private bool BeltIsVertical;
@@ -132,6 +139,8 @@ public class BeltManager : Singleton<BeltManager>
 
     private void SpawnBelts()
     {
+        if (lineRenderer.GetPosition(0) == lineRenderer.GetPosition(1))
+            return;
         int x = (int)lineRenderer.GetPosition(0).x;
         int y = (int)lineRenderer.GetPosition(0).y;
         float cellSize = GameGrid.cellSize.x;
@@ -195,6 +204,23 @@ public class BeltManager : Singleton<BeltManager>
 
     private GameObject SpawnMachine(Vector3 position, Vector3 direction)
     {
+        int machinePrice = (int)(MachineBaseprice * (MachineCount + 1) * MachinePriceMultiplier);
+        if (OtherMachinePrefab.GetComponent<Machine>())
+        {
+            if (Wallet.instance.Money >= machinePrice)
+            {
+                Wallet.instance.Money -= machinePrice;
+                MachineCount++;
+            }
+            else
+                return null;
+        }
+        else if (OtherMachinePrefab.GetComponent<Seller>())
+        {
+            if (ShopCount >= MaxShop)
+                return null;
+            ShopCount++;
+        }
         GameObject belt = Instantiate(OtherMachinePrefab, position, Quaternion.identity, mapParentObject.transform);
 
         Belt b = belt.GetComponent<Belt>();
@@ -233,6 +259,20 @@ public class BeltManager : Singleton<BeltManager>
     {
         Vector3 mouseWorldPos = m_Camera.ScreenToWorldPoint(m_InputAction.Player.PointerPosition.ReadValue<Vector2>());
         Vector3Int cellPos = GameGrid.WorldToCell(mouseWorldPos);
+        Belt DeletedBelt = GridManager.instance.GetBeltAt(new Vector2Int(cellPos.x, cellPos.y));
+        if (DeletedBelt == null)
+            return;
+        GameObject deletedObject = DeletedBelt.gameObject;
+        if(deletedObject.GetComponent<Machine>())
+        {
+            Wallet.instance.Money += (int)(MachineBaseprice * MachineCount * MachinePriceMultiplier);
+            MachineCount--;
+        }
+        else if(deletedObject.GetComponent<Seller>()) 
+        {
+            ShopCount--;
+        }
+
         GridManager.instance.SetBeltAt(new Vector2Int(cellPos.x, cellPos.y), null, true); // do not delete spawners
     }
 
@@ -264,5 +304,27 @@ public class BeltManager : Singleton<BeltManager>
         {
             Destroy(newBeltObject);
         }
+    }
+
+    public void UpdateStat(Stat stat)
+    {
+        if (stat.StatData.Name == "Belt speed")
+            speed = stat.Value;
+        else if (stat.StatData.Name == "Extract speed")
+            SpawnRate = stat.Value;
+        else if (stat.StatData.Name == "Craft Speed")
+            CraftingSpeedMultiplier = stat.Value;
+
+
+    }
+
+    public float GetSpawnRate()
+    {
+        return SpawnRate;
+    }
+
+    public float GetCraftingSpeedMultiplier()
+    {
+        return CraftingSpeedMultiplier;
     }
 }

@@ -9,7 +9,6 @@ public class Spawner : Belt
 {
     [Expandable]
     public ItemData SpawnedItemData;
-    public float SpawnRate;
 
     [SerializeField]
     private ScriptablesRelativeAudio _thescriptablesRelativeAudio;
@@ -30,7 +29,7 @@ public class Spawner : Belt
     {
         while(true)
         {
-            yield return new WaitForSeconds(SpawnRate);
+            yield return new WaitForSeconds(BeltManager.instance.GetSpawnRate());
             if(isSpaceTaken == false)
             {
                 CallTheSound(EnumRelativeSounds.Activate);
