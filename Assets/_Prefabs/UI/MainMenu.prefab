@@ -1816,6 +1816,7 @@ MonoBehaviour:
   _optionPanel: {fileID: 2299859399367911767}
   _tutoPanel: {fileID: 5874419547066100683}
   _WarningPanel: {fileID: 2299859398643791371}
+  loadButton: {fileID: 0}
   _scriptablesWorldAudio: {fileID: 11400000, guid: 19dbf4f3c9a4b474d92e900db4dd54a6, type: 2}
 --- !u!114 &786701970528553881
 MonoBehaviour:
@@ -2262,6 +2263,10 @@ PrefabInstance:
     - target: {fileID: 3842081732559498525, guid: f4ec8d09b302e4e4f840c1b7387688ab, type: 3}
       propertyPath: m_Name
       value: TutoPanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 3842081732559498525, guid: f4ec8d09b302e4e4f840c1b7387688ab, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3842081732559498526, guid: f4ec8d09b302e4e4f840c1b7387688ab, type: 3}
       propertyPath: m_Pivot.x

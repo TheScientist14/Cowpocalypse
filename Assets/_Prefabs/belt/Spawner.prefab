@@ -216,10 +216,9 @@ MonoBehaviour:
   isSpaceTaken: 0
   isMachineBlocking: 0
   MachineInSequence: {fileID: 0}
-  _scriptablesRelativeAudio: {fileID: 11400000, guid: b9a27726f078d244fa604caaa4339dae, type: 2}
+  _scriptablesRelativeAudio: {fileID: 0}
   SpawnedItemData: {fileID: 0}
-  SpawnRate: 5
-  _thescriptablesRelativeAudio: {fileID: 0}
+  _thescriptablesRelativeAudio: {fileID: 11400000, guid: b9a27726f078d244fa604caaa4339dae, type: 2}
 --- !u!114 &5596085840803485462
 MonoBehaviour:
   m_ObjectHideFlags: 0
