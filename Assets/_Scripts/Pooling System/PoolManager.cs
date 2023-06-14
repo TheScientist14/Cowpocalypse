@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using NaughtyAttributes;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Assertions;
 using UnityEngine.Serialization;
 
 namespace _Scripts.Pooling_System
@@ -61,6 +63,13 @@ namespace _Scripts.Pooling_System
         /// <returns></returns>
         public Item SpawnObject(ItemData itemData, Vector3 prmPosition)
         {
+            if (itemPool.Count == 0)
+            { 
+                AddOneToPool();
+            }
+
+            Assert.IsTrue(totalNumberOfPooledItems > 0);
+            
             itemPool[0].SetItemData(itemData);
             if (itemData.Sprite)
             {
@@ -107,15 +116,20 @@ namespace _Scripts.Pooling_System
         {
             for (int i = 0; i < numberOfItemsToAdd; i++)
             {
-                Item newItem = new GameObject().AddComponent<Item>();
-                newItem.AddComponent<SpriteRenderer>().sortingOrder = 1;
-                newItem.transform.parent = transform;
-                newItem.gameObject.transform.localScale = Vector3.one * itemScaleSize;
-                newItem.gameObject.SetActive(false);
-                itemPool.Add(newItem);
-                totalNumberOfPooledItems++;
+                AddOneToPool();
                 yield return new WaitForEndOfFrame();
             }
+        }
+
+        private void AddOneToPool()
+        {
+            Item newItem = new GameObject().AddComponent<Item>();
+            newItem.AddComponent<SpriteRenderer>().sortingOrder = 1;
+            newItem.transform.parent = transform;
+            newItem.gameObject.transform.localScale = Vector3.one * itemScaleSize;
+            newItem.gameObject.SetActive(false);
+            itemPool.Add(newItem);
+            totalNumberOfPooledItems++;
         }
 
         #region Accessors

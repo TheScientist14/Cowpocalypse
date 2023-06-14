@@ -452,7 +452,7 @@ MonoBehaviour:
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
-    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 0.6156863, g: 0.6156863, b: 0.6156863, a: 1}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -1816,6 +1816,7 @@ MonoBehaviour:
   _optionPanel: {fileID: 2299859399367911767}
   _tutoPanel: {fileID: 5874419547066100683}
   _WarningPanel: {fileID: 2299859398643791371}
+  loadButton: {fileID: 0}
   _scriptablesWorldAudio: {fileID: 11400000, guid: 19dbf4f3c9a4b474d92e900db4dd54a6, type: 2}
 --- !u!114 &786701970528553881
 MonoBehaviour:
