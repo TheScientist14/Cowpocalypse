@@ -107,6 +107,24 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Pinch1"",
+                    ""type"": ""Value"",
+                    ""id"": ""ee5259dd-1655-449a-8401-2b8f1ad46a1c"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""Pinch2"",
+                    ""type"": ""Value"",
+                    ""id"": ""70de4578-dc10-44cf-a2cf-be4cfb4a5a67"",
+                    ""expectedControlType"": ""Vector2"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -120,39 +138,6 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                     ""action"": ""ZoomValue"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""Pinch"",
-                    ""id"": ""16992aac-a28d-4c53-8e6e-c80903a91968"",
-                    ""path"": ""Pinch"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""ZoomValue"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""m_FirstFingerPositionValueId"",
-                    ""id"": ""c4960551-ab97-43c2-87b8-45ce1a2831e4"",
-                    ""path"": ""<Touchscreen>/touch0/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Touchscreen"",
-                    ""action"": ""ZoomValue"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""m_SecondFingerPositionValueId"",
-                    ""id"": ""5179b7f8-d51a-4153-a650-22a2720d3522"",
-                    ""path"": ""<Touchscreen>/touch1/position"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": ""Touchscreen"",
-                    ""action"": ""ZoomValue"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
                 },
                 {
                     ""name"": """",
@@ -329,6 +314,28 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                     ""action"": ""DragBuildMode"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d5b6cb5d-5e25-429c-9686-ee725306e96a"",
+                    ""path"": ""<Touchscreen>/touch0/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Touchscreen"",
+                    ""action"": ""Pinch1"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""85898bbb-7b5b-446b-8be5-d3287e62976a"",
+                    ""path"": ""<Touchscreen>/touch1/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Touchscreen"",
+                    ""action"": ""Pinch2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -374,6 +381,8 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
         m_Player_Drag = m_Player.FindAction("Drag", throwIfNotFound: true);
         m_Player_DragBuildMode = m_Player.FindAction("DragBuildMode", throwIfNotFound: true);
         m_Player_ClickBuildMode = m_Player.FindAction("ClickBuildMode", throwIfNotFound: true);
+        m_Player_Pinch1 = m_Player.FindAction("Pinch1", throwIfNotFound: true);
+        m_Player_Pinch2 = m_Player.FindAction("Pinch2", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -444,6 +453,8 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Drag;
     private readonly InputAction m_Player_DragBuildMode;
     private readonly InputAction m_Player_ClickBuildMode;
+    private readonly InputAction m_Player_Pinch1;
+    private readonly InputAction m_Player_Pinch2;
     public struct PlayerActions
     {
         private @InputsActions m_Wrapper;
@@ -457,6 +468,8 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
         public InputAction @Drag => m_Wrapper.m_Player_Drag;
         public InputAction @DragBuildMode => m_Wrapper.m_Player_DragBuildMode;
         public InputAction @ClickBuildMode => m_Wrapper.m_Player_ClickBuildMode;
+        public InputAction @Pinch1 => m_Wrapper.m_Player_Pinch1;
+        public InputAction @Pinch2 => m_Wrapper.m_Player_Pinch2;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -493,6 +506,12 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
             @ClickBuildMode.started += instance.OnClickBuildMode;
             @ClickBuildMode.performed += instance.OnClickBuildMode;
             @ClickBuildMode.canceled += instance.OnClickBuildMode;
+            @Pinch1.started += instance.OnPinch1;
+            @Pinch1.performed += instance.OnPinch1;
+            @Pinch1.canceled += instance.OnPinch1;
+            @Pinch2.started += instance.OnPinch2;
+            @Pinch2.performed += instance.OnPinch2;
+            @Pinch2.canceled += instance.OnPinch2;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -524,6 +543,12 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
             @ClickBuildMode.started -= instance.OnClickBuildMode;
             @ClickBuildMode.performed -= instance.OnClickBuildMode;
             @ClickBuildMode.canceled -= instance.OnClickBuildMode;
+            @Pinch1.started -= instance.OnPinch1;
+            @Pinch1.performed -= instance.OnPinch1;
+            @Pinch1.canceled -= instance.OnPinch1;
+            @Pinch2.started -= instance.OnPinch2;
+            @Pinch2.performed -= instance.OnPinch2;
+            @Pinch2.canceled -= instance.OnPinch2;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -570,5 +595,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
         void OnDrag(InputAction.CallbackContext context);
         void OnDragBuildMode(InputAction.CallbackContext context);
         void OnClickBuildMode(InputAction.CallbackContext context);
+        void OnPinch1(InputAction.CallbackContext context);
+        void OnPinch2(InputAction.CallbackContext context);
     }
 }

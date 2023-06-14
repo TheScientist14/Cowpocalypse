@@ -85,6 +85,24 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Pinch1",
+                    "type": "Value",
+                    "id": "ee5259dd-1655-449a-8401-2b8f1ad46a1c",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Pinch2",
+                    "type": "Value",
+                    "id": "70de4578-dc10-44cf-a2cf-be4cfb4a5a67",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -98,39 +116,6 @@
                     "action": "ZoomValue",
                     "isComposite": false,
                     "isPartOfComposite": false
-                },
-                {
-                    "name": "Pinch",
-                    "id": "16992aac-a28d-4c53-8e6e-c80903a91968",
-                    "path": "Pinch",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "ZoomValue",
-                    "isComposite": true,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "m_FirstFingerPositionValueId",
-                    "id": "c4960551-ab97-43c2-87b8-45ce1a2831e4",
-                    "path": "<Touchscreen>/touch0/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Touchscreen",
-                    "action": "ZoomValue",
-                    "isComposite": false,
-                    "isPartOfComposite": true
-                },
-                {
-                    "name": "m_SecondFingerPositionValueId",
-                    "id": "5179b7f8-d51a-4153-a650-22a2720d3522",
-                    "path": "<Touchscreen>/touch1/position",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Touchscreen",
-                    "action": "ZoomValue",
-                    "isComposite": false,
-                    "isPartOfComposite": true
                 },
                 {
                     "name": "",
@@ -305,6 +290,28 @@
                     "processors": "",
                     "groups": "Touchscreen",
                     "action": "DragBuildMode",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d5b6cb5d-5e25-429c-9686-ee725306e96a",
+                    "path": "<Touchscreen>/touch0/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Touchscreen",
+                    "action": "Pinch1",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "85898bbb-7b5b-446b-8be5-d3287e62976a",
+                    "path": "<Touchscreen>/touch1/position",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "Touchscreen",
+                    "action": "Pinch2",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
