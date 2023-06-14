@@ -149,17 +149,25 @@ namespace _Scripts.Save_System
 
         private IEnumerator Load()
         {
+            Debug.Log("Loading...");
             foreach (Transform child in _playerSpawnedObjects.transform)
             {
                 Destroy(child.gameObject);
             }
+
             
             LoadMachines();
+            Debug.Log("Loaded Machines");
             LoadBelts();
+            Debug.Log("Loaded Belts");
             LoadSplitters();
+            Debug.Log("Loaded Splitters");
             LoadPlayer();
+            Debug.Log("Loaded Player");
             LoadMerger();
+            Debug.Log("Loaded Merger");
             LoadSeller();
+            Debug.Log("Loaded Seller");
             
             yield return new WaitForSecondsRealtime(loadTime);
             
