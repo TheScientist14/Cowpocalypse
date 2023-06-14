@@ -1744,7 +1744,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7357614054047876827, guid: 2f41322951505894f8ff5f5ba1392085, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 500
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7357614054047876827, guid: 2f41322951505894f8ff5f5ba1392085, type: 3}
       propertyPath: m_AnchoredPosition.y
@@ -3085,6 +3085,10 @@ PrefabInstance:
     - target: {fileID: 6990053111912614388, guid: 5cfdac124a377664aa78c82379fa6a8f, type: 3}
       propertyPath: LoadTime
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6990053111912614388, guid: 5cfdac124a377664aa78c82379fa6a8f, type: 3}
+      propertyPath: loadOnStartup
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6990053111912614388, guid: 5cfdac124a377664aa78c82379fa6a8f, type: 3}
       propertyPath: playerSpawnedObjects

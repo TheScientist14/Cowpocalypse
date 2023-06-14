@@ -45,7 +45,17 @@ public class PauseMenuBehaviour : MonoBehaviour
         PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound3);
 
         ClosePauseMenu();
-        SaveSystem.instance.SaveGame();
+
+        SaveSystem saveSystem = SaveSystem.instance;
+
+        if (!saveSystem)
+        {
+            Debug.LogError("No SaveSystem found");
+        }
+        else
+        {
+             SaveSystem.instance.SaveGame();
+        }
     }
 
     public void LoadGame()

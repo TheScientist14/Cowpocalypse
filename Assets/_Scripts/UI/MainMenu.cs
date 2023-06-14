@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _Scripts.Save_System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -14,6 +15,7 @@ namespace _Scripts.UI
         [SerializeField] CanvasGroup _buttons;
         [SerializeField] GameObject _optionPanel;
         [SerializeField] GameObject _WarningPanel;
+        [SerializeField] private Button loadButton;
 
         private ObservableSound _observableSound;
         [SerializeField]
@@ -40,6 +42,12 @@ namespace _Scripts.UI
             sequence.Append(_buttons.DOFade(1, 2).SetEase(Ease.Linear));
             sequence.Insert(3, _buttonsRect.DOAnchorPosX(0, 2));
             sequence.onComplete = () => _buttons.interactable = true;
+
+            if (!SaveSystem.instance.CheckForSave())
+            {
+                Debug.Log("Save not Found");
+                loadButton.interactable = false;
+            }
         }
 
         public void NewGame()
@@ -60,6 +68,7 @@ namespace _Scripts.UI
         public void Load()
         {
             PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound1);
+            SceneManager.LoadScene(2);
             Debug.Log("Load !");
         }
 
