@@ -324,4 +324,15 @@ public class BeltManager : Singleton<BeltManager>
     {
         return CraftingSpeedMultiplier;
     }
+
+    public void RemoveOneShop()
+    {
+        ShopCount--;
+    }
+
+    public void RemoveOneMachine()
+    {
+        MachineCount--;
+        Wallet.instance.Money += (int)(MachineBaseprice * MachineCount * MachinePriceMultiplier);
+    }
 }

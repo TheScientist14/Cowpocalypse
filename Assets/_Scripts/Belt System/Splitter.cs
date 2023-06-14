@@ -50,7 +50,9 @@ public class Splitter : Belt
                     else
                         isMachineBlocking = true;
                 }
-                if(!isMachineBlocking)
+                if (BeltInSequence.GetComponent<Spawner>())
+                    isMachineBlocking = true;
+                if (!isMachineBlocking)
                 {
                     if(MachineInSequence != null)
                     {

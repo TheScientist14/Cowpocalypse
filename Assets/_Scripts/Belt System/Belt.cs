@@ -68,6 +68,8 @@ public class Belt : MonoBehaviour
                     }
                 }
             }
+            if (BeltInSequence.GetComponent<Spawner>())
+                isMachineBlocking = true;
             if(!isMachineBlocking)
             {
                 if(MachineInSequence != null)
@@ -125,6 +127,10 @@ public class Belt : MonoBehaviour
     {
         if(BeltItem != null)
             PoolManager.instance.DespawnObject(BeltItem);
+        if (GetComponent<Machine>() != null)
+            BeltManager.instance.RemoveOneMachine();
+        if(GetComponent<Seller>() != null)
+            BeltManager.instance.RemoveOneShop();
     }
 
     private void CallSound(EnumRelativeSounds _action)
