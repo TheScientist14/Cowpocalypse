@@ -17,27 +17,7 @@ public class AllTiersPanel : Panel
     {
         InstantiateTiers();
     }
-    public void ChangeTiersDisplayed(int firstTiersToHide, int lastTiersToHide = 100000)
-    {
-        var tr = _layout.transform;
-        int childCount = tr.childCount;
-        firstTiersToHide = Mathf.Min(firstTiersToHide, childCount);
-        lastTiersToHide = Mathf.Min(lastTiersToHide, childCount);
-        int i = 0;
-        for (; i < firstTiersToHide; i++)
-        {
-            tr.GetChild(i).gameObject.SetActive(false);
-        }
-        for (; i < lastTiersToHide; i++)
-        {
-            tr.GetChild(i).gameObject.SetActive(true);
-        }
-        for (; i < childCount; i++)
-        {
-            tr.GetChild(i).gameObject.SetActive(false);
-        }
-    }
-    
+
     [SerializeField, Header("Editor helpers")]
     private TierUI _tierPrefab;
     [Button("Instantiate tiers")]
