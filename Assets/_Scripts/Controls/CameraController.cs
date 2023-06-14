@@ -70,6 +70,7 @@ public class CameraController : MonoBehaviour
     void EndPinch()
     {
         m_IsPinching = false;
+        m_PrevPinchDist = 0;
     }
 
     void InitMoveCamera()
@@ -99,7 +100,7 @@ public class CameraController : MonoBehaviour
 
         transform.position = new Vector3(
             Mathf.Clamp(transform.position.x, m_MinCamera.position.x, m_MaxCamera.position.x),
-            Mathf.Clamp(transform.position.x, m_MinCamera.position.y, m_MaxCamera.position.y),
+            Mathf.Clamp(transform.position.y, m_MinCamera.position.y, m_MaxCamera.position.y),
             transform.position.z);
     }
 }
