@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using _Scripts.Save_System;
 using DG.Tweening;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -63,13 +64,15 @@ namespace _Scripts.UI
         public void Play()
         {
             PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound1);
+            SaveSystem.instance.OverideSave();
             _WarningPanel.SetActive(true);
         }
 
         public void Load()
         {
             PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound1);
-            SceneManager.LoadScene(2);
+            SaveSystem._loadOnStartup = true;
+            SceneManager.LoadScene(1);
             Debug.Log("Load !");
         }
 

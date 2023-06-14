@@ -16,7 +16,7 @@ namespace _Scripts.Save_System
 {
     public class SaveSystem : Singleton<SaveSystem>
     {
-        [SerializeField] private bool loadOnStartup;
+        [SerializeField] public static bool _loadOnStartup = false;
         
         [SerializeField]
         private GameObject saveIconPrefab;
@@ -73,9 +73,10 @@ namespace _Scripts.Save_System
             savedGame.AddListener(OnGameSaved);
             loadedGame.AddListener(OnGameLoaded);
             
-            if (loadOnStartup)
+            if (_loadOnStartup)
             {
                 LoadGame();
+                _loadOnStartup = false;
             }
         }
 
@@ -306,6 +307,11 @@ namespace _Scripts.Save_System
             }
             
             
+        }
+
+        public void OverideSave()
+        {
+            File.Delete(_path);
         }
     }
 }
