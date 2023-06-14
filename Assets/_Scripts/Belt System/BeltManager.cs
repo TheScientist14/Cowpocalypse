@@ -303,8 +303,12 @@ public class BeltManager : Singleton<BeltManager>
 
     public void UpdateStat(Stat stat)
     {
-        if(stat.StatData.Name == "Belt speed")
+        if (stat.StatData.Name == "Belt speed")
+        {
             speed = stat.Value;
+            Shader.SetGlobalFloat("_speed", speed);
+        }
+            
         else if(stat.StatData.Name == "Extract speed")
             SpawnRate = stat.Value;
         else if(stat.StatData.Name == "Craft Speed")

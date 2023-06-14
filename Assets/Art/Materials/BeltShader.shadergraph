@@ -1199,7 +1199,7 @@
     "m_RefNameGeneratedByDisplayName": "speed",
     "m_DefaultReferenceName": "_speed",
     "m_OverrideReferenceName": "",
-    "m_GeneratePropertyBlock": true,
+    "m_GeneratePropertyBlock": false,
     "m_UseCustomSlotLabel": false,
     "m_CustomSlotLabel": "",
     "m_Precision": 0,
@@ -1225,7 +1225,7 @@
     "m_ShaderOutputName": "B",
     "m_StageCapability": 3,
     "m_Value": {
-        "e00": 5.0,
+        "e00": 0.26249998807907107,
         "e01": 2.0,
         "e02": 2.0,
         "e03": 2.0,
