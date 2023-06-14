@@ -40,10 +40,9 @@ public class ModalWindowController : Singleton<ModalWindowController>
     #region CalledFromUi
     // public void OpenCatalogFromGame() => OpenCatalog("Recipe unlocks");
 
-    public void OpenCatalogFromMachineSettings() => OpenCatalog("Recipe to craft", 1);
-    private void OpenCatalog(string title, int tiersToSkip = 0)
+    public void OpenCatalogFromMachineSettings() => OpenCatalog("Recipe to craft");
+    private void OpenCatalog(string title)
     {
-        _recipeUnlockPanel.ChangeTiersDisplayed(tiersToSkip);
         OpenPanel(_recipeUnlockPanel, title);
     }
     public void OpenMachineSettings(Vector2 screenPosition, Machine machine)
@@ -162,6 +161,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
 
             Wallet.instance.Money -= ressourceUI.ItemData.Tier.UnlockPrice;
             ressourceUI.ItemData.Unlocked = true;
+            ressourceUI.UpdateValue();
             Debug.Log($"Successfully unlocked {ressourceUI.ItemData.Name}.");
             //TODO: rajouter les item unlocked dans le save system
             return;
@@ -183,6 +183,9 @@ public class ModalWindowController : Singleton<ModalWindowController>
 
     internal void CheckClickedOutside(Vector2 position)
     {
+        if (_openedPanels.Count == 0)
+            return;
+        
         if(PointIsOutsideOfPanel(position))
             CloseAll();
     }

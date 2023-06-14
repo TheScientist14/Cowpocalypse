@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using _Scripts.Save_System;
 using DG.Tweening;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -15,6 +16,7 @@ namespace _Scripts.UI
         [SerializeField] GameObject _optionPanel;
         [SerializeField] GameObject _tutoPanel;
         [SerializeField] GameObject _WarningPanel;
+        [SerializeField] private Button loadButton;
 
         private ObservableSound _observableSound;
         [SerializeField]
@@ -33,7 +35,7 @@ namespace _Scripts.UI
             _titleTransform.position = new Vector2(0, 7);
             _buttons.alpha = 0;
             _buttonsRect.anchoredPosition = new Vector2(-400, 0);
-            
+
             var sequence = DOTween.Sequence();
             sequence.Append(_camera.DOOrthoSize(5, 2));
             sequence.Append(_titleTransform.DOMoveY(3, 0.25f).SetEase(Ease.OutBack));
@@ -41,11 +43,20 @@ namespace _Scripts.UI
             sequence.Append(_buttons.DOFade(1, 2).SetEase(Ease.Linear));
             sequence.Insert(3, _buttonsRect.DOAnchorPosX(0, 2));
             sequence.onComplete = () => _buttons.interactable = true;
+
+            if (!SaveSystem.instance.CheckForSave())
+            {
+                Debug.Log("Save not Found");
+                loadButton.interactable = false;
+            }
         }
 
         public void NewGame()
         {
             PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound2);
+            ItemData[] itemsData = Resources.LoadAll<ItemData>("ScriptableObject/Items/");
+            foreach(ItemData itemData in itemsData)
+                itemData.Unlocked = false;
             SceneManager.LoadScene(1);
         }
 
@@ -58,6 +69,7 @@ namespace _Scripts.UI
         public void Load()
         {
             PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound1);
+            SceneManager.LoadScene(2);
             Debug.Log("Load !");
         }
 

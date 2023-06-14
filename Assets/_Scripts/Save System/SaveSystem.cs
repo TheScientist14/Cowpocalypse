@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -15,6 +16,8 @@ namespace _Scripts.Save_System
 {
     public class SaveSystem : Singleton<SaveSystem>
     {
+        [SerializeField] private bool loadOnStartup;
+        
         [SerializeField]
         private GameObject saveIconPrefab;
 
@@ -37,11 +40,9 @@ namespace _Scripts.Save_System
         private static string _path;
 
         [SerializeField] private float loadTime;
-        [SerializeField] private GameObject playerSpawnedObjects;
+        private GameObject _playerSpawnedObjects;
         
         private Dictionary<string, ItemData> _itemDatas;
-        public List<Belt> belts;
-        public static List<Belt> beltsStatic;
 
         public UnityEvent savedGame;
         public UnityEvent loadedGame;
@@ -57,14 +58,25 @@ namespace _Scripts.Save_System
 
             _path = Application.persistentDataPath + "/" + Filename;
             
-            savedGame.AddListener(OnGameSaved);
-            loadedGame.AddListener(OnGameLoaded);
-            
             if (_saveIcon == null)
             {
                 _saveIcon = Instantiate(saveIconPrefab);
             } 
             _saveIcon.SetActive(false);
+            
+            _playerSpawnedObjects = GameObject.FindWithTag("Map");
+        }
+
+        private void Start()
+        {
+            
+            savedGame.AddListener(OnGameSaved);
+            loadedGame.AddListener(OnGameLoaded);
+            
+            if (loadOnStartup)
+            {
+                LoadGame();
+            }
         }
 
         private void OnGameSaved()
@@ -137,7 +149,7 @@ namespace _Scripts.Save_System
 
         private IEnumerator Load()
         {
-            foreach (Transform child in playerSpawnedObjects.transform)
+            foreach (Transform child in _playerSpawnedObjects.transform)
             {
                 Destroy(child.gameObject);
             }
@@ -155,9 +167,14 @@ namespace _Scripts.Save_System
             yield return null;
         }
 
+        public bool CheckForSave()
+        {
+            return File.Exists(_path);
+        }
+
         public SaveData GetSavedGameData()
         {
-            if (File.Exists(_path))
+            if (CheckForSave())
             {
                 BinaryFormatter formatter = new BinaryFormatter();
                 FileStream stream = new FileStream(_path, FileMode.Open);
@@ -179,7 +196,7 @@ namespace _Scripts.Save_System
         {
             foreach (BeltSaveData beltSaveData in GetSavedGameData().BeltDatas)
             {
-                Belt belt = Instantiate(beltPrefab, beltSaveData.GetPos, Quaternion.Euler(beltSaveData.GetRot), playerSpawnedObjects.transform)
+                Belt belt = Instantiate(beltPrefab, beltSaveData.GetPos, Quaternion.Euler(beltSaveData.GetRot), _playerSpawnedObjects.transform)
                     .GetComponent<Belt>();
 
                 if (beltSaveData.GetItem.GetValueOrDefault().GetName != null)
@@ -197,7 +214,7 @@ namespace _Scripts.Save_System
             foreach (MachineSaveData machineSaveData in GetSavedGameData().MachineDatas)
             {
                 Machine machine =
-                    Instantiate(machinePrefab, machineSaveData.GetPos, Quaternion.Euler(machineSaveData.GetRot), playerSpawnedObjects.transform)
+                    Instantiate(machinePrefab, machineSaveData.GetPos, Quaternion.Euler(machineSaveData.GetRot), _playerSpawnedObjects.transform)
                         .GetComponent<Machine>();
 
                 machine.Stock = new Dictionary<ItemData, int>(machineSaveData.ItemNames.Zip(
@@ -222,7 +239,7 @@ namespace _Scripts.Save_System
             foreach (SplitterSaveData splitterSaveData in GetSavedGameData().SplitterDatas)
             {
                 Splitter splitter =
-                    Instantiate(splitterPrefab, splitterSaveData.GetPos, Quaternion.Euler(splitterSaveData.GetRot), playerSpawnedObjects.transform)
+                    Instantiate(splitterPrefab, splitterSaveData.GetPos, Quaternion.Euler(splitterSaveData.GetRot), _playerSpawnedObjects.transform)
                         .GetComponent<Splitter>();
 
                 if (splitterSaveData.GetItem.GetValueOrDefault().GetName != null)
@@ -239,7 +256,7 @@ namespace _Scripts.Save_System
             foreach (MergerSaveData mergerSaveData in GetSavedGameData().MergerDatas)
             {
                 Merger merger =
-                    Instantiate(mergerPrefab, mergerSaveData.GetPos, Quaternion.Euler(mergerSaveData.GetRot), playerSpawnedObjects.transform)
+                    Instantiate(mergerPrefab, mergerSaveData.GetPos, Quaternion.Euler(mergerSaveData.GetRot), _playerSpawnedObjects.transform)
                         .GetComponent<Merger>();
                 
                 if (mergerSaveData.GetItem.GetValueOrDefault().GetName != null)
@@ -269,7 +286,7 @@ namespace _Scripts.Save_System
             foreach (SellerSaveData sellerSaveData in GetSavedGameData().SellerDatas)
             {
                 Seller seller =
-                    Instantiate(sellerPrefab, sellerSaveData.GetPos, Quaternion.Euler(sellerSaveData.GetRot), playerSpawnedObjects.transform).GetComponent<Seller>();
+                    Instantiate(sellerPrefab, sellerSaveData.GetPos, Quaternion.Euler(sellerSaveData.GetRot), _playerSpawnedObjects.transform).GetComponent<Seller>();
                 
                 if (sellerSaveData.GetItem.GetValueOrDefault().GetName != null)
                 {
