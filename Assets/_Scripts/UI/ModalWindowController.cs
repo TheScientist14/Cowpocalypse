@@ -183,6 +183,9 @@ public class ModalWindowController : Singleton<ModalWindowController>
 
     internal void CheckClickedOutside(Vector2 position)
     {
+        if (_openedPanels.Count == 0)
+            return;
+        
         if(PointIsOutsideOfPanel(position))
             CloseAll();
     }
