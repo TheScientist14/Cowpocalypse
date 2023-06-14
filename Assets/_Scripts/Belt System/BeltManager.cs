@@ -28,7 +28,7 @@ public class BeltManager : Singleton<BeltManager>
     [SerializeField] float SpawnRate;
     [SerializeField] private float CraftingSpeedMultiplier;
 
-    // private int DraggingPhase = 0;
+    private bool IsDraggingBelt = false;
     private bool BeltIsVertical;
 
     private bool IsInDeleteMode = false;
@@ -44,9 +44,9 @@ public class BeltManager : Singleton<BeltManager>
 
         m_InputAction = InputMaster.instance.InputAction;
 
-        m_InputAction.Player.DragBuildMode.started += context => InitDrag();
-        m_InputAction.Player.DragBuildMode.canceled += ctx => EndDrag(ctx.ReadValue<Vector2>());
-        m_InputAction.Player.DragBuildMode.performed += context => DuringDrag();
+        m_InputAction.Player.DragBuildMode.started += _ => InitDrag();
+        m_InputAction.Player.DragBuildMode.canceled += _ => EndDrag();
+        m_InputAction.Player.PointerPosition.performed += _ => DuringDrag();
 
         m_InputAction.Player.ClickBuildMode.started += context => PlaceOrDeleteMachine();
 
@@ -60,41 +60,37 @@ public class BeltManager : Singleton<BeltManager>
 
     private void InitDrag()
     {
-        /*if(DraggingPhase >= 2)
-            DraggingPhase = 0;*/
+        if(IsDraggingBelt)
+            return;
 
-        Debug.Log("Dragging");
+        IsDraggingBelt = true;
         lineRenderer.enabled = true;
-        // DraggingPhase++;
         Vector3 m_InitMouseWorldPos = m_Camera.ScreenToWorldPoint(m_InputAction.Player.PointerPosition.ReadValue<Vector2>());
-        //Instantiate(TestPrefab, new Vector3(m_InitMouseWorldPos.x, m_InitMouseWorldPos.y, 0), Quaternion.Euler(Vector3.one));
-        //if(DraggingPhase == 1)
-        //{
         m_InitMouseWorldPos = PlaceInGrid(m_InitMouseWorldPos);
         lineRenderer.positionCount = 2;
         lineRenderer.SetPosition(0, new Vector3(m_InitMouseWorldPos.x, m_InitMouseWorldPos.y, 0));
         lineRenderer.SetPosition(1, new Vector3(m_InitMouseWorldPos.x, m_InitMouseWorldPos.y, 0));
-        //}
+
+
     }
 
-    private void EndDrag(Vector2 endPosition)
+    private void EndDrag()
     {
+        IsDraggingBelt = false;
+
         SpawnBelts();
         lineRenderer.enabled = false;
         lineRenderer.positionCount = 0;
-
     }
 
     private void DuringDrag()
     {
+        if(!IsDraggingBelt)
+            return;
+
         Vector3 currentDragPosition = m_Camera.ScreenToWorldPoint(m_InputAction.Player.PointerPosition.ReadValue<Vector2>());
         currentDragPosition = PlaceInGrid(currentDragPosition);
-        // if(DraggingPhase > 2)
-        //     DraggingPhase = 1;
-        // if(DraggingPhase == 1)
         MakeFirstLine(currentDragPosition);
-        // else if(DraggingPhase == 2)
-        //    MakeLShape(currentDragPosition);
     }
 
     private void MakeLShape(Vector3 end)
@@ -139,7 +135,7 @@ public class BeltManager : Singleton<BeltManager>
 
     private void SpawnBelts()
     {
-        if (lineRenderer.GetPosition(0) == lineRenderer.GetPosition(1))
+        if(lineRenderer.GetPosition(0) == lineRenderer.GetPosition(1))
             return;
         int x = (int)lineRenderer.GetPosition(0).x;
         int y = (int)lineRenderer.GetPosition(0).y;
@@ -192,6 +188,7 @@ public class BeltManager : Singleton<BeltManager>
     {
         InputStateMachine.instance.SetState(new FreeViewState());
     }
+
     private void PlaceSimpleMachine()
     {
         Assert.IsNotNull(OtherMachinePrefab);
@@ -205,9 +202,9 @@ public class BeltManager : Singleton<BeltManager>
     private GameObject SpawnMachine(Vector3 position, Vector3 direction)
     {
         int machinePrice = (int)(MachineBaseprice * (MachineCount + 1) * MachinePriceMultiplier);
-        if (OtherMachinePrefab.GetComponent<Machine>())
+        if(OtherMachinePrefab.GetComponent<Machine>())
         {
-            if (Wallet.instance.Money >= machinePrice)
+            if(Wallet.instance.Money >= machinePrice)
             {
                 Wallet.instance.Money -= machinePrice;
                 MachineCount++;
@@ -215,9 +212,9 @@ public class BeltManager : Singleton<BeltManager>
             else
                 return null;
         }
-        else if (OtherMachinePrefab.GetComponent<Seller>())
+        else if(OtherMachinePrefab.GetComponent<Seller>())
         {
-            if (ShopCount >= MaxShop)
+            if(ShopCount >= MaxShop)
                 return null;
             ShopCount++;
         }
@@ -260,7 +257,7 @@ public class BeltManager : Singleton<BeltManager>
         Vector3 mouseWorldPos = m_Camera.ScreenToWorldPoint(m_InputAction.Player.PointerPosition.ReadValue<Vector2>());
         Vector3Int cellPos = GameGrid.WorldToCell(mouseWorldPos);
         Belt DeletedBelt = GridManager.instance.GetBeltAt(new Vector2Int(cellPos.x, cellPos.y));
-        if (DeletedBelt == null)
+        if(DeletedBelt == null)
             return;
         GameObject deletedObject = DeletedBelt.gameObject;
         if(deletedObject.GetComponent<Machine>())
@@ -268,7 +265,7 @@ public class BeltManager : Singleton<BeltManager>
             Wallet.instance.Money += (int)(MachineBaseprice * MachineCount * MachinePriceMultiplier);
             MachineCount--;
         }
-        else if(deletedObject.GetComponent<Seller>()) 
+        else if(deletedObject.GetComponent<Seller>())
         {
             ShopCount--;
         }
@@ -300,7 +297,7 @@ public class BeltManager : Singleton<BeltManager>
         // Destroy the previous belt object and assign the new belt to the grid
         Vector3Int GridPos = GameGrid.WorldToCell(savedPosition);
         bool isAssigned = GridManager.instance.SetBeltAt(new Vector2Int(GridPos.x, GridPos.y), newBeltObject.GetComponent<Belt>(), true);
-        if (!isAssigned)
+        if(!isAssigned)
         {
             Destroy(newBeltObject);
         }
@@ -308,11 +305,11 @@ public class BeltManager : Singleton<BeltManager>
 
     public void UpdateStat(Stat stat)
     {
-        if (stat.StatData.Name == "Belt speed")
+        if(stat.StatData.Name == "Belt speed")
             speed = stat.Value;
-        else if (stat.StatData.Name == "Extract speed")
+        else if(stat.StatData.Name == "Extract speed")
             SpawnRate = stat.Value;
-        else if (stat.StatData.Name == "Craft Speed")
+        else if(stat.StatData.Name == "Craft Speed")
             CraftingSpeedMultiplier = stat.Value;
 
 

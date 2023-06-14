@@ -12,9 +12,9 @@ public class CameraController : MonoBehaviour
 
     private Camera m_Camera;
 
-    private Vector2 m_InitMouseScreenPos;
     private Vector3 m_InitMouseWorldPos;
     private Vector3 m_InitTransformWorldPos;
+    private bool m_IsDragging = false;
 
     private InputsActions m_InputAction;
 
@@ -22,10 +22,15 @@ public class CameraController : MonoBehaviour
     void Start()
     {
         m_Camera = GetComponent<Camera>();
+
         m_InputAction = InputMaster.instance.InputAction;
+
         m_InputAction.Player.ZoomValue.performed += ctx => UpdateZoom(ctx.ReadValue<float>());
+
         m_InputAction.Player.Drag.started += _ => InitMoveCamera();
-        m_InputAction.Player.Drag.performed += ctx => MovePosition(ctx.ReadValue<Vector2>());
+        m_InputAction.Player.Drag.canceled += _ => StopMoveCamera();
+        m_InputAction.Player.PointerPosition.performed += MovePosition;
+
     }
 
     void UpdateZoom(float iZoomDelta)
@@ -36,15 +41,27 @@ public class CameraController : MonoBehaviour
 
     void InitMoveCamera()
     {
-        m_InitMouseScreenPos = m_InputAction.Player.PointerPosition.ReadValue<Vector2>();
-        m_InitMouseWorldPos = m_Camera.ScreenToWorldPoint(m_InitMouseScreenPos);
+        if(m_IsDragging)
+            return;
+
+        m_IsDragging = true;
+        m_InitMouseWorldPos = m_Camera.ScreenToWorldPoint(m_InputAction.Player.PointerPosition.ReadValue<Vector2>());
         m_InitTransformWorldPos = transform.position;
     }
 
-    void MovePosition(Vector2 iMouseDeltaScreen)
+    void StopMoveCamera()
     {
+        m_IsDragging = false;
+    }
+
+    void MovePosition(InputAction.CallbackContext iCtx)
+    {
+        if(!m_IsDragging)
+            return;
+
+        Vector2 newMouseScreenPos = iCtx.ReadValue<Vector2>();
         transform.position = m_InitTransformWorldPos;
-        Vector3 deltaPosWC = m_InitMouseWorldPos - m_Camera.ScreenToWorldPoint(m_InitMouseScreenPos + iMouseDeltaScreen);
+        Vector3 deltaPosWC = m_InitMouseWorldPos - m_Camera.ScreenToWorldPoint(newMouseScreenPos);
         transform.Translate(deltaPosWC, Space.Self);
     }
 }
