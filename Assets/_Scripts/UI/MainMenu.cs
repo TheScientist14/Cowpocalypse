@@ -13,6 +13,7 @@ namespace _Scripts.UI
         [SerializeField] RectTransform _buttonsRect;
         [SerializeField] CanvasGroup _buttons;
         [SerializeField] GameObject _optionPanel;
+        [SerializeField] GameObject _tutoPanel;
         [SerializeField] GameObject _WarningPanel;
 
         private ObservableSound _observableSound;
@@ -64,6 +65,12 @@ namespace _Scripts.UI
         {
             PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound1);
             _optionPanel.SetActive(true);
+        }
+
+        public void Tuto()
+        {
+            PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound1);
+            _tutoPanel.SetActive(true);
         }
 
         public void NoPopup()
