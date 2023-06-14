@@ -32,7 +32,7 @@ namespace _Scripts.UI
             _titleTransform.position = new Vector2(0, 7);
             _buttons.alpha = 0;
             _buttonsRect.anchoredPosition = new Vector2(-400, 0);
-            
+
             var sequence = DOTween.Sequence();
             sequence.Append(_camera.DOOrthoSize(5, 2));
             sequence.Append(_titleTransform.DOMoveY(3, 0.25f).SetEase(Ease.OutBack));
@@ -45,6 +45,9 @@ namespace _Scripts.UI
         public void NewGame()
         {
             PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound2);
+            ItemData[] itemsData = Resources.LoadAll<ItemData>("ScriptableObject/Items/");
+            foreach(ItemData itemData in itemsData)
+                itemData.Unlocked = false;
             SceneManager.LoadScene(1);
         }
 
