@@ -161,6 +161,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
 
             Wallet.instance.Money -= ressourceUI.ItemData.Tier.UnlockPrice;
             ressourceUI.ItemData.Unlocked = true;
+            ressourceUI.UpdateValue();
             Debug.Log($"Successfully unlocked {ressourceUI.ItemData.Name}.");
             //TODO: rajouter les item unlocked dans le save system
             return;
