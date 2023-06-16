@@ -8,12 +8,17 @@ using UnityEngine.Events;
 public class Machine : Belt
 {
     [Expandable]
-    [SerializeField] private ItemData CraftedItem;
+    [SerializeField] private ItemData CraftedItemData;
 
     [SerializeField]
     private ScriptablesRelativeAudio _thescriptablesRelativeAudio;
     private AudioSource _theaudioSource;
     private float _thevolume;
+    private bool Outputed;
+    private bool CanCraft;
+    private bool HasSomethingToOutput;
+    private Item CraftedItem;
+    private Item OutputedItem;
 
     public Dictionary<ItemData, int> Stock { get; set; }
     public StockUpdateEvent stockUpdated { get; private set; } = new StockUpdateEvent();
@@ -21,6 +26,9 @@ public class Machine : Belt
 
     private void Start()
     {
+        Outputed = true;
+        HasSomethingToOutput = false;
+        CanCraft = true;
         Stock = new Dictionary<ItemData, int>();
         stockUpdated.Invoke(Stock);
         gameObject.name = $"Machine: {BeltID++}";
@@ -28,7 +36,7 @@ public class Machine : Belt
         _theaudioSource = GetComponent<AudioSource>();
         CallSound(EnumRelativeSounds.Spawn);
 
-        SetCrafteditem(CraftedItem);
+        SetCrafteditem(CraftedItemData);
     }
 
     public IEnumerator MoveQueuedItems(Item queuedItem)
@@ -49,30 +57,37 @@ public class Machine : Belt
 
         while(NextBeltBlock == true)
         {
-            foreach (ItemData item in CraftedItem.Recipes.Keys)
+            foreach (ItemData item in CraftedItemData.Recipes.Keys)
             {
-                if (Stock[item] < CraftedItem.Recipes[item] || BeltInSequence == null || BeltInSequence.isSpaceTaken == true)
+                if (Stock[item] < CraftedItemData.Recipes[item])
                     yield return null;
                 else
                     NextBeltBlock = false;
             }
         }
 
-
-        foreach(ItemData item in CraftedItem.Recipes.Keys)
-            Stock[item] -= CraftedItem.Recipes[item];
+        while (CanCraft == false || HasSomethingToOutput == true)
+            yield return null;
+        
+        foreach(ItemData item in CraftedItemData.Recipes.Keys)
+            Stock[item] -= CraftedItemData.Recipes[item];
         stockUpdated.Invoke(Stock);
-        yield return new WaitForSeconds(CraftedItem.CraftDuration * BeltManager.instance.GetCraftingSpeedMultiplier());
+        CanCraft = false;
+        yield return new WaitForSeconds(CraftedItemData.CraftDuration * BeltManager.instance.GetCraftingSpeedMultiplier());
+        HasSomethingToOutput = true;
         // play sound
         CallSound(EnumRelativeSounds.Activate);
-        Item craftedItem = PoolManager.instance.SpawnObject(CraftedItem, transform.position);
-        StartCoroutine(Output(craftedItem));
+        CraftedItem = PoolManager.instance.SpawnObject(CraftedItemData, transform.position);
+        while(BeltInSequence == null || BeltInSequence.isSpaceTaken == true || Outputed == false)
+            yield return null;
+        StartCoroutine(Output(CraftedItem));
     }
 
     private IEnumerator Output(Item item)
     {
-        bool outputed = false;
-        while(outputed == false)
+        OutputedItem = item;
+        Outputed = false;
+        while(Outputed == false)
         {
             print("Trying Output");
             if (BeltInSequence != null && BeltInSequence.isSpaceTaken == false)
@@ -93,11 +108,25 @@ public class Machine : Belt
                 }
                 if (!isMachineBlocking)
                 {
+
                     Vector3 toPosition = BeltInSequence.transform.position;
-                    BeltInSequence.isSpaceTaken = true;
-                    isSpaceTaken = false;
-                    BeltInSequence.BeltItem = item;
-                    outputed = true;
+                    HasSomethingToOutput = false;
+                    CanCraft = true;
+                    while (item.transform.position != toPosition && BeltInSequence != null)
+                    {
+                        item.transform.position = Vector3.MoveTowards(item.transform.position, toPosition, BeltManager.instance.speed * Time.fixedDeltaTime);
+                        yield return new WaitForFixedUpdate();
+                    }
+                    Outputed = true;
+                    if (BeltInSequence)
+                    {
+                        BeltInSequence.isSpaceTaken = true;
+                        isSpaceTaken = false;
+                        BeltInSequence.BeltItem = item;
+                        break;
+                    }
+                    PoolManager.instance.DespawnObject(item);
+                    break;
                 }
             }
             yield return null;
@@ -106,17 +135,17 @@ public class Machine : Belt
 
     public void SetCrafteditem(ItemData craftedItemData)
     {
-        CraftedItem = craftedItemData;
+        CraftedItemData = craftedItemData;
         Stock.Clear();
         stockUpdated.Invoke(Stock);
-        if(CraftedItem != null)
-            foreach(ItemData item in CraftedItem.Recipes.Keys)
+        if(CraftedItemData != null)
+            foreach(ItemData item in CraftedItemData.Recipes.Keys)
                 Stock.Add(item, 0);
     }
 
     public ItemData GetCraftedItem()
     {
-        return CraftedItem;
+        return CraftedItemData;
     }
 
     public void AddToStock(Item item)
@@ -166,6 +195,14 @@ public class Machine : Belt
         _theaudioSource.Play();
 
         // Debug.Log(_audioClip);
+    }
+
+    private void OnDestroy()
+    {
+        if(CraftedItem != null)
+            PoolManager.instance.DespawnObject(CraftedItem);
+        if (OutputedItem != null)
+            PoolManager.instance.DespawnObject(OutputedItem);
     }
 
 }

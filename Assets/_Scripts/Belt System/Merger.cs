@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
 using UnityEngine;
 
 public class Merger : Belt
 {
     public List<Belt> InputBelts = new List<Belt>();
     [SerializeField] private int CurrentInput = 0;
+    private float timer = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,8 +21,6 @@ public class Merger : Belt
     // Update is called once per frame
     new void Update()
     {
-        base.Update();
-
         if(InputBelts[0] == null)
             InputBelts[0] = (GetLeftBelt());
         if(InputBelts[1] == null)
@@ -28,11 +28,18 @@ public class Merger : Belt
         if(InputBelts[2] == null)
             InputBelts[2] = GetRightBelt();
 
-        if(BeltItem != null && BeltItem.GetItem() != null)
-            StartCoroutine(StartBeltMove());
+        if (BeltItem == null)
+        {
+            if (timer <= 0)
+            {
+                ChooseInput();
+                timer = 0.1f;
+            }
+            else
+                timer -= Time.deltaTime;
+        }
 
-        if(isSpaceTaken == false)
-            ChooseInput();
+        base.Update();
     }
 
     private Belt GetLeftBelt()
@@ -103,13 +110,18 @@ public class Merger : Belt
 
     public void ChooseInput()
     {
-        if(CurrentInput > 2)
-            CurrentInput = 0;
+        int oldInput = CurrentInput;
+
         if(InputBelts[CurrentInput] != null)
         {
             if(InputBelts[CurrentInput].isSpaceTaken)
                 SwitchInput();
         }
-        CurrentInput++;
+        do
+        {
+            CurrentInput++;
+            if (CurrentInput > 2)
+                CurrentInput = 0;
+        } while (oldInput != CurrentInput && InputBelts[CurrentInput] == null);
     }
 }

@@ -20,7 +20,7 @@ public class Belt : MonoBehaviour
     private AudioSource _audioSource;
     private float _volume;
 
-    private bool m_IsRunning;
+    protected bool m_IsRunning;
 
     private void Start()
     {

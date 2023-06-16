@@ -19,8 +19,6 @@ public class Splitter : Belt
 
     new void Update()
     {
-        base.Update();
-
         if(OutputBelts[0] == null)
             OutputBelts[0] = (GetLeftBelt());
         if(OutputBelts[1] == null)
@@ -50,7 +48,7 @@ public class Splitter : Belt
                     else
                         isMachineBlocking = true;
                 }
-                if (BeltInSequence.GetComponent<Spawner>())
+                if (OutputBelts[CurrentOutput].GetComponent<Spawner>())
                     isMachineBlocking = true;
                 if (!isMachineBlocking)
                 {

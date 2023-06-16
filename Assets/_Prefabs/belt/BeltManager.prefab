@@ -52,7 +52,6 @@ MonoBehaviour:
   - {fileID: 4732986801910414389, guid: 3138b7e5b9beecf40bd5a66462d2fc52, type: 3}
   - {fileID: 8504238527581414455, guid: d88ecdf69dd0588478fbf63f8bde920e, type: 3}
   - {fileID: 45940641016382040, guid: 06e1ce65c9fe45949a064b3f6d62ca07, type: 3}
-  - {fileID: 4732986801910414389, guid: 6ff40ac3a32ce4f47bd1d9bccc6d8b98, type: 3}
   - {fileID: 8504238527581414455, guid: d2fd8be8225616a458214792f8a5bd97, type: 3}
   speed: 1
   mapParentObject: {fileID: 0}
