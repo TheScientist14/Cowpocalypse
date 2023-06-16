@@ -6,14 +6,9 @@ public class PauseButtonBehaviour : MonoBehaviour
 {
     [SerializeField] GameObject m_PauseMenuPanel;
 
-    void Start()
-    {
-        m_PauseMenuPanel.SetActive(false);
-    }
-
     public void PauseGame()
     {
-        InputStateMachine.instance.SetState(new PauseState());
         m_PauseMenuPanel.SetActive(true);
+        InputStateMachine.instance.SetState(new PauseState());
     }
 }

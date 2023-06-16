@@ -6,6 +6,7 @@ public class PauseState : State
     {
         base.Enter();
 
+        InputMaster.instance.InputAction.Disable();
         Time.timeScale = 0;
     }
 
@@ -13,6 +14,7 @@ public class PauseState : State
     {
         base.Exit();
 
+        InputMaster.instance.InputAction.Enable();
         Time.timeScale = 1;
     }
 }

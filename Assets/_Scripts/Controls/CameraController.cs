@@ -32,8 +32,8 @@ public class CameraController : MonoBehaviour
 
         m_InputAction.Player.ZoomValue.performed += ctx => UpdateZoom(ctx.ReadValue<float>());
         m_InputAction.Player.Pinch2.started += _ => StartPinch();
-        m_InputAction.Player.Pinch1.performed += _ => UpdatePinch();
-        m_InputAction.Player.Pinch2.performed += _ => UpdatePinch();
+        m_InputAction.Player.PointerPosition1.performed += _ => UpdatePinch();
+        m_InputAction.Player.PointerPosition.performed += _ => UpdatePinch();
         m_InputAction.Player.Pinch2.canceled += _ => EndPinch();
 
         m_InputAction.Player.Drag.started += _ => InitMoveCamera();
@@ -52,9 +52,11 @@ public class CameraController : MonoBehaviour
     {
         if(m_IsPinching)
             return;
-
+        
+        StopMoveCamera();
+        
         m_IsPinching = true;
-        m_PrevPinchDist = (m_InputAction.Player.Pinch1.ReadValue<Vector2>() - m_InputAction.Player.Pinch2.ReadValue<Vector2>()).magnitude;
+        m_PrevPinchDist = (m_InputAction.Player.PointerPosition.ReadValue<Vector2>() - m_InputAction.Player.PointerPosition1.ReadValue<Vector2>()).magnitude;
     }
 
     void UpdatePinch()
@@ -62,7 +64,7 @@ public class CameraController : MonoBehaviour
         if(!m_IsPinching)
             return;
 
-        float pinchDist = (m_InputAction.Player.Pinch1.ReadValue<Vector2>() - m_InputAction.Player.Pinch2.ReadValue<Vector2>()).magnitude;
+        float pinchDist = (m_InputAction.Player.PointerPosition.ReadValue<Vector2>() - m_InputAction.Player.PointerPosition1.ReadValue<Vector2>()).magnitude;
         UpdateZoom(pinchDist - m_PrevPinchDist);
         m_PrevPinchDist = pinchDist;
     }
@@ -96,6 +98,10 @@ public class CameraController : MonoBehaviour
         Vector2 newMouseScreenPos = iCtx.ReadValue<Vector2>();
         transform.position = m_InitTransformWorldPos;
         Vector3 deltaPosWC = m_InitMouseWorldPos - m_Camera.ScreenToWorldPoint(newMouseScreenPos);
+        if (deltaPosWC.sqrMagnitude < 0.01)
+        {
+           return; 
+        }
         transform.Translate(deltaPosWC, Space.Self);
 
         transform.position = new Vector3(

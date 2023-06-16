@@ -11,6 +11,8 @@
         _inputAction.Player.DragBuildMode.Enable();
         _inputAction.Player.ClickButton.Disable();
         _inputAction.Player.Drag.Disable();
+        _inputAction.Player.Pinch1.Disable();
+        _inputAction.Player.Pinch2.Disable();
     }
 
     public override void Exit()
@@ -20,5 +22,7 @@
         _inputAction.Player.DragBuildMode.Disable();
         _inputAction.Player.ClickButton.Enable();
         _inputAction.Player.Drag.Enable();
+        _inputAction.Player.Pinch1.Enable();
+        _inputAction.Player.Pinch2.Enable();
     }
 }

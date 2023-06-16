@@ -64,7 +64,7 @@ public class SlidingPanel : MonoBehaviour
             targetMin.y = _expanded ? 0 : -1;
             targetMax.y = _expanded ? 1 : 0;
         }
-        _runningTweens.Add(_rtTomove.DOAnchorMin(targetMin, _duration).SetEase(_ease));
-        _runningTweens.Add(_rtTomove.DOAnchorMax(targetMax, _duration).SetEase(_ease));
+        _runningTweens.Add(_rtTomove.DOAnchorMin(targetMin, _duration).SetEase(_ease).SetUpdate(true));
+        _runningTweens.Add(_rtTomove.DOAnchorMax(targetMax, _duration).SetEase(_ease).SetUpdate(true));
     }
 }

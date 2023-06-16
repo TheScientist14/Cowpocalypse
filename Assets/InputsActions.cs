@@ -110,21 +110,30 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": ""Pinch1"",
-                    ""type"": ""Value"",
+                    ""type"": ""Button"",
                     ""id"": ""ee5259dd-1655-449a-8401-2b8f1ad46a1c"",
-                    ""expectedControlType"": ""Vector2"",
+                    ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press(behavior=2)"",
                     ""initialStateCheck"": true
                 },
                 {
                     ""name"": ""Pinch2"",
-                    ""type"": ""Value"",
+                    ""type"": ""Button"",
                     ""id"": ""70de4578-dc10-44cf-a2cf-be4cfb4a5a67"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Press(behavior=2)"",
+                    ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""PointerPosition1"",
+                    ""type"": ""PassThrough"",
+                    ""id"": ""2ce8d4d2-34b2-4619-b497-a7d6e09b6fe7"",
                     ""expectedControlType"": ""Vector2"",
                     ""processors"": """",
                     ""interactions"": """",
-                    ""initialStateCheck"": true
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -219,7 +228,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""8f4e9f8a-a647-427f-b6ec-5fe5896262c5"",
-                    ""path"": ""<Touchscreen>/position"",
+                    ""path"": ""<Touchscreen>/touch0/position"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Touchscreen"",
@@ -230,8 +239,8 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""dc60821b-0759-4c64-a680-1177b9ef283c"",
-                    ""path"": ""<Touchscreen>/touch0/tap"",
-                    ""interactions"": ""Tap"",
+                    ""path"": ""<Touchscreen>/touch0/press"",
+                    ""interactions"": ""Press"",
                     ""processors"": """",
                     ""groups"": ""Touchscreen"",
                     ""action"": ""ClickBuildMode"",
@@ -285,8 +294,8 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""dbc9047d-0341-4e53-bbe3-2e42aa000f31"",
-                    ""path"": ""<Touchscreen>/Press"",
-                    ""interactions"": ""Press"",
+                    ""path"": ""<Touchscreen>/touch0/press"",
+                    ""interactions"": ""Press(behavior=2)"",
                     ""processors"": """",
                     ""groups"": ""Touchscreen"",
                     ""action"": ""Drag"",
@@ -318,7 +327,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d5b6cb5d-5e25-429c-9686-ee725306e96a"",
-                    ""path"": ""<Touchscreen>/touch0/position"",
+                    ""path"": ""<Touchscreen>/touch0/press"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Touchscreen"",
@@ -329,11 +338,22 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""85898bbb-7b5b-446b-8be5-d3287e62976a"",
-                    ""path"": ""<Touchscreen>/touch1/position"",
+                    ""path"": ""<Touchscreen>/touch1/press"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": ""Touchscreen"",
                     ""action"": ""Pinch2"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e7cf240c-d630-4a04-8c85-44b9f61325bc"",
+                    ""path"": ""<Touchscreen>/touch1/position"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Touchscreen"",
+                    ""action"": ""PointerPosition1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -383,6 +403,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
         m_Player_ClickBuildMode = m_Player.FindAction("ClickBuildMode", throwIfNotFound: true);
         m_Player_Pinch1 = m_Player.FindAction("Pinch1", throwIfNotFound: true);
         m_Player_Pinch2 = m_Player.FindAction("Pinch2", throwIfNotFound: true);
+        m_Player_PointerPosition1 = m_Player.FindAction("PointerPosition1", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -455,6 +476,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_ClickBuildMode;
     private readonly InputAction m_Player_Pinch1;
     private readonly InputAction m_Player_Pinch2;
+    private readonly InputAction m_Player_PointerPosition1;
     public struct PlayerActions
     {
         private @InputsActions m_Wrapper;
@@ -470,6 +492,7 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
         public InputAction @ClickBuildMode => m_Wrapper.m_Player_ClickBuildMode;
         public InputAction @Pinch1 => m_Wrapper.m_Player_Pinch1;
         public InputAction @Pinch2 => m_Wrapper.m_Player_Pinch2;
+        public InputAction @PointerPosition1 => m_Wrapper.m_Player_PointerPosition1;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -512,6 +535,9 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
             @Pinch2.started += instance.OnPinch2;
             @Pinch2.performed += instance.OnPinch2;
             @Pinch2.canceled += instance.OnPinch2;
+            @PointerPosition1.started += instance.OnPointerPosition1;
+            @PointerPosition1.performed += instance.OnPointerPosition1;
+            @PointerPosition1.canceled += instance.OnPointerPosition1;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -549,6 +575,9 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
             @Pinch2.started -= instance.OnPinch2;
             @Pinch2.performed -= instance.OnPinch2;
             @Pinch2.canceled -= instance.OnPinch2;
+            @PointerPosition1.started -= instance.OnPointerPosition1;
+            @PointerPosition1.performed -= instance.OnPointerPosition1;
+            @PointerPosition1.canceled -= instance.OnPointerPosition1;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -597,5 +626,6 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
         void OnClickBuildMode(InputAction.CallbackContext context);
         void OnPinch1(InputAction.CallbackContext context);
         void OnPinch2(InputAction.CallbackContext context);
+        void OnPointerPosition1(InputAction.CallbackContext context);
     }
 }

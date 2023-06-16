@@ -144,7 +144,7 @@ namespace _Scripts.Save_System
         {
             _saveIcon.SetActive(true);
             _saveIcon.transform.GetChild(0).gameObject.SetActive(true);
-            InputStateMachine.instance.SetState(new LoadState());
+            InputStateMachine.instance.SetState(new PauseState());
             StartCoroutine(Load());
         }
 
