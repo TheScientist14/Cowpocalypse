@@ -28,7 +28,8 @@ public class Seller : Belt
             return;
 
         isSpaceTaken = false;
-        Assert.IsTrue(PoolManager.instance.DespawnObject(BeltItem));
+        bool despawned = PoolManager.instance.DespawnObject(BeltItem);
+        Assert.IsTrue(despawned);
         CallSound(EnumRelativeSounds.Activate);
         Wallet.instance.Money += BeltItem.GetItemData().Price;
         BeltItem = null;

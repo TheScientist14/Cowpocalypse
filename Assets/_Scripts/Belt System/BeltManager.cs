@@ -25,6 +25,8 @@ public class BeltManager : Singleton<BeltManager>
     private int MachineCount;
     [SerializeField] private int maxShop;
 
+    private bool FirstDrag = true;
+
     public int MaxShop => maxShop;
 
     private int shopCount;
@@ -73,17 +75,15 @@ public class BeltManager : Singleton<BeltManager>
 
         IsDraggingBelt = true;
         lineRenderer.enabled = true;
-        Vector3 m_InitMouseWorldPos = m_Camera.ScreenToWorldPoint(m_InputAction.Player.PointerPosition.ReadValue<Vector2>());
-        m_InitMouseWorldPos = PlaceInGrid(m_InitMouseWorldPos);
-        lineRenderer.positionCount = 2;
-        lineRenderer.SetPosition(0, new Vector3(m_InitMouseWorldPos.x, m_InitMouseWorldPos.y, 0));
-        lineRenderer.SetPosition(1, new Vector3(m_InitMouseWorldPos.x, m_InitMouseWorldPos.y, 0));
-
-
+        
     }
 
     private void EndDrag()
     {
+        if (!IsDraggingBelt)
+        {
+            return;
+        }
         IsDraggingBelt = false;
 
         SpawnBelts();
@@ -98,6 +98,15 @@ public class BeltManager : Singleton<BeltManager>
 
         Vector3 currentDragPosition = m_Camera.ScreenToWorldPoint(m_InputAction.Player.PointerPosition.ReadValue<Vector2>());
         currentDragPosition = PlaceInGrid(currentDragPosition);
+           
+        if (lineRenderer.positionCount <=0)
+        {
+            lineRenderer.positionCount = 2;
+            lineRenderer.SetPosition(0, new Vector3(currentDragPosition.x, currentDragPosition.y, 0));
+        }
+        
+        lineRenderer.SetPosition(1, new Vector3(currentDragPosition.x, currentDragPosition.y, 0));
+        
         MakeFirstLine(currentDragPosition);
     }
 
