@@ -1,3 +1,4 @@
+using DG.Tweening;
 using NaughtyAttributes;
 using NaughtyAttributes.Test;
 using System;
@@ -137,7 +138,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
     private void CloseEverything()
     {
         _titlePanel.ChangeVisibility(false);
-        _windowBackground.enabled = false;
+        _windowBackground.transform.DOMove(transform.position, 1f).OnComplete(() => _windowBackground.enabled = (_openedPanels.Count != 0));
         InputStateMachine.instance.SetState(new FreeViewState());
     }
 
@@ -183,9 +184,9 @@ public class ModalWindowController : Singleton<ModalWindowController>
 
     internal void CheckClickedOutside(Vector2 position)
     {
-        if (_openedPanels.Count == 0)
+        if(_openedPanels.Count == 0)
             return;
-        
+
         if(PointIsOutsideOfPanel(position))
             CloseAll();
     }

@@ -45,7 +45,7 @@ namespace _Scripts.UI
             sequence.Insert(3, _buttonsRect.DOAnchorPosX(0, 2));
             sequence.onComplete = () => _buttons.interactable = true;
 
-            if (!SaveSystem.instance.CheckForSave())
+            if(!SaveSystem.instance.CheckForSave())
             {
                 Debug.Log("Save not Found");
                 loadButton.interactable = false;
@@ -55,9 +55,9 @@ namespace _Scripts.UI
         public void NewGame()
         {
             PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound2);
-            ItemData[] itemsData = Resources.LoadAll<ItemData>("ScriptableObject/Items/");
+            IEnumerable<ItemData> itemsData = ItemCreator.LoadAllResourceAtPath<ItemData>();
             foreach(ItemData itemData in itemsData)
-                itemData.Unlocked = false;
+                itemData.Unlocked = (itemData.Tier.Level <= 1);
             SceneManager.LoadScene(1);
         }
 

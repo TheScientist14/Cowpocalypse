@@ -24,13 +24,13 @@ public class AllTiersPanel : Panel
     private void InstantiateTiers()
     {
         var SOs = ItemCreator.LoadAllResourceAtPath<ItemData>();
-        IEnumerable<IGrouping<ItemTier, ItemData>> s = SOs.GroupBy(x => x.Tier).OrderBy(t => t.Key.Level);
+        IEnumerable<IGrouping<ItemTier, ItemData>> s = SOs.GroupBy(x => x.Tier).OrderBy(t => t.Key.Level).Where(t => t.Key.Level > 1);
         var ch = _layout.transform.childCount;
-        for (int i = 0; i < ch; i++)
+        for(int i = 0; i < ch; i++)
         {
             Destroy(_layout.transform.GetChild(0).gameObject);
         }
-        foreach (IGrouping<ItemTier, ItemData> tier in s)
+        foreach(IGrouping<ItemTier, ItemData> tier in s)
         {
             var inst = Instantiate(_tierPrefab, _layout.transform);
             inst.TierName.Value = tier.Key.Name;

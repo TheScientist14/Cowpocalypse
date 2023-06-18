@@ -16,6 +16,7 @@ public class MachineSettingsState : State
         _inputAction.Player.ClickButton.Disable();
         _inputAction.Player.Pinch1.Disable();
         _inputAction.Player.Pinch2.Disable();
+        _inputAction.Player.ZoomValue.Disable();
     }
 
     public override void Exit()
@@ -26,5 +27,6 @@ public class MachineSettingsState : State
         _inputAction.Player.ClickButton.Enable();
         _inputAction.Player.Pinch1.Enable();
         _inputAction.Player.Pinch2.Enable();
+        _inputAction.Player.ZoomValue.Enable();
     }
 }
