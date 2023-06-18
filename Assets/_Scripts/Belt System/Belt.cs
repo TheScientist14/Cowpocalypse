@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class Belt : MonoBehaviour
 {
@@ -22,6 +23,8 @@ public class Belt : MonoBehaviour
 
     protected bool m_IsRunning;
 
+    public UnityEvent OnItemMoved;
+
     private void Start()
     {
         isMachineBlocking = false;
@@ -31,6 +34,8 @@ public class Belt : MonoBehaviour
 
         _audioSource = GetComponent<AudioSource>();
         CallSound(EnumRelativeSounds.Activate);
+        if(OnItemMoved == null)
+            OnItemMoved = new UnityEvent();
     }
 
     protected void Update()
@@ -88,6 +93,7 @@ public class Belt : MonoBehaviour
                         BeltItem.GetItem().transform.position = Vector3.MoveTowards(BeltItem.transform.position, toPosition, BeltManager.instance.speed * Time.fixedDeltaTime);
                         yield return new WaitForFixedUpdate();
                     }
+                    OnItemMoved.Invoke();
                     if(BeltInSequence != null)
                     {
                         BeltInSequence.BeltItem = BeltItem;

@@ -16,6 +16,7 @@ public class Merger : Belt
         InputBelts.Add(GetDownBelt());
         InputBelts.Add(GetRightBelt());
         gameObject.name = $"Merger: {BeltID++}";
+        //OnItemMoved.AddListener(ChooseInput);
     }
 
     // Update is called once per frame
@@ -28,16 +29,10 @@ public class Merger : Belt
         if(InputBelts[2] == null)
             InputBelts[2] = GetRightBelt();
 
-        if (BeltItem == null)
+        if (InputBelts[CurrentInput] == null || InputBelts[CurrentInput].BeltItem == null)
         {
-            if (timer <= 0)
-            {
-                ChooseInput();
-                timer = 0.1f;
-            }
-            else
-                timer -= Time.deltaTime;
-        }
+            ChooseInput();
+        }   
 
         base.Update();
     }
@@ -110,18 +105,20 @@ public class Merger : Belt
 
     public void ChooseInput()
     {
+        timer = 0.1f;
         int oldInput = CurrentInput;
-
-        if(InputBelts[CurrentInput] != null)
-        {
-            if(InputBelts[CurrentInput].isSpaceTaken)
-                SwitchInput();
-        }
+        
         do
         {
             CurrentInput++;
             if (CurrentInput > 2)
                 CurrentInput = 0;
         } while (oldInput != CurrentInput && InputBelts[CurrentInput] == null);
+
+        if (InputBelts[CurrentInput] != null)
+        {
+            if (InputBelts[CurrentInput].isSpaceTaken)
+                SwitchInput();
+        }
     }
 }
