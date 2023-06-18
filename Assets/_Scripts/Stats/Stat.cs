@@ -22,5 +22,5 @@ public class Stat
 
     public bool IsMaxedOut => CurrentLevel == StatData.MaxLevelInclusive;
     
-    public float Value => StatData.BaseValue + StatData.MultiplierPerLevel * (CurrentLevel - 1);
+    public float Value => StatData.BaseValue * Mathf.Pow(StatData.MultiplierPerLevel , (CurrentLevel - 1));
 }

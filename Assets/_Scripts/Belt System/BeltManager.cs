@@ -59,6 +59,8 @@ public class BeltManager : Singleton<BeltManager>
         // Validate.onClick.AddListener(SpawnBelts);
 
         lineRenderer = GetComponent<LineRenderer>();
+        
+        Shader.SetGlobalFloat("_speed", speed);
 
         /*DisableBuildMode();
         EndPlaceMachine();*/
@@ -307,6 +309,7 @@ public class BeltManager : Singleton<BeltManager>
         {
             speed = stat.Value;
             Shader.SetGlobalFloat("_speed", speed);
+            Debug.Log(Shader.GetGlobalFloat("_speed"));
         }
             
         else if(stat.StatData.Name == "Extract speed")

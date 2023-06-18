@@ -23,9 +23,9 @@ public class Wallet : Singleton<Wallet>
 
     public Action<int> MoneyChanged;
 
-    [ContextMenu("Add 100")][Button("Add 100")]
+    [ContextMenu("Add 10000")][Button("Add 10000")]
     public void Add()
     {
-        Money += 100;
+        Money += 10000;
     }
 }

@@ -38,6 +38,7 @@ Material:
     - _BUILTIN_ZTest: 4
     - _BUILTIN_ZWrite: 1
     - _BUILTIN_ZWriteControl: 0
+    - _Boolean: 1
     - _Float: 0.195
     - _Size: 0.195
     - _TimeMult: 1
