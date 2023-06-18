@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GridManager : Singleton<GridManager>
 {
@@ -10,6 +11,8 @@ public class GridManager : Singleton<GridManager>
     private Dictionary<Vector2Int, Belt> m_WorldGrid;
 
     [SerializeField] Grid gridGeometry;
+
+    public UnityEvent onGridChanged;
 
     // Start is called before the first frame update
     void Awake()
@@ -30,6 +33,7 @@ public class GridManager : Singleton<GridManager>
             Vector3Int cellPos = gridGeometry.WorldToCell(belt.gameObject.transform.position);
             SetBeltAt(new Vector2Int(cellPos.x, cellPos.y), belt);
         }
+        onGridChanged.Invoke();
     }
 
     public Belt GetBeltAt(Vector2Int iCellPos)
@@ -54,6 +58,7 @@ public class GridManager : Singleton<GridManager>
         }
 
         m_WorldGrid[iCellPos] = iBelt;
+        onGridChanged.Invoke();
         return true;
     }
 }

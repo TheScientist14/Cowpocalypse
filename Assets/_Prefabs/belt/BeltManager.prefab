@@ -57,7 +57,7 @@ MonoBehaviour:
   mapParentObject: {fileID: 0}
   MachineBaseprice: 10
   MachinePriceMultiplier: 1.2
-  MaxShop: 3
+  maxShop: 3
   SpawnRate: 1
   CraftingSpeedMultiplier: 1
   m_Camera: {fileID: 0}

@@ -23,8 +23,14 @@ public class BeltManager : Singleton<BeltManager>
     [SerializeField] private float MachineBaseprice;
     [SerializeField] private float MachinePriceMultiplier;
     private int MachineCount;
-    [SerializeField] private int MaxShop;
-    private int ShopCount;
+    [SerializeField] private int maxShop;
+
+    public int MaxShop => maxShop;
+
+    private int shopCount;
+
+    public int ShopCount => shopCount;
+
     [SerializeField] float SpawnRate;
     [SerializeField] private float CraftingSpeedMultiplier;
 
@@ -199,9 +205,14 @@ public class BeltManager : Singleton<BeltManager>
         EndPlaceMachine();
     }
 
+    public int GetMachinePrice()
+    {
+        return (int)(MachineBaseprice *  Mathf.Pow(MachinePriceMultiplier,MachineCount));
+    }
+    
     private GameObject SpawnMachine(Vector3 position, Vector3 direction)
     {
-        int machinePrice = (int)(MachineBaseprice * (MachineCount + 1) * MachinePriceMultiplier);
+        int machinePrice = GetMachinePrice();
         if(OtherMachinePrefab.GetComponent<Machine>())
         {
             if(Wallet.instance.Money >= machinePrice)
@@ -214,9 +225,9 @@ public class BeltManager : Singleton<BeltManager>
         }
         else if(OtherMachinePrefab.GetComponent<Seller>())
         {
-            if(ShopCount >= MaxShop)
+            if(shopCount >= maxShop)
                 return null;
-            ShopCount++;
+            shopCount++;
         }
         GameObject belt = Instantiate(OtherMachinePrefab, position, Quaternion.identity, mapParentObject.transform);
 
@@ -256,19 +267,6 @@ public class BeltManager : Singleton<BeltManager>
     {
         Vector3 mouseWorldPos = m_Camera.ScreenToWorldPoint(m_InputAction.Player.PointerPosition.ReadValue<Vector2>());
         Vector3Int cellPos = GameGrid.WorldToCell(mouseWorldPos);
-        Belt DeletedBelt = GridManager.instance.GetBeltAt(new Vector2Int(cellPos.x, cellPos.y));
-        if(DeletedBelt == null)
-            return;
-        GameObject deletedObject = DeletedBelt.gameObject;
-        if(deletedObject.GetComponent<Machine>())
-        {
-            Wallet.instance.Money += (int)(MachineBaseprice * MachineCount * MachinePriceMultiplier);
-            MachineCount--;
-        }
-        else if(deletedObject.GetComponent<Seller>())
-        {
-            ShopCount--;
-        }
 
         GridManager.instance.SetBeltAt(new Vector2Int(cellPos.x, cellPos.y), null, true); // do not delete spawners
     }
@@ -327,12 +325,12 @@ public class BeltManager : Singleton<BeltManager>
 
     public void RemoveOneShop()
     {
-        ShopCount--;
+        shopCount--;
     }
 
     public void RemoveOneMachine()
     {
         MachineCount--;
-        Wallet.instance.Money += (int)(MachineBaseprice * MachineCount * MachinePriceMultiplier);
+        Wallet.instance.Money += GetMachinePrice();
     }
 }

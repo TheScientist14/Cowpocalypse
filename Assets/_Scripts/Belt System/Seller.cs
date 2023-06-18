@@ -1,6 +1,7 @@
 using _Scripts.Pooling_System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.Assertions;
 
@@ -71,6 +72,13 @@ public class Seller : Belt
         _theaudioSource.Play();
 
         // Debug.Log(_audioClip);
+    }
+
+    protected new void OnDestroy()
+    {
+        base.OnDestroy();
+
+        BeltManager.instance.RemoveOneShop();
     }
 
 }

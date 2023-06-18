@@ -197,8 +197,12 @@ public class Machine : Belt
         // Debug.Log(_audioClip);
     }
 
-    private void OnDestroy()
+    private new void OnDestroy()
     {
+        base.OnDestroy();
+        
+        BeltManager.instance.RemoveOneMachine();
+        
         if(CraftedItem != null)
             PoolManager.instance.DespawnObject(CraftedItem);
         if (OutputedItem != null)

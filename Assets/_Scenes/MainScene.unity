@@ -6008,6 +6008,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridGeometry: {fileID: 1879911186}
+  onGridChanged:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!4 &1885275461
 Transform:
   m_ObjectHideFlags: 0

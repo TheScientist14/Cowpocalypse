@@ -7,7 +7,6 @@ public class Merger : Belt
 {
     public List<Belt> InputBelts = new List<Belt>();
     [SerializeField] private int CurrentInput = 0;
-    private float timer = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -105,7 +104,6 @@ public class Merger : Belt
 
     public void ChooseInput()
     {
-        timer = 0.1f;
         int oldInput = CurrentInput;
         
         do

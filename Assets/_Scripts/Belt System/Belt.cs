@@ -129,14 +129,10 @@ public class Belt : MonoBehaviour
         return null;
     }
 
-    private void OnDestroy()
+    protected void OnDestroy()
     {
         if(BeltItem != null)
             PoolManager.instance.DespawnObject(BeltItem);
-        if (GetComponent<Machine>() != null)
-            BeltManager.instance.RemoveOneMachine();
-        if(GetComponent<Seller>() != null)
-            BeltManager.instance.RemoveOneShop();
     }
 
     private void CallSound(EnumRelativeSounds _action)
