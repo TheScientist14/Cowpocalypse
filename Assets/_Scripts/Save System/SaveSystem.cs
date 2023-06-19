@@ -145,10 +145,13 @@ namespace _Scripts.Save_System
             _saveIcon.SetActive(true);
             _saveIcon.transform.GetChild(0).gameObject.SetActive(true);
             InputStateMachine.instance.SetState(new PauseState());
-            StartCoroutine(Load());
+
+            PoolManager poolManager = PoolManager.instance;
+            
+            StartCoroutine(Load(poolManager));
         }
 
-        private IEnumerator Load()
+        private IEnumerator Load(PoolManager poolManager)
         {
             Debug.Log("Loading...");
             foreach (Transform child in _playerSpawnedObjects.transform)
@@ -156,7 +159,7 @@ namespace _Scripts.Save_System
                 Destroy(child.gameObject);
             }
 
-            
+
             LoadMachines();
             Debug.Log("Loaded Machines");
             LoadBelts();
@@ -240,6 +243,8 @@ namespace _Scripts.Save_System
                         _itemDatas[machineSaveData.GetItem.GetValueOrDefault().GetName],
                         machineSaveData.GetItem.GetValueOrDefault().GetPos);
                 }
+
+                BeltManager.instance.MachineCount++;
             }
         }
 
@@ -303,7 +308,9 @@ namespace _Scripts.Save_System
                         _itemDatas[sellerSaveData.GetItem.GetValueOrDefault().GetName],
                         sellerSaveData.GetItem.GetValueOrDefault().GetPos);
                 }
-                
+
+                BeltManager.instance.ShopCount++;
+
             }
             
             

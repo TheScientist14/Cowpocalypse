@@ -100,6 +100,7 @@ MonoBehaviour:
   m_ConfirmationWidget: {fileID: 0}
   m_OptionsPanel: {fileID: 7026627872623513704}
   _scriptablesWorldAudio: {fileID: 11400000, guid: 19dbf4f3c9a4b474d92e900db4dd54a6, type: 2}
+  loadButton: {fileID: 5891567554151309880}
 --- !u!114 &-7197488221554859067
 MonoBehaviour:
   m_ObjectHideFlags: 0

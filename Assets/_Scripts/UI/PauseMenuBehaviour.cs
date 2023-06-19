@@ -6,6 +6,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class PauseMenuBehaviour : MonoBehaviour
 {
@@ -16,6 +17,8 @@ public class PauseMenuBehaviour : MonoBehaviour
     private ScriptablesWorldAudio _scriptablesWorldAudio;
     private ObservableSound _observableSound;
     private AudioManager _audioManager;
+    
+    [SerializeField] private Button loadButton;
 
     // Start is called before the first frame update
     void Start()
@@ -25,6 +28,11 @@ public class PauseMenuBehaviour : MonoBehaviour
 
         _observableSound = GetComponent<ObservableSound>();
         _audioManager = GameObject.Find("AudioManagerUI").GetComponent<AudioManager>();
+        if(!SaveSystem.instance.CheckForSave())
+        {
+            Debug.Log("Save not Found");
+            loadButton.interactable = false;
+        }
     }
 
     void OnEnable()
@@ -56,6 +64,13 @@ public class PauseMenuBehaviour : MonoBehaviour
         {
              SaveSystem.instance.SaveGame();
         }
+        
+        if(SaveSystem.instance.CheckForSave())
+        {
+            Debug.Log("Save Found");
+            loadButton.interactable = true;
+        }
+        
     }
 
     public void LoadGame()

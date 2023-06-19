@@ -22,7 +22,14 @@ public class BeltManager : Singleton<BeltManager>
 
     [SerializeField] private float MachineBaseprice;
     [SerializeField] private float MachinePriceMultiplier;
-    private int MachineCount;
+    private int machineCount;
+
+    public int MachineCount
+    {
+        get => machineCount;
+        set => machineCount = value;
+    }
+
     [SerializeField] private int maxShop;
 
     private bool FirstDrag = true;
@@ -31,7 +38,11 @@ public class BeltManager : Singleton<BeltManager>
 
     private int shopCount;
 
-    public int ShopCount => shopCount;
+    public int ShopCount
+    {
+        get => shopCount;
+        set => shopCount = value;
+    }
 
     [SerializeField] float SpawnRate;
     [SerializeField] private float CraftingSpeedMultiplier;
@@ -218,7 +229,7 @@ public class BeltManager : Singleton<BeltManager>
 
     public int GetMachinePrice()
     {
-        return (int)(MachineBaseprice *  Mathf.Pow(MachinePriceMultiplier,MachineCount));
+        return (int)(MachineBaseprice *  Mathf.Pow(MachinePriceMultiplier,machineCount));
     }
     
     private GameObject SpawnMachine(Vector3 position, Vector3 direction)
@@ -229,7 +240,7 @@ public class BeltManager : Singleton<BeltManager>
             if(Wallet.instance.Money >= machinePrice)
             {
                 Wallet.instance.Money -= machinePrice;
-                MachineCount++;
+                machineCount++;
             }
             else
                 return null;
@@ -346,7 +357,7 @@ public class BeltManager : Singleton<BeltManager>
 
     public void RemoveOneMachine()
     {
-        MachineCount--;
+        machineCount--;
         Wallet.instance.Money += GetMachinePrice();
     }
 }
