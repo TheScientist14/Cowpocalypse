@@ -12,17 +12,21 @@ namespace _Scripts.Pooling_System
 {
     public class PoolManager : Singleton<PoolManager>
     {
-        [Header("Parameters")] [Tooltip("Start number of pooled items")] [SerializeField]
+        [Header("Parameters")]
+        [Tooltip("Start number of pooled items")]
+        [SerializeField]
         private int _startNumberOfPooledObjects = 10;
 
         [Tooltip("Limit of pooled items left in the pool before adding new ones (value between 0 and 1)")]
         [SerializeField]
         private float minPoolSize = 0.2f;
 
-        [Tooltip("The multiplier for adding pooled items (value between 0 and 1)")] [SerializeField]
+        [Tooltip("The multiplier for adding pooled items (value between 0 and 1)")]
+        [SerializeField]
         private float percentageToAdd = 0.5f;
 
-        [Tooltip("The multiplier for the size of the Items")] [SerializeField]
+        [Tooltip("The multiplier for the size of the Items")]
+        [SerializeField]
         private float itemScaleSize = 0.2f;
 
         [HorizontalLine(color: EColor.Green)]
@@ -32,11 +36,11 @@ namespace _Scripts.Pooling_System
         [SerializeField]
         private int totalNumberOfPooledItems = 0;
 
-        [ReadOnly] [SerializeField] private List<GameObject> spawners = new();
+        [ReadOnly][SerializeField] private List<GameObject> spawners = new();
 
-        [ReadOnly] [SerializeField] private List<Item> itemPool = new();
+        [ReadOnly][SerializeField] private List<Item> itemPool = new();
 
-        [ReadOnly] [SerializeField] private List<Item> existingItems = new();
+        [ReadOnly][SerializeField] private List<Item> existingItems = new();
 
 
         //Add a starting amount of spawnable items to the pool
@@ -48,7 +52,7 @@ namespace _Scripts.Pooling_System
         //Checks if the number of items are sufficient in order to spawn at least one item per spawner, used for debugging purposes not releasing with this
         private void Start()
         {
-            if (itemPool.Count <= spawners.Count)
+            if(itemPool.Count <= spawners.Count)
             {
                 StartCoroutine(AddToPool(spawners.Count));
             }
@@ -63,15 +67,18 @@ namespace _Scripts.Pooling_System
         /// <returns></returns>
         public Item SpawnObject(ItemData itemData, Vector3 prmPosition)
         {
-            if (itemPool.Count == 0)
-            { 
+            if(itemData == null)
+                return null;
+
+            if(itemPool.Count == 0)
+            {
                 AddOneToPool();
             }
 
             Assert.IsTrue(totalNumberOfPooledItems > 0);
-            
+
             itemPool[0].SetItemData(itemData);
-            if (itemData.Sprite)
+            if(itemData.Sprite)
             {
                 itemPool[0].GetComponent<SpriteRenderer>().sprite = itemData.Sprite;
             }
@@ -80,7 +87,7 @@ namespace _Scripts.Pooling_System
             itemPool[0].gameObject.SetActive(true);
             existingItems.Add(itemPool[0]);
             itemPool.RemoveAt(0);
-            if (itemPool.Count <= totalNumberOfPooledItems * minPoolSize)
+            if(itemPool.Count <= totalNumberOfPooledItems * minPoolSize)
             {
                 StartCoroutine(AddToPool(Mathf.FloorToInt(totalNumberOfPooledItems * percentageToAdd)));
             }
@@ -96,7 +103,7 @@ namespace _Scripts.Pooling_System
         public bool DespawnObject(Item prmItem)
         {
             prmItem.gameObject.SetActive(false);
-            if (existingItems.Contains(prmItem))
+            if(existingItems.Contains(prmItem))
             {
                 existingItems.Remove(prmItem);
 
@@ -114,7 +121,7 @@ namespace _Scripts.Pooling_System
         /// <returns></returns>
         private IEnumerator AddToPool(int numberOfItemsToAdd)
         {
-            for (int i = 0; i < numberOfItemsToAdd; i++)
+            for(int i = 0; i < numberOfItemsToAdd; i++)
             {
                 AddOneToPool();
                 yield return new WaitForEndOfFrame();
