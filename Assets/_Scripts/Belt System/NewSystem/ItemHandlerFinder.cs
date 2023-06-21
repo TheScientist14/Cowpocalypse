@@ -59,7 +59,7 @@ public class ItemHandlerFinder : MonoBehaviour, IEnumerable<IItemHandler>
 
     IEnumerator _Search(ItemHandlerSearch iSearch)
     {
-        iSearch.IsSearching = false;
+        iSearch.IsSearching = true;
 
         Collider2D[] collider = new Collider2D[1];
         while(iSearch.FoundItemHandler == null)
