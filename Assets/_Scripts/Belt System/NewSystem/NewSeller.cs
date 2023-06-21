@@ -6,19 +6,39 @@ using UnityEngine.Assertions;
 
 public class NewSeller : SimpleItemHandler
 {
-    // Update is called once per frame
-    protected void Update()
-    {
-        if(m_HandledItem != null && m_IsItemFullyReceived)
-        {
-            bool success = PoolManager.instance.DespawnObject(m_HandledItem);
-            Assert.IsTrue(success);
-            if(!success)
-                return;
+    private HashSet<Item> m_NotFullyReceivedItems;
 
-            Wallet.instance.Money += m_HandledItem.GetItemData().Price;
-            m_HandledItem = null;
-            m_IsItemFullyReceived = false;
-        }
+    protected void Start()
+    {
+        m_NotFullyReceivedItems = new HashSet<Item>();
+    }
+
+    public override bool CanReceive(IItemHandler iGiver, Item iItem)
+    {
+        return true;
+    }
+
+    protected override IEnumerator MoveReceivedItem(Item iItem)
+    {
+        m_NotFullyReceivedItems.Add(iItem);
+        yield return StartCoroutine(base.MoveReceivedItem(iItem));
+
+        Wallet.instance.Money += iItem.GetItemData().Price;
+        bool success = PoolManager.instance.DespawnObject(iItem);
+        Assert.IsTrue(success);
+        if(success)
+            m_NotFullyReceivedItems.Remove(iItem);
+    }
+
+    protected new void OnDestroy()
+    {
+        base.OnDestroy();
+
+        foreach(Item item in m_NotFullyReceivedItems)
+            PoolManager.instance.DespawnObject(item);
+
+        ItemHandlerManager.instance.RemoveOneShop();
     }
 }
+
+

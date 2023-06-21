@@ -16,13 +16,13 @@ using UnityEditor;
 [DisplayStringFormat("Scroll")]
 public class ScrollWrapper : InputBindingComposite<float>
 {
-    // Each part binding is represented as a field of type int and annotated with
+    /*// Each part binding is represented as a field of type int and annotated with
     // InputControlAttribute. Setting "layout" restricts the controls that
     // are made available for picking in the UI.
     //
     // On creation, the int value is set to an integer identifier for the binding
     // part. This identifier can read values from InputBindingCompositeContext.
-    // See ReadValue() below.
+    // See ReadValue() below.*/
     [InputControl(layout = "Value")]
     public int m_ScrollValueId;
 
@@ -41,7 +41,7 @@ public class ScrollWrapper : InputBindingComposite<float>
 
     static ScrollWrapper()
     {
-        // Can give custom name or use default (type name with "Composite" clipped off).
+        /*// Can give custom name or use default (type name with "Composite" clipped off).
         // Same composite can be registered multiple times with different names to introduce
         // aliases.
         //
@@ -50,7 +50,7 @@ public class ScrollWrapper : InputBindingComposite<float>
         //       composite from wherever it works best for you. Note, however, that
         //       the registration has to take place before the composite is first used
         //       in a binding. Also, for the composite to show in the editor, it has
-        //       to be registered from code that runs in edit mode.
+        //       to be registered from code that runs in edit mode.*/
         InputSystem.RegisterBindingComposite<ScrollWrapper>();
     }
 

@@ -32,8 +32,6 @@ public class BeltManager : Singleton<BeltManager>
 
     [SerializeField] private int maxShop;
 
-    private bool FirstDrag = true;
-
     public int MaxShop => maxShop;
 
     private int shopCount;
@@ -72,7 +70,7 @@ public class BeltManager : Singleton<BeltManager>
         // Validate.onClick.AddListener(SpawnBelts);
 
         lineRenderer = GetComponent<LineRenderer>();
-        
+
         Shader.SetGlobalFloat("_speed", speed);
 
         /*DisableBuildMode();
@@ -86,12 +84,12 @@ public class BeltManager : Singleton<BeltManager>
 
         IsDraggingBelt = true;
         lineRenderer.enabled = true;
-        
+
     }
 
     private void EndDrag()
     {
-        if (!IsDraggingBelt)
+        if(!IsDraggingBelt)
         {
             return;
         }
@@ -109,15 +107,15 @@ public class BeltManager : Singleton<BeltManager>
 
         Vector3 currentDragPosition = m_Camera.ScreenToWorldPoint(m_InputAction.Player.PointerPosition.ReadValue<Vector2>());
         currentDragPosition = PlaceInGrid(currentDragPosition);
-           
-        if (lineRenderer.positionCount <=0)
+
+        if(lineRenderer.positionCount <= 0)
         {
             lineRenderer.positionCount = 2;
             lineRenderer.SetPosition(0, new Vector3(currentDragPosition.x, currentDragPosition.y, 0));
         }
-        
+
         lineRenderer.SetPosition(1, new Vector3(currentDragPosition.x, currentDragPosition.y, 0));
-        
+
         MakeFirstLine(currentDragPosition);
     }
 
@@ -229,9 +227,9 @@ public class BeltManager : Singleton<BeltManager>
 
     public int GetMachinePrice()
     {
-        return (int)(MachineBaseprice *  Mathf.Pow(MachinePriceMultiplier,machineCount));
+        return (int)(MachineBaseprice * Mathf.Pow(MachinePriceMultiplier, machineCount));
     }
-    
+
     private GameObject SpawnMachine(Vector3 position, Vector3 direction)
     {
         int machinePrice = GetMachinePrice();
@@ -325,13 +323,13 @@ public class BeltManager : Singleton<BeltManager>
 
     public void UpdateStat(Stat stat)
     {
-        if (stat.StatData.Name == "Belt speed")
+        if(stat.StatData.Name == "Belt speed")
         {
             speed = stat.Value;
             Shader.SetGlobalFloat("_speed", speed);
             Debug.Log(Shader.GetGlobalFloat("_speed"));
         }
-            
+
         else if(stat.StatData.Name == "Extract speed")
             SpawnRate = stat.Value;
         else if(stat.StatData.Name == "Craft Speed")

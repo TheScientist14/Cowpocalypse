@@ -15,7 +15,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
     [SerializeField]
     private Image _windowBackground;
     [SerializeField]
-    private MachineSettingsPanel _machineSettingsPanel;
+    private NewMachineSettingsPanel _machineSettingsPanel;
     [SerializeField]
     private AllTiersPanel _recipeUnlockPanel;
     [SerializeField]
@@ -46,7 +46,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
     {
         OpenPanel(_recipeUnlockPanel, title);
     }
-    public void OpenMachineSettings(Vector2 screenPosition, Machine machine)
+    public void OpenMachineSettings(Vector2 screenPosition, NewMachine machine)
     {
         // we might try to open a new panel when clicking on a different machine outside of the panel, if trying to open in any other circunstances we don't refresh UI
         if(PointIsOutsideOfPanel(screenPosition) && machine != _machineSettingsPanel.OpenedMachine)

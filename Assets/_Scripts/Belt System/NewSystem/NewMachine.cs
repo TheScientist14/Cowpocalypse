@@ -10,6 +10,7 @@ public class NewMachine : UpGiver
 {
     [Expandable]
     [SerializeField] ItemData m_CraftedItemData;
+    private bool m_IsTryingToCraft = false;
     private bool m_IsCrafting = false;
     private Item m_CraftedItem;
 
@@ -19,8 +20,10 @@ public class NewMachine : UpGiver
     public class StockUpdateEvent : UnityEvent<Dictionary<ItemData, int>> { }
 
     // Start is called before the first frame update
-    void Start()
+    protected new void Start()
     {
+        base.Start();
+
         m_NotFullyReceivedItems = new HashSet<Item>();
 
         if(OnStockUpdated == null)
@@ -28,6 +31,25 @@ public class NewMachine : UpGiver
 
         Stock = new Dictionary<ItemData, int>();
         OnStockUpdated.Invoke(Stock);
+    }
+
+    public ItemData GetCraftedItemData()
+    {
+        return m_CraftedItemData;
+    }
+
+    private bool HasEnoughRessourcesToCraft()
+    {
+        if(m_CraftedItemData == null)
+            return false;
+
+        foreach(KeyValuePair<ItemData, int> requiredItemCount in m_CraftedItemData.Recipes)
+        {
+            if(Stock.GetValueOrDefault(requiredItemCount.Key, 0) < requiredItemCount.Value)
+                return false;
+        }
+
+        return true;
     }
 
     private bool CanCraft()
@@ -40,11 +62,8 @@ public class NewMachine : UpGiver
         if(m_NotFullyReceivedItems.Count > 0)
             return false;
 
-        foreach(KeyValuePair<ItemData, int> itemCount in Stock)
-        {
-            if(itemCount.Value < m_CraftedItemData.Recipes[itemCount.Key])
-                return false;
-        }
+        if(!HasEnoughRessourcesToCraft())
+            return false;
 
         return true;
     }
@@ -63,11 +82,11 @@ public class NewMachine : UpGiver
 
     private IEnumerator _CraftItemAfterCooldown()
     {
-        yield return new WaitForSeconds(m_CraftedItemData.CraftDuration * BeltManager.instance.GetCraftingSpeedMultiplier());
+        yield return new WaitForSeconds(m_CraftedItemData.CraftDuration * ItemHandlerManager.instance.GetCraftingSpeedMultiplier());
 
         // if crafted item data changed while crafting, we reset it
         if(!m_IsCrafting)
-            yield return null;
+            yield return new WaitForEndOfFrame();
 
         m_CraftedItem = PoolManager.instance.SpawnObject(m_CraftedItemData, transform.position);
         m_IsCrafting = false;
@@ -75,8 +94,10 @@ public class NewMachine : UpGiver
 
     private IEnumerator RepeatTryCraftUntilSuccess()
     {
+        m_IsTryingToCraft = true;
         while(!CraftItem())
             yield return new WaitForSecondsRealtime(.1f);
+        m_IsTryingToCraft = false;
     }
 
     public void SetCrafteditem(ItemData iCraftedItemData)
@@ -108,12 +129,15 @@ public class NewMachine : UpGiver
         m_NotFullyReceivedItems.Clear();
     }
 
-    protected override Item GetItemToSend()
+    protected override ref Item GetItemToSend()
     {
         if(m_IsCrafting)
-            return null;
+        {
+            m_NullItem = null;
+            return ref m_NullItem;
+        }
 
-        return m_CraftedItem;
+        return ref m_CraftedItem;
     }
 
     public override bool CanReceive(IItemHandler iGiver, Item iItem)
@@ -131,7 +155,10 @@ public class NewMachine : UpGiver
     {
         bool received = base.Receive(iGiver, iItem);
         if(received)
+        {
+            Stock[iItem.GetItemData()] = Stock.GetValueOrDefault(iItem.GetItemData(), 0) + 1;
             m_NotFullyReceivedItems.Add(iItem);
+        }
         return received;
     }
 
@@ -140,15 +167,19 @@ public class NewMachine : UpGiver
         yield return StartCoroutine(base.MoveReceivedItem(iItem));
         PoolManager.instance.DespawnObject(iItem);
         m_NotFullyReceivedItems.Remove(iItem);
-        if(CanCraft())
+        if(HasEnoughRessourcesToCraft() && !m_IsTryingToCraft)
             StartCoroutine(RepeatTryCraftUntilSuccess());
     }
 
     protected new void OnDestroy()
     {
+        base.OnDestroy();
+
         ClearReceivingItems();
 
         if(m_CraftedItem != null)
             PoolManager.instance.DespawnObject(m_CraftedItem);
+
+        ItemHandlerManager.instance.RemoveOneMachine();
     }
 }

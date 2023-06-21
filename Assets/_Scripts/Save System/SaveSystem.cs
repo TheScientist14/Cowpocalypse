@@ -244,7 +244,7 @@ namespace _Scripts.Save_System
                         machineSaveData.GetItem.GetValueOrDefault().GetPos);
                 }
 
-                BeltManager.instance.MachineCount++;
+                ItemHandlerManager.instance.MachineCount++;
             }
         }
 
@@ -309,7 +309,7 @@ namespace _Scripts.Save_System
                         sellerSaveData.GetItem.GetValueOrDefault().GetPos);
                 }
 
-                BeltManager.instance.ShopCount++;
+                ItemHandlerManager.instance.ShopCount++;
 
             }
             

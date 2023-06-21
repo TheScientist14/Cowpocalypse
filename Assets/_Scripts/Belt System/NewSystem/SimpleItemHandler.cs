@@ -4,22 +4,32 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 
-public class SimpleItemHandler : MonoBehaviour, IItemHandler
+public class SimpleItemHandler : IItemHandler
 {
     protected Item m_HandledItem;
     protected bool m_IsItemFullyReceived = false;
 
-    public virtual bool CanGive()
+    protected bool HasFullyReceivedItem()
     {
         return m_HandledItem != null && m_IsItemFullyReceived;
     }
 
-    public virtual bool CanReceive(IItemHandler iGiver, Item iItem)
+    public override bool CanBeOverriden()
     {
-        return iGiver != null && iItem != null && iGiver.CanGive() && m_HandledItem == null;
+        return true;
     }
 
-    public virtual bool Receive(IItemHandler iGiver, Item iItem)
+    public override bool CanGive(IItemHandler iReceiver)
+    {
+        return false;
+    }
+
+    public override bool CanReceive(IItemHandler iGiver, Item iItem)
+    {
+        return iGiver != null && iItem != null && iGiver.CanGive(this) && m_HandledItem == null;
+    }
+
+    public override bool Receive(IItemHandler iGiver, Item iItem)
     {
         bool canReceive = CanReceive(iGiver, iItem);
         Assert.IsTrue(canReceive);
@@ -37,26 +47,26 @@ public class SimpleItemHandler : MonoBehaviour, IItemHandler
     protected virtual IEnumerator MoveReceivedItem(Item iItem)
     {
         if(iItem == null)
-            yield return null;
+            yield return new WaitForEndOfFrame();
 
         Transform itemTransform = iItem.transform;
         while(Vector3.SqrMagnitude(itemTransform.position - transform.position) > .001)
         {
-            itemTransform.position = Vector3.MoveTowards(itemTransform.position, transform.position, BeltManager.instance.speed * Time.fixedDeltaTime);
+            itemTransform.position = Vector3.MoveTowards(itemTransform.position, transform.position, ItemHandlerManager.instance.speed * Time.fixedDeltaTime);
             yield return new WaitForFixedUpdate();
         }
         m_IsItemFullyReceived = true;
     }
 
-    protected bool TrySendItemTo(Item iItem, IItemHandler iReceiver)
+    protected bool TrySendItemTo(ref Item ioItem, IItemHandler iReceiver)
     {
-        if(iReceiver != null && CanGive() && iReceiver.CanReceive(this, iItem))
+        if(iReceiver != null && CanGive(iReceiver) && iReceiver.CanReceive(this, ioItem))
         {
-            bool success = iReceiver.Receive(this, iItem);
+            bool success = iReceiver.Receive(this, ioItem);
             Assert.IsTrue(success);
             if(success)
             {
-                iItem = null;
+                ioItem = null;
                 return true;
             }
         }

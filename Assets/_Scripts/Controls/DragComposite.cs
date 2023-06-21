@@ -1,4 +1,4 @@
-/*// Use InputBindingComposite<TValue> as a base class for a composite that returns
+// Use InputBindingComposite<TValue> as a base class for a composite that returns
 // values of type TValue.
 // NOTE: It is possible to define a composite that returns different kinds of values
 //       but doing so requires deriving directly from InputBindingComposite.
@@ -18,7 +18,6 @@ using UnityEditor;
 // source : https://forum.unity.com/threads/implement-a-mouse-drag-composite.807906/
 public class DragComposite : InputBindingComposite<Vector2>
 {
-
     [InputControl(layout = "Button")]
     public int Button;
 
@@ -63,4 +62,4 @@ public class DragComposite : InputBindingComposite<Vector2>
 
     [RuntimeInitializeOnLoadMethod]
     private static void Init() { }
-}*/
+}

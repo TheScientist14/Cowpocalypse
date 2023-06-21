@@ -9,12 +9,12 @@ public class UIUpdatePricesAndCount : MonoBehaviour
 {
     [SerializeField] private TMP_Text sellerCount;
     [SerializeField] private TMP_Text machinePrice;
-    
+
     // Start is called before the first frame update
     void Start()
     {
         UpdateUI();
-        GridManager.instance.onGridChanged.AddListener(UpdateUI);
+        NewGridManager.instance.OnGridChanged.AddListener(UpdateUI);
     }
 
     private void UpdateUI()
@@ -25,7 +25,7 @@ public class UIUpdatePricesAndCount : MonoBehaviour
     private IEnumerator WaitForDestroy()
     {
         yield return new WaitForEndOfFrame();
-        sellerCount.text = (BeltManager.instance.MaxShop - BeltManager.instance.ShopCount) + "/" + BeltManager.instance.MaxShop;
-        machinePrice.text = BeltManager.instance.GetMachinePrice() + " $";
+        sellerCount.text = (ItemHandlerManager.instance.MaxShop - ItemHandlerManager.instance.ShopCount) + "/" + ItemHandlerManager.instance.MaxShop;
+        machinePrice.text = ItemHandlerManager.instance.GetMachinePrice() + " $";
     }
 }

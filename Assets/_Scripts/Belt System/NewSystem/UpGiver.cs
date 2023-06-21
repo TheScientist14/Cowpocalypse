@@ -1,51 +1,48 @@
 using System.Collections;
 using UnityEngine;
 
+[RequireComponent(typeof(ItemHandlerFinder))]
 public class UpGiver : SimpleItemHandler
 {
-    protected IItemHandler m_NextItemHandler;
-    private bool m_IsLookingForNextBelt = false;
+    protected ItemHandlerFinder m_ItemHandlerFinder;
+
+    [HideInInspector]
+    protected Item m_NullItem = null;
+
+    protected void Start()
+    {
+        m_ItemHandlerFinder = GetComponent<ItemHandlerFinder>();
+        if(m_ItemHandlerFinder == null)
+        {
+            Debug.LogError("Unexpected error: No found ItemHandlerFinder on " + gameObject.name);
+            Debug.LogError("Self destroying");
+            Destroy(gameObject);
+            return;
+        }
+
+        m_ItemHandlerFinder.AddItemHandlerSearch(transform.position + transform.up);
+    }
 
     // Update is called once per frame
     protected void Update()
     {
-        if(m_NextItemHandler == null)
-        {
-            if(!m_IsLookingForNextBelt)
-                StartCoroutine(LookForNextBelt());
-        }
-        else
-            m_IsItemFullyReceived = !TrySendItemTo(GetItemToSend(), m_NextItemHandler);
+        if(m_ItemHandlerFinder[0] != null && m_IsItemFullyReceived && m_HandledItem != null)
+            m_IsItemFullyReceived = !TrySendItemTo(ref GetItemToSend(), m_ItemHandlerFinder[0]);
     }
 
-    IEnumerator LookForNextBelt()
-    {
-        m_IsLookingForNextBelt = true;
-
-        RaycastHit2D hit;
-        while(m_NextItemHandler == null)
-        {
-            // transform.position + transform.up => assuming item handlers are 1 unit large
-            hit = Physics2D.Raycast(transform.position + transform.up, transform.up, 0.1f);
-            if(hit.collider != null)
-                m_NextItemHandler = hit.collider.GetComponent<IItemHandler>();
-
-            yield return new WaitForSecondsRealtime(.1f);
-        }
-
-        m_IsLookingForNextBelt = false;
-    }
-
-    protected virtual Item GetItemToSend()
+    protected virtual ref Item GetItemToSend()
     {
         if(!m_IsItemFullyReceived)
-            return null;
+        {
+            m_NullItem = null;
+            return ref m_NullItem;
+        }
 
-        return m_HandledItem;
+        return ref m_HandledItem;
     }
 
-    public override bool CanGive()
+    public override bool CanGive(IItemHandler iReceiver)
     {
-        return GetItemToSend() != null;
+        return GetItemToSend() != null && iReceiver == m_ItemHandlerFinder[0];
     }
 }

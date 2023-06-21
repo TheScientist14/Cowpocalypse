@@ -7,6 +7,18 @@ public class NewSpawner : UpGiver
 {
     [SerializeField] ItemData m_SpawnedItemData;
 
+    protected new void Start()
+    {
+        base.Start();
+
+        StartCoroutine(Produce());
+    }
+
+    public override bool CanBeOverriden()
+    {
+        return false;
+    }
+
     public override bool CanReceive(IItemHandler iGiver, Item iItem)
     {
         return false;
@@ -18,7 +30,7 @@ public class NewSpawner : UpGiver
         {
             if(m_HandledItem == null)
             {
-                yield return new WaitForSeconds(BeltManager.instance.GetSpawnRate());
+                yield return new WaitForSeconds(ItemHandlerManager.instance.GetSpawnRate());
                 m_HandledItem = PoolManager.instance.SpawnObject(m_SpawnedItemData, transform.position);
                 m_IsItemFullyReceived = (m_HandledItem != null);
             }
