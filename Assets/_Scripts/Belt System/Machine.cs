@@ -60,14 +60,14 @@ public class Machine : Belt
             foreach (ItemData item in CraftedItemData.Recipes.Keys)
             {
                 if (Stock[item] < CraftedItemData.Recipes[item])
-                    yield return null;
+                    yield break;
                 else
                     NextBeltBlock = false;
             }
         }
 
         while (CanCraft == false || HasSomethingToOutput == true)
-            yield return null;
+            yield return new WaitForEndOfFrame();
         
         foreach(ItemData item in CraftedItemData.Recipes.Keys)
             Stock[item] -= CraftedItemData.Recipes[item];
@@ -79,7 +79,7 @@ public class Machine : Belt
         CallSound(EnumRelativeSounds.Activate);
         CraftedItem = PoolManager.instance.SpawnObject(CraftedItemData, transform.position);
         while(BeltInSequence == null || BeltInSequence.isSpaceTaken == true || Outputed == false)
-            yield return null;
+            yield return new WaitForEndOfFrame();
         StartCoroutine(Output(CraftedItem));
     }
 
@@ -129,7 +129,7 @@ public class Machine : Belt
                     break;
                 }
             }
-            yield return null;
+            yield return new WaitForEndOfFrame();
         }
     }
 

@@ -70,7 +70,7 @@ public class Splitter : Belt
                         /*while(BeltItem.GetItem().transform.position != toPosition)
                         {
                             BeltItem.GetItem().transform.position = Vector3.MoveTowards(BeltItem.transform.position, toPosition, step);
-                            yield return null;
+                            yield return new WaitForEndOfFrame();
                         }*/
 
                         ItemMoving = false;
@@ -78,7 +78,7 @@ public class Splitter : Belt
                         OutputBelts[CurrentOutput].BeltItem = BeltItem;
                         BeltItem = null;
                         CurrentOutput++;
-                        yield return null;
+                        yield return new WaitForEndOfFrame();
                     }
                 }
             }

@@ -38,7 +38,10 @@ public class MachineSettingsPanel : Panel
     {
         foreach(var kvp in stock)
         {
-            _itemToRessource[kvp.Key].UpdateValue(kvp.Value, null);
+            if (_itemToRessource.ContainsKey(kvp.Key))
+            {
+              _itemToRessource[kvp.Key].UpdateValue(kvp.Value, null);  
+            }
         }
     }
 

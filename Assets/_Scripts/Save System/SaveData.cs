@@ -17,6 +17,7 @@ namespace _Scripts.Save_System
         private List<SplitterSaveData> _splitterDatas = new();
         private List<MergerSaveData> _mergerDatas = new();
         private List<SellerSaveData> _sellerDatas = new();
+        private List<Ressources> _ressourcesDatas = new();
         private PlayerSaveData _playerSaveData;
         
 
@@ -67,6 +68,14 @@ namespace _Scripts.Save_System
             }
             
             _playerSaveData = new PlayerSaveData(stats, Wallet.instance.Money);
+
+            var sOs = ItemCreator.LoadAllResourceAtPath<ItemData>();
+
+            foreach (var So in sOs)
+            {
+                _ressourcesDatas.Add(new Ressources(So.Name,So.Unlocked));
+            }
+
         }
 
         public List<BeltSaveData> BeltDatas => _beltDatas;
@@ -76,6 +85,7 @@ namespace _Scripts.Save_System
         public List<SellerSaveData> SellerDatas => _sellerDatas;
 
         public PlayerSaveData PlayerSaveData => _playerSaveData;
+        public List<Ressources> Ressources => _ressourcesDatas;
     }
 
     #region DataStruct
@@ -332,6 +342,23 @@ namespace _Scripts.Save_System
         public Vector3 GetRot => new(_rotX, _rotY, _rotZ);
         
         public ItemSaveData? GetItem => _itemSaveData;
+    }
+
+    [Serializable]
+    public struct Ressources
+    {
+        private string name;
+        private bool unlocked;
+
+        public Ressources(string name, bool unlocked)
+        {
+            this.name = name;
+            this.unlocked = unlocked;
+        }
+
+        public string Name => name;
+
+        public bool Unlocked => unlocked;
     }
 
     #endregion

@@ -172,11 +172,12 @@ namespace _Scripts.Save_System
             Debug.Log("Loaded Merger");
             LoadSeller();
             Debug.Log("Loaded Seller");
+            LoadRessources();
+            Debug.Log("Loaded Resources");
             
             yield return new WaitForSecondsRealtime(loadTime);
             
             loadedGame.Invoke();
-            yield return null;
         }
 
         public bool CheckForSave()
@@ -314,6 +315,23 @@ namespace _Scripts.Save_System
             }
             
             
+        }
+
+        public void LoadRessources()
+        {
+            foreach (var ressource in GetSavedGameData().Ressources)
+            {
+                var items = ItemCreator.LoadAllResourceAtPath<ItemData>();
+
+                foreach (var vaItem in items)
+                {
+                    if (vaItem.Name == ressource.Name)
+                    {
+                        vaItem.Unlocked = ressource.Unlocked;
+                    }
+                }
+                
+            }
         }
 
         public void OverideSave()
