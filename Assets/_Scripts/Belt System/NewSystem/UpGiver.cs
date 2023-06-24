@@ -7,7 +7,7 @@ public class UpGiver : SimpleItemHandler
     protected ItemHandlerFinder m_ItemHandlerFinder;
 
     [HideInInspector]
-    protected Item m_NullItem = null;
+    static protected Item m_NullItem = null;
 
     protected void Start()
     {

@@ -39,6 +39,19 @@ public class NewSeller : SimpleItemHandler
 
         ItemHandlerManager.instance.RemoveOneShop();
     }
+
+    public IEnumerable<Item> GetItemsInTransfer()
+    {
+        return m_NotFullyReceivedItems;
+    }
+
+    public void AddItemsInTransfer(IEnumerable<Item> iItemsInTransfer)
+    {
+        foreach(Item item in iItemsInTransfer)
+        {
+            if(m_NotFullyReceivedItems.Contains(item))
+                continue;
+            MoveReceivedItem(item);
+        }
+    }
 }
-
-

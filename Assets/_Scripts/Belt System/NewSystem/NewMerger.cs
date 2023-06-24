@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 public class NewMerger : UpGiver
 {
@@ -53,5 +54,16 @@ public class NewMerger : UpGiver
             SwitchInputIndex();
 
         return received;
+    }
+
+    public int GetCurrentInputIndex()
+    {
+        return m_CurrentInputIdx;
+    }
+
+    public void SetCurrentInputIndex(int iInputIdx)
+    {
+        Assert.IsTrue(0 <= iInputIdx && iInputIdx < m_ItemHandlerFinder.Count);
+        m_CurrentInputIdx = iInputIdx;
     }
 }

@@ -170,7 +170,7 @@ public class ModalWindowController : Singleton<ModalWindowController>
 
         if(InMachineSettings)
         {
-            _machineSettingsPanel.SetItemData(ressourceUI.ItemData);
+            _machineSettingsPanel.SetItemData(ressourceUI.ItemData, new Dictionary<ItemData, int>(_machineSettingsPanel.OpenedMachine.GetCurrentStock()));
             ClosePanel(_recipeUnlockPanel);
             return;
         }

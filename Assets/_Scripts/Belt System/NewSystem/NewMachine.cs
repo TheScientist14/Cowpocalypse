@@ -12,11 +12,15 @@ public class NewMachine : UpGiver
     [SerializeField] ItemData m_CraftedItemData;
     private bool m_IsTryingToCraft = false;
     private bool m_IsCrafting = false;
+    private float m_StartCraftTime = 0;
     private Item m_CraftedItem;
 
-    public Dictionary<ItemData, int> Stock { get; set; }
+    private Dictionary<ItemData, int> m_Stock;
+
     public StockUpdateEvent OnStockUpdated;
+
     private HashSet<Item> m_NotFullyReceivedItems;
+
     public class StockUpdateEvent : UnityEvent<Dictionary<ItemData, int>> { }
 
     // Start is called before the first frame update
@@ -29,8 +33,8 @@ public class NewMachine : UpGiver
         if(OnStockUpdated == null)
             OnStockUpdated = new StockUpdateEvent();
 
-        Stock = new Dictionary<ItemData, int>();
-        OnStockUpdated.Invoke(Stock);
+        m_Stock = new Dictionary<ItemData, int>();
+        OnStockUpdated.Invoke(m_Stock);
     }
 
     public ItemData GetCraftedItemData()
@@ -45,7 +49,7 @@ public class NewMachine : UpGiver
 
         foreach(KeyValuePair<ItemData, int> requiredItemCount in m_CraftedItemData.Recipes)
         {
-            if(Stock.GetValueOrDefault(requiredItemCount.Key, 0) < requiredItemCount.Value)
+            if(m_Stock.GetValueOrDefault(requiredItemCount.Key, 0) < requiredItemCount.Value)
                 return false;
         }
 
@@ -75,18 +79,23 @@ public class NewMachine : UpGiver
 
         m_IsCrafting = true;
         ResetStock();
-        StartCoroutine(_CraftItemAfterCooldown());
+        StartCoroutine(_CraftItemAfterCooldown(_GetCraftLength()));
 
         return true;
     }
 
-    private IEnumerator _CraftItemAfterCooldown()
+    private float _GetCraftLength()
     {
-        yield return new WaitForSeconds(m_CraftedItemData.CraftDuration * ItemHandlerManager.instance.GetCraftingSpeedMultiplier());
+        return m_CraftedItemData.CraftDuration * ItemHandlerManager.instance.GetCraftingSpeedMultiplier();
+    }
+
+    private IEnumerator _CraftItemAfterCooldown(float iCooldown)
+    {
+        yield return new WaitForSeconds(iCooldown);
 
         // if crafted item data changed while crafting, we reset it
         if(!m_IsCrafting)
-            yield return new WaitForEndOfFrame();
+            yield break;
 
         m_CraftedItem = PoolManager.instance.SpawnObject(m_CraftedItemData, transform.position);
         m_IsCrafting = false;
@@ -100,7 +109,7 @@ public class NewMachine : UpGiver
         m_IsTryingToCraft = false;
     }
 
-    public void SetCrafteditem(ItemData iCraftedItemData)
+    public void SetCraftedItem(ItemData iCraftedItemData)
     {
         m_CraftedItemData = iCraftedItemData;
         ResetStock();
@@ -110,12 +119,12 @@ public class NewMachine : UpGiver
 
     private void ResetStock()
     {
-        Stock.Clear();
+        m_Stock.Clear();
         if(m_CraftedItemData != null)
             foreach(ItemData item in m_CraftedItemData.Recipes.Keys)
-                Stock.Add(item, 0);
+                m_Stock.Add(item, 0);
 
-        OnStockUpdated.Invoke(Stock);
+        OnStockUpdated.Invoke(m_Stock);
     }
 
     private void ClearReceivingItems()
@@ -148,7 +157,7 @@ public class NewMachine : UpGiver
         if(m_CraftedItemData == null || itemData == null)
             return false;
 
-        return Stock.ContainsKey(itemData) && Stock[itemData] < m_CraftedItemData.Recipes[itemData];
+        return m_Stock.ContainsKey(itemData) && m_Stock[itemData] < m_CraftedItemData.Recipes[itemData];
     }
 
     public override bool Receive(IItemHandler iGiver, Item iItem)
@@ -156,7 +165,7 @@ public class NewMachine : UpGiver
         bool received = base.Receive(iGiver, iItem);
         if(received)
         {
-            Stock[iItem.GetItemData()] = Stock.GetValueOrDefault(iItem.GetItemData(), 0) + 1;
+            m_Stock[iItem.GetItemData()] = m_Stock.GetValueOrDefault(iItem.GetItemData(), 0) + 1;
             m_NotFullyReceivedItems.Add(iItem);
         }
         return received;
@@ -181,5 +190,58 @@ public class NewMachine : UpGiver
             PoolManager.instance.DespawnObject(m_CraftedItem);
 
         ItemHandlerManager.instance.RemoveOneMachine();
+    }
+
+    public IEnumerable<Item> GetItemsInTransfer()
+    {
+        return m_NotFullyReceivedItems;
+    }
+
+    public void AddItemsInTransfer(IEnumerable<Item> iItemsInTransfer)
+    {
+        foreach(Item item in iItemsInTransfer)
+        {
+            if(m_NotFullyReceivedItems.Contains(item))
+                continue;
+            m_NotFullyReceivedItems.Add(item);
+            MoveReceivedItem(item);
+        }
+    }
+
+    public float GetTimeLeftForCurrentCraft()
+    {
+        if(!m_IsCrafting)
+            return -1;
+
+        return Mathf.Clamp(m_StartCraftTime + _GetCraftLength() - Time.time, 0, _GetCraftLength());
+    }
+
+    public void SetTimeLeftForCurrentCraft(float iTimeLeft)
+    {
+        if(Time.time < 0)
+            return;
+
+        _CraftItemAfterCooldown(iTimeLeft);
+    }
+
+    public IEnumerable<KeyValuePair<ItemData, int>> GetCurrentStock()
+    {
+        return m_Stock;
+    }
+
+    public void SetCurrentStock(IEnumerable<KeyValuePair<ItemData, int>> iStock)
+    {
+        m_Stock = new Dictionary<ItemData, int>(iStock);
+        OnStockUpdated.Invoke(m_Stock);
+    }
+
+    public Item GetCraftedItem()
+    {
+        return m_CraftedItem;
+    }
+
+    public void SetAlreadyCraftedItem(Item iCraftedItem)
+    {
+        m_CraftedItem = iCraftedItem;
     }
 }

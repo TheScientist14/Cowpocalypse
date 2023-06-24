@@ -9,6 +9,17 @@ public class SimpleItemHandler : IItemHandler
     protected Item m_HandledItem;
     protected bool m_IsItemFullyReceived = false;
 
+    public Item GetCurrentItem()
+    {
+        return m_HandledItem;
+    }
+
+    public virtual void SetItemInTransfer(Item iItem)
+    {
+        m_HandledItem = iItem;
+        StartCoroutine(MoveReceivedItem(iItem));
+    }
+
     protected bool HasFullyReceivedItem()
     {
         return m_HandledItem != null && m_IsItemFullyReceived;
@@ -47,7 +58,7 @@ public class SimpleItemHandler : IItemHandler
     protected virtual IEnumerator MoveReceivedItem(Item iItem)
     {
         if(iItem == null)
-            yield return new WaitForEndOfFrame();
+            yield break;
 
         Transform itemTransform = iItem.transform;
         while(Vector3.SqrMagnitude(itemTransform.position - transform.position) > .001)

@@ -1,12 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 [RequireComponent(typeof(ItemHandlerFinder))]
 public class NewSplitter : SimpleItemHandler
 {
     // left = 0, up = 1, right = 2
-    private List<Vector3> m_OutputDirections = new List<Vector3>();
     private ItemHandlerFinder m_ItemHandlerFinder;
 
     private int m_CurrentOutputIdx = 0;
@@ -52,5 +52,16 @@ public class NewSplitter : SimpleItemHandler
     public override bool CanGive(IItemHandler iReceiver)
     {
         return HasFullyReceivedItem() && iReceiver == m_ItemHandlerFinder[m_CurrentOutputIdx];
+    }
+
+    public int GetCurrentOutputIndex()
+    {
+        return m_CurrentOutputIdx;
+    }
+
+    public void SetCurrentOutputIndex(int iOutputIdx)
+    {
+        Assert.IsTrue(0 <= iOutputIdx && iOutputIdx < m_ItemHandlerFinder.Count);
+        m_CurrentOutputIdx = iOutputIdx;
     }
 }

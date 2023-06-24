@@ -45,24 +45,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   saveIconPrefab: {fileID: 9167905607567024168, guid: 62e9bf53015f7a3428f7bec7d3ee35d0, type: 3}
-  beltPrefab: {fileID: 4732986801910414389, guid: 39b3afbc04efd43489d67a26e6c013a1, type: 3}
-  machinePrefab: {fileID: 4732986801910414389, guid: 3138b7e5b9beecf40bd5a66462d2fc52, type: 3}
-  splitterPrefab: {fileID: 8504238527581414455, guid: d2fd8be8225616a458214792f8a5bd97, type: 3}
-  mergerPrefab: {fileID: 8504238527581414455, guid: d88ecdf69dd0588478fbf63f8bde920e, type: 3}
-  sellerPrefab: {fileID: 45940641016382040, guid: 06e1ce65c9fe45949a064b3f6d62ca07, type: 3}
+  beltPrefab: {fileID: 4732986801910414389, guid: 058d93178a086e64cabe8cd5679114b0, type: 3}
+  machinePrefab: {fileID: 4732986801910414389, guid: d7e00fd415221ad498a820f85becdafa, type: 3}
+  splitterPrefab: {fileID: 8504238527581414455, guid: 4762357ca4e2a5349a7eec5c10e83b92, type: 3}
+  mergerPrefab: {fileID: 8504238527581414455, guid: ed328e898e68bc14bb1da2475479f840, type: 3}
+  sellerPrefab: {fileID: 45940641016382040, guid: 9027fdf0e398e1040af5b7b4371d751d, type: 3}
   loadTime: 1
-  playerSpawnedObjects: {fileID: 0}
-  belts:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   savedGame:
     m_PersistentCalls:
       m_Calls: []

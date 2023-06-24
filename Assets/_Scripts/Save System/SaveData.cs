@@ -1,14 +1,10 @@
 using System.Collections.Generic;
 using System;
-using System.Linq;
-using JetBrains.Annotations;
-using Unity.VisualScripting;
 using UnityEngine;
-using Object = UnityEngine.Object;
 
 namespace _Scripts.Save_System
 {
-    
+
     [Serializable]
     public class SaveData
     {
@@ -17,55 +13,34 @@ namespace _Scripts.Save_System
         private List<SplitterSaveData> _splitterDatas = new();
         private List<MergerSaveData> _mergerDatas = new();
         private List<SellerSaveData> _sellerDatas = new();
+        private List<SpawnerSaveData> _spawnerDatas = new();
         private PlayerSaveData _playerSaveData;
-        
 
         public SaveData()
         {
-            foreach (var o in Object.FindObjectsOfType(typeof(Belt))
-                         .Where(b => !b.GetType().IsSubclassOf(typeof(Belt))))
-            {
-                var belt = (Belt)o;
-                var transform = belt.transform;
-                _beltDatas.Add(new BeltSaveData(transform.position, transform.rotation.eulerAngles, belt.BeltItem));
-            }
+            foreach(NewBelt belt in GameObject.FindObjectsOfType<NewBelt>())
+                _beltDatas.Add(new BeltSaveData(belt));
 
-            foreach (var o in Object.FindObjectsOfType(typeof(Machine)))
-            {
-                var machines = (Machine)o;
-                var transform = machines.transform;
-                _machineDatas.Add(new MachineSaveData( transform.position,
-                    transform.rotation.eulerAngles, machines.Stock, machines.BeltItem, machines.GetCraftedItem() ? machines.GetCraftedItem().Name : ""));
-            }
-            
-            foreach (var o in Object.FindObjectsOfType(typeof(Splitter)))
-            {
-                var splitter = (Splitter)o;
-                var transform = splitter.transform;
-                _splitterDatas.Add(new SplitterSaveData(transform.position, transform.rotation.eulerAngles, splitter.BeltItem));
-            }
+            foreach(NewMachine machine in GameObject.FindObjectsOfType<NewMachine>())
+                _machineDatas.Add(new MachineSaveData(machine));
 
-            foreach (var o in Object.FindObjectsOfType(typeof(Merger)))
-            {
-                var merger = (Merger)o;
-                var transform = merger.transform;
-                _mergerDatas.Add(new MergerSaveData(transform.position, transform.rotation.eulerAngles, merger.BeltItem));
-            }
+            foreach(NewSplitter splitter in GameObject.FindObjectsOfType<NewSplitter>())
+                _splitterDatas.Add(new SplitterSaveData(splitter));
 
-            foreach (var o in Object.FindObjectsOfType(typeof(Seller)))
-            {
-                var seller = (Seller)o;
-                var transform = seller.transform;
-                _sellerDatas.Add(new SellerSaveData(transform.position, transform.rotation.eulerAngles, seller.BeltItem));
-            }
+            foreach(NewMerger merger in GameObject.FindObjectsOfType<NewMerger>())
+                _mergerDatas.Add(new MergerSaveData(merger));
+
+            foreach(NewSeller seller in GameObject.FindObjectsOfType<NewSeller>())
+                _sellerDatas.Add(new SellerSaveData(seller));
+
+            foreach(NewSpawner spawner in GameObject.FindObjectsOfType<NewSpawner>())
+                _spawnerDatas.Add(new SpawnerSaveData(spawner));
 
             List<StatSaveData> stats = new List<StatSaveData>();
-            
-            foreach (var stat in StatManager.instance.Stats)
-            {
+
+            foreach(var stat in StatManager.instance.Stats)
                 stats.Add(new StatSaveData(stat.CurrentLevel));
-            }
-            
+
             _playerSaveData = new PlayerSaveData(stats, Wallet.instance.Money);
         }
 
@@ -74,7 +49,7 @@ namespace _Scripts.Save_System
         public List<SplitterSaveData> SplitterDatas => _splitterDatas;
         public List<MergerSaveData> MergerDatas => _mergerDatas;
         public List<SellerSaveData> SellerDatas => _sellerDatas;
-
+        public List<SpawnerSaveData> SpawnerDatas => _spawnerDatas;
         public PlayerSaveData PlayerSaveData => _playerSaveData;
     }
 
@@ -86,185 +61,194 @@ namespace _Scripts.Save_System
         private string _name;
         private float _x;
         private float _y;
-        private float _z;
 
-        public ItemSaveData(string prmName, Vector3 prmPos)
+        public ItemSaveData(Item iItem)
         {
-            _name = prmName;
-            _x = prmPos.x;
-            _y = prmPos.y;
-            _z = prmPos.z;
+            _name = iItem.GetItemData().Name;
+            _x = iItem.transform.position.x;
+            _y = iItem.transform.position.y;
         }
 
-        public Vector3 GetPos => new Vector3(_x, _y, _z);
+        public Vector3 Pos => new Vector3(_x, _y, 0);
+        public string Name => _name;
+    }
 
-        public string GetName => _name;
+    [Serializable]
+    public struct Transform2DSaveData
+    {
+        private float _x;
+        private float _y;
+        private float _rotZ;
+
+        public Transform2DSaveData(Transform iTransform)
+        {
+            _x = iTransform.position.x;
+            _y = iTransform.position.y;
+            _rotZ = iTransform.rotation.eulerAngles.z;
+        }
+
+        public Vector3 Pos => new Vector3(_x, _y, 0);
+        public Quaternion Rot => Quaternion.Euler(0, 0, _rotZ);
     }
 
     [Serializable]
     public struct BeltSaveData
     {
-        private float _x;
-        private float _y;
-        private float _z;
-        private float _rotX;
-        private float _rotY;
-        private float _rotZ;
-        [Serialize] private ItemSaveData? _itemSaveData;
+        private Transform2DSaveData _transform;
+        private ItemSaveData? _itemSaveData;
 
-        public BeltSaveData(Vector3 prmPos, Vector3 prmRot, Item prmItem)
+        public BeltSaveData(NewBelt iBelt)
         {
-            _x = prmPos.x;
-            _y = prmPos.y;
-            _z = prmPos.z;
-            _rotX = prmRot.x;
-            _rotY = prmRot.y;
-            _rotZ = prmRot.z;
+            _transform = new Transform2DSaveData(iBelt.transform);
 
-            if (prmItem != null)
-            {
-                _itemSaveData = new ItemSaveData(prmItem.GetItemData().Name, prmItem.gameObject.transform.position);
-            }
+            Item item = iBelt.GetCurrentItem();
+            if(item != null)
+                _itemSaveData = new ItemSaveData(item);
             else
-            {
                 _itemSaveData = null;
-            }
         }
 
-        public Vector3 GetPos => new(_x, _y, _z);
-
-        public Vector3 GetRot => new(_rotX, _rotY, _rotZ);
-
-        public ItemSaveData? GetItem => _itemSaveData;
+        public Transform2DSaveData Transform => _transform;
+        public ItemSaveData? Item => _itemSaveData;
     }
 
     [Serializable]
     public struct SplitterSaveData
     {
-        private float _x;
-        private float _y;
-        private float _z;
-        private float _rotX;
-        private float _rotY;
-        private float _rotZ;
+        private Transform2DSaveData _transform;
+        private ItemSaveData? _itemSaveData;
+        private int _outputIdx;
 
-        [Serialize] private ItemSaveData? _itemSaveData;
-
-        public SplitterSaveData(Vector3 prmPos, Vector3 prmRot, Item prmItem)
+        public SplitterSaveData(NewSplitter iSplitter)
         {
-            _x = prmPos.x;
-            _y = prmPos.y;
-            _z = prmPos.z;
-            _rotX = prmRot.x;
-            _rotY = prmRot.y;
-            _rotZ = prmRot.z;
-            if (prmItem != null)
-            {
-                _itemSaveData = new ItemSaveData(prmItem.GetItemData().Name, prmItem.gameObject.transform.position);
-            }
+            _transform = new Transform2DSaveData(iSplitter.transform);
+            Item item = iSplitter.GetCurrentItem();
+            if(item != null)
+                _itemSaveData = new ItemSaveData(item);
             else
-            {
                 _itemSaveData = null;
-            }
+            _outputIdx = iSplitter.GetCurrentOutputIndex();
         }
 
-
-        public Vector3 GetPos => new(_x, _y, _z);
-
-        public Vector3 GetRot => new(_rotX, _rotY, _rotZ);
-        
-        public ItemSaveData? GetItem => _itemSaveData;
+        public Transform2DSaveData Transform => _transform;
+        public ItemSaveData? Item => _itemSaveData;
+        public int OutputIndex => _outputIdx;
     }
-    
+
     [Serializable]
     public struct MergerSaveData
     {
-        private float _x;
-        private float _y;
-        private float _z;
-        private float _rotX;
-        private float _rotY;
-        private float _rotZ;
+        private Transform2DSaveData _transform;
+        private ItemSaveData? _itemSaveData;
+        private int _inputIdx;
 
-        [Serialize] private ItemSaveData? _itemSaveData;
-
-        public MergerSaveData(Vector3 prmPos, Vector3 prmRot, Item prmItem)
+        public MergerSaveData(NewMerger iMerger)
         {
-            _x = prmPos.x;
-            _y = prmPos.y;
-            _z = prmPos.z;
-            _rotX = prmRot.x;
-            _rotY = prmRot.y;
-            _rotZ = prmRot.z;
-            if (prmItem != null)
-            {
-                _itemSaveData = new ItemSaveData(prmItem.GetItemData().Name, prmItem.gameObject.transform.position);
-            }
+            _transform = new Transform2DSaveData(iMerger.transform);
+            Item item = iMerger.GetCurrentItem();
+            if(item != null)
+                _itemSaveData = new ItemSaveData(item);
             else
-            {
                 _itemSaveData = null;
-            }
+            _inputIdx = iMerger.GetCurrentInputIndex();
         }
 
-
-        public Vector3 GetPos => new(_x, _y, _z);
-
-        public Vector3 GetRot => new(_rotX, _rotY, _rotZ);
-        
-        public ItemSaveData? GetItem => _itemSaveData;
+        public Transform2DSaveData Transform => _transform;
+        public ItemSaveData? Item => _itemSaveData;
+        public int InputIndex => _inputIdx;
     }
 
     [Serializable]
     public struct MachineSaveData
     {
-        private float _x;
-        private float _y;
-        private float _z;
-        private float _rotX;
-        private float _rotY;
-        private float _rotZ;
-        
+        private Transform2DSaveData _transform;
+        private ItemSaveData? _craftedItem;
         private string _itemToCraftName;
-
-        private List<String> _itemNames;
+        private float _leftCraftTime;
+        private List<string> _itemNames;
         private List<int> _itemQuantity;
+        private HashSet<ItemSaveData> _itemsInTransfer;
 
-        [Serialize] private ItemSaveData? _itemSaveData;
-
-        public MachineSaveData( Vector3 prmPos, Vector3 prmRot,
-            Dictionary<ItemData, int> prmStock, Item prmItem, string prmItemToCraftName)
+        public MachineSaveData(NewMachine iMachine)
         {
-            _itemToCraftName = prmItemToCraftName;
-            _x = prmPos.x;
-            _y = prmPos.y;
-            _z = prmPos.z;
-            _rotX = prmRot.x;
-            _rotY = prmRot.y;
-            _rotZ = prmRot.z;
-
-            _itemNames = prmStock.Keys.Select((itemData) => itemData.Name).ToList();
-            _itemQuantity = prmStock.Values.ToList();
-            
-            if (prmItem != null)
-            {
-                _itemSaveData = new ItemSaveData(prmItem.GetItemData().Name, prmItem.gameObject.transform.position);
-            }
+            _transform = new Transform2DSaveData(iMachine.transform);
+            Item item = iMachine.GetCraftedItem();
+            if(item != null)
+                _craftedItem = new ItemSaveData(item);
             else
+                _craftedItem = null;
+            ItemData itemData = iMachine.GetCraftedItemData();
+            if(itemData != null)
+                _itemToCraftName = itemData.Name;
+            else
+                _itemToCraftName = ""; // assuming there is no item with empty name
+            _leftCraftTime = iMachine.GetTimeLeftForCurrentCraft();
+
+            _itemNames = new List<string>();
+            _itemQuantity = new List<int>();
+            foreach(KeyValuePair<ItemData, int> itemCount in iMachine.GetCurrentStock())
             {
-                _itemSaveData = null;
+                _itemNames.Add(itemCount.Key.Name);
+                _itemQuantity.Add(itemCount.Value);
             }
+
+            _itemsInTransfer = new HashSet<ItemSaveData>();
+            foreach(Item itemInTransfer in iMachine.GetItemsInTransfer())
+                _itemsInTransfer.Add(new ItemSaveData(itemInTransfer));
         }
 
+        public Transform2DSaveData Transform => _transform;
+        public ItemSaveData? CraftedItem => _craftedItem;
         public string ItemToCraftName => _itemToCraftName;
-
-        public Vector3 GetPos => new(_x, _y, _z);
-        public Vector3 GetRot => new(_rotX, _rotY, _rotZ);
-
+        public float TimeLeftToCraft => _leftCraftTime;
         public IEnumerable<string> ItemNames => _itemNames;
-
         public IEnumerable<int> ItemQuantity => _itemQuantity;
-        
-        public ItemSaveData? GetItem => _itemSaveData;
+        public IEnumerable<ItemSaveData> ItemsInTransfer => _itemsInTransfer;
+    }
+
+    [Serializable]
+    public struct SellerSaveData
+    {
+        private Transform2DSaveData _transform;
+        private HashSet<ItemSaveData> _itemsInTransfer;
+
+        public SellerSaveData(NewSeller iSeller)
+        {
+            _transform = new Transform2DSaveData(iSeller.transform);
+
+            _itemsInTransfer = new HashSet<ItemSaveData>();
+            foreach(Item itemInTransfer in iSeller.GetItemsInTransfer())
+                _itemsInTransfer.Add(new ItemSaveData(itemInTransfer));
+        }
+
+        public Transform2DSaveData Transform => _transform;
+        public IEnumerable<ItemSaveData> ItemsInTransfer => _itemsInTransfer;
+    }
+
+    [Serializable]
+    public struct SpawnerSaveData
+    {
+        private Transform2DSaveData _transform;
+        private string _itemNameToSpawn;
+        private ItemSaveData? _spawnedItem;
+        private float _leftSpawnTime;
+
+        public SpawnerSaveData(NewSpawner iSpawner)
+        {
+            _transform = new Transform2DSaveData(iSpawner.transform);
+            _itemNameToSpawn = iSpawner.GetItemDataToSpawn().Name;
+            Item item = iSpawner.GetCurrentItem();
+            if(item != null)
+                _spawnedItem = new ItemSaveData(item);
+            else
+                _spawnedItem = null;
+            _leftSpawnTime = iSpawner.GetTimeForNextSpawn();
+        }
+
+        public Transform2DSaveData Transform => _transform;
+        public string ItemNameToSpawn => _itemNameToSpawn;
+        public ItemSaveData? SpawnedItem => _spawnedItem;
+        public float TimeToNextSpawn => _leftSpawnTime;
     }
 
     [Serializable]
@@ -280,7 +264,6 @@ namespace _Scripts.Save_System
         }
 
         public List<StatSaveData> Stats => _stats;
-
         public int Money => _money;
     }
 
@@ -295,43 +278,6 @@ namespace _Scripts.Save_System
         }
 
         public int CurrentLevel => _currentLevel;
-    }
-
-    [Serializable]
-    public struct SellerSaveData
-    {
-        private float _x;
-        private float _y;
-        private float _z;
-        private float _rotX;
-        private float _rotY;
-        private float _rotZ;
-        
-        [Serialize] private ItemSaveData? _itemSaveData;
-        
-        public SellerSaveData(Vector3 prmPos, Vector3 prmRot, Item prmItem)
-        {
-            _x = prmPos.x;
-            _y = prmPos.y;
-            _z = prmPos.z;
-            _rotX = prmRot.x;
-            _rotY = prmRot.y;
-            _rotZ = prmRot.z;
-            if (prmItem != null)
-            {
-                _itemSaveData = new ItemSaveData(prmItem.GetItemData().Name, prmItem.gameObject.transform.position);
-            }
-            else
-            {
-                _itemSaveData = null;
-            }
-        }
-        
-        public Vector3 GetPos => new(_x, _y, _z);
-
-        public Vector3 GetRot => new(_rotX, _rotY, _rotZ);
-        
-        public ItemSaveData? GetItem => _itemSaveData;
     }
 
     #endregion
