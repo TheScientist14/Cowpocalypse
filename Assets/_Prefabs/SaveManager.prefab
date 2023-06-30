@@ -50,6 +50,7 @@ MonoBehaviour:
   splitterPrefab: {fileID: 8504238527581414455, guid: 4762357ca4e2a5349a7eec5c10e83b92, type: 3}
   mergerPrefab: {fileID: 8504238527581414455, guid: ed328e898e68bc14bb1da2475479f840, type: 3}
   sellerPrefab: {fileID: 45940641016382040, guid: 9027fdf0e398e1040af5b7b4371d751d, type: 3}
+  spawnerPrefab: {fileID: 4732986801910414389, guid: 8a11f632e82038545a792c426fb24eb4, type: 3}
   loadTime: 1
   savedGame:
     m_PersistentCalls:

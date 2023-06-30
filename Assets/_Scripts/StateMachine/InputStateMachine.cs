@@ -2,7 +2,7 @@
 
 public class InputStateMachine : Singleton<InputStateMachine>
 {
-    State _currentState;
+    private State m_CurrentState;
 
     void Start()
     {
@@ -11,14 +11,18 @@ public class InputStateMachine : Singleton<InputStateMachine>
 
     void Update()
     {
-        _currentState?.Update();
+        m_CurrentState?.Update();
     }
 
     public void SetState(State state)
     {
-        Debug.Log("Current state : " + state.GetType().Name);
-        _currentState?.Exit();
-        _currentState = state;
-        _currentState.Enter();
+        m_CurrentState?.Exit();
+        m_CurrentState = state;
+        m_CurrentState.Enter();
+    }
+
+    public State GetState()
+    {
+        return m_CurrentState;
     }
 }

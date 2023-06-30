@@ -44,8 +44,10 @@ namespace _Scripts.Pooling_System
 
 
         //Add a starting amount of spawnable items to the pool
-        private void Awake()
+        protected new void Awake()
         {
+            base.Awake();
+
             StartCoroutine(AddToPool(_startNumberOfPooledObjects));
         }
 
@@ -102,6 +104,9 @@ namespace _Scripts.Pooling_System
         /// <returns></returns>
         public bool DespawnObject(Item prmItem)
         {
+            if(prmItem == null)
+                return false;
+
             prmItem.gameObject.SetActive(false);
             if(existingItems.Contains(prmItem))
             {

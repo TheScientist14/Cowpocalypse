@@ -42,6 +42,10 @@ namespace _Scripts.Save_System
         [SerializeField]
         private GameObject sellerPrefab;
 
+        [ShowAssetPreview()]
+        [SerializeField]
+        private GameObject spawnerPrefab;
+
         private const string Filename = "Cowpocalypse.noext";
         private string _path;
 
@@ -55,11 +59,12 @@ namespace _Scripts.Save_System
         public UnityEvent savedGame;
         public UnityEvent loadedGame;
 
-        private JobHandle _jobHandle;
         private GameObject _saveIcon;
 
-        private void Awake()
+        protected new void Awake()
         {
+            base.Awake();
+
             var sOs = ItemCreator.LoadAllResourceAtPath<ItemData>();
 
             _itemDatas = sOs.ToDictionary(i => i.Name);
@@ -87,7 +92,7 @@ namespace _Scripts.Save_System
 
         private void OnGameSaved()
         {
-            Debug.Log("Game Saved");
+            // Debug.Log("Game Saved");
             _saveIcon.SetActive(false);
         }
 
@@ -97,7 +102,7 @@ namespace _Scripts.Save_System
             _saveIcon.SetActive(false);
             InputStateMachine.instance.SetState(new FreeViewState());
 
-            Debug.Log("Game Loaded");
+            // Debug.Log("Game Loaded");
         }
 
         [Button("Save Game async")]
@@ -112,7 +117,7 @@ namespace _Scripts.Save_System
         {
             _saveIcon.SetActive(true);
 
-            Debug.Log("Game Save async Started : { Thread : " + Thread.CurrentThread.ManagedThreadId + " }");
+            // Debug.Log("Game Save async Started : { Thread : " + Thread.CurrentThread.ManagedThreadId + " }");
             SaveData data = new SaveData();
             await Task.Run(() =>
             {
@@ -125,7 +130,7 @@ namespace _Scripts.Save_System
                     formatter.Serialize(stream, data);
                 }
 
-                Debug.Log("Game Saved: { Thread : " + Thread.CurrentThread.ManagedThreadId + " }");
+                // Debug.Log("Game Saved: { Thread : " + Thread.CurrentThread.ManagedThreadId + " }");
             });
             savedGame.Invoke();
         }
@@ -156,26 +161,18 @@ namespace _Scripts.Save_System
 
         private IEnumerator Load()
         {
-            Debug.Log("Loading...");
             foreach(Transform child in _playerSpawnedObjects.transform)
                 Destroy(child.gameObject);
 
             SaveData data = GetSavedGameData();
 
-            LoadPlayer(data);
-            Debug.Log("Loaded Player");
             LoadMachines(data);
-            Debug.Log("Loaded Machines");
             LoadBelts(data);
-            Debug.Log("Loaded Belts");
             LoadSplitters(data);
-            Debug.Log("Loaded Splitters");
             LoadMergers(data);
-            Debug.Log("Loaded Mergers");
             LoadSellers(data);
-            Debug.Log("Loaded Sellers");
-            ResetSpawners(data);
-            Debug.Log("Reset Spawners");
+            LoadSpawners(data);
+            LoadPlayer(data); // load player to reset money after spawning spawners & machines
 
             // this is only to have loading time perceptible
             yield return new WaitForSecondsRealtime(loadTime);
@@ -199,7 +196,7 @@ namespace _Scripts.Save_System
                 int? Version = formatter.Deserialize(stream) as int?;
                 if(!Version.HasValue || Version.Value < 0 || Version.Value > LastVersion)
                 {
-                    Debug.Log("Save file version is not supported");
+                    Debug.LogWarning("Save file version is not supported");
                     return null;
                 }
 
@@ -219,18 +216,19 @@ namespace _Scripts.Save_System
         {
             PlayerSaveData playerSaveData = iData.PlayerSaveData;
 
-            for(int i = 0; i < playerSaveData.Stats.Count; i++)
-                StatManager.instance.Stats[i].CurrentLevel = playerSaveData.Stats[i].CurrentLevel;
-
+            StatManager.instance.SetLevelToStat(StatManager.ExtractSpeedIndex, playerSaveData.ExtractLevel);
+            StatManager.instance.SetLevelToStat(StatManager.BeltSpeedIndex, playerSaveData.BeltLevel);
+            StatManager.instance.SetLevelToStat(StatManager.CraftSpeedIndex, playerSaveData.CraftLevel);
             Wallet.instance.Money = playerSaveData.Money;
+            MapGenerator.instance.InitMap(playerSaveData.Seed);
         }
 
         public void LoadBelts(SaveData iData)
         {
             foreach(BeltSaveData beltSaveData in iData.BeltDatas)
             {
-                NewBelt belt = Instantiate(beltPrefab, beltSaveData.Transform.Pos, beltSaveData.Transform.Rot, _playerSpawnedObjects.transform)
-                    .GetComponent<NewBelt>();
+                Belt belt = Instantiate(beltPrefab, beltSaveData.Transform.Pos, beltSaveData.Transform.Rot, _playerSpawnedObjects.transform)
+                    .GetComponent<Belt>();
 
                 if(beltSaveData.Item.HasValue)
                 {
@@ -244,9 +242,10 @@ namespace _Scripts.Save_System
         {
             foreach(MachineSaveData machineSaveData in iData.MachineDatas)
             {
-                NewMachine machine =
+                Wallet.instance.Money += ItemHandlerManager.instance.GetMachinePrice();
+                Machine machine =
                     Instantiate(machinePrefab, machineSaveData.Transform.Pos, machineSaveData.Transform.Rot, _playerSpawnedObjects.transform)
-                        .GetComponent<NewMachine>();
+                        .GetComponent<Machine>();
 
                 machine.SetCurrentStock(new Dictionary<ItemData, int>(machineSaveData.ItemNames.Zip(
                     machineSaveData.ItemQuantity, (name, quantity) => new KeyValuePair<ItemData, int>(_itemDatas[name], quantity))));
@@ -268,8 +267,6 @@ namespace _Scripts.Save_System
                 foreach(ItemSaveData itemData in machineSaveData.ItemsInTransfer)
                     itemsInTransfer.Add(PoolManager.instance.SpawnObject(_itemDatas[itemData.Name], itemData.Pos));
                 machine.AddItemsInTransfer(itemsInTransfer);
-
-                ItemHandlerManager.instance.MachineCount++;
             }
         }
 
@@ -277,9 +274,9 @@ namespace _Scripts.Save_System
         {
             foreach(SplitterSaveData splitterSaveData in iData.SplitterDatas)
             {
-                NewSplitter splitter =
+                Splitter splitter =
                     Instantiate(splitterPrefab, splitterSaveData.Transform.Pos, splitterSaveData.Transform.Rot, _playerSpawnedObjects.transform)
-                        .GetComponent<NewSplitter>();
+                        .GetComponent<Splitter>();
 
                 if(splitterSaveData.Item.HasValue)
                 {
@@ -295,9 +292,9 @@ namespace _Scripts.Save_System
         {
             foreach(MergerSaveData mergerSaveData in iData.MergerDatas)
             {
-                NewMerger merger =
+                Merger merger =
                     Instantiate(mergerPrefab, mergerSaveData.Transform.Pos, mergerSaveData.Transform.Rot, _playerSpawnedObjects.transform)
-                        .GetComponent<NewMerger>();
+                        .GetComponent<Merger>();
 
                 if(mergerSaveData.Item.HasValue)
                 {
@@ -313,45 +310,24 @@ namespace _Scripts.Save_System
         {
             foreach(SellerSaveData sellerSaveData in iData.SellerDatas)
             {
-                NewSeller seller =
+                Seller seller =
                     Instantiate(sellerPrefab, sellerSaveData.Transform.Pos, sellerSaveData.Transform.Rot, _playerSpawnedObjects.transform)
-                        .GetComponent<NewSeller>();
+                        .GetComponent<Seller>();
 
                 List<Item> itemsInTransfer = new List<Item>();
                 foreach(ItemSaveData itemData in sellerSaveData.ItemsInTransfer)
                     itemsInTransfer.Add(PoolManager.instance.SpawnObject(_itemDatas[itemData.Name], itemData.Pos));
                 seller.AddItemsInTransfer(itemsInTransfer);
-
-                ItemHandlerManager.instance.ShopCount++;
-
             }
         }
 
-        public void ResetSpawners(SaveData iData)
+        public void LoadSpawners(SaveData iData)
         {
-            // this code assumes that there is no more than one spawner per item type
-            // and that there is none with null spawned item data
-            Dictionary<string, NewSpawner> spawners = new Dictionary<string, NewSpawner>();
-            foreach(NewSpawner spawner in FindObjectsOfType<NewSpawner>())
-            {
-                ItemData itemData = spawner.GetItemDataToSpawn();
-                Assert.IsNotNull(itemData);
-                Assert.IsFalse(spawners.ContainsKey(itemData.Name));
-                spawners[itemData.Name] = spawner;
-            }
-
             foreach(SpawnerSaveData spawnerSaveData in iData.SpawnerDatas)
             {
-                if(spawnerSaveData.ItemNameToSpawn == "" || spawners.ContainsKey(spawnerSaveData.ItemNameToSpawn))
-                    continue;
-
-                if(spawnerSaveData.SpawnedItem.HasValue)
-                {
-                    spawners[spawnerSaveData.ItemNameToSpawn].InitSpawnTime(0);
-                    continue;
-                }
-
-                spawners[spawnerSaveData.ItemNameToSpawn].InitSpawnTime(spawnerSaveData.TimeToNextSpawn);
+                Spawner spawner = Instantiate(spawnerPrefab, spawnerSaveData.Transform.Pos, spawnerSaveData.Transform.Rot, _playerSpawnedObjects.transform)
+                    .GetComponent<Spawner>();
+                spawner.InitSpawnTime(Mathf.Max(spawnerSaveData.TimeToNextSpawn, 0));
             }
         }
 

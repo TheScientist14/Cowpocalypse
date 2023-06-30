@@ -63,7 +63,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _windowBackground: {fileID: 579903065588776004}
-  _machineSettingsPanel: {fileID: 4986044546508140141}
+  _machineSettingsPanel: {fileID: 9088021945506515991}
   _recipeUnlockPanel: {fileID: 579903066836447626}
   _titlePanel: {fileID: 1998337983}
   _closeButton: {fileID: 2757988671199479908}
@@ -1708,6 +1708,14 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 579903065588776002}
+    - target: {fileID: 6055457627701765936, guid: c122d9961e9aaa44091ed91292bc4e84, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OpenCatalogFromMachineSettings
+      objectReference: {fileID: 0}
+    - target: {fileID: 6055457627701765936, guid: c122d9961e9aaa44091ed91292bc4e84, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ModalWindowController, Assembly-CSharp
+      objectReference: {fileID: 0}
     - target: {fileID: 6380599117964573630, guid: c122d9961e9aaa44091ed91292bc4e84, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4278190080
@@ -1859,15 +1867,15 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3863155496916726990, guid: c122d9961e9aaa44091ed91292bc4e84, type: 3}
   m_PrefabInstance: {fileID: 3131910204686534532}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &4986044546508140141 stripped
+--- !u!114 &9088021945506515991 stripped
 MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 7946384551589652969, guid: c122d9961e9aaa44091ed91292bc4e84, type: 3}
+  m_CorrespondingSourceObject: {fileID: 6154701551808924563, guid: c122d9961e9aaa44091ed91292bc4e84, type: 3}
   m_PrefabInstance: {fileID: 3131910204686534532}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fb21b0824cb4b243aa7e8b3ebf3d382, type: 3}
+  m_Script: {fileID: 11500000, guid: b5991b48fbb31c44188d89e39513a6ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1001 &4797810704650384106

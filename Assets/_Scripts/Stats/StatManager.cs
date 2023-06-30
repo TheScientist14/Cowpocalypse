@@ -1,34 +1,111 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-using System.Linq;
 using NaughtyAttributes;
+using UnityEngine.Events;
 
 public class StatManager : Singleton<StatManager>
 {
-    [Expandable]
-    [SerializeField] List<StatData> _statsData;
+    [SerializeField] StatData m_ExtractSpeedStatData;
+    [SerializeField] StatData m_BeltSpeedStatData;
+    [SerializeField] StatData m_CraftSpeedStatData;
 
-    public List<Stat> Stats { get; private set; }
+    private Stat m_ExtractSpeedStat = new Stat();
+    private Stat m_BeltSpeedStat = new Stat();
+    private Stat m_CraftSpeedStat = new Stat();
 
-    void Awake()
+    private List<Stat> m_Stats = new List<Stat>();
+
+    public UnityEvent OnStatUpdated;
+
+    public static int ExtractSpeedIndex = 0;
+    public static int BeltSpeedIndex = 1;
+    public static int CraftSpeedIndex = 2;
+
+    protected new void Awake()
     {
-        Stats = _statsData.Select(statData => new Stat { StatData = statData }).ToList();
+        base.Awake();
+
+        if(OnStatUpdated == null)
+            OnStatUpdated = new UnityEvent();
+
+        m_ExtractSpeedStat.StatData = m_ExtractSpeedStatData;
+        m_BeltSpeedStat.StatData = m_BeltSpeedStatData;
+        m_CraftSpeedStat.StatData = m_CraftSpeedStatData;
+
+        m_Stats.Add(m_ExtractSpeedStat);
+        m_Stats.Add(m_BeltSpeedStat);
+        m_Stats.Add(m_CraftSpeedStat);
     }
 
-    [ContextMenu("Log stat values")][Button("Log Values")]
+    [ContextMenu("Log stat values")]
+    [Button("Log Values")]
     public void LogValues()
     {
-        foreach (var stat in Stats)
-        {
+        foreach(var stat in m_Stats)
             Debug.Log($"{stat.StatData.Name} : {stat.CurrentLevel}, {stat.Value}");
-        }
     }
 
-
-    [Button("Add Values")]
-    private void AddLevelToStat()
+    public int GetStatLevel(int iStatIdx)
     {
-        Stats[0].CurrentLevel++;
+        if(iStatIdx >= m_Stats.Count)
+        {
+            Debug.LogError("Invalid stat index : " + iStatIdx);
+            return 0;
+        }
+
+        return m_Stats[iStatIdx].CurrentLevel;
     }
-    
+
+    public void AddLevelToStat(int iStatIdx)
+    {
+        if(iStatIdx >= m_Stats.Count)
+        {
+            Debug.LogError("Invalid stat index : " + iStatIdx);
+            return;
+        }
+
+        if(Wallet.instance.Money < m_Stats[iStatIdx].StatData.Prices[m_Stats[iStatIdx].CurrentLevel - 1])
+            return;
+
+        Wallet.instance.Money -= m_Stats[iStatIdx].StatData.Prices[m_Stats[iStatIdx].CurrentLevel - 1];
+        m_Stats[iStatIdx].CurrentLevel++;
+        Shader.SetGlobalFloat("_speed", GetStatValue(BeltSpeedIndex));
+        OnStatUpdated.Invoke();
+    }
+
+    public void SetLevelToStat(int iStatIdx, int iLevel)
+    {
+        if(iStatIdx >= m_Stats.Count)
+        {
+            Debug.LogError("Invalid stat index : " + iStatIdx);
+            return;
+        }
+
+        m_Stats[iStatIdx].CurrentLevel = iLevel;
+        Shader.SetGlobalFloat("_speed", GetStatValue(BeltSpeedIndex));
+        OnStatUpdated.Invoke();
+    }
+
+    public Stat GetStat(int iStatIdx)
+    {
+        if(iStatIdx >= m_Stats.Count)
+        {
+            Debug.LogError("Invalid stat index : " + iStatIdx);
+            return null;
+        }
+
+        return m_Stats[iStatIdx];
+    }
+
+    public float GetStatValue(int iStatIdx)
+    {
+        if(iStatIdx >= m_Stats.Count)
+        {
+            Debug.LogError("Invalid stat index : " + iStatIdx);
+            return 0;
+        }
+
+        return m_Stats[iStatIdx].Value;
+    }
+
 }

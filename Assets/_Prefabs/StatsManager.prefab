@@ -44,7 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 31cbf5b9912240fe888765e51d782572, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _statsData:
-  - {fileID: 11400000, guid: c91c5043849c6a14a84f41121d45b38b, type: 2}
-  - {fileID: 11400000, guid: f3294e5095700224c9e2fd3de172aaba, type: 2}
-  - {fileID: 11400000, guid: 50ff215f1ba084b478a3382983b9179b, type: 2}
+  m_ExtractSpeedStatData: {fileID: 11400000, guid: c91c5043849c6a14a84f41121d45b38b, type: 2}
+  m_BeltSpeedStatData: {fileID: 11400000, guid: f3294e5095700224c9e2fd3de172aaba, type: 2}
+  m_CraftSpeedStatData: {fileID: 11400000, guid: 50ff215f1ba084b478a3382983b9179b, type: 2}
+  OnStatUpdated:
+    m_PersistentCalls:
+      m_Calls: []

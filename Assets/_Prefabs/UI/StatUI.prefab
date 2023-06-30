@@ -340,9 +340,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2471930e4763454a858f74f4b9f6bb0b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _priceText: {fileID: 8166705890087587855}
-  _statIcon: {fileID: 8166705890028493140}
-  _lvlImage: {fileID: 8166705889537894940}
+  m_PriceText: {fileID: 8166705890087587855}
+  m_StatIcon: {fileID: 8166705890028493140}
+  m_LvlImage: {fileID: 8166705889537894940}
+  m_StatIdx: 0
 --- !u!114 &3339137075522881125
 MonoBehaviour:
   m_ObjectHideFlags: 0

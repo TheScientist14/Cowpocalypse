@@ -20,14 +20,14 @@ public class UpdateAudio : MonoBehaviour
 
         _audioManagers = GameObject.FindObjectsOfType<AudioManager>();
 
-        Debug.Log("Player prefs: " + worldSoundVolume);
+        // Debug.Log("Player prefs: " + worldSoundVolume);
 
         // get all audios and set parameters
-        foreach (var worldAudio in ItemCreator.LoadAllResourceAtPath<ScriptablesWorldAudio>("Scriptable objects/Sounds/Worlds"))
+        foreach(var worldAudio in ItemCreator.LoadAllResourceAtPath<ScriptablesWorldAudio>("Scriptable objects/Sounds/Worlds"))
         {
             SetWorldAudioVolume(worldAudio);
         }
-        foreach (var relativeAudio in ItemCreator.LoadAllResourceAtPath<ScriptablesRelativeAudio>("Scriptable objects/Sounds/Relatives"))
+        foreach(var relativeAudio in ItemCreator.LoadAllResourceAtPath<ScriptablesRelativeAudio>("Scriptable objects/Sounds/Relatives"))
         {
             SetRelativeAudioVolume(relativeAudio);
         }
@@ -40,12 +40,12 @@ public class UpdateAudio : MonoBehaviour
         wSO.volume = worldSoundVolume / 100f;
 
         // apply anytime in the music
-        foreach (var audioMan in _audioManagers)
+        foreach(var audioMan in _audioManagers)
         {
             audioMan.SetMusicVolume(worldSoundVolume / 100f);
         }
 
-        Debug.Log("Volume du scriptable: " + wSO.volume);
+        // Debug.Log("Volume du scriptable: " + wSO.volume);
     }
 
     private void SetRelativeAudioVolume(ScriptablesRelativeAudio rSO)

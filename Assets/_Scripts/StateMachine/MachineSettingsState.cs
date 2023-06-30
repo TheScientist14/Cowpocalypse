@@ -13,7 +13,6 @@ public class MachineSettingsState : State
         _inputAction = InputMaster.instance.InputAction;
 
         _inputAction.Player.Drag.Disable();
-        _inputAction.Player.ClickButton.Disable();
         _inputAction.Player.Pinch1.Disable();
         _inputAction.Player.Pinch2.Disable();
         _inputAction.Player.ZoomValue.Disable();
@@ -24,7 +23,6 @@ public class MachineSettingsState : State
         base.Exit();
 
         _inputAction.Player.Drag.Enable();
-        _inputAction.Player.ClickButton.Enable();
         _inputAction.Player.Pinch1.Enable();
         _inputAction.Player.Pinch2.Enable();
         _inputAction.Player.ZoomValue.Enable();

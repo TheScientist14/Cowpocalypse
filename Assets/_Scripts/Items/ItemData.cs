@@ -9,22 +9,23 @@ public class ItemData : ScriptableObject, ISerializationCallbackReceiver
     [field: SerializeField] public float CraftDuration { get; set; }
     [field: SerializeField] public Sprite Sprite { get; set; }
     [field: SerializeField] public ItemTier Tier { get; set; }
-    
+
     [SerializeField] List<ItemData> _parents = new List<ItemData>();
     [SerializeField] List<int> _amounts = new List<int>();
-    
+
     public Dictionary<ItemData, int> Recipes { get; } = new Dictionary<ItemData, int>();
 
     public bool Unlocked { get; set; }
-    
+
     public void OnBeforeSerialize() { }
 
     public void OnAfterDeserialize()
     {
-        if (_parents.Count != _amounts.Count)
+        if(_parents.Count != _amounts.Count)
             return;
-        
-        for (var i = 0; i < _parents.Count; i++)
+
+        Recipes.Clear();
+        for(var i = 0; i < _parents.Count; i++)
         {
             Recipes.Add(_parents[i], _amounts[i]);
         }

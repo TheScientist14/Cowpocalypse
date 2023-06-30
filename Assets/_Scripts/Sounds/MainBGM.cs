@@ -32,7 +32,7 @@ public class MainBGM : MonoBehaviour
     private void PlayRandomMusic()
     {
         int idMusic = Random.Range(0, 3);
-        switch (idMusic)
+        switch(idMusic)
         {
             case 0:
                 PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound1);
@@ -44,7 +44,7 @@ public class MainBGM : MonoBehaviour
                 PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound3);
                 break;
             default:
-                print("Problem, it's default music");
+                Debug.LogError("Problem, it's default music");
                 break;
         }
 
@@ -55,7 +55,7 @@ public class MainBGM : MonoBehaviour
 
     IEnumerator WaitEndMusic()
     {
-        print(_audioManager.GetMusicLength());
+        // Debug.Log(_audioManager.GetMusicLength());
         yield return new WaitForSeconds(_audioManager.GetMusicLength());
         PlayRandomMusic();
     }

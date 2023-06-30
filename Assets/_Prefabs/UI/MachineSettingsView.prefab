@@ -1111,7 +1111,7 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 8876461041565785533, guid: 3609a2c3a4f787440b3a3bd61d8b4d99, type: 3}
   m_PrefabInstance: {fileID: 5670921699047958896}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &7946384551589652969
+--- !u!114 &6154701551808924563
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1120,7 +1120,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3863155496916726989}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5fb21b0824cb4b243aa7e8b3ebf3d382, type: 3}
+  m_Script: {fileID: 11500000, guid: b5991b48fbb31c44188d89e39513a6ca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _duration: 1
@@ -1474,18 +1474,6 @@ PrefabInstance:
     - target: {fileID: 3975457021335123766, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
       propertyPath: m_fontColor32.rgba
       value: 4278190080
-      objectReference: {fileID: 0}
-    - target: {fileID: 4310456068369441889, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
-      value: 
-      objectReference: {fileID: 0}
-    - target: {fileID: 4310456068369441889, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: OpenCatalogFromMachineSettings
-      objectReference: {fileID: 0}
-    - target: {fileID: 4310456068369441889, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
-      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
-      value: ModalWindowController, Assembly-CSharp
       objectReference: {fileID: 0}
     - target: {fileID: 4814615333098483244, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
       propertyPath: m_fontColor32.rgba

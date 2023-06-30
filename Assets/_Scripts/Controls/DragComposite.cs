@@ -34,18 +34,18 @@ public class DragComposite : InputBindingComposite<Vector2>
         {
             oldPos = curPos;
             isDragging = true;
-            Debug.Log("init drag : " + curPos);
+            // Debug.Log("init drag : " + curPos);
             return Vector2.zero;
         }
 
-        Debug.Log("drag : " + (curPos - oldPos).magnitude);
+        // Debug.Log("drag : " + (curPos - oldPos).magnitude);
         return curPos - oldPos;
     }
 
     public override float EvaluateMagnitude(ref InputBindingCompositeContext context)
     {
         float magnitude = context.EvaluateMagnitude(Button);
-        Debug.Log(magnitude);
+        // Debug.Log(magnitude);
         if(magnitude <= 0)
         {
             isDragging = false;

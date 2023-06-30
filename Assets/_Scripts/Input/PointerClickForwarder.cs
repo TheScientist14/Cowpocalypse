@@ -13,7 +13,7 @@ public class PointerClickForwarder : MonoBehaviour
     private void Awake()
     {
         _inputAction = InputMaster.instance.InputAction;
-        if (_distance < 0f)
+        if(_distance < 0f)
             _distance = -2f * _camera.transform.position.z;
     }
     private void OnEnable()

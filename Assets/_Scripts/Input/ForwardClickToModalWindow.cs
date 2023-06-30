@@ -16,20 +16,18 @@ public class ForwardClickToModalWindow : MonoBehaviour
             {
                 int machineType = TestMachineType(go);
                 if(machineType == -1)
-                {
                     return;
-                }
 
                 if(IsDoubleClick())
                 {
-                    Debug.Log(go.name);
+                    // Debug.Log(go.name);
                     // Double-click detected on the Belt
                     ItemHandlerManager.instance.RotateBelt(go, machineType); // Rotate belt
                     return;
                 }
             }
 
-            NewMachine machine = go.GetComponent<NewMachine>();
+            Machine machine = go.GetComponent<Machine>();
             if(machine != null)
             {
                 _window.OpenMachineSettings(pos, machine);
@@ -58,11 +56,11 @@ public class ForwardClickToModalWindow : MonoBehaviour
     private int TestMachineType(GameObject go)
     {
         int machineType =
-            go.GetComponent<NewMachine>() != null ? 1 :
-            go.GetComponent<NewMerger>() != null ? 2 :
-            go.GetComponent<NewSeller>() != null ? 3 :
-            go.GetComponent<NewSplitter>() != null ? 4 :
-            go.GetComponent<NewSpawner>() != null ? -1 :
+            go.GetComponent<Machine>() != null ? 1 :
+            go.GetComponent<Merger>() != null ? 2 :
+            go.GetComponent<Seller>() != null ? 3 :
+            go.GetComponent<Splitter>() != null ? 4 :
+            go.GetComponent<Spawner>() != null ? 5 :
             0;
 
         return machineType;

@@ -36,7 +36,7 @@ public class CameraController : MonoBehaviour
         m_InputAction.Player.PointerPosition.performed += _ => UpdatePinch();
         m_InputAction.Player.Pinch2.canceled += _ => EndPinch();
 
-        m_InputAction.Player.Drag.started += _ => InitMoveCamera();
+        InputMaster.instance.OnStartDrag.AddListener(InitMoveCamera);
         m_InputAction.Player.Drag.canceled += _ => StopMoveCamera();
         m_InputAction.Player.PointerPosition.performed += MovePosition;
 
@@ -52,9 +52,9 @@ public class CameraController : MonoBehaviour
     {
         if(m_IsPinching)
             return;
-        
+
         StopMoveCamera();
-        
+
         m_IsPinching = true;
         m_PrevPinchDist = (m_InputAction.Player.PointerPosition.ReadValue<Vector2>() - m_InputAction.Player.PointerPosition1.ReadValue<Vector2>()).magnitude;
     }
@@ -98,9 +98,9 @@ public class CameraController : MonoBehaviour
         Vector2 newMouseScreenPos = iCtx.ReadValue<Vector2>();
         transform.position = m_InitTransformWorldPos;
         Vector3 deltaPosWC = m_InitMouseWorldPos - m_Camera.ScreenToWorldPoint(newMouseScreenPos);
-        if (deltaPosWC.sqrMagnitude < 0.01)
+        if(deltaPosWC.sqrMagnitude < 0.01)
         {
-           return; 
+            return;
         }
         transform.Translate(deltaPosWC, Space.Self);
 

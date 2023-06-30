@@ -12,6 +12,7 @@ public class DeleteState : State
 
         _inputAction = InputMaster.instance.InputAction;
 
+        _inputAction.Player.Drag.Disable();
         _inputAction.Player.ClickBuildMode.Enable();
         _inputAction.Player.ClickButton.Disable();
     }
@@ -20,6 +21,7 @@ public class DeleteState : State
     {
         base.Exit();
 
+        _inputAction.Player.Drag.Enable();
         _inputAction.Player.ClickBuildMode.Disable();
         _inputAction.Player.ClickButton.Enable();
     }

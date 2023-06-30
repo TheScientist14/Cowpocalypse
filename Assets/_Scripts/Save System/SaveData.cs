@@ -18,30 +18,25 @@ namespace _Scripts.Save_System
 
         public SaveData()
         {
-            foreach(NewBelt belt in GameObject.FindObjectsOfType<NewBelt>())
+            foreach(Belt belt in GameObject.FindObjectsOfType<Belt>())
                 _beltDatas.Add(new BeltSaveData(belt));
 
-            foreach(NewMachine machine in GameObject.FindObjectsOfType<NewMachine>())
+            foreach(Machine machine in GameObject.FindObjectsOfType<Machine>())
                 _machineDatas.Add(new MachineSaveData(machine));
 
-            foreach(NewSplitter splitter in GameObject.FindObjectsOfType<NewSplitter>())
+            foreach(Splitter splitter in GameObject.FindObjectsOfType<Splitter>())
                 _splitterDatas.Add(new SplitterSaveData(splitter));
 
-            foreach(NewMerger merger in GameObject.FindObjectsOfType<NewMerger>())
+            foreach(Merger merger in GameObject.FindObjectsOfType<Merger>())
                 _mergerDatas.Add(new MergerSaveData(merger));
 
-            foreach(NewSeller seller in GameObject.FindObjectsOfType<NewSeller>())
+            foreach(Seller seller in GameObject.FindObjectsOfType<Seller>())
                 _sellerDatas.Add(new SellerSaveData(seller));
 
-            foreach(NewSpawner spawner in GameObject.FindObjectsOfType<NewSpawner>())
+            foreach(Spawner spawner in GameObject.FindObjectsOfType<Spawner>())
                 _spawnerDatas.Add(new SpawnerSaveData(spawner));
 
-            List<StatSaveData> stats = new List<StatSaveData>();
-
-            foreach(var stat in StatManager.instance.Stats)
-                stats.Add(new StatSaveData(stat.CurrentLevel));
-
-            _playerSaveData = new PlayerSaveData(stats, Wallet.instance.Money);
+            _playerSaveData = new PlayerSaveData(true);
         }
 
         public List<BeltSaveData> BeltDatas => _beltDatas;
@@ -97,7 +92,7 @@ namespace _Scripts.Save_System
         private Transform2DSaveData _transform;
         private ItemSaveData? _itemSaveData;
 
-        public BeltSaveData(NewBelt iBelt)
+        public BeltSaveData(Belt iBelt)
         {
             _transform = new Transform2DSaveData(iBelt.transform);
 
@@ -119,7 +114,7 @@ namespace _Scripts.Save_System
         private ItemSaveData? _itemSaveData;
         private int _outputIdx;
 
-        public SplitterSaveData(NewSplitter iSplitter)
+        public SplitterSaveData(Splitter iSplitter)
         {
             _transform = new Transform2DSaveData(iSplitter.transform);
             Item item = iSplitter.GetCurrentItem();
@@ -142,7 +137,7 @@ namespace _Scripts.Save_System
         private ItemSaveData? _itemSaveData;
         private int _inputIdx;
 
-        public MergerSaveData(NewMerger iMerger)
+        public MergerSaveData(Merger iMerger)
         {
             _transform = new Transform2DSaveData(iMerger.transform);
             Item item = iMerger.GetCurrentItem();
@@ -167,9 +162,9 @@ namespace _Scripts.Save_System
         private float _leftCraftTime;
         private List<string> _itemNames;
         private List<int> _itemQuantity;
-        private HashSet<ItemSaveData> _itemsInTransfer;
+        private List<ItemSaveData> _itemsInTransfer;
 
-        public MachineSaveData(NewMachine iMachine)
+        public MachineSaveData(Machine iMachine)
         {
             _transform = new Transform2DSaveData(iMachine.transform);
             Item item = iMachine.GetCraftedItem();
@@ -192,7 +187,7 @@ namespace _Scripts.Save_System
                 _itemQuantity.Add(itemCount.Value);
             }
 
-            _itemsInTransfer = new HashSet<ItemSaveData>();
+            _itemsInTransfer = new List<ItemSaveData>();
             foreach(Item itemInTransfer in iMachine.GetItemsInTransfer())
                 _itemsInTransfer.Add(new ItemSaveData(itemInTransfer));
         }
@@ -210,13 +205,13 @@ namespace _Scripts.Save_System
     public struct SellerSaveData
     {
         private Transform2DSaveData _transform;
-        private HashSet<ItemSaveData> _itemsInTransfer;
+        private List<ItemSaveData> _itemsInTransfer;
 
-        public SellerSaveData(NewSeller iSeller)
+        public SellerSaveData(Seller iSeller)
         {
             _transform = new Transform2DSaveData(iSeller.transform);
 
-            _itemsInTransfer = new HashSet<ItemSaveData>();
+            _itemsInTransfer = new List<ItemSaveData>();
             foreach(Item itemInTransfer in iSeller.GetItemsInTransfer())
                 _itemsInTransfer.Add(new ItemSaveData(itemInTransfer));
         }
@@ -229,55 +224,41 @@ namespace _Scripts.Save_System
     public struct SpawnerSaveData
     {
         private Transform2DSaveData _transform;
-        private string _itemNameToSpawn;
-        private ItemSaveData? _spawnedItem;
         private float _leftSpawnTime;
 
-        public SpawnerSaveData(NewSpawner iSpawner)
+        public SpawnerSaveData(Spawner iSpawner)
         {
             _transform = new Transform2DSaveData(iSpawner.transform);
-            _itemNameToSpawn = iSpawner.GetItemDataToSpawn().Name;
-            Item item = iSpawner.GetCurrentItem();
-            if(item != null)
-                _spawnedItem = new ItemSaveData(item);
-            else
-                _spawnedItem = null;
             _leftSpawnTime = iSpawner.GetTimeForNextSpawn();
         }
 
         public Transform2DSaveData Transform => _transform;
-        public string ItemNameToSpawn => _itemNameToSpawn;
-        public ItemSaveData? SpawnedItem => _spawnedItem;
         public float TimeToNextSpawn => _leftSpawnTime;
     }
 
     [Serializable]
     public struct PlayerSaveData
     {
-        private List<StatSaveData> _stats;
+        private int _extractLevel;
+        private int _beltLevel;
+        private int _craftLevel;
         private int _money;
+        private int _seed;
 
-        public PlayerSaveData(List<StatSaveData> stats, int money = 0)
+        public PlayerSaveData(bool _)
         {
-            _stats = stats;
-            _money = money;
+            _extractLevel = StatManager.instance.GetStatLevel(StatManager.ExtractSpeedIndex);
+            _beltLevel = StatManager.instance.GetStatLevel(StatManager.BeltSpeedIndex);
+            _craftLevel = StatManager.instance.GetStatLevel(StatManager.CraftSpeedIndex);
+            _money = Wallet.instance.Money;
+            _seed = MapGenerator.instance.GetSeed();
         }
 
-        public List<StatSaveData> Stats => _stats;
+        public int ExtractLevel => _extractLevel;
+        public int BeltLevel => _beltLevel;
+        public int CraftLevel => _craftLevel;
         public int Money => _money;
-    }
-
-    [Serializable]
-    public struct StatSaveData
-    {
-        private int _currentLevel;
-
-        public StatSaveData(int currentLevel)
-        {
-            _currentLevel = currentLevel;
-        }
-
-        public int CurrentLevel => _currentLevel;
+        public int Seed => _seed;
     }
 
     #endregion

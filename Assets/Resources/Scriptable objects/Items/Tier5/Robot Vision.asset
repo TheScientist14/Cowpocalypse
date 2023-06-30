@@ -1,0 +1,23 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6d391d4023e803140b0d56a24867b9b7, type: 3}
+  m_Name: Robot Vision
+  m_EditorClassIdentifier: 
+  <Price>k__BackingField: 5000
+  <Name>k__BackingField: Robot Vision
+  <CraftDuration>k__BackingField: 10
+  <Sprite>k__BackingField: {fileID: 21300000, guid: e446d19bdeeb404428f7159063a0f170, type: 3}
+  <Tier>k__BackingField: {fileID: 11400000, guid: 8094ace0322e98647bda4816c6da0ff4, type: 2}
+  _parents:
+  - {fileID: 11400000, guid: 8d07a57313bf9ad42be6687bb4d1b801, type: 2}
+  - {fileID: 11400000, guid: c99fc9c4906d9b44683dab95c82b8a75, type: 2}
+  _amounts: 010000000a000000
