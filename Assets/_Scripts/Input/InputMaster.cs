@@ -11,6 +11,8 @@ public class InputMaster : Singleton<InputMaster>
 
     public InputsActions InputAction { get => inputAction; }
 
+    private static string s_InputBindingPlayerPrefKey = "inputBindings";
+
     protected override bool IsPersistent()
     {
         return true;
@@ -23,6 +25,9 @@ public class InputMaster : Singleton<InputMaster>
             return;
 
         inputAction = new InputsActions();
+        string overrideJson = PlayerPrefs.GetString(s_InputBindingPlayerPrefKey, "");
+        inputAction.LoadBindingOverridesFromJson(overrideJson);
+
         inputAction.Enable();
         SetupCallbacks();
     }
@@ -41,6 +46,14 @@ public class InputMaster : Singleton<InputMaster>
         }
 
         inputAction.Disable();
+    }
+
+    private new void OnDestroy()
+    {
+        base.OnDestroy();
+
+        string overrideJson = inputAction.SaveBindingOverridesAsJson();
+        PlayerPrefs.SetString(s_InputBindingPlayerPrefKey, overrideJson);
     }
 
     ////////////////////////
