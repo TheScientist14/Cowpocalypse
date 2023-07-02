@@ -2088,6 +2088,7 @@ GameObject:
   m_Component:
   - component: {fileID: 982662849852630594}
   - component: {fileID: 2545492994751185660}
+  - component: {fileID: 2957647754772775895}
   m_Layer: 5
   m_Name: ButtonsContainer
   m_TagString: Untagged
@@ -2148,6 +2149,33 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &2957647754772775895
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6625918101967586619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1a600f5c7af5c5e499afdd76a7423519, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ButtonShortcutBindings:
+  - Button: {fileID: 6013134582891783429}
+    InputActionRef: {fileID: 8765117739234692611, guid: 4dc9cd8f74683a34c975f6cd425f8352, type: 3}
+  - Button: {fileID: 2381711291099602799}
+    InputActionRef: {fileID: 4799592395238484968, guid: 4dc9cd8f74683a34c975f6cd425f8352, type: 3}
+  - Button: {fileID: 3391176820678857714}
+    InputActionRef: {fileID: 5995912307687037117, guid: 4dc9cd8f74683a34c975f6cd425f8352, type: 3}
+  - Button: {fileID: 17905926708842220}
+    InputActionRef: {fileID: -4772629888504911640, guid: 4dc9cd8f74683a34c975f6cd425f8352, type: 3}
+  - Button: {fileID: 7885054746152494790}
+    InputActionRef: {fileID: -6264108851800292167, guid: 4dc9cd8f74683a34c975f6cd425f8352, type: 3}
+  - Button: {fileID: 5205389141423028064}
+    InputActionRef: {fileID: -2880171736653975441, guid: 4dc9cd8f74683a34c975f6cd425f8352, type: 3}
+  - Button: {fileID: 9207364742466527160}
+    InputActionRef: {fileID: -1541404498118526766, guid: 4dc9cd8f74683a34c975f6cd425f8352, type: 3}
 --- !u!1 &6646310064611491105
 GameObject:
   m_ObjectHideFlags: 0
@@ -2609,8 +2637,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -300, y: 0}
-  m_SizeDelta: {x: 200, y: 50}
+  m_AnchoredPosition: {x: -300, y: -10}
+  m_SizeDelta: {x: 300, y: 100}
   m_Pivot: {x: 1, y: 1}
 --- !u!222 &3003572398343134601
 CanvasRenderer:
@@ -2653,7 +2681,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 0 $
+  m_text: 1000000000 $
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 3cbc3587fac016847825e9b26521b36a, type: 2}
   m_sharedMaterial: {fileID: 7801693171831284549, guid: 3cbc3587fac016847825e9b26521b36a, type: 2}
@@ -2683,12 +2711,12 @@ MonoBehaviour:
   m_fontSize: 36
   m_fontSizeBase: 36
   m_fontWeight: 400
-  m_enableAutoSizing: 0
+  m_enableAutoSizing: 1
   m_fontSizeMin: 18
-  m_fontSizeMax: 72
+  m_fontSizeMax: 36
   m_fontStyle: 0
   m_HorizontalAlignment: 4
-  m_VerticalAlignment: 1024
+  m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
   m_wordSpacing: 0
@@ -2698,7 +2726,7 @@ MonoBehaviour:
   m_charWidthMaxAdj: 0
   m_enableWordWrapping: 1
   m_wordWrappingRatios: 0.4
-  m_overflowMode: 0
+  m_overflowMode: 3
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 1
@@ -4435,7 +4463,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 579903065797735797, guid: 83f2f7ef77424ec48816bd4d0f2c1ce1, type: 3}
       propertyPath: m_Size
-      value: 0.14955205
+      value: 0.1122198
       objectReference: {fileID: 0}
     - target: {fileID: 579903066172829008, guid: 83f2f7ef77424ec48816bd4d0f2c1ce1, type: 3}
       propertyPath: m_fontSize

@@ -22,12 +22,10 @@ namespace _Scripts.UI
         private ObservableSound _observableSound;
         [SerializeField]
         private ScriptablesWorldAudio _scriptablesWorldAudio;
-        private AudioManager _audioManager;
 
         private void Awake()
         {
             _observableSound = GetComponent<ObservableSound>();
-            _audioManager = GameObject.Find("AudioManagerUI").GetComponent<AudioManager>();
         }
 
         void Start()
@@ -47,6 +45,8 @@ namespace _Scripts.UI
 
             if(!SaveSystem.instance.CheckForSave())
                 loadButton.interactable = false;
+
+            InputMaster.instance.InputAction.Disable();
         }
 
         public void NewGame()
@@ -55,20 +55,24 @@ namespace _Scripts.UI
             IEnumerable<ItemData> itemsData = ItemCreator.LoadAllResourceAtPath<ItemData>();
             foreach(ItemData itemData in itemsData)
                 itemData.Unlocked = (itemData.Tier.Level <= 1);
+
+            InputMaster.instance.InputAction.Enable();
             SceneManager.LoadScene(1);
         }
 
+        // not used anymore
         public void Play()
         {
-            PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound1);
-            SaveSystem.instance.OverideSave();
-            _WarningPanel.SetActive(true);
+            // PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound1);
+            // _WarningPanel.SetActive(true);
+            NewGame();
         }
 
         public void Load()
         {
             PlaySound(_scriptablesWorldAudio, EnumWorldSounds.Sound1);
             SaveSystem._loadOnStartup = true;
+            InputMaster.instance.InputAction.Enable();
             SceneManager.LoadScene(1);
             // Debug.Log("Load !");
         }

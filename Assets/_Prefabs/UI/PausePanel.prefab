@@ -1464,6 +1464,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 5891567553117405231}
     m_Modifications:
+    - target: {fileID: 665620985421132932, guid: 9d0704f37b5e95941b8593ec1dab8964, type: 3}
+      propertyPath: m_AnchorMax.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 665620985421132932, guid: 9d0704f37b5e95941b8593ec1dab8964, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 665620985421132932, guid: 9d0704f37b5e95941b8593ec1dab8964, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3842081732559498524, guid: 9d0704f37b5e95941b8593ec1dab8964, type: 3}
       propertyPath: m_Color.a
       value: 0
@@ -1471,10 +1483,6 @@ PrefabInstance:
     - target: {fileID: 3842081732559498525, guid: 9d0704f37b5e95941b8593ec1dab8964, type: 3}
       propertyPath: m_Name
       value: OptionsPanel
-      objectReference: {fileID: 0}
-    - target: {fileID: 3842081732559498525, guid: 9d0704f37b5e95941b8593ec1dab8964, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3842081732559498526, guid: 9d0704f37b5e95941b8593ec1dab8964, type: 3}
       propertyPath: m_RootOrder

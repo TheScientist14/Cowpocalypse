@@ -112,7 +112,8 @@ public class MapGenerator : Singleton<MapGenerator>
 
         m_Seed = iSeed;
         Random.InitState(iSeed);
-        Vector3 seedOffset = Random.insideUnitSphere;
+        Vector2 seedOffset = Random.insideUnitCircle * Random.Range(-10000, 10000);
+        Vector2 seedOffset2 = Random.insideUnitCircle * Random.Range(-10000, 10000);
 
         m_Map = new GameObject();
         m_Map.transform.parent = transform;
@@ -129,8 +130,8 @@ public class MapGenerator : Singleton<MapGenerator>
         {
             for(int yy = 0; yy < m_MapHeight; yy++)
             {
-                Vector3Int gridPos = new Vector3Int(xStart + xx, yStart + yy, 0);
-                TerrainType terrainType = _GetTileType(gridPos, seedOffset);
+                Vector2Int gridPos = new Vector2Int(xStart + xx, yStart + yy);
+                TerrainType terrainType = _GetTileType(gridPos, seedOffset, seedOffset2);
 
                 Texture2D terrainTexture = m_TypeTextures.GetValueOrDefault(terrainType, null);
                 if(terrainTexture == null)
@@ -149,7 +150,7 @@ public class MapGenerator : Singleton<MapGenerator>
         mapRenderer.sprite = mapSprite;
     }
 
-    private TerrainType _GetTileType(Vector3Int iTileCoord, Vector3 iSeed)
+    private TerrainType _GetTileType(Vector2Int iTileCoord, Vector2 iSeed1, Vector2 iSeed2)
     {
         TerrainType terrainType = TerrainType.Grass;
 
@@ -166,11 +167,13 @@ public class MapGenerator : Singleton<MapGenerator>
         //      - below water level
         //      - over rock level
         //      - plain
-        float waterVal = GetPerlin(iTileCoord, iSeed + 100 * Vector3.one, m_TerrainScale * 2);
+        float waterVal = GetPerlin(iTileCoord, iSeed1, m_TerrainScale * 2);
+        waterVal += GetPerlin(iTileCoord, iSeed2, m_TerrainScale);
         if(waterVal <= m_WaterLevel)
             terrainType = TerrainType.Water;
 
-        float rockVal = GetPerlin(iTileCoord, iSeed, m_TerrainScale);
+        float rockVal = GetPerlin(iTileCoord, iSeed1 - 10000 * Vector2.one, m_TerrainScale);
+        rockVal += GetPerlin(iTileCoord, iSeed2 - 10000 * Vector2.down, m_TerrainScale / 2);
         if(waterVal >= m_RockLevel)
             terrainType = TerrainType.Rock;
 
@@ -178,7 +181,7 @@ public class MapGenerator : Singleton<MapGenerator>
         // Two states :
         //      - hot
         //      - normal
-        float temperature = GetPerlin(iTileCoord, iSeed + 100 * Vector3.back, m_TerrainScale); // generating a different noise
+        float temperature = GetPerlin(iTileCoord, iSeed1 + 1000 * Vector2.up, m_TerrainScale);
         if(terrainType == TerrainType.Grass && temperature >= m_SandTemperature)
             terrainType = TerrainType.Sand;
 
@@ -186,11 +189,13 @@ public class MapGenerator : Singleton<MapGenerator>
         // iron, copper & coal ores     in rocks
         // sulfur                       in grass & sand
         // oil                          in water, sand & grass
-        bool isCoal = GetPerlin(iTileCoord, iSeed + 100 * Vector3.up, m_RessourcesScale) <= m_CoalFrequency;
-        bool isCopper = GetPerlin(iTileCoord, iSeed + 100 * Vector3.down, m_RessourcesScale) <= m_CopperFrequency;
-        bool isIron = GetPerlin(iTileCoord, iSeed + 100 * Vector3.left, m_RessourcesScale) <= m_IronFrequency;
-        bool isSulfur = GetPerlin(iTileCoord, iSeed + 100 * Vector3.right, m_RessourcesScale) <= m_SulfurFrequency;
-        bool isOil = GetPerlin(iTileCoord, iSeed + 100 * Vector3.forward, m_RessourcesScale) <= m_OilFrequency;
+        bool isCoal = GetPerlin(iTileCoord, iSeed1 + 100 * Vector2.up, m_RessourcesScale) <= m_CoalFrequency;
+        bool isCopper = GetPerlin(iTileCoord, iSeed1 + 100 * Vector2.down, m_RessourcesScale) <= m_CopperFrequency;
+        bool isIron = GetPerlin(iTileCoord, iSeed1 + 100 * Vector2.left, m_RessourcesScale) <= m_IronFrequency;
+        bool isSulfur = GetPerlin(iTileCoord, iSeed1 + 100 * Vector2.right, m_RessourcesScale) <= m_SulfurFrequency;
+        float oilF = GetPerlin(iTileCoord, iSeed1 - 1000 * Vector2.one, m_RessourcesScale);
+        oilF += GetPerlin(iTileCoord, iSeed2 - 1000 * Vector2.one, m_RessourcesScale / 2);
+        bool isOil = oilF <= m_OilFrequency;
 
         if(terrainType == TerrainType.Rock)
         {
@@ -220,8 +225,9 @@ public class MapGenerator : Singleton<MapGenerator>
     public TerrainType GetTileType(Vector3Int iTileCoord)
     {
         Random.InitState(m_Seed);
-        Vector3 offsetSeed = Random.insideUnitSphere;
-        return _GetTileType(iTileCoord, offsetSeed);
+        Vector2 seedOffset = Random.insideUnitCircle * Random.Range(-10000, 10000);
+        Vector2 seedOffset2 = Random.insideUnitCircle * Random.Range(-10000, 10000);
+        return _GetTileType(new Vector2Int(iTileCoord.x, iTileCoord.y), seedOffset, seedOffset2);
     }
 
     public TerrainType GetTileType(Vector3 iWorldCoord)
@@ -230,7 +236,7 @@ public class MapGenerator : Singleton<MapGenerator>
         return GetTileType(gridCoord);
     }
 
-    private static float GetPerlin(Vector3Int iPos, Vector3 iSeed, float iScale = 1)
+    private static float GetPerlin(Vector2Int iPos, Vector2 iSeed, float iScale = 1)
     {
         float scale;
         if(iScale != 0)

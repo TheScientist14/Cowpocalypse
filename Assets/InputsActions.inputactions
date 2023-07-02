@@ -112,6 +112,78 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Belt",
+                    "type": "Button",
+                    "id": "276a0b72-1683-4c78-8e70-aeebc7f3e7e2",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Machine",
+                    "type": "Button",
+                    "id": "4d197751-4a0e-437a-b218-dd560a8f2900",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Splitter",
+                    "type": "Button",
+                    "id": "2325a203-e0f9-4f2d-933f-7ef784f1502e",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Merger",
+                    "type": "Button",
+                    "id": "723ac8a6-547d-4941-b23c-90cfc2bf8da6",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Shop",
+                    "type": "Button",
+                    "id": "f9a5e989-4690-4913-8827-54cd24584053",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Spawner",
+                    "type": "Button",
+                    "id": "7cb1fe19-d367-4d3b-b872-7b95df1bc929",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Delete",
+                    "type": "Button",
+                    "id": "e4ebb3c2-667d-4c15-a01f-d311cc111463",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Camera",
+                    "type": "Value",
+                    "id": "6cef44eb-c1d3-403f-8cb7-c88d07e03c00",
+                    "expectedControlType": "Vector3",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -334,6 +406,160 @@
                     "action": "PointerPosition1",
                     "isComposite": false,
                     "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "9b760e1e-7db2-441f-a817-bb2c56f8a73b",
+                    "path": "<Keyboard>/1",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM_Rebindable",
+                    "action": "Belt",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "7358cb67-8926-44b8-9c56-ad1a5c2ad4fc",
+                    "path": "<Keyboard>/2",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM_Rebindable",
+                    "action": "Machine",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1212af04-f4aa-4b40-bf45-0ffa4e07f011",
+                    "path": "<Keyboard>/3",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM_Rebindable",
+                    "action": "Splitter",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b3c831ce-1d55-461b-9bf2-25ea6de74e8e",
+                    "path": "<Keyboard>/4",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM_Rebindable",
+                    "action": "Merger",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0035826e-9cac-466e-b91b-4423b5eab4f8",
+                    "path": "<Keyboard>/6",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM_Rebindable",
+                    "action": "Spawner",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "502546bf-fa60-4303-a0bf-2083aa355e17",
+                    "path": "<Keyboard>/7",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM_Rebindable",
+                    "action": "Delete",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "f7286aee-6127-43bb-9c8d-fed5d03ccb7f",
+                    "path": "<Keyboard>/5",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM_Rebindable",
+                    "action": "Shop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "Camera",
+                    "id": "b6797aed-1e25-479c-aa06-b189663d0931",
+                    "path": "3DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Camera",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "de07c0eb-3e9b-4611-91a6-b50b1dfb924b",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM_Rebindable",
+                    "action": "Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "79a8a695-4b06-47d4-8c1e-01bdd9a1960b",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM_Rebindable",
+                    "action": "Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "ecb02fce-bc63-45d6-b090-38c4166b1de7",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM_Rebindable",
+                    "action": "Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "d24e1b4a-aade-49f3-ae70-2aefe6aa3a5c",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM_Rebindable",
+                    "action": "Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "forward",
+                    "id": "8e74de39-d035-4ab7-a73c-2603163976e1",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM_Rebindable",
+                    "action": "Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "backward",
+                    "id": "75f6b30d-817c-4bad-9035-1dcc10a00ec5",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "KBM_Rebindable",
+                    "action": "Camera",
+                    "isComposite": false,
+                    "isPartOfComposite": true
                 }
             ]
         }
@@ -361,6 +587,22 @@
             "devices": [
                 {
                     "devicePath": "<Touchscreen>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
+        },
+        {
+            "name": "KBM_Rebindable",
+            "bindingGroup": "KBM_Rebindable",
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                },
+                {
+                    "devicePath": "<Mouse>",
                     "isOptional": false,
                     "isOR": false
                 }

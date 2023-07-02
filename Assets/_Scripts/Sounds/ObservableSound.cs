@@ -20,12 +20,12 @@ public class ObservableSound : MonoBehaviour
         _observer.Remove(observer);
     }
 
-    // notify each observer that an event has occure
+    // notify each observer that an event has occured
     public void NotifyObserver(ScriptablesWorldAudio _audioScript, EnumWorldSounds _action)
     {
         _observer.ForEach((_observer) =>
         {
-            _observer.OnNotify(_audioScript, _action);   
+            _observer.OnNotify(_audioScript, _action);
         });
     }
 }

@@ -134,6 +134,78 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Belt"",
+                    ""type"": ""Button"",
+                    ""id"": ""276a0b72-1683-4c78-8e70-aeebc7f3e7e2"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Machine"",
+                    ""type"": ""Button"",
+                    ""id"": ""4d197751-4a0e-437a-b218-dd560a8f2900"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Splitter"",
+                    ""type"": ""Button"",
+                    ""id"": ""2325a203-e0f9-4f2d-933f-7ef784f1502e"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Merger"",
+                    ""type"": ""Button"",
+                    ""id"": ""723ac8a6-547d-4941-b23c-90cfc2bf8da6"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Shop"",
+                    ""type"": ""Button"",
+                    ""id"": ""f9a5e989-4690-4913-8827-54cd24584053"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Spawner"",
+                    ""type"": ""Button"",
+                    ""id"": ""7cb1fe19-d367-4d3b-b872-7b95df1bc929"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Delete"",
+                    ""type"": ""Button"",
+                    ""id"": ""e4ebb3c2-667d-4c15-a01f-d311cc111463"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Camera"",
+                    ""type"": ""Value"",
+                    ""id"": ""6cef44eb-c1d3-403f-8cb7-c88d07e03c00"",
+                    ""expectedControlType"": ""Vector3"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -356,6 +428,160 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                     ""action"": ""PointerPosition1"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9b760e1e-7db2-441f-a817-bb2c56f8a73b"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM_Rebindable"",
+                    ""action"": ""Belt"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""7358cb67-8926-44b8-9c56-ad1a5c2ad4fc"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM_Rebindable"",
+                    ""action"": ""Machine"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""1212af04-f4aa-4b40-bf45-0ffa4e07f011"",
+                    ""path"": ""<Keyboard>/3"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM_Rebindable"",
+                    ""action"": ""Splitter"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b3c831ce-1d55-461b-9bf2-25ea6de74e8e"",
+                    ""path"": ""<Keyboard>/4"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM_Rebindable"",
+                    ""action"": ""Merger"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""0035826e-9cac-466e-b91b-4423b5eab4f8"",
+                    ""path"": ""<Keyboard>/6"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM_Rebindable"",
+                    ""action"": ""Spawner"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""502546bf-fa60-4303-a0bf-2083aa355e17"",
+                    ""path"": ""<Keyboard>/7"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM_Rebindable"",
+                    ""action"": ""Delete"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""f7286aee-6127-43bb-9c8d-fed5d03ccb7f"",
+                    ""path"": ""<Keyboard>/5"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM_Rebindable"",
+                    ""action"": ""Shop"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""Camera"",
+                    ""id"": ""b6797aed-1e25-479c-aa06-b189663d0931"",
+                    ""path"": ""3DVector"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Camera"",
+                    ""isComposite"": true,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": ""up"",
+                    ""id"": ""de07c0eb-3e9b-4611-91a6-b50b1dfb924b"",
+                    ""path"": ""<Keyboard>/w"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM_Rebindable"",
+                    ""action"": ""Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""down"",
+                    ""id"": ""79a8a695-4b06-47d4-8c1e-01bdd9a1960b"",
+                    ""path"": ""<Keyboard>/s"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM_Rebindable"",
+                    ""action"": ""Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""left"",
+                    ""id"": ""ecb02fce-bc63-45d6-b090-38c4166b1de7"",
+                    ""path"": ""<Keyboard>/a"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM_Rebindable"",
+                    ""action"": ""Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""right"",
+                    ""id"": ""d24e1b4a-aade-49f3-ae70-2aefe6aa3a5c"",
+                    ""path"": ""<Keyboard>/d"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM_Rebindable"",
+                    ""action"": ""Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""forward"",
+                    ""id"": ""8e74de39-d035-4ab7-a73c-2603163976e1"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM_Rebindable"",
+                    ""action"": ""Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
+                },
+                {
+                    ""name"": ""backward"",
+                    ""id"": ""75f6b30d-817c-4bad-9035-1dcc10a00ec5"",
+                    ""path"": ""<Keyboard>/q"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""KBM_Rebindable"",
+                    ""action"": ""Camera"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": true
                 }
             ]
         }
@@ -387,6 +613,22 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
                     ""isOR"": false
                 }
             ]
+        },
+        {
+            ""name"": ""KBM_Rebindable"",
+            ""bindingGroup"": ""KBM_Rebindable"",
+            ""devices"": [
+                {
+                    ""devicePath"": ""<Keyboard>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                },
+                {
+                    ""devicePath"": ""<Mouse>"",
+                    ""isOptional"": false,
+                    ""isOR"": false
+                }
+            ]
         }
     ]
 }");
@@ -404,6 +646,14 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
         m_Player_Pinch1 = m_Player.FindAction("Pinch1", throwIfNotFound: true);
         m_Player_Pinch2 = m_Player.FindAction("Pinch2", throwIfNotFound: true);
         m_Player_PointerPosition1 = m_Player.FindAction("PointerPosition1", throwIfNotFound: true);
+        m_Player_Belt = m_Player.FindAction("Belt", throwIfNotFound: true);
+        m_Player_Machine = m_Player.FindAction("Machine", throwIfNotFound: true);
+        m_Player_Splitter = m_Player.FindAction("Splitter", throwIfNotFound: true);
+        m_Player_Merger = m_Player.FindAction("Merger", throwIfNotFound: true);
+        m_Player_Shop = m_Player.FindAction("Shop", throwIfNotFound: true);
+        m_Player_Spawner = m_Player.FindAction("Spawner", throwIfNotFound: true);
+        m_Player_Delete = m_Player.FindAction("Delete", throwIfNotFound: true);
+        m_Player_Camera = m_Player.FindAction("Camera", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -477,6 +727,14 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Pinch1;
     private readonly InputAction m_Player_Pinch2;
     private readonly InputAction m_Player_PointerPosition1;
+    private readonly InputAction m_Player_Belt;
+    private readonly InputAction m_Player_Machine;
+    private readonly InputAction m_Player_Splitter;
+    private readonly InputAction m_Player_Merger;
+    private readonly InputAction m_Player_Shop;
+    private readonly InputAction m_Player_Spawner;
+    private readonly InputAction m_Player_Delete;
+    private readonly InputAction m_Player_Camera;
     public struct PlayerActions
     {
         private @InputsActions m_Wrapper;
@@ -493,6 +751,14 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
         public InputAction @Pinch1 => m_Wrapper.m_Player_Pinch1;
         public InputAction @Pinch2 => m_Wrapper.m_Player_Pinch2;
         public InputAction @PointerPosition1 => m_Wrapper.m_Player_PointerPosition1;
+        public InputAction @Belt => m_Wrapper.m_Player_Belt;
+        public InputAction @Machine => m_Wrapper.m_Player_Machine;
+        public InputAction @Splitter => m_Wrapper.m_Player_Splitter;
+        public InputAction @Merger => m_Wrapper.m_Player_Merger;
+        public InputAction @Shop => m_Wrapper.m_Player_Shop;
+        public InputAction @Spawner => m_Wrapper.m_Player_Spawner;
+        public InputAction @Delete => m_Wrapper.m_Player_Delete;
+        public InputAction @Camera => m_Wrapper.m_Player_Camera;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -538,6 +804,30 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
             @PointerPosition1.started += instance.OnPointerPosition1;
             @PointerPosition1.performed += instance.OnPointerPosition1;
             @PointerPosition1.canceled += instance.OnPointerPosition1;
+            @Belt.started += instance.OnBelt;
+            @Belt.performed += instance.OnBelt;
+            @Belt.canceled += instance.OnBelt;
+            @Machine.started += instance.OnMachine;
+            @Machine.performed += instance.OnMachine;
+            @Machine.canceled += instance.OnMachine;
+            @Splitter.started += instance.OnSplitter;
+            @Splitter.performed += instance.OnSplitter;
+            @Splitter.canceled += instance.OnSplitter;
+            @Merger.started += instance.OnMerger;
+            @Merger.performed += instance.OnMerger;
+            @Merger.canceled += instance.OnMerger;
+            @Shop.started += instance.OnShop;
+            @Shop.performed += instance.OnShop;
+            @Shop.canceled += instance.OnShop;
+            @Spawner.started += instance.OnSpawner;
+            @Spawner.performed += instance.OnSpawner;
+            @Spawner.canceled += instance.OnSpawner;
+            @Delete.started += instance.OnDelete;
+            @Delete.performed += instance.OnDelete;
+            @Delete.canceled += instance.OnDelete;
+            @Camera.started += instance.OnCamera;
+            @Camera.performed += instance.OnCamera;
+            @Camera.canceled += instance.OnCamera;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -578,6 +868,30 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
             @PointerPosition1.started -= instance.OnPointerPosition1;
             @PointerPosition1.performed -= instance.OnPointerPosition1;
             @PointerPosition1.canceled -= instance.OnPointerPosition1;
+            @Belt.started -= instance.OnBelt;
+            @Belt.performed -= instance.OnBelt;
+            @Belt.canceled -= instance.OnBelt;
+            @Machine.started -= instance.OnMachine;
+            @Machine.performed -= instance.OnMachine;
+            @Machine.canceled -= instance.OnMachine;
+            @Splitter.started -= instance.OnSplitter;
+            @Splitter.performed -= instance.OnSplitter;
+            @Splitter.canceled -= instance.OnSplitter;
+            @Merger.started -= instance.OnMerger;
+            @Merger.performed -= instance.OnMerger;
+            @Merger.canceled -= instance.OnMerger;
+            @Shop.started -= instance.OnShop;
+            @Shop.performed -= instance.OnShop;
+            @Shop.canceled -= instance.OnShop;
+            @Spawner.started -= instance.OnSpawner;
+            @Spawner.performed -= instance.OnSpawner;
+            @Spawner.canceled -= instance.OnSpawner;
+            @Delete.started -= instance.OnDelete;
+            @Delete.performed -= instance.OnDelete;
+            @Delete.canceled -= instance.OnDelete;
+            @Camera.started -= instance.OnCamera;
+            @Camera.performed -= instance.OnCamera;
+            @Camera.canceled -= instance.OnCamera;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -613,6 +927,15 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
             return asset.controlSchemes[m_TouchscreenSchemeIndex];
         }
     }
+    private int m_KBM_RebindableSchemeIndex = -1;
+    public InputControlScheme KBM_RebindableScheme
+    {
+        get
+        {
+            if (m_KBM_RebindableSchemeIndex == -1) m_KBM_RebindableSchemeIndex = asset.FindControlSchemeIndex("KBM_Rebindable");
+            return asset.controlSchemes[m_KBM_RebindableSchemeIndex];
+        }
+    }
     public interface IPlayerActions
     {
         void OnZoomValue(InputAction.CallbackContext context);
@@ -627,5 +950,13 @@ public partial class @InputsActions: IInputActionCollection2, IDisposable
         void OnPinch1(InputAction.CallbackContext context);
         void OnPinch2(InputAction.CallbackContext context);
         void OnPointerPosition1(InputAction.CallbackContext context);
+        void OnBelt(InputAction.CallbackContext context);
+        void OnMachine(InputAction.CallbackContext context);
+        void OnSplitter(InputAction.CallbackContext context);
+        void OnMerger(InputAction.CallbackContext context);
+        void OnShop(InputAction.CallbackContext context);
+        void OnSpawner(InputAction.CallbackContext context);
+        void OnDelete(InputAction.CallbackContext context);
+        void OnCamera(InputAction.CallbackContext context);
     }
 }

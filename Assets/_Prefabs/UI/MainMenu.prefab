@@ -418,7 +418,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 1486010137, guid: 26df369bdd0461b4992082c94918c2a4, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -426,7 +426,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 0.45
 --- !u!114 &2299859398773239694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -820,7 +820,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 1486010137, guid: 26df369bdd0461b4992082c94918c2a4, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -828,7 +828,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 0.45
 --- !u!114 &2299859399472648243
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -875,7 +875,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2299859400254097717}
         m_TargetAssemblyTypeName: _Scripts.UI.MainMenu, Assembly-CSharp
-        m_MethodName: Play
+        m_MethodName: NewGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1089,7 +1089,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 1486010137, guid: 26df369bdd0461b4992082c94918c2a4, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1097,7 +1097,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 0.45
 --- !u!114 &2299859399541526133
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1493,7 +1493,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 1486010137, guid: 26df369bdd0461b4992082c94918c2a4, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -1501,7 +1501,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 0.45
 --- !u!114 &2299859399860689686
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2034,7 +2034,7 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 1486010137, guid: 26df369bdd0461b4992082c94918c2a4, type: 3}
-  m_Type: 0
+  m_Type: 1
   m_PreserveAspect: 0
   m_FillCenter: 1
   m_FillMethod: 4
@@ -2042,7 +2042,7 @@ MonoBehaviour:
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  m_PixelsPerUnitMultiplier: 0.45
 --- !u!114 &1330362658006704106
 MonoBehaviour:
   m_ObjectHideFlags: 0

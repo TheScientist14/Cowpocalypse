@@ -7,13 +7,20 @@ using UnityEngine.InputSystem;
 
 public class InputMaster : Singleton<InputMaster>
 {
-    InputsActions inputAction;
+    private InputsActions inputAction;
 
     public InputsActions InputAction { get => inputAction; }
+
+    protected override bool IsPersistent()
+    {
+        return true;
+    }
 
     protected new void Awake()
     {
         base.Awake();
+        if(instance != this)
+            return;
 
         inputAction = new InputsActions();
         inputAction.Enable();
@@ -27,6 +34,12 @@ public class InputMaster : Singleton<InputMaster>
 
     private void OnDisable()
     {
+        if(inputAction == null)
+        {
+            Debug.LogWarning("Disabling while no input action");
+            return;
+        }
+
         inputAction.Disable();
     }
 
@@ -34,11 +47,11 @@ public class InputMaster : Singleton<InputMaster>
     // Filtering with ui
     ////////////////////////
 
-    public UnityEvent OnStartClickButton;
-    public UnityEvent OnStartDoubleClickButton;
-    public UnityEvent OnStartDrag;
-    public UnityEvent OnStartDragBuildMode;
-    public UnityEvent OnStartClickBuildMode;
+    [HideInInspector] public UnityEvent OnStartClickButton;
+    [HideInInspector] public UnityEvent OnStartDoubleClickButton;
+    [HideInInspector] public UnityEvent OnStartDrag;
+    [HideInInspector] public UnityEvent OnStartDragBuildMode;
+    [HideInInspector] public UnityEvent OnStartClickBuildMode;
 
     public void SetupCallbacks()
     {
@@ -47,6 +60,15 @@ public class InputMaster : Singleton<InputMaster>
         inputAction.Player.Drag.started += _ => FilterStartedDrag();
         inputAction.Player.DragBuildMode.started += _ => FilterStartedDragBuildMode();
         inputAction.Player.ClickBuildMode.started += _ => FilterStartedClickBuildMode();
+    }
+
+    public void RemoveCallbacks()
+    {
+        inputAction.Player.ClickButton.started -= _ => FilterStartedClickButton();
+        inputAction.Player.DoubleClickButton.started -= _ => FilterStartedDoubleClickButton();
+        inputAction.Player.Drag.started -= _ => FilterStartedDrag();
+        inputAction.Player.DragBuildMode.started -= _ => FilterStartedDragBuildMode();
+        inputAction.Player.ClickBuildMode.started -= _ => FilterStartedClickBuildMode();
     }
 
     private bool IsOnUI()

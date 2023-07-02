@@ -35,6 +35,8 @@ public class StatManager : Singleton<StatManager>
         m_Stats.Add(m_ExtractSpeedStat);
         m_Stats.Add(m_BeltSpeedStat);
         m_Stats.Add(m_CraftSpeedStat);
+
+        Shader.SetGlobalFloat("_speed", GetStatValue(BeltSpeedIndex));
     }
 
     [ContextMenu("Log stat values")]
