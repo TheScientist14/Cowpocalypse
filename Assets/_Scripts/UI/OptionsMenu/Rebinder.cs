@@ -72,22 +72,15 @@ public class Rebinder : MonoBehaviour
         }
 
         InputActionRebindingExtensions.RebindingOperation rebindOperation = m_Action.PerformInteractiveRebinding(m_BindingIndex)
-            .WithCancelingThrough("<Keyboard>/escape")
-            // .WithExpectedControlType("Keyboard")
+            .WithExpectedControlType(m_Action.bindings[m_BindingIndex].GetType())
             .OnMatchWaitForAnother(0.1f)
-            .OnCancel(operation =>
-                {
-                    Debug.Log("Canceled rebinding");
-                    operation.Dispose();
-                })
+            .OnCancel(operation => operation.Dispose())
             .OnComplete(operation =>
                 {
-                    Debug.Log($"Rebound '{m_Action}' to '{operation.selectedControl}'");
                     operation.Dispose();
                     Refresh();
                 })
             .Start();
-        Debug.Log($"Started rebinding '{m_Action}'");
     }
 
     void RemoveBindings()
