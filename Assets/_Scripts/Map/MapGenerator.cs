@@ -8,8 +8,10 @@ using Random = UnityEngine.Random;
 public class MapGenerator : Singleton<MapGenerator>
 {
     private int m_Seed;
+    public Texture2D mapTexture;
 
     [SerializeField] Grid m_WorldGridGeometry;
+    [SerializeField] Material m_WorldMaterial;
 
     [Header("MapTexture")]
     [SerializeField] int m_MapWidth = 200;
@@ -123,7 +125,7 @@ public class MapGenerator : Singleton<MapGenerator>
                                                 (m_MapHeight % 2 == 0) ? originCellBottomLeftCorner.y : originCellCenter.y,
                                                 0.5f);
 
-        Texture2D mapTexture = new Texture2D(m_MapWidth * m_PixelPerCell, m_MapHeight * m_PixelPerCell, TextureFormat.RGB24, false);
+        mapTexture = new Texture2D(m_MapWidth * m_PixelPerCell, m_MapHeight * m_PixelPerCell, TextureFormat.RGB24, false);
         int xStart = -m_MapWidth / 2;
         int yStart = -m_MapHeight / 2;
         for(int xx = 0; xx < m_MapWidth; xx++)
@@ -148,6 +150,7 @@ public class MapGenerator : Singleton<MapGenerator>
         Sprite mapSprite = Sprite.Create(
             mapTexture, new Rect(0, 0, m_MapWidth * m_PixelPerCell, m_MapHeight * m_PixelPerCell), 0.5f * Vector2.one, m_PixelPerCell);
         mapRenderer.sprite = mapSprite;
+        mapRenderer.material = m_WorldMaterial;
     }
 
     private TerrainType _GetTileType(Vector2Int iTileCoord, Vector2 iSeed1, Vector2 iSeed2)
