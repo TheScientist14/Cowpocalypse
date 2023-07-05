@@ -14,7 +14,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
     }
     private static T _instance;
 
-    protected void Awake()
+    protected virtual void Awake()
     {
         if(_instance != null && _instance != this as T)
         {
@@ -28,7 +28,7 @@ public abstract class Singleton<T> : MonoBehaviour where T : MonoBehaviour
         _instance = this as T;
     }
 
-    protected void OnDestroy()
+    protected virtual void OnDestroy()
     {
         if(_instance == this as T)
             _instance = null;

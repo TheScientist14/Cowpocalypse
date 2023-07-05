@@ -18,7 +18,7 @@ public class InputMaster : Singleton<InputMaster>
         return true;
     }
 
-    protected new void Awake()
+    protected override void Awake()
     {
         base.Awake();
         if(instance != this)
@@ -48,9 +48,12 @@ public class InputMaster : Singleton<InputMaster>
         inputAction.Disable();
     }
 
-    private new void OnDestroy()
+    protected override void OnDestroy()
     {
         base.OnDestroy();
+
+        if(inputAction == null)
+            return;
 
         string overrideJson = inputAction.SaveBindingOverridesAsJson();
         PlayerPrefs.SetString(s_InputBindingPlayerPrefKey, overrideJson);

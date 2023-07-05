@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MachineSettingsState : State
 {
@@ -16,6 +17,24 @@ public class MachineSettingsState : State
         _inputAction.Player.Pinch1.Disable();
         _inputAction.Player.Pinch2.Disable();
         _inputAction.Player.ZoomValue.Disable();
+
+        foreach(InputAction inputAction in _inputAction)
+        {
+            if(inputAction == null)
+                continue;
+
+            for(int bindingIdx = 0; bindingIdx < inputAction.bindings.Count; bindingIdx++)
+            {
+                InputBinding inputBinding = inputAction.bindings[bindingIdx];
+                if(inputBinding == null || inputBinding.groups == null)
+                    continue;
+                if(inputBinding.groups.Contains("Rebindable"))
+                {
+                    inputAction.Disable();
+                    break;
+                }
+            }
+        }
     }
 
     public override void Exit()
@@ -26,5 +45,23 @@ public class MachineSettingsState : State
         _inputAction.Player.Pinch1.Enable();
         _inputAction.Player.Pinch2.Enable();
         _inputAction.Player.ZoomValue.Enable();
+
+        foreach(InputAction inputAction in _inputAction)
+        {
+            if(inputAction == null)
+                continue;
+
+            for(int bindingIdx = 0; bindingIdx < inputAction.bindings.Count; bindingIdx++)
+            {
+                InputBinding inputBinding = inputAction.bindings[bindingIdx];
+                if(inputBinding == null || inputBinding.groups == null)
+                    continue;
+                if(inputBinding.groups.Contains("Rebindable"))
+                {
+                    inputAction.Enable();
+                    break;
+                }
+            }
+        }
     }
 }

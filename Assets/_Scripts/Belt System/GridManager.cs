@@ -14,7 +14,7 @@ public class GridManager : Singleton<GridManager>
     public UnityEvent OnGridChanged;
 
     // Start is called before the first frame update
-    protected new void Awake()
+    protected override void Awake()
     {
         base.Awake();
 

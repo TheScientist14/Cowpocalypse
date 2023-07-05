@@ -9,8 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7420794641469528635}
-  - component: {fileID: 8590446155696481503}
-  - component: {fileID: 222898898}
   - component: {fileID: 7420794641469528634}
   - component: {fileID: 7420794641469528613}
   - component: {fileID: 934449259384034582}
@@ -36,51 +34,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &8590446155696481503
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7420794641469528612}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c5d171e4e5d7d1c44a0fa3b7a990042c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _camera: {fileID: 7420794641469528634}
-  _layers:
-    serializedVersion: 2
-    m_Bits: 4294967295
-  _distance: -1
-  _onClick:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 222898898}
-        m_TargetAssemblyTypeName: ForwardClickToModalWindow, Assembly-CSharp
-        m_MethodName: CheckMachineClicked
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
---- !u!114 &222898898
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7420794641469528612}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9e6b8b84aa9b9eb448037cf9068b1ec0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _window: {fileID: 0}
 --- !u!20 &7420794641469528634
 Camera:
   m_ObjectHideFlags: 0
@@ -90,8 +43,8 @@ Camera:
   m_GameObject: {fileID: 7420794641469528612}
   m_Enabled: 1
   serializedVersion: 2
-  m_ClearFlags: 1
-  m_BackGroundColor: {r: 0.19215687, g: 0.3019608, b: 0.4745098, a: 0}
+  m_ClearFlags: 2
+  m_BackGroundColor: {r: 0.2392157, g: 0.20392159, b: 0.0627451, a: 1}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0

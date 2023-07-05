@@ -2,81 +2,87 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
-public class AudioManager : MonoBehaviour, IObserver
+public class AudioManager : Singleton<AudioManager>
 {
-    [SerializeField]
-    private GameObject[] _playingObjects;
-    [SerializeField]
-    private AudioSource _audioSource;
-    private float _audioLength;
+    [SerializeField] AudioSource m_MusicAudioSource;
+    [SerializeField] AudioSource m_SoundEffectsAudioSource;
 
-    public void OnNotify(ScriptablesWorldAudio _audioScript, EnumWorldSounds _action)
+    [SerializeField] AudioMixer m_MasterMixer;
+    private const string s_MusicVolumeKey = "MusicVolume";
+    private const string s_SfxVolumeKey = "SoundEffectsVolume";
+
+    // caching volumes as percentages
+    float m_MusicVolume = 50;
+    float m_SfxVolume = 50;
+
+    protected override void Awake()
     {
-        _audioSource.volume = _audioScript.volume;
+        base.Awake();
 
-        switch(_action)
-        {
-            case EnumWorldSounds.Sound1:
-                PlayWorldSound(_audioScript._sound1, _audioScript.volume);
-                break;
-            case EnumWorldSounds.Sound2:
-                PlayWorldSound(_audioScript._sound2, _audioScript.volume);
-                float lenght = _audioScript._sound2.length;
-                break;
-            case EnumWorldSounds.Sound3:
-                PlayWorldSound(_audioScript._sound3, _audioScript.volume);
-                break;
-            default:
-                break;
-        }
+        m_MusicVolume = PlayerPrefs.GetFloat(s_MusicVolumeKey, 50);
+        m_SfxVolume = PlayerPrefs.GetFloat(s_SfxVolumeKey, 50);
+
+        UpdateMixer();
     }
 
-    private void OnEnable()
+    protected override void OnDestroy()
     {
-        foreach(GameObject _playingObject in _playingObjects)
-        {
-            // enable observers
-            ObservableSound observableSound = _playingObject.GetComponent<ObservableSound>();
-            if(observableSound == null)
-            {
-                Debug.LogError(_playingObject.name + " has no ObservableSound component");
-                continue;
-            }
-            observableSound.AddObserver(this);
-        }
+        base.OnDestroy();
+
+        PlayerPrefs.SetFloat(s_MusicVolumeKey, m_MusicVolume);
+        PlayerPrefs.SetFloat(s_SfxVolumeKey, m_SfxVolume);
     }
 
-    private void OnDisable()
+    private void UpdateMixer()
     {
-        foreach(GameObject _playingObject in _playingObjects)
-        {
-            // disable observers
-            if(_playingObject != null)
-                _playingObject.GetComponent<ObservableSound>().RemoveObserver(this);
-        }
+        m_MasterMixer.SetFloat(s_MusicVolumeKey, PercentToDb(m_MusicVolume));
+        m_MasterMixer.SetFloat(s_SfxVolumeKey, PercentToDb(m_SfxVolume));
     }
 
-    private void PlayWorldSound(AudioClip _audioClip, float volume)
+    private float PercentToDb(float iVolumePercent)
     {
-        _audioLength = _audioClip.length;
-        _audioSource.clip = _audioClip;
-        SetMusicVolume(volume);
-        _audioSource.Play();
+        return Mathf.Lerp(-80, 0, iVolumePercent / 100);
     }
 
-    public float GetMusicLength()
+    public void PlaySoundEffect(AudioClip iClip)
     {
-        return _audioLength;
+        if(m_SoundEffectsAudioSource.isPlaying)
+            m_SoundEffectsAudioSource.Stop();
+
+        m_SoundEffectsAudioSource.clip = iClip;
+        m_SoundEffectsAudioSource.Play();
     }
 
-    public void SetMusicLoop(bool loop)
+    public void PlayMusic(AudioClip iClip)
     {
-        _audioSource.loop = true;
+        if(m_MusicAudioSource.isPlaying)
+            m_MusicAudioSource.Stop();
+
+        m_MusicAudioSource.clip = iClip;
+        m_MusicAudioSource.Play();
     }
 
-    public void SetMusicVolume(float volume)
+    public float GetMusicVolume()
     {
-        _audioSource.volume = volume;
+        return m_MusicVolume;
+    }
+
+    public void SetMusicVolume(float iVolume)
+    {
+        m_MusicVolume = iVolume;
+        UpdateMixer();
+    }
+
+    public float GetSfxVolume()
+    {
+        return m_SfxVolume;
+    }
+
+    public void SetSfxVolume(float iVolume)
+    {
+        m_SfxVolume = iVolume;
+        UpdateMixer();
     }
 }
