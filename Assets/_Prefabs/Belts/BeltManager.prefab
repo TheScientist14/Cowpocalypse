@@ -12,6 +12,8 @@ GameObject:
   - component: {fileID: 5996414628175474715}
   - component: {fileID: 4475892929583025520}
   - component: {fileID: 4475892929583025521}
+  - component: {fileID: 2700693416321742907}
+  - component: {fileID: 3198665734505756931}
   m_Layer: 0
   m_Name: BeltManager
   m_TagString: Untagged
@@ -62,9 +64,6 @@ MonoBehaviour:
   m_MachinePriceMultiplier: 1.2
   m_SpawnerBasePrice: 2
   m_MaxShop: 3
-  BeltSpeed: 1
-  m_SpawnRate: 2
-  m_CraftingSpeedMultiplier: 4
   OnBeltModeChange:
     m_PersistentCalls:
       m_Calls: []
@@ -177,3 +176,28 @@ Grid:
   m_CellGap: {x: 0, y: 0, z: 0}
   m_CellLayout: 0
   m_CellSwizzle: 0
+--- !u!114 &2700693416321742907
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4475892929583025522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfe66cbf071fb0742a6804c131433efb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &3198665734505756931
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4475892929583025522}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d19e8917c2fe4ff4a943a7841b978544, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_MachinePanel: {fileID: 0}

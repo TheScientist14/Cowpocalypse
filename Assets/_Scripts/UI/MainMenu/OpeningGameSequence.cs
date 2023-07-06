@@ -22,13 +22,19 @@ public class OpeningGameSequence : MonoBehaviour
         _buttons.interactable = false;
         _buttonsRect.anchoredPosition = new Vector2(-400, 0);
 
-        Sequence sequence = DOTween.Sequence();
-        sequence.Append(_camera.DOOrthoSize(5, 2));
-        sequence.Append(_titleTransform.DOMoveY(3, 0.25f).SetEase(Ease.OutBack));
-        sequence.Append(_camera.DOShakePosition(1f, 1f));
-        sequence.Append(_buttons.DOFade(1, 2).SetEase(Ease.Linear));
-        sequence.Insert(3, _buttonsRect.DOAnchorPosX(0, 2));
-        sequence.onComplete = () => SkipSequence();
+        m_IntroSequence = DOTween.Sequence();
+        m_IntroSequence.Append(_camera.DOOrthoSize(5, 2));
+        m_IntroSequence.Append(_titleTransform.DOMoveY(3, 0.25f).SetEase(Ease.OutBack));
+        m_IntroSequence.Append(_camera.DOShakePosition(1f, 1f));
+        m_IntroSequence.Append(_buttons.DOFade(1, 2).SetEase(Ease.Linear));
+        m_IntroSequence.Insert(3, _buttonsRect.DOAnchorPosX(0, 2));
+        m_IntroSequence.onComplete = () => SkipSequence();
+    }
+
+    void Update()
+    {
+        if(Input.anyKeyDown)
+            SkipSequence();
     }
 
     [Button]
@@ -38,9 +44,10 @@ public class OpeningGameSequence : MonoBehaviour
         {
             Sequence sequence = m_IntroSequence;
             m_IntroSequence = null;
-            sequence.Kill(true);
+            sequence.Complete(false);
         }
 
         _buttons.interactable = true;
+        Destroy(this);
     }
 }

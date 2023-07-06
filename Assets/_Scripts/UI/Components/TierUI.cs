@@ -10,14 +10,14 @@ public class TierUI : MonoBehaviour
     [SerializeField] LayoutGroup m_Layout;
     [SerializeField] RessourceUI m_RessourceUiPrefab;
 
-    public void InstantiateRecipes(IEnumerable<ItemData> iItemsInTier, MachinePanel iMachinePanel)
+    public void InstantiateRecipes(IEnumerable<ItemData> iItemsInTier, MachinePanel iMachinePanel, PanelComponent iCatalogPanel)
     {
         foreach(ItemData itemData in iItemsInTier)
         {
             RessourceUI ressource = Instantiate(m_RessourceUiPrefab, m_Layout.transform);
             ressource.SetItemData(itemData);
             ressource.OnItemDataClicked.AddListener(iMachinePanel.SetItemData);
-            ressource.OnItemDataClicked.AddListener(_ => iMachinePanel.Close());
+            ressource.OnItemDataClicked.AddListener(_ => iCatalogPanel.Close());
         }
     }
 

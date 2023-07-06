@@ -25,6 +25,7 @@ public class RessourceUI : MonoBehaviour
     {
         Button button = GetComponent<Button>();
         button.onClick.AddListener(OnClick);
+        SetItemData(m_ItemData); // to refresh sprites, etc...
     }
 
     void OnEnable()
@@ -35,7 +36,10 @@ public class RessourceUI : MonoBehaviour
     void OnClick()
     {
         if(m_ItemData == null)
+        {
+            OnItemDataClicked.Invoke(null);
             return;
+        }
 
         if(!m_ItemData.Unlocked)
         {
@@ -58,12 +62,14 @@ public class RessourceUI : MonoBehaviour
 
     public void UpdateValue(int? iCurrent = null, int? iMax = null)
     {
-        if(m_ItemData == null || !m_ItemData.Unlocked)
+        if(m_ItemData == null)
+            return;
+
+        if(!m_ItemData.Unlocked)
         {
             m_LockedIcon.SetActive(true);
             m_UnlockPriceText.gameObject.SetActive(true);
-            if(m_ItemData != null)
-                m_UnlockPriceText.text = $"{m_ItemData.Tier.UnlockPrice}";
+            m_UnlockPriceText.text = $"{m_ItemData.Tier.UnlockPrice}";
 
             m_CurrentCountText.gameObject.SetActive(false);
             m_MaxCountText.gameObject.SetActive(false);
@@ -94,9 +100,7 @@ public class RessourceUI : MonoBehaviour
                 }
             }
             else if(iCurrent.HasValue)
-            {
                 m_CurrentCountText.text = iCurrent.Value.ToString();
-            }
         }
     }
 
@@ -110,15 +114,23 @@ public class RessourceUI : MonoBehaviour
         m_ItemData = iItemData;
         if(m_ItemData == null)
         {
+            m_CurrentCountText.gameObject.SetActive(true);
+            m_MaxCountText.gameObject.SetActive(true);
             m_CurrentCountText.text = "NO";
             m_MaxCountText.text = "NE";
+
             m_Image.sprite = m_NoItemSprite;
-            gameObject.name = "None";
+            m_Image.color = Color.white;
+
+            m_LockedIcon.SetActive(false);
+            m_UnlockPriceText.gameObject.SetActive(false);
+
             return;
         }
 
         m_Image.sprite = m_ItemData.Sprite;
-        gameObject.name = m_ItemData.name;
-        UpdateValue(iMax: m_ItemData.Price);
+        m_CurrentCountText.text = "";
+        m_MaxCountText.text = "";
+        UpdateValue();
     }
 }

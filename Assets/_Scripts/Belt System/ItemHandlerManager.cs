@@ -1,3 +1,4 @@
+using _Scripts.Save_System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -288,25 +289,16 @@ public class ItemHandlerManager : Singleton<ItemHandlerManager>
         GridManager.instance.SetItemHandlerAt(new Vector2Int(cellPos.x, cellPos.y), null, true); // do not delete spawners
     }
 
-    public void RotateBelt(GameObject go, int machineType)
+    public void RotateItemHandler(IItemHandler iItemHandler)
     {
-        Quaternion savedRotation = go.transform.rotation;
-        Vector3 savedPosition = go.transform.position;
-        Transform savedParent = go.transform.parent;
+        if(iItemHandler == null)
+            return;
 
-        GameObject newBeltPrefab = m_ItemHandlerPrefabList[machineType];
+        iItemHandler.transform.Rotate(0, 0, 90);
 
-        // Instantiate a new belt object with the saved rotation plus an additional 90 degrees rotation on the Z-axis
-        GameObject newBeltObject = Instantiate(newBeltPrefab, savedPosition, savedRotation * Quaternion.Euler(0f, 0f, 90f));
-
-        // Optionally, you can parent the new belt to the same transform as the previous belt
-        newBeltObject.transform.parent = savedParent;
-
-        // Destroy the previous belt object and assign the new belt to the grid
-        Vector3Int GridPos = m_WorldGridGeometry.WorldToCell(savedPosition);
-        bool isAssigned = GridManager.instance.SetItemHandlerAt(new Vector2Int(GridPos.x, GridPos.y), newBeltObject.GetComponent<IItemHandler>(), true);
-        if(!isAssigned)
-            Destroy(newBeltObject);
+        ItemHandlerFinder finder = iItemHandler.GetComponent<ItemHandlerFinder>();
+        if(finder != null)
+            finder.RefreshSearches();
     }
 
     ////////////////////////

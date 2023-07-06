@@ -166,19 +166,34 @@ namespace _Scripts.Save_System
 
             SaveData data = GetSavedGameData();
 
-            LoadMachines(data);
-            LoadBelts(data);
-            LoadSplitters(data);
-            LoadMergers(data);
-            LoadSellers(data);
-            LoadSpawners(data);
-            LoadPlayer(data); // load player to reset money after spawning spawners & machines
+            Wallet.instance.Money = int.MaxValue; // avoid errors about negative money when spawning machines & extractors
+
+            foreach(MachineSaveData machineData in data.MachineDatas)
+                LoadMachine(machineData);
+
+            foreach(BeltSaveData beltData in data.BeltDatas)
+                LoadBelt(beltData);
+
+            foreach(SplitterSaveData splitterData in data.SplitterDatas)
+                LoadSplitter(splitterData);
+
+            foreach(MergerSaveData mergerData in data.MergerDatas)
+                LoadMerger(mergerData);
+
+            foreach(SellerSaveData sellerData in data.SellerDatas)
+                LoadSeller(sellerData);
+
+            foreach(SpawnerSaveData spawnerData in data.SpawnerDatas)
+                LoadSpawner(spawnerData);
+
+            // important to load player after spawning spawners & machines
+            // to reset money
+            LoadPlayer(data.PlayerSaveData);
 
             // this is only to have loading time perceptible
             yield return new WaitForSecondsRealtime(loadTime);
 
             loadedGame.Invoke();
-            yield return null;
         }
 
         public bool CheckForSave()
@@ -212,123 +227,101 @@ namespace _Scripts.Save_System
             }
         }
 
-        public void LoadPlayer(SaveData iData)
+        public void LoadPlayer(PlayerSaveData iData)
         {
-            PlayerSaveData playerSaveData = iData.PlayerSaveData;
-
-            StatManager.instance.SetLevelToStat(StatManager.ExtractSpeedIndex, playerSaveData.ExtractLevel);
-            StatManager.instance.SetLevelToStat(StatManager.BeltSpeedIndex, playerSaveData.BeltLevel);
-            StatManager.instance.SetLevelToStat(StatManager.CraftSpeedIndex, playerSaveData.CraftLevel);
-            Wallet.instance.Money = playerSaveData.Money;
-            MapGenerator.instance.InitMap(playerSaveData.Seed);
+            StatManager.instance.SetLevelToStat(StatManager.ExtractSpeedIndex, iData.ExtractLevel);
+            StatManager.instance.SetLevelToStat(StatManager.BeltSpeedIndex, iData.BeltLevel);
+            StatManager.instance.SetLevelToStat(StatManager.CraftSpeedIndex, iData.CraftLevel);
+            Wallet.instance.Money = iData.Money;
+            MapGenerator.instance.InitMap(iData.Seed);
         }
 
-        public void LoadBelts(SaveData iData)
+        public Belt LoadBelt(BeltSaveData iData)
         {
-            foreach(BeltSaveData beltSaveData in iData.BeltDatas)
-            {
-                Belt belt = Instantiate(beltPrefab, beltSaveData.Transform.Pos, beltSaveData.Transform.Rot, _playerSpawnedObjects.transform)
-                    .GetComponent<Belt>();
+            Belt belt = Instantiate(beltPrefab, iData.Transform.Pos, iData.Transform.Rot, _playerSpawnedObjects.transform)
+                .GetComponent<Belt>();
 
-                if(beltSaveData.Item.HasValue)
-                {
-                    belt.SetItemInTransfer(
-                        PoolManager.instance.SpawnObject(_itemDatas[beltSaveData.Item.Value.Name], beltSaveData.Item.Value.Pos));
-                }
-            }
+            if(iData.Item.HasValue)
+                belt.SetItemInTransfer(LoadItem(iData.Item.Value));
+
+            return belt;
         }
 
-        public void LoadMachines(SaveData iData)
+        public Machine LoadMachine(MachineSaveData iData)
         {
-            foreach(MachineSaveData machineSaveData in iData.MachineDatas)
-            {
-                Wallet.instance.Money += ItemHandlerManager.instance.GetMachinePrice();
-                Machine machine =
-                    Instantiate(machinePrefab, machineSaveData.Transform.Pos, machineSaveData.Transform.Rot, _playerSpawnedObjects.transform)
-                        .GetComponent<Machine>();
+            Machine machine = Instantiate(machinePrefab, iData.Transform.Pos, iData.Transform.Rot, _playerSpawnedObjects.transform)
+                    .GetComponent<Machine>();
 
-                machine.SetCurrentStock(new Dictionary<ItemData, int>(machineSaveData.ItemNames.Zip(
-                    machineSaveData.ItemQuantity, (name, quantity) => new KeyValuePair<ItemData, int>(_itemDatas[name], quantity))));
+            machine.SetCurrentStock(new Dictionary<ItemData, int>(iData.ItemNames.Zip(
+                iData.ItemQuantity, (name, quantity) => new KeyValuePair<ItemData, int>(_itemDatas[name], quantity))));
 
-                if(machineSaveData.ItemToCraftName != "")
-                    machine.SetCraftedItem(_itemDatas[machineSaveData.ItemToCraftName]);
+            if(iData.ItemToCraftName != "")
+                machine.SetCraftedItem(_itemDatas[iData.ItemToCraftName]);
 
-                machine.SetTimeLeftForCurrentCraft(machineSaveData.TimeLeftToCraft);
+            machine.SetTimeLeftForCurrentCraft(iData.TimeLeftToCraft);
 
-                if(machineSaveData.CraftedItem.HasValue)
-                {
-                    machine.SetAlreadyCraftedItem(
-                        PoolManager.instance.SpawnObject(
-                            _itemDatas[machineSaveData.CraftedItem.Value.Name],
-                            machineSaveData.CraftedItem.Value.Pos));
-                }
+            if(iData.CraftedItem.HasValue)
+                machine.SetAlreadyCraftedItem(LoadItem(iData.CraftedItem.Value));
 
-                List<Item> itemsInTransfer = new List<Item>();
-                foreach(ItemSaveData itemData in machineSaveData.ItemsInTransfer)
-                    itemsInTransfer.Add(PoolManager.instance.SpawnObject(_itemDatas[itemData.Name], itemData.Pos));
-                machine.AddItemsInTransfer(itemsInTransfer);
-            }
+            List<Item> itemsInTransfer = new List<Item>();
+            foreach(ItemSaveData itemData in iData.ItemsInTransfer)
+                itemsInTransfer.Add(LoadItem(itemData));
+            machine.AddItemsInTransfer(itemsInTransfer);
+
+            return machine;
         }
 
-        public void LoadSplitters(SaveData iData)
+        public Splitter LoadSplitter(SplitterSaveData iData)
         {
-            foreach(SplitterSaveData splitterSaveData in iData.SplitterDatas)
-            {
-                Splitter splitter =
-                    Instantiate(splitterPrefab, splitterSaveData.Transform.Pos, splitterSaveData.Transform.Rot, _playerSpawnedObjects.transform)
+            Splitter splitter = Instantiate(splitterPrefab, iData.Transform.Pos, iData.Transform.Rot, _playerSpawnedObjects.transform)
                         .GetComponent<Splitter>();
 
-                if(splitterSaveData.Item.HasValue)
-                {
-                    splitter.SetItemInTransfer(
-                        PoolManager.instance.SpawnObject(_itemDatas[splitterSaveData.Item.Value.Name], splitterSaveData.Item.Value.Pos));
-                }
+            if(iData.Item.HasValue)
+                splitter.SetItemInTransfer(LoadItem(iData.Item.Value));
 
-                splitter.SetCurrentOutputIndex(splitterSaveData.OutputIndex);
-            }
+            splitter.SetCurrentOutputIndex(iData.OutputIndex);
+
+            return splitter;
         }
 
-        public void LoadMergers(SaveData iData)
+        public Merger LoadMerger(MergerSaveData iData)
         {
-            foreach(MergerSaveData mergerSaveData in iData.MergerDatas)
-            {
-                Merger merger =
-                    Instantiate(mergerPrefab, mergerSaveData.Transform.Pos, mergerSaveData.Transform.Rot, _playerSpawnedObjects.transform)
-                        .GetComponent<Merger>();
+            Merger merger = Instantiate(mergerPrefab, iData.Transform.Pos, iData.Transform.Rot, _playerSpawnedObjects.transform)
+                    .GetComponent<Merger>();
 
-                if(mergerSaveData.Item.HasValue)
-                {
-                    merger.SetItemInTransfer(
-                        PoolManager.instance.SpawnObject(_itemDatas[mergerSaveData.Item.Value.Name], mergerSaveData.Item.Value.Pos));
-                }
+            if(iData.Item.HasValue)
+                merger.SetItemInTransfer(LoadItem(iData.Item.Value));
 
-                merger.SetCurrentInputIndex(mergerSaveData.InputIndex);
-            }
+            merger.SetCurrentInputIndex(iData.InputIndex);
+
+            return merger;
         }
 
-        public void LoadSellers(SaveData iData)
+        public Seller LoadSeller(SellerSaveData iData)
         {
-            foreach(SellerSaveData sellerSaveData in iData.SellerDatas)
-            {
-                Seller seller =
-                    Instantiate(sellerPrefab, sellerSaveData.Transform.Pos, sellerSaveData.Transform.Rot, _playerSpawnedObjects.transform)
-                        .GetComponent<Seller>();
+            Seller seller = Instantiate(sellerPrefab, iData.Transform.Pos, iData.Transform.Rot, _playerSpawnedObjects.transform)
+                    .GetComponent<Seller>();
 
-                List<Item> itemsInTransfer = new List<Item>();
-                foreach(ItemSaveData itemData in sellerSaveData.ItemsInTransfer)
-                    itemsInTransfer.Add(PoolManager.instance.SpawnObject(_itemDatas[itemData.Name], itemData.Pos));
-                seller.AddItemsInTransfer(itemsInTransfer);
-            }
+            List<Item> itemsInTransfer = new List<Item>();
+            foreach(ItemSaveData itemData in iData.ItemsInTransfer)
+                itemsInTransfer.Add(LoadItem(itemData));
+            seller.AddItemsInTransfer(itemsInTransfer);
+
+            return seller;
         }
 
-        public void LoadSpawners(SaveData iData)
+        public Spawner LoadSpawner(SpawnerSaveData iData)
         {
-            foreach(SpawnerSaveData spawnerSaveData in iData.SpawnerDatas)
-            {
-                Spawner spawner = Instantiate(spawnerPrefab, spawnerSaveData.Transform.Pos, spawnerSaveData.Transform.Rot, _playerSpawnedObjects.transform)
-                    .GetComponent<Spawner>();
-                spawner.InitSpawnTime(Mathf.Max(spawnerSaveData.TimeToNextSpawn, 0));
-            }
+            Spawner spawner = Instantiate(spawnerPrefab, iData.Transform.Pos, iData.Transform.Rot, _playerSpawnedObjects.transform)
+                .GetComponent<Spawner>();
+            spawner.InitSpawnTime(Mathf.Max(iData.TimeToNextSpawn, 0));
+
+            return spawner;
+        }
+
+        public Item LoadItem(ItemSaveData iData)
+        {
+            return PoolManager.instance.SpawnObject(_itemDatas[iData.Name], iData.Pos);
         }
 
         public void OverideSave()

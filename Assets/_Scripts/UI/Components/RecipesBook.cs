@@ -89,8 +89,6 @@ public class RecipesBook : MonoBehaviour
 
         m_PrevPageButton.onClick.AddListener(PreviousPage);
         m_NextPageButton.onClick.AddListener(NextPage);
-
-        gameObject.SetActive(false);
     }
 
     void OnEnable()
@@ -131,6 +129,9 @@ public class RecipesBook : MonoBehaviour
 
     public void GoToItemPage(ItemData iItem)
     {
+        if(iItem == null)
+            return;
+
         int itemIdx = 0;
         int tierIdx = 0;
         IEnumerator<List<ItemData>> tierIt = m_ItemsByTier.GetEnumerator();

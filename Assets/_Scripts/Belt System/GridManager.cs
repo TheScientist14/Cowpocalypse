@@ -42,6 +42,12 @@ public class GridManager : Singleton<GridManager>
         return m_WorldGridStorage.GetValueOrDefault(iCellPos, null);
     }
 
+    public IItemHandler GetItemHandlerAt(Vector3 iWorldPos)
+    {
+        Vector3Int cellPos = m_GridGeometry.WorldToCell(iWorldPos);
+        return GetItemHandlerAt(new Vector2Int(cellPos.x, cellPos.y));
+    }
+
     public bool IsCellFree(Vector2Int iCellPos)
     {
         return GetItemHandlerAt(iCellPos) != null;

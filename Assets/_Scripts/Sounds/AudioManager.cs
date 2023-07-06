@@ -17,14 +17,12 @@ public class AudioManager : Singleton<AudioManager>
     float m_MusicVolume = 50;
     float m_SfxVolume = 50;
 
-    protected override void Awake()
+    protected void Start()
     {
-        base.Awake();
-
         m_MusicVolume = PlayerPrefs.GetFloat(s_MusicVolumeKey, 50);
         m_SfxVolume = PlayerPrefs.GetFloat(s_SfxVolumeKey, 50);
 
-        UpdateMixer();
+        StartCoroutine(DelayMixerUpdate());
     }
 
     protected override void OnDestroy()
@@ -33,6 +31,12 @@ public class AudioManager : Singleton<AudioManager>
 
         PlayerPrefs.SetFloat(s_MusicVolumeKey, m_MusicVolume);
         PlayerPrefs.SetFloat(s_SfxVolumeKey, m_SfxVolume);
+    }
+
+    IEnumerator DelayMixerUpdate()
+    {
+        yield return new WaitForEndOfFrame();
+        UpdateMixer();
     }
 
     private void UpdateMixer()

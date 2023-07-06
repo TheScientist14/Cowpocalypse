@@ -12,9 +12,9 @@ public class Merger : UpGiver
     {
         base.Start();
 
-        m_ItemHandlerFinder.AddItemHandlerSearch(transform.position - transform.right); // left
-        m_ItemHandlerFinder.AddItemHandlerSearch(transform.position - transform.up);    // down
-        m_ItemHandlerFinder.AddItemHandlerSearch(transform.position + transform.right); // right
+        m_ItemHandlerFinder.AddItemHandlerSearch(Vector3.right);
+        m_ItemHandlerFinder.AddItemHandlerSearch(Vector3.down);
+        m_ItemHandlerFinder.AddItemHandlerSearch(Vector3.left);
     }
 
     // Update is called once per frame

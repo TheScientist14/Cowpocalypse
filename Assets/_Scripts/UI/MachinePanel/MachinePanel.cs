@@ -67,18 +67,18 @@ public class MachinePanel : BasicPanel
 
     private void UpdateItemData()
     {
-        ItemData iItem = m_Machine.GetCraftedItemData();
+        ItemData craftedItem = m_Machine.GetCraftedItemData();
 
-        m_CraftedItemRessourceUI.SetItemData(iItem);
+        m_CraftedItemRessourceUI.SetItemData(craftedItem);
         m_ItemToRessource = new Dictionary<ItemData, RessourceUI>();
         var ressourceUiTotalCount = m_NeededItemRessourcesUI.Count;
         int ressourceUiIdx = 0;
-        if(iItem != null)
+        if(craftedItem != null)
         {
             // erratum : trying to display nothing
             // instead of displaying the cost we display one, being the nb of items being produced
             // m_CraftedItemRessourceUI.UpdateValue(iMax: 1);
-            foreach(var recipe in iItem.Recipes)
+            foreach(var recipe in craftedItem.Recipes)
             {
                 RessourceUI neededItemRessourceUi = m_NeededItemRessourcesUI[ressourceUiIdx];
                 m_ItemToRessource.Add(recipe.Key, neededItemRessourceUi);

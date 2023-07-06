@@ -22,9 +22,9 @@ public class Splitter : SimpleItemHandler
             return;
         }
 
-        m_ItemHandlerFinder.AddItemHandlerSearch(transform.position - transform.right); // left
-        m_ItemHandlerFinder.AddItemHandlerSearch(transform.position + transform.up);    // up
-        m_ItemHandlerFinder.AddItemHandlerSearch(transform.position + transform.right); // right
+        m_ItemHandlerFinder.AddItemHandlerSearch(Vector3.left);
+        m_ItemHandlerFinder.AddItemHandlerSearch(Vector3.up);
+        m_ItemHandlerFinder.AddItemHandlerSearch(Vector3.right);
     }
 
     // Update is called once per frame

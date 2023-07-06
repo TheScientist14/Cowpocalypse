@@ -8,6 +8,7 @@ using UnityEngine.UI;
 public class AllTiersPanelBuilder : MonoBehaviour
 {
     [SerializeField] MachinePanel m_MachinePanel;
+    [SerializeField] PanelComponent m_CatalogPanel;
 
     [SerializeField] LayoutGroup m_Layout;
     [SerializeField] TierUI m_TierUiPrefab;
@@ -31,7 +32,7 @@ public class AllTiersPanelBuilder : MonoBehaviour
         {
             TierUI inst = Instantiate(m_TierUiPrefab, m_Layout.transform);
             inst.SetTierName(itemsInTier.Key.Name);
-            inst.InstantiateRecipes(itemsInTier, m_MachinePanel);
+            inst.InstantiateRecipes(itemsInTier, m_MachinePanel, m_CatalogPanel);
         }
     }
 }

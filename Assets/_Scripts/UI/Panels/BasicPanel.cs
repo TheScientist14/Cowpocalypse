@@ -16,6 +16,9 @@ public class BasicPanel : PanelComponent
 
     public void TogglePanel()
     {
+        if(!transform.parent.gameObject.activeInHierarchy)
+            return;
+
         if(gameObject.activeSelf)
             Close();
         else

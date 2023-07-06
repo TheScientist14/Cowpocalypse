@@ -20,14 +20,15 @@ public class UpGiver : SimpleItemHandler
             return;
         }
 
-        m_ItemHandlerFinder.AddItemHandlerSearch(transform.position + transform.up);
+        m_ItemHandlerFinder.AddItemHandlerSearch(Vector3.up);
     }
 
     // Update is called once per frame
     protected void Update()
     {
-        if(CanGive(m_ItemHandlerFinder[0]))
-            m_IsItemFullyReceived = !TrySendItemTo(ref GetItemToSend(), m_ItemHandlerFinder[0]);
+        IItemHandler receiver = m_ItemHandlerFinder[0];
+        if(CanGive(receiver))
+            m_IsItemFullyReceived = !TrySendItemTo(ref GetItemToSend(), receiver);
     }
 
     protected virtual ref Item GetItemToSend()

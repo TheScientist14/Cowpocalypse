@@ -1,18 +1,21 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class ItemHandlerFinder : MonoBehaviour, IEnumerable<IItemHandler>
 {
+    [Serializable]
     private class ItemHandlerSearch
     {
         public IItemHandler FoundItemHandler = null;
         public bool IsSearching = false;
-        public Vector3 Target; // worldPos
+        public Vector4 LocalDeltaToTarget;
 
-        public ItemHandlerSearch(Vector3 iTarget)
+        public ItemHandlerSearch(Vector3 iLocalToTarget)
         {
-            Target = iTarget;
+            LocalDeltaToTarget = iLocalToTarget;
+            LocalDeltaToTarget.w = 1;
         }
     }
 
@@ -60,11 +63,11 @@ public class ItemHandlerFinder : MonoBehaviour, IEnumerable<IItemHandler>
     IEnumerator _Search(ItemHandlerSearch iSearch)
     {
         iSearch.IsSearching = true;
+        Vector3 target = transform.localToWorldMatrix * iSearch.LocalDeltaToTarget;
 
         Collider2D[] collider = new Collider2D[1];
         while(iSearch.FoundItemHandler == null)
         {
-            Vector3 target = iSearch.Target;
             int nbHit = Physics2D.OverlapCircleNonAlloc(target, .1f, collider);
             if(nbHit > 0)
                 iSearch.FoundItemHandler = collider[0].GetComponent<IItemHandler>();
@@ -76,16 +79,29 @@ public class ItemHandlerFinder : MonoBehaviour, IEnumerable<IItemHandler>
     }
 
     // This function only adds a target to search for
-    public void AddItemHandlerSearch(Vector3 iTarget)
+    public void AddItemHandlerSearch(Vector3 iLocalToTarget)
     {
-        // checking that iDirection isn't search already
-        foreach(ItemHandlerSearch search in m_ItemHandlerSearches)
+        ItemHandlerSearch search = new ItemHandlerSearch(iLocalToTarget);
+
+        // avoiding doublons
+        foreach(ItemHandlerSearch exisitingSearch in m_ItemHandlerSearches)
         {
-            if(search.Target == iTarget)
+            if(exisitingSearch.LocalDeltaToTarget == search.LocalDeltaToTarget)
                 return;
         }
 
-        m_ItemHandlerSearches.Add(new ItemHandlerSearch(iTarget));
+        m_ItemHandlerSearches.Add(search);
+    }
+
+    public void RefreshSearches()
+    {
+        StopAllCoroutines();
+
+        foreach(ItemHandlerSearch search in m_ItemHandlerSearches)
+        {
+            search.FoundItemHandler = null;
+            search.IsSearching = false;
+        }
     }
 
     public IItemHandler this[int iItemHandlerIdx]

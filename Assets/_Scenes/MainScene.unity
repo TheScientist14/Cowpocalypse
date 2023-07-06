@@ -4926,6 +4926,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &575509216 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 902132531111546089, guid: 2f41322951505894f8ff5f5ba1392085, type: 3}
+  m_PrefabInstance: {fileID: 2442515}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5991b48fbb31c44188d89e39513a6ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &637459245
 GameObject:
   m_ObjectHideFlags: 0
@@ -5096,6 +5107,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 637459246}
     m_Modifications:
+    - target: {fileID: 3198665734505756931, guid: 51590197fc7ab5548ae1bafd4662755e, type: 3}
+      propertyPath: m_MachinePanel
+      value: 
+      objectReference: {fileID: 575509216}
     - target: {fileID: 4475892929583025522, guid: 51590197fc7ab5548ae1bafd4662755e, type: 3}
       propertyPath: m_Name
       value: BeltManager
