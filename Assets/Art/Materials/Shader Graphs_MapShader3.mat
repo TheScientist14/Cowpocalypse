@@ -1,18 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-3083137817359033637
-MonoBehaviour:
-  m_ObjectHideFlags: 11
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  version: 0
 --- !u!21 &2100000
 Material:
   serializedVersion: 8
@@ -20,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Shader Graphs_MapShader
+  m_Name: Shader Graphs_MapShader3
   m_Shader: {fileID: -6465566751694194690, guid: 08afbd452d17cb8409796febd106dcc7, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
@@ -33,16 +20,8 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - Layer_12CBD4DD:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    - Layer_4B7808BC:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 05cfe010378336646ad6c721f66543d1, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _WaveTexture:
@@ -53,13 +32,27 @@ Material:
     m_Floats:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
-    - _Float: 18.7
-    - _Float_1: 1.86
-    - _Float_2: 43.07
+    - _Float: 20
+    - _Float_2: 153.18
+    - _InvertDIrection: 0
     - _ToggleShader: 0
-    - _WaveSize: 1
-    - _WaveSpeed: 0.08
+    - _Vector1_4d0a4553a9e2484dbf5cb71f6a053805: 3.99
+    - _WaveSize: 50
+    - _WaveSpace: 500
+    - _WaveSpeed: 0.1
     m_Colors:
-    - _TilingAndOffset: {r: 0, g: 0, b: 0, a: 0}
-    - _WaterColor: {r: 0.20392159, g: 0.49803925, b: 0.7176471, a: 1}
+    - _WaterColor: {r: 0.1843137, g: 0.4627451, b: 0.6745098, a: 1}
   m_BuildTextureStacks: []
+--- !u!114 &8721766705580719786
+MonoBehaviour:
+  m_ObjectHideFlags: 11
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 639247ca83abc874e893eb93af2b5e44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  version: 0
