@@ -1,8 +1,9 @@
-using System;
+using NaughtyAttributes;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.Events;
 
 public class AudioManager : Singleton<AudioManager>
 {
@@ -14,15 +15,27 @@ public class AudioManager : Singleton<AudioManager>
     private const string s_SfxVolumeKey = "SoundEffectsVolume";
 
     // caching volumes as percentages
-    float m_MusicVolume = 50;
-    float m_SfxVolume = 50;
+    private float m_MusicVolume = 50;
+    private float m_SfxVolume = 50;
+
+    public float m_PercentToDbPow = 1f;
+
+    public UnityEvent OnMixerInit;
+
+    protected override void Awake()
+    {
+        base.Awake();
+
+        if(OnMixerInit == null)
+            OnMixerInit = new UnityEvent();
+    }
 
     protected void Start()
     {
         m_MusicVolume = PlayerPrefs.GetFloat(s_MusicVolumeKey, 50);
         m_SfxVolume = PlayerPrefs.GetFloat(s_SfxVolumeKey, 50);
 
-        StartCoroutine(DelayMixerUpdate());
+        StartCoroutine(DelayMixerUpdateOnStart());
     }
 
     protected override void OnDestroy()
@@ -33,10 +46,11 @@ public class AudioManager : Singleton<AudioManager>
         PlayerPrefs.SetFloat(s_SfxVolumeKey, m_SfxVolume);
     }
 
-    IEnumerator DelayMixerUpdate()
+    IEnumerator DelayMixerUpdateOnStart()
     {
         yield return new WaitForEndOfFrame();
         UpdateMixer();
+        OnMixerInit.Invoke();
     }
 
     private void UpdateMixer()
@@ -47,7 +61,7 @@ public class AudioManager : Singleton<AudioManager>
 
     private float PercentToDb(float iVolumePercent)
     {
-        return Mathf.Lerp(-80, 0, iVolumePercent / 100);
+        return Mathf.Lerp(-80, 0, Mathf.Pow(iVolumePercent / 100, m_PercentToDbPow));
     }
 
     public void PlaySoundEffect(AudioClip iClip)

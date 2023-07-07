@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 5891567553117405225}
   - component: {fileID: 5891567553117405230}
   - component: {fileID: 5891567553117405224}
+  - component: {fileID: 6657976558120234998}
   m_Layer: 5
   m_Name: PausePanel
   m_TagString: Untagged
@@ -99,6 +100,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Parent: {fileID: 0}
   m_ConfirmationWidget: {fileID: 6566189502146020236}
+--- !u!114 &6657976558120234998
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5891567553117405228}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1be332e5ab63bca4f97e409f4e31511b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Sounds: {fileID: 11400000, guid: 49506ae89310e7b4ca6fafa36703c1af, type: 2}
 --- !u!1 &5891567553368955967
 GameObject:
   m_ObjectHideFlags: 0
@@ -381,7 +395,6 @@ GameObject:
   - component: {fileID: 5891567553473931619}
   - component: {fileID: 5891567553473931616}
   - component: {fileID: 5891567553473931617}
-  - component: {fileID: 4072844553954274813}
   m_Layer: 5
   m_Name: SettingsButton
   m_TagString: Untagged
@@ -504,20 +517,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4072844553954274813
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5891567553473931623}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
+      - m_Target: {fileID: 6657976558120234998}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5891567553857368565
 GameObject:
   m_ObjectHideFlags: 0
@@ -665,7 +676,6 @@ GameObject:
   - component: {fileID: 5891567554145335010}
   - component: {fileID: 5891567554145335011}
   - component: {fileID: 5891567554145335008}
-  - component: {fileID: 5588988397252637309}
   m_Layer: 5
   m_Name: SaveButton
   m_TagString: Untagged
@@ -788,20 +798,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &5588988397252637309
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5891567554145335014}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
+      - m_Target: {fileID: 6657976558120234998}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5891567554151309886
 GameObject:
   m_ObjectHideFlags: 0
@@ -815,7 +823,6 @@ GameObject:
   - component: {fileID: 5891567554151309883}
   - component: {fileID: 5891567554151309880}
   - component: {fileID: 75525332556893776}
-  - component: {fileID: 1315152881736878540}
   m_Layer: 5
   m_Name: LoadButton
   m_TagString: Untagged
@@ -938,6 +945,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+      - m_Target: {fileID: 6657976558120234998}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &75525332556893776
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -950,20 +969,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1d88605cef4580341b27c25a96816f02, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1315152881736878540
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5891567554151309886}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
 --- !u!1 &5891567554174041388
 GameObject:
   m_ObjectHideFlags: 0
@@ -1246,7 +1251,6 @@ GameObject:
   - component: {fileID: 5891567554574153435}
   - component: {fileID: 5891567554574153432}
   - component: {fileID: 5891567554574153433}
-  - component: {fileID: 8061533838859909641}
   m_Layer: 5
   m_Name: QuitButton
   m_TagString: Untagged
@@ -1369,20 +1373,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8061533838859909641
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5891567554574153439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
+      - m_Target: {fileID: 6657976558120234998}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5891567554758576328
 GameObject:
   m_ObjectHideFlags: 0
@@ -1395,7 +1397,6 @@ GameObject:
   - component: {fileID: 5891567554758576180}
   - component: {fileID: 5891567554758576181}
   - component: {fileID: 5891567554758576330}
-  - component: {fileID: 2223824264009910837}
   m_Layer: 5
   m_Name: ExitButton
   m_TagString: Untagged
@@ -1517,20 +1518,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &2223824264009910837
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5891567554758576328}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
+      - m_Target: {fileID: 6657976558120234998}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &6112026983341538677
 PrefabInstance:
   m_ObjectHideFlags: 0

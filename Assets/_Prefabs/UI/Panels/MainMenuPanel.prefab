@@ -149,7 +149,6 @@ GameObject:
   - component: {fileID: 2299859398773239692}
   - component: {fileID: 2299859398773239693}
   - component: {fileID: 2299859398773239694}
-  - component: {fileID: 3654558812187608425}
   m_Layer: 5
   m_Name: LoadButton
   m_TagString: Untagged
@@ -272,20 +271,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &3654558812187608425
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2299859398773239688}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
+      - m_Target: {fileID: 964792672004806678}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2299859399037756079
 GameObject:
   m_ObjectHideFlags: 0
@@ -487,7 +484,6 @@ GameObject:
   - component: {fileID: 2299859399472648241}
   - component: {fileID: 2299859399472648242}
   - component: {fileID: 2299859399472648243}
-  - component: {fileID: 5995805995210414318}
   m_Layer: 5
   m_Name: NewGameButton
   m_TagString: Untagged
@@ -610,20 +606,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
---- !u!114 &5995805995210414318
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2299859399472648205}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
+      - m_Target: {fileID: 964792672004806678}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &2299859399498712139
 GameObject:
   m_ObjectHideFlags: 0
@@ -771,7 +765,6 @@ GameObject:
   - component: {fileID: 2299859399541526139}
   - component: {fileID: 2299859399541526132}
   - component: {fileID: 2299859399541526133}
-  - component: {fileID: 548079965946395204}
   m_Layer: 5
   m_Name: OptionsButton
   m_TagString: Untagged
@@ -894,20 +887,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
---- !u!114 &548079965946395204
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2299859399541526135}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
+      - m_Target: {fileID: 964792672004806678}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &2299859399597582457
 GameObject:
   m_ObjectHideFlags: 0
@@ -1057,7 +1048,6 @@ GameObject:
   - component: {fileID: 2299859399860689684}
   - component: {fileID: 2299859399860689685}
   - component: {fileID: 2299859399860689686}
-  - component: {fileID: 7470567173656287058}
   m_Layer: 5
   m_Name: QuitButton
   m_TagString: Untagged
@@ -1180,20 +1170,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &7470567173656287058
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2299859399860689680}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
+      - m_Target: {fileID: 964792672004806678}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &2299859400254097714
 GameObject:
   m_ObjectHideFlags: 0
@@ -1209,6 +1197,7 @@ GameObject:
   - component: {fileID: 6262529483024096349}
   - component: {fileID: 2299859400254097717}
   - component: {fileID: 3403921889209120903}
+  - component: {fileID: 964792672004806678}
   m_Layer: 5
   m_Name: MainMenuPanel
   m_TagString: Untagged
@@ -1341,6 +1330,19 @@ MonoBehaviour:
   _titleTransform: {fileID: 0}
   _buttonsRect: {fileID: 2299859399319623167}
   _buttons: {fileID: 2299859399319623160}
+--- !u!114 &964792672004806678
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2299859400254097714}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1be332e5ab63bca4f97e409f4e31511b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Sounds: {fileID: 11400000, guid: 49506ae89310e7b4ca6fafa36703c1af, type: 2}
 --- !u!1 &2464458805354707783
 GameObject:
   m_ObjectHideFlags: 0
@@ -1488,7 +1490,6 @@ GameObject:
   - component: {fileID: 3562736690286319466}
   - component: {fileID: 8229351684941042362}
   - component: {fileID: 1330362658006704106}
-  - component: {fileID: 8931843052971871127}
   m_Layer: 5
   m_Name: TutoButton
   m_TagString: Untagged
@@ -1611,20 +1612,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8931843052971871127
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2798450427188275987}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
+      - m_Target: {fileID: 964792672004806678}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1001 &3079174662229525578
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -495,7 +495,7 @@ GameObject:
   - component: {fileID: 9065911187852907703}
   - component: {fileID: 4310456068369441889}
   - component: {fileID: 5338728772489972039}
-  - component: {fileID: 2429336181775369429}
+  - component: {fileID: 1352993941078177948}
   m_Layer: 5
   m_Name: RessourceIcon
   m_TagString: Untagged
@@ -650,8 +650,20 @@ MonoBehaviour:
   m_LockedIcon: {fileID: 8400796916950611644}
   OnItemDataClicked:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &2429336181775369429
+      m_Calls:
+      - m_Target: {fileID: 1352993941078177948}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1352993941078177948
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -660,8 +672,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 9133027545470972643}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
+  m_Script: {fileID: 11500000, guid: 1be332e5ab63bca4f97e409f4e31511b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
+  m_Sounds: {fileID: 11400000, guid: 49506ae89310e7b4ca6fafa36703c1af, type: 2}

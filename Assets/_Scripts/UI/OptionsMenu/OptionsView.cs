@@ -5,8 +5,8 @@ using UnityEngine.UI;
 
 public class OptionsView : MonoBehaviour
 {
-    [SerializeField] Image m_MusicVolumeSlider;
-    [SerializeField] Image m_SfxVolumeSlider;
+    [SerializeField] Slider m_MusicVolumeSlider;
+    [SerializeField] Slider m_SfxVolumeSlider;
     [SerializeField] float m_VolumeStep;
     [SerializeField] TextMeshProUGUI m_VersionText;
 
@@ -17,6 +17,7 @@ public class OptionsView : MonoBehaviour
         m_VersionText.text = $"v{Application.version}";
 
         m_Master = AudioManager.instance;
+        Refresh();
     }
 
     void OnEnable()
@@ -49,9 +50,15 @@ public class OptionsView : MonoBehaviour
         Refresh();
     }
 
+    public void UpdateVolumesFromSliders()
+    {
+        m_Master.SetMusicVolume(m_MusicVolumeSlider.value);
+        m_Master.SetSfxVolume(m_SfxVolumeSlider.value);
+    }
+
     private void Refresh()
     {
-        m_MusicVolumeSlider.fillAmount = m_Master.GetMusicVolume() / 100;
-        m_SfxVolumeSlider.fillAmount = m_Master.GetSfxVolume() / 100;
+        m_MusicVolumeSlider.value = m_Master.GetMusicVolume();
+        m_SfxVolumeSlider.value = m_Master.GetSfxVolume();
     }
 }

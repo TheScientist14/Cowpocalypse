@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 8724448664662408037}
   - component: {fileID: 7294670387985507404}
   - component: {fileID: 3966599020260844324}
-  - component: {fileID: 3169973619415361351}
   m_Layer: 5
   m_Name: RemoveBindingButton
   m_TagString: Untagged
@@ -121,21 +120,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7294670387985507404}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &3169973619415361351
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1563711525524586792}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
+      m_Calls:
+      - m_Target: {fileID: 8042291564612604359}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1660414471097358430
 GameObject:
   m_ObjectHideFlags: 0
@@ -418,7 +415,6 @@ GameObject:
   - component: {fileID: 9023467086494966236}
   - component: {fileID: 6880753836702581335}
   - component: {fileID: 6082776350348273524}
-  - component: {fileID: 7620714323566695300}
   m_Layer: 5
   m_Name: RebindButton
   m_TagString: Untagged
@@ -528,21 +524,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6880753836702581335}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &7620714323566695300
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4272962410273380490}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
+      m_Calls:
+      - m_Target: {fileID: 8042291564612604359}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8964812326481868373
 GameObject:
   m_ObjectHideFlags: 0
@@ -555,6 +549,7 @@ GameObject:
   - component: {fileID: 736536224768747775}
   - component: {fileID: 4519767739674737371}
   - component: {fileID: 6375110648289079754}
+  - component: {fileID: 8042291564612604359}
   m_Layer: 5
   m_Name: Rebinder
   m_TagString: Untagged
@@ -639,3 +634,16 @@ MonoBehaviour:
   m_BoundKeyText: {fileID: 1789661372844181502}
   m_RebindButton: {fileID: 6082776350348273524}
   m_RemoveBindindButton: {fileID: 3966599020260844324}
+--- !u!114 &8042291564612604359
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8964812326481868373}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1be332e5ab63bca4f97e409f4e31511b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Sounds: {fileID: 11400000, guid: 49506ae89310e7b4ca6fafa36703c1af, type: 2}

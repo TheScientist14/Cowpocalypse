@@ -21,7 +21,7 @@ public class StatManager : Singleton<StatManager>
     public static int BeltSpeedIndex = 1;
     public static int CraftSpeedIndex = 2;
 
-    protected new void Awake()
+    protected override void Awake()
     {
         base.Awake();
 

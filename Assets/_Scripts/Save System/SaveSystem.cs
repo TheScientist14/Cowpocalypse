@@ -61,7 +61,7 @@ namespace _Scripts.Save_System
 
         private GameObject _saveIcon;
 
-        protected new void Awake()
+        protected override void Awake()
         {
             base.Awake();
 
@@ -164,6 +164,8 @@ namespace _Scripts.Save_System
             foreach(Transform child in _playerSpawnedObjects.transform)
                 Destroy(child.gameObject);
 
+            yield return new WaitForEndOfFrame(); // wait for destroys to be effective
+
             SaveData data = GetSavedGameData();
 
             Wallet.instance.Money = int.MaxValue; // avoid errors about negative money when spawning machines & extractors
@@ -185,6 +187,8 @@ namespace _Scripts.Save_System
 
             foreach(SpawnerSaveData spawnerData in data.SpawnerDatas)
                 LoadSpawner(spawnerData);
+
+            yield return new WaitForEndOfFrame(); // wait for all Start functions to be called
 
             // important to load player after spawning spawners & machines
             // to reset money

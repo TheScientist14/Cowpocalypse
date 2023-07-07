@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 579903065588776004}
   - component: {fileID: 579903065588776003}
   - component: {fileID: 3672142025011209573}
+  - component: {fileID: 9084519744724675591}
   m_Layer: 5
   m_Name: MachinePanel
   m_TagString: Untagged
@@ -101,6 +102,19 @@ MonoBehaviour:
   - {fileID: 6973292417506464602}
   - {fileID: 3648090342391298304}
   - {fileID: 4763334288282184540}
+--- !u!114 &9084519744724675591
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 579903065588776006}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1be332e5ab63bca4f97e409f4e31511b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Sounds: {fileID: 11400000, guid: 49506ae89310e7b4ca6fafa36703c1af, type: 2}
 --- !u!1 &579903066077773157
 GameObject:
   m_ObjectHideFlags: 0
@@ -194,7 +208,7 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 29.85
+  m_fontSize: 29.7
   m_fontSizeBase: 36
   m_fontWeight: 400
   m_enableAutoSizing: 1
@@ -248,7 +262,6 @@ GameObject:
   - component: {fileID: 579903066663312907}
   - component: {fileID: 579903066663312908}
   - component: {fileID: 579903066663312909}
-  - component: {fileID: 227438095581810013}
   m_Layer: 5
   m_Name: Cross
   m_TagString: Untagged
@@ -370,20 +383,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &227438095581810013
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 579903066663312911}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
+      - m_Target: {fileID: 9084519744724675591}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &579903067397547358
 GameObject:
   m_ObjectHideFlags: 0
@@ -1284,7 +1295,6 @@ GameObject:
   - component: {fileID: 8387972247108727580}
   - component: {fileID: 2989797957703247934}
   - component: {fileID: 6325664761286416291}
-  - component: {fileID: 3368209861248733748}
   m_Layer: 5
   m_Name: Cross
   m_TagString: Untagged
@@ -1406,20 +1416,18 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &3368209861248733748
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6361409041261573903}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
+      - m_Target: {fileID: 9084519744724675591}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7727232353456776913
 GameObject:
   m_ObjectHideFlags: 0

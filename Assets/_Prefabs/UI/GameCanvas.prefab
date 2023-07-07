@@ -148,7 +148,6 @@ GameObject:
   - component: {fileID: 7988048174949863046}
   - component: {fileID: 5205389141423028064}
   - component: {fileID: 6388310091857395269}
-  - component: {fileID: 2335640158772771881}
   m_Layer: 5
   m_Name: PlaceSpawnerButton
   m_TagString: Untagged
@@ -260,7 +259,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7988048174949863046}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1264778925990315452}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &6388310091857395269
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,20 +287,6 @@ MonoBehaviour:
   m_ItemHandlerToPlacePrefab: {fileID: 4732986801910414389, guid: 8a11f632e82038545a792c426fb24eb4, type: 3}
   m_ActiveColor: {r: 0, g: 1, b: 0, a: 1}
   m_InactiveColor: {r: 1, g: 1, b: 1, a: 1}
---- !u!114 &2335640158772771881
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1167567914351019119}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
 --- !u!1 &1638396522207101262
 GameObject:
   m_ObjectHideFlags: 0
@@ -707,7 +704,6 @@ GameObject:
   - component: {fileID: 7357513075876466312}
   - component: {fileID: 4706812526833446772}
   - component: {fileID: 1259112330915222423}
-  - component: {fileID: 4482032759153612337}
   m_Layer: 5
   m_Name: PauseGameButton
   m_TagString: Untagged
@@ -817,6 +813,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1264778925990315452}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 4180458581419319286}
         m_TargetAssemblyTypeName: BasicPanel, Assembly-CSharp
         m_MethodName: TogglePanel
@@ -829,20 +837,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &4482032759153612337
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1827185436477331939}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
 --- !u!1 &2186435949158133847
 GameObject:
   m_ObjectHideFlags: 0
@@ -1008,7 +1002,6 @@ GameObject:
   - component: {fileID: 1529920521653182983}
   - component: {fileID: 9207364742466527160}
   - component: {fileID: 8130207211588901190}
-  - component: {fileID: 5204839706396004352}
   m_Layer: 5
   m_Name: DeleteButton
   m_TagString: Untagged
@@ -1119,7 +1112,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1529920521653182983}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1264778925990315452}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8130207211588901190
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1134,20 +1139,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ActiveColor: {r: 1, g: 0.005347593, b: 0, a: 1}
   m_InactiveColor: {r: 1, g: 1, b: 1, a: 1}
---- !u!114 &5204839706396004352
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2962333363980832739}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
 --- !u!1 &3378599842479722727
 GameObject:
   m_ObjectHideFlags: 0
@@ -1161,7 +1152,6 @@ GameObject:
   - component: {fileID: 4324841959152840404}
   - component: {fileID: 17905926708842220}
   - component: {fileID: 6812856564628095772}
-  - component: {fileID: 2146363175186378379}
   m_Layer: 5
   m_Name: PlaceMergerButton
   m_TagString: Untagged
@@ -1272,7 +1262,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4324841959152840404}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1264778925990315452}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &6812856564628095772
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1288,20 +1290,6 @@ MonoBehaviour:
   m_ItemHandlerToPlacePrefab: {fileID: 8504238527581414455, guid: ed328e898e68bc14bb1da2475479f840, type: 3}
   m_ActiveColor: {r: 0, g: 1, b: 0, a: 1}
   m_InactiveColor: {r: 1, g: 1, b: 1, a: 1}
---- !u!114 &2146363175186378379
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3378599842479722727}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
 --- !u!1 &3393282805480753095
 GameObject:
   m_ObjectHideFlags: 0
@@ -1315,7 +1303,6 @@ GameObject:
   - component: {fileID: 1084816968343598306}
   - component: {fileID: 2381711291099602799}
   - component: {fileID: 7917186394287133196}
-  - component: {fileID: 5148207908134846780}
   m_Layer: 5
   m_Name: PlaceMachineButton
   m_TagString: Untagged
@@ -1427,7 +1414,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1084816968343598306}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1264778925990315452}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7917186394287133196
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1443,20 +1442,6 @@ MonoBehaviour:
   m_ItemHandlerToPlacePrefab: {fileID: 4732986801910414389, guid: d7e00fd415221ad498a820f85becdafa, type: 3}
   m_ActiveColor: {r: 0, g: 1, b: 0, a: 1}
   m_InactiveColor: {r: 1, g: 1, b: 1, a: 1}
---- !u!114 &5148207908134846780
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3393282805480753095}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
 --- !u!1 &3926909844133796217
 GameObject:
   m_ObjectHideFlags: 0
@@ -1469,6 +1454,7 @@ GameObject:
   - component: {fileID: 3926909844133796222}
   - component: {fileID: 3926909844133796223}
   - component: {fileID: 3926909844133796216}
+  - component: {fileID: 1264778925990315452}
   m_Layer: 5
   m_Name: GameCanvas
   m_TagString: Untagged
@@ -1560,6 +1546,19 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &1264778925990315452
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3926909844133796217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1be332e5ab63bca4f97e409f4e31511b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Sounds: {fileID: 11400000, guid: 49506ae89310e7b4ca6fafa36703c1af, type: 2}
 --- !u!1 &3926909844862489846
 GameObject:
   m_ObjectHideFlags: 0
@@ -1755,7 +1754,6 @@ GameObject:
   - component: {fileID: 2476938414265579892}
   - component: {fileID: 7885054746152494790}
   - component: {fileID: 4684285265405274503}
-  - component: {fileID: 3381247331138094432}
   m_Layer: 5
   m_Name: PlaceShopButton
   m_TagString: Untagged
@@ -1867,7 +1865,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2476938414265579892}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1264778925990315452}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &4684285265405274503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1883,20 +1893,6 @@ MonoBehaviour:
   m_ItemHandlerToPlacePrefab: {fileID: 45940641016382040, guid: 9027fdf0e398e1040af5b7b4371d751d, type: 3}
   m_ActiveColor: {r: 0, g: 1, b: 0, a: 1}
   m_InactiveColor: {r: 1, g: 1, b: 1, a: 1}
---- !u!114 &3381247331138094432
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5495114014507399269}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
 --- !u!1 &5508841512106744756
 GameObject:
   m_ObjectHideFlags: 0
@@ -1910,7 +1906,6 @@ GameObject:
   - component: {fileID: 6893586605632585685}
   - component: {fileID: 3391176820678857714}
   - component: {fileID: 7414892922551517503}
-  - component: {fileID: 6849066803519444978}
   m_Layer: 5
   m_Name: PlaceSplitterButton
   m_TagString: Untagged
@@ -2021,7 +2016,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6893586605632585685}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1264778925990315452}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7414892922551517503
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2037,20 +2044,6 @@ MonoBehaviour:
   m_ItemHandlerToPlacePrefab: {fileID: 8504238527581414455, guid: 4762357ca4e2a5349a7eec5c10e83b92, type: 3}
   m_ActiveColor: {r: 0, g: 1, b: 0, a: 1}
   m_InactiveColor: {r: 1, g: 1, b: 1, a: 1}
---- !u!114 &6849066803519444978
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5508841512106744756}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
 --- !u!1 &5881463153269859846
 GameObject:
   m_ObjectHideFlags: 0
@@ -2508,7 +2501,6 @@ GameObject:
   - component: {fileID: 3061382633061203994}
   - component: {fileID: 6013134582891783429}
   - component: {fileID: 1698904226084123940}
-  - component: {fileID: 2928365464608176857}
   m_Layer: 5
   m_Name: PlaceBeltButton
   m_TagString: Untagged
@@ -2619,7 +2611,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3061382633061203994}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1264778925990315452}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1698904226084123940
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2634,20 +2638,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_ActiveColor: {r: 0, g: 1, b: 0, a: 1}
   m_InactiveColor: {r: 1, g: 1, b: 1, a: 1}
---- !u!114 &2928365464608176857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7252080117710382270}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
 --- !u!1 &7284653210586815479
 GameObject:
   m_ObjectHideFlags: 0
@@ -2961,7 +2951,6 @@ GameObject:
   - component: {fileID: 3061073636885243690}
   - component: {fileID: 9141003583112262199}
   - component: {fileID: 1693689772735407858}
-  - component: {fileID: 5410745736521170123}
   m_Layer: 5
   m_Name: RecipesBookButton
   m_TagString: Untagged
@@ -3071,6 +3060,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1264778925990315452}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 6680447754503215520}
         m_TargetAssemblyTypeName: BasicPanel, Assembly-CSharp
         m_MethodName: TogglePanel
@@ -3083,20 +3084,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &5410745736521170123
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7691591109427243831}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
 --- !u!1 &7720161567866167668
 GameObject:
   m_ObjectHideFlags: 0

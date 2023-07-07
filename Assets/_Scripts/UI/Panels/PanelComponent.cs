@@ -71,6 +71,6 @@ public abstract class PanelComponent : MonoBehaviour
 
     protected virtual void OnDestroy()
     {
-        Close();
+        // Close();
     }
 }

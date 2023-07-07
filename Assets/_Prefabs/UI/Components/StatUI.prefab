@@ -301,7 +301,7 @@ GameObject:
   - component: {fileID: 4176417731220052440}
   - component: {fileID: 7468656179101406317}
   - component: {fileID: 1925933621281400141}
-  - component: {fileID: 5905158546072303259}
+  - component: {fileID: 6828449100167998224}
   m_Layer: 5
   m_Name: StatUI
   m_TagString: Untagged
@@ -433,7 +433,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6205223103204990844}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 6828449100167998224}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1925933621281400141
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -450,7 +462,7 @@ MonoBehaviour:
   m_StatIcon: {fileID: 8166705890028493140}
   m_LvlImage: {fileID: 8166705889537894940}
   m_StatIdx: 0
---- !u!114 &5905158546072303259
+--- !u!114 &6828449100167998224
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -459,8 +471,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 8166705890202976487}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
+  m_Script: {fileID: 11500000, guid: 1be332e5ab63bca4f97e409f4e31511b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
+  m_Sounds: {fileID: 11400000, guid: 49506ae89310e7b4ca6fafa36703c1af, type: 2}

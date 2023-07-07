@@ -213,7 +213,6 @@ GameObject:
   - component: {fileID: 1136645084147003120}
   - component: {fileID: 2312478531340802161}
   - component: {fileID: 2356363080484243878}
-  - component: {fileID: 5608771726430783843}
   m_Layer: 5
   m_Name: CloseBookButton
   m_TagString: Untagged
@@ -343,6 +342,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 2452788450332634705}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 6098504885863645608}
         m_TargetAssemblyTypeName: PanelComponent, Assembly-CSharp
         m_MethodName: Close
@@ -355,20 +366,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &5608771726430783843
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 839198441686181636}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
 --- !u!1 &1162335260362136785
 GameObject:
   m_ObjectHideFlags: 0
@@ -647,7 +644,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 1.000061}
+  m_AnchoredPosition: {x: 0, y: -0.000061035156}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &6856046875009497923
@@ -1231,7 +1228,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0, y: 1.000061}
+  m_AnchoredPosition: {x: 0, y: -0.000061035156}
   m_SizeDelta: {x: 0, y: 300}
   m_Pivot: {x: 0, y: 1}
 --- !u!114 &5263790727436314885
@@ -1551,6 +1548,7 @@ GameObject:
   - component: {fileID: 6335151870391404370}
   - component: {fileID: 6098504885863645608}
   - component: {fileID: 6625482923234305437}
+  - component: {fileID: 2452788450332634705}
   m_Layer: 5
   m_Name: RecipesBook
   m_TagString: Untagged
@@ -1694,6 +1692,19 @@ MonoBehaviour:
   m_LastCover: {fileID: 21300000, guid: 0e85378b4d8ad9a42bc18dd91f9c5fdc, type: 3}
   m_BlankPageSprite: {fileID: 21300000, guid: 73228c46a90974f4db15fe99615ca386, type: 3}
   m_RessourceUIPrefab: {fileID: 9133027545470972643, guid: a1f66710ec4a7be46b9d3bef11935f4d, type: 3}
+--- !u!114 &2452788450332634705
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3394607163150015085}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1be332e5ab63bca4f97e409f4e31511b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Sounds: {fileID: 11400000, guid: 49506ae89310e7b4ca6fafa36703c1af, type: 2}
 --- !u!1 &3503781024315327098
 GameObject:
   m_ObjectHideFlags: 0
@@ -2103,12 +2114,24 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4240952413743127804}
   m_HandleRect: {fileID: 6135325657603595299}
   m_Direction: 2
-  m_Value: -0.000061035156
-  m_Size: 0.99666667
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2452788450332634705}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &4137075321105473831
 GameObject:
   m_ObjectHideFlags: 0
@@ -2618,7 +2641,6 @@ GameObject:
   - component: {fileID: 8538695255997470801}
   - component: {fileID: 1160835179529372617}
   - component: {fileID: 902239790675591134}
-  - component: {fileID: 3160240122301989176}
   m_Layer: 5
   m_Name: NextPage
   m_TagString: Untagged
@@ -2727,21 +2749,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1160835179529372617}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &3160240122301989176
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4884918724463277090}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
+      m_Calls:
+      - m_Target: {fileID: 2452788450332634705}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5303004882537366153
 GameObject:
   m_ObjectHideFlags: 0
@@ -3284,7 +3304,6 @@ GameObject:
   - component: {fileID: 4112798182474542255}
   - component: {fileID: 7273051111987136456}
   - component: {fileID: 2213477782074096701}
-  - component: {fileID: 8921456577575190504}
   m_Layer: 5
   m_Name: PrevPage
   m_TagString: Untagged
@@ -3393,21 +3412,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7273051111987136456}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &8921456577575190504
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6811635656315379363}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
+      m_Calls:
+      - m_Target: {fileID: 2452788450332634705}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6978354006331791788
 GameObject:
   m_ObjectHideFlags: 0
@@ -3664,12 +3681,24 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 633240608248270355}
   m_HandleRect: {fileID: 9043264544272518300}
   m_Direction: 2
-  m_Value: -0.000061035156
-  m_Size: 0.99666667
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2452788450332634705}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7226358392147521718
 GameObject:
   m_ObjectHideFlags: 0

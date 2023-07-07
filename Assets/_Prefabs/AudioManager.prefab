@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2063688204948103352}
   - component: {fileID: 2063688204948103355}
+  - component: {fileID: 3930299318268566872}
   m_Layer: 0
   m_Name: AudioManager
   m_TagString: Untagged
@@ -49,6 +50,35 @@ MonoBehaviour:
   m_MusicAudioSource: {fileID: 2063688206364697850}
   m_SoundEffectsAudioSource: {fileID: 2063688205751007385}
   m_MasterMixer: {fileID: 24100000, guid: d3afd62c31a41254cbdc908dd35dd2c3, type: 2}
+  m_PercentToDbPow: 0.5
+  OnMixerInit:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3930299318268566872}
+        m_TargetAssemblyTypeName: RandomMusicPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &3930299318268566872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2063688204948103353}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b5f991701b49c34409b6da594e727094, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Sounds: {fileID: 11400000, guid: 74303c24be005ac4a940f26e33838f6a, type: 2}
 --- !u!1 &2063688205751007391
 GameObject:
   m_ObjectHideFlags: 0

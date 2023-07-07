@@ -12,7 +12,6 @@ GameObject:
   - component: {fileID: 4462844775694374825}
   - component: {fileID: 1599105675605405403}
   - component: {fileID: 8990141653056807901}
-  - component: {fileID: 8154068825921490799}
   m_Layer: 5
   m_Name: CollapseButton
   m_TagString: Untagged
@@ -121,21 +120,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1599105675605405403}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &8154068825921490799
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 539737959952329104}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
+      m_Calls:
+      - m_Target: {fileID: 5787930772425073270}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5728718121056334786
 GameObject:
   m_ObjectHideFlags: 0
@@ -148,7 +145,6 @@ GameObject:
   - component: {fileID: 7319727008286335613}
   - component: {fileID: 3967451278798521408}
   - component: {fileID: 3064064256144412563}
-  - component: {fileID: 4319025168452657847}
   m_Layer: 5
   m_Name: ExpandButton
   m_TagString: Untagged
@@ -257,21 +253,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3967451278798521408}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
---- !u!114 &4319025168452657847
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5728718121056334786}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 253c4524865ca8e498fa42ba55580963, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ClickSounds:
-  - {fileID: 8300000, guid: 3dbc28a78b5e7cd409b7cd76adae1636, type: 3}
+      m_Calls:
+      - m_Target: {fileID: 5787930772425073270}
+        m_TargetAssemblyTypeName: RandomUISoundPlayer, Assembly-CSharp
+        m_MethodName: PlayRandomSound
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &7466613124970424521
 GameObject:
   m_ObjectHideFlags: 0
@@ -362,6 +356,7 @@ GameObject:
   - component: {fileID: 5032401894230292326}
   - component: {fileID: 8299707219134000953}
   - component: {fileID: 5843623088874072471}
+  - component: {fileID: 5787930772425073270}
   m_Layer: 5
   m_Name: ExpandedSpace
   m_TagString: Untagged
@@ -447,3 +442,16 @@ MonoBehaviour:
   m_MovementEase: 10
   m_ExpandButton: {fileID: 3064064256144412563}
   m_CollapseButton: {fileID: 8990141653056807901}
+--- !u!114 &5787930772425073270
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9038879738931538931}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1be332e5ab63bca4f97e409f4e31511b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Sounds: {fileID: 11400000, guid: 49506ae89310e7b4ca6fafa36703c1af, type: 2}

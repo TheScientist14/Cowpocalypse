@@ -44,7 +44,7 @@ namespace _Scripts.Pooling_System
 
 
         //Add a starting amount of spawnable items to the pool
-        protected new void Awake()
+        protected override void Awake()
         {
             base.Awake();
 
