@@ -21,7 +21,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: Shader Graphs_MapShader2
-  m_Shader: {fileID: -6465566751694194690, guid: 5f89cef115908634fa76a4749bca8856, type: 3}
+  m_Shader: {fileID: -6465566751694194690, guid: 08afbd452d17cb8409796febd106dcc7, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -34,7 +34,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _MainTex:
-        m_Texture: {fileID: 2800000, guid: 05cfe010378336646ad6c721f66543d1, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _WaveTexture:
@@ -45,13 +45,17 @@ Material:
     m_Floats:
     - _BUILTIN_QueueControl: 0
     - _BUILTIN_QueueOffset: 0
-    - _Float: 18.7
+    - _Float: 14.6
     - _Float_1: 1.86
     - _Float_2: 43.07
+    - _InvertDIrection: 1
+    - _Side_width: -1
     - _ToggleShader: 0
-    - _WaveSize: 2.41
-    - _WaveSpeed: 2
+    - _WaveSize: 50
+    - _WaveSpace: 515.54
+    - _WaveSpeed: 0.2
     m_Colors:
+    - _SecondWaveOffset: {r: -2.07, g: -3.3, b: 0, a: 0}
     - _TilingAndOffset: {r: 0, g: 0, b: 0, a: 0}
     - _WaterColor: {r: 0.20392159, g: 0.49803925, b: 0.7176471, a: 1}
   m_BuildTextureStacks: []
