@@ -243,7 +243,7 @@ public class Machine : UpGiver
         if(Time.time < 0)
             return;
 
-        _CraftItemAfterCooldown(iTimeLeft);
+        StartCoroutine(_CraftItemAfterCooldown(iTimeLeft));
     }
 
     public IEnumerable<KeyValuePair<ItemData, int>> GetCurrentStock()

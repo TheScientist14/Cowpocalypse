@@ -59,9 +59,8 @@ public class Splitter : SimpleItemHandler
         return m_CurrentOutputIdx;
     }
 
-    public void SetCurrentOutputIndex(int iOutputIdx)
+    public void UnsafeSetCurrentOutputIndex(int iOutputIdx)
     {
-        Assert.IsTrue(0 <= iOutputIdx && iOutputIdx < m_ItemHandlerFinder.Count);
         m_CurrentOutputIdx = iOutputIdx;
     }
 }

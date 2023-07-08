@@ -12,6 +12,9 @@ using NaughtyAttributes;
 using Unity.Jobs;
 using UnityEngine.Events;
 using UnityEngine.Assertions;
+using Unity.VisualScripting;
+using System.Text;
+using UnityEngine.Analytics;
 
 namespace _Scripts.Save_System
 {
@@ -49,8 +52,6 @@ namespace _Scripts.Save_System
         private const string Filename = "Cowpocalypse.noext";
         private string _path;
 
-        private const int LastVersion = 1;
-
         [SerializeField] private float loadTime;
         private GameObject _playerSpawnedObjects;
 
@@ -65,8 +66,15 @@ namespace _Scripts.Save_System
         {
             base.Awake();
 
-            var sOs = ItemCreator.LoadAllResourceAtPath<ItemData>();
+            if(savedGame == null)
+                savedGame = new UnityEvent();
+            if(loadedGame == null)
+                loadedGame = new UnityEvent();
+        }
 
+        private void Start()
+        {
+            var sOs = ItemCreator.LoadAllResourceAtPath<ItemData>();
             _itemDatas = sOs.ToDictionary(i => i.Name);
 
             _path = Application.persistentDataPath + "/" + Filename;
@@ -76,12 +84,6 @@ namespace _Scripts.Save_System
             _saveIcon.SetActive(false);
 
             _playerSpawnedObjects = GameObject.FindWithTag("Map");
-        }
-
-        private void Start()
-        {
-            savedGame.AddListener(OnGameSaved);
-            loadedGame.AddListener(OnGameLoaded);
 
             if(_loadOnStartup)
             {
@@ -92,7 +94,6 @@ namespace _Scripts.Save_System
 
         private void OnGameSaved()
         {
-            // Debug.Log("Game Saved");
             _saveIcon.SetActive(false);
         }
 
@@ -101,11 +102,8 @@ namespace _Scripts.Save_System
             _saveIcon.transform.GetChild(0).gameObject.SetActive(false);
             _saveIcon.SetActive(false);
             InputStateMachine.instance.SetState(new FreeViewState());
-
-            // Debug.Log("Game Loaded");
         }
 
-        [Button("Save Game async")]
         public void SaveGame()
         {
 #pragma warning disable CS4014 // Don't want to await, it should block gameplay;
@@ -117,39 +115,56 @@ namespace _Scripts.Save_System
         {
             _saveIcon.SetActive(true);
 
-            // Debug.Log("Game Save async Started : { Thread : " + Thread.CurrentThread.ManagedThreadId + " }");
-            SaveData data = new SaveData();
-            await Task.Run(() =>
-            {
-                BinaryFormatter formatter = new BinaryFormatter();
+            SaveData data = new SaveData(true);
+            bool success = false;
+            await Task.Run(() => success = _SaveData(data));
 
-                using(FileStream stream = new FileStream(_path, FileMode.Create))
-                {
-                    int? Version = LastVersion;
-                    formatter.Serialize(stream, Version);
-                    formatter.Serialize(stream, data);
-                }
+            OnGameSaved();
 
-                // Debug.Log("Game Saved: { Thread : " + Thread.CurrentThread.ManagedThreadId + " }");
-            });
+            if(!success)
+                return;
+
             savedGame.Invoke();
         }
 
-        [Button("Save Game non async")]
-        public void SaveNonAsync()
+        public bool SaveNonAsync()
         {
-            BinaryFormatter formatter = new BinaryFormatter();
+            SaveData data = new SaveData(true);
+            if(!_SaveData(data))
+                return false;
 
-            SaveData data = new SaveData();
-
-            using(FileStream stream = new FileStream(_path, FileMode.Create))
-            {
-                formatter.Serialize(stream, data);
-            }
             savedGame.Invoke();
+            return true;
         }
 
-        [Button("Load Game")]
+        public bool _SaveData(SaveData iData)
+        {
+            bool success = false;
+            FileStream stream = null;
+            BinaryWriter writer = null;
+            try
+            {
+                stream = File.Create(_path);
+                writer = new BinaryWriter(stream, Encoding.UTF8, false);
+
+                iData.WriteBin(writer);
+                success = true;
+            }
+            catch(Exception)
+            {
+                success = false;
+            }
+            finally
+            {
+                if(stream != null)
+                    stream.Dispose();
+                if(writer != null)
+                    writer.Dispose();
+            }
+
+            return success;
+        }
+
         public void LoadGame()
         {
             _saveIcon.SetActive(true);
@@ -161,14 +176,18 @@ namespace _Scripts.Save_System
 
         private IEnumerator Load()
         {
+            string errMsg = "";
+            SaveData data = GetSavedGameData(out errMsg);
+            if(!errMsg.Equals(""))
+                Debug.LogWarning(errMsg);
+            if(data == null)
+            {
+                OnGameLoaded();
+                yield break;
+            }
+
             foreach(Transform child in _playerSpawnedObjects.transform)
                 Destroy(child.gameObject);
-
-            yield return new WaitForEndOfFrame(); // wait for destroys to be effective
-
-            SaveData data = GetSavedGameData();
-
-            Wallet.instance.Money = int.MaxValue; // avoid errors about negative money when spawning machines & extractors
 
             foreach(MachineSaveData machineData in data.MachineDatas)
                 LoadMachine(machineData);
@@ -188,14 +207,16 @@ namespace _Scripts.Save_System
             foreach(SpawnerSaveData spawnerData in data.SpawnerDatas)
                 LoadSpawner(spawnerData);
 
-            yield return new WaitForEndOfFrame(); // wait for all Start functions to be called
-
-            // important to load player after spawning spawners & machines
-            // to reset money
             LoadPlayer(data.PlayerSaveData);
 
-            // this is only to have loading time perceptible
-            yield return new WaitForSecondsRealtime(loadTime);
+            // avoid errors about negative money when spawning machines & extractors
+            Wallet.instance.Money = int.MaxValue / 2;
+
+            OnGameLoaded();
+
+            // reset money after all starts done
+            yield return new WaitForEndOfFrame();
+            Wallet.instance.Money = data.PlayerSaveData.Money;
 
             loadedGame.Invoke();
         }
@@ -205,30 +226,42 @@ namespace _Scripts.Save_System
             return File.Exists(_path);
         }
 
-        public SaveData GetSavedGameData()
+        public SaveData GetSavedGameData(out string oMsg)
         {
+            SaveData data = null;
+            oMsg = "";
             if(CheckForSave())
             {
-                BinaryFormatter formatter = new BinaryFormatter();
-                FileStream stream = new FileStream(_path, FileMode.Open);
-
-                int? Version = formatter.Deserialize(stream) as int?;
-                if(!Version.HasValue || Version.Value < 0 || Version.Value > LastVersion)
+                FileStream stream = null;
+                BinaryReader reader = null;
+                try
                 {
-                    Debug.LogWarning("Save file version is not supported");
-                    return null;
+                    stream = File.OpenRead(_path);
+                    reader = new BinaryReader(stream, Encoding.UTF8, false);
+
+                    data = new SaveData(reader, out oMsg);
                 }
-
-                SaveData data = formatter.Deserialize(stream) as SaveData;
-
-                stream.Close();
-                return data;
+                catch(Exception)
+                {
+                    data = null;
+                    if(oMsg.Equals(""))
+                    {
+                        oMsg = "Unknown error, loading aborted.\n" +
+                            "Might be a file access or corruption issue.";
+                    }
+                }
+                finally
+                {
+                    if(stream != null)
+                        stream.Dispose();
+                    if(reader != null)
+                        reader.Dispose();
+                }
             }
             else
-            {
-                Debug.Log("Save file not found in " + _path);
-                return null;
-            }
+                oMsg = "Save file not found.";
+
+            return data;
         }
 
         public void LoadPlayer(PlayerSaveData iData)
@@ -238,6 +271,14 @@ namespace _Scripts.Save_System
             StatManager.instance.SetLevelToStat(StatManager.CraftSpeedIndex, iData.CraftLevel);
             Wallet.instance.Money = iData.Money;
             MapGenerator.instance.InitMap(iData.Seed);
+            Camera camera = Camera.main;
+            Vector3 camPos2D = iData.CameraTransform.Pos;
+            camera.transform.position = new Vector3(camPos2D.x, camPos2D.y, camera.transform.position.z);
+            camera.orthographicSize = iData.CameraOrthoSize;
+            foreach(ItemData _item in _itemDatas.Values)
+                _item.Unlocked = false;
+            foreach(KeyValuePair<string, bool> itemUnlock in iData.ItemUnlocks)
+                _itemDatas[itemUnlock.Key].Unlocked = itemUnlock.Value;
         }
 
         public Belt LoadBelt(BeltSaveData iData)
@@ -283,7 +324,7 @@ namespace _Scripts.Save_System
             if(iData.Item.HasValue)
                 splitter.SetItemInTransfer(LoadItem(iData.Item.Value));
 
-            splitter.SetCurrentOutputIndex(iData.OutputIndex);
+            splitter.UnsafeSetCurrentOutputIndex(iData.OutputIndex);
 
             return splitter;
         }
@@ -296,7 +337,7 @@ namespace _Scripts.Save_System
             if(iData.Item.HasValue)
                 merger.SetItemInTransfer(LoadItem(iData.Item.Value));
 
-            merger.SetCurrentInputIndex(iData.InputIndex);
+            merger.UnsafeSetCurrentInputIndex(iData.InputIndex);
 
             return merger;
         }

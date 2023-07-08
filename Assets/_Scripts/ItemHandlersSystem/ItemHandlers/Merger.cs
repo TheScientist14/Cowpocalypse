@@ -74,9 +74,8 @@ public class Merger : UpGiver
         return m_CurrentInputIdx;
     }
 
-    public void SetCurrentInputIndex(int iInputIdx)
+    public void UnsafeSetCurrentInputIndex(int iInputIdx)
     {
-        Assert.IsTrue(0 <= iInputIdx && iInputIdx < m_ItemHandlerFinder.Count);
         m_CurrentInputIdx = iInputIdx;
     }
 }

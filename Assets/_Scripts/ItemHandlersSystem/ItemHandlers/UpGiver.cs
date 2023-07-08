@@ -1,6 +1,5 @@
 using System.Collections;
 using UnityEngine;
-using UnityEngine.Events;
 
 [RequireComponent(typeof(ItemHandlerFinder))]
 public class UpGiver : SimpleItemHandler
