@@ -3,6 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Windows;
 using Random = UnityEngine.Random;
 
 public class MapGenerator : Singleton<MapGenerator>
@@ -141,8 +142,8 @@ public class MapGenerator : Singleton<MapGenerator>
             }
         }
         mapTexture.Apply();
-        // byte[] bytes = mapTexture.EncodeToPNG();
-        // File.WriteAllBytes(Application.dataPath + "/Art/Sprites/Terrain/DebugMapTexture.png", bytes);
+        byte[] bytes = mapTexture.EncodeToPNG();
+        File.WriteAllBytes(Application.dataPath + "/Art/Sprites/Terrain/DebugMapTexture.png", bytes);
 
         SpriteRenderer mapRenderer = m_Map.AddComponent<SpriteRenderer>();
         Sprite mapSprite = Sprite.Create(
