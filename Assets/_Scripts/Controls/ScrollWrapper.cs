@@ -16,32 +16,32 @@ using UnityEditor;
 [DisplayStringFormat("Scroll")]
 public class ScrollWrapper : InputBindingComposite<float>
 {
-    /*// Each part binding is represented as a field of type int and annotated with
+	/*// Each part binding is represented as a field of type int and annotated with
     // InputControlAttribute. Setting "layout" restricts the controls that
     // are made available for picking in the UI.
     //
     // On creation, the int value is set to an integer identifier for the binding
     // part. This identifier can read values from InputBindingCompositeContext.
     // See ReadValue() below.*/
-    [InputControl(layout = "Value")]
-    public int m_ScrollValueId;
+	[InputControl(layout = "Value")]
+	public int m_ScrollValueId;
 
-    // This method computes the resulting input value of the composite based
-    // on the input from its part bindings.
-    public override float ReadValue(ref InputBindingCompositeContext iContext)
-    {
-        return iContext.ReadValue<Vector2, Vector2MagnitudeComparer>(m_ScrollValueId).y;
-    }
+	// This method computes the resulting input value of the composite based
+	// on the input from its part bindings.
+	public override float ReadValue(ref InputBindingCompositeContext iContext)
+	{
+		return iContext.ReadValue<Vector2, Vector2MagnitudeComparer>(m_ScrollValueId).y;
+	}
 
-    // This method computes the current actuation of the binding as a whole.
-    public override float EvaluateMagnitude(ref InputBindingCompositeContext iContext)
-    {
-        return iContext.EvaluateMagnitude(m_ScrollValueId);
-    }
+	// This method computes the current actuation of the binding as a whole.
+	public override float EvaluateMagnitude(ref InputBindingCompositeContext iContext)
+	{
+		return iContext.EvaluateMagnitude(m_ScrollValueId);
+	}
 
-    static ScrollWrapper()
-    {
-        /*// Can give custom name or use default (type name with "Composite" clipped off).
+	static ScrollWrapper()
+	{
+		/*// Can give custom name or use default (type name with "Composite" clipped off).
         // Same composite can be registered multiple times with different names to introduce
         // aliases.
         //
@@ -51,9 +51,11 @@ public class ScrollWrapper : InputBindingComposite<float>
         //       the registration has to take place before the composite is first used
         //       in a binding. Also, for the composite to show in the editor, it has
         //       to be registered from code that runs in edit mode.*/
-        InputSystem.RegisterBindingComposite<ScrollWrapper>();
-    }
+		InputSystem.RegisterBindingComposite<ScrollWrapper>();
+	}
 
-    [RuntimeInitializeOnLoadMethod]
-    static void Init() { } // Trigger static constructor.
+	[RuntimeInitializeOnLoadMethod]
+	static void Init()
+	{
+	} // Trigger static constructor.
 }

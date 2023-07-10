@@ -45,9 +45,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_WorldGridGeometry: {fileID: 0}
-  m_MapWidth: 200
-  m_MapHeight: 200
-  m_PixelPerCell: 16
+  m_MapWidth: 100
+  m_MapHeight: 100
+  m_PixelPerCell: 128
   m_TerrainSprites:
   - Sprite: {fileID: 21300000, guid: 68be4d34f9f359f4fbcf4d2567f91d96, type: 3}
     TerrainType: 0
@@ -55,7 +55,7 @@ MonoBehaviour:
     TerrainType: 1
   - Sprite: {fileID: 21300000, guid: e653d5d839a5d3b41ac849ee65ae3404, type: 3}
     TerrainType: 2
-  - Sprite: {fileID: 21300000, guid: 144498600bfd9e64686004ab23d72228, type: 3}
+  - Sprite: {fileID: 21300000, guid: 5fd17c2296e1e8241b0d94f837200045, type: 3}
     TerrainType: 3
   - Sprite: {fileID: 21300000, guid: 77e487a46cd3fb94cb403f186015ed9a, type: 3}
     TerrainType: 4

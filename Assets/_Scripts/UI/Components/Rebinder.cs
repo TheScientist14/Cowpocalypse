@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -7,53 +5,53 @@ using UnityEngine.UI;
 
 public class Rebinder : MonoBehaviour
 {
-    [SerializeField] TextMeshProUGUI m_ActionNameText;
-    [SerializeField] TextMeshProUGUI m_BoundKeyText;
-    [SerializeField] Button m_RebindButton;
-    [SerializeField] Button m_RemoveBindindButton;
+	[SerializeField] TextMeshProUGUI m_ActionNameText;
+	[SerializeField] TextMeshProUGUI m_BoundKeyText;
+	[SerializeField] Button m_RebindButton;
+	[SerializeField] Button m_RemoveBindindButton;
 
-    private InputAction m_Action;
-    private int m_BindingIndex;
+	private InputAction m_Action;
+	private int m_BindingIndex;
 
-    void Start()
-    {
-        m_RebindButton.onClick.AddListener(Rebind);
-        m_RemoveBindindButton.onClick.AddListener(RemoveBindings);
-    }
+	void Start()
+	{
+		m_RebindButton.onClick.AddListener(Rebind);
+		m_RemoveBindindButton.onClick.AddListener(RemoveBindings);
+	}
 
-    public void SetInputAction(InputAction iInputAction, int iBindingIndex = 0)
-    {
-        m_Action = iInputAction;
-        m_BindingIndex = iBindingIndex;
+	public void SetInputAction(InputAction iInputAction, int iBindingIndex = 0)
+	{
+		m_Action = iInputAction;
+		m_BindingIndex = iBindingIndex;
 
-        if(m_Action == null)
-            return;
+		if(m_Action == null)
+			return;
 
-        m_ActionNameText.text = m_Action.name;
-        if(m_Action.bindings[m_BindingIndex].isPartOfComposite)
-            m_ActionNameText.text += "/" + m_Action.bindings[m_BindingIndex].name;
+		m_ActionNameText.text = m_Action.name;
+		if(m_Action.bindings[m_BindingIndex].isPartOfComposite)
+			m_ActionNameText.text += "/" + m_Action.bindings[m_BindingIndex].name;
 
-        Refresh();
-    }
+		Refresh();
+	}
 
-    void Refresh()
-    {
-        if(m_Action == null || m_Action.bindings[m_BindingIndex] == null)
-        {
-            m_BoundKeyText.text = "";
-            return;
-        }
+	void Refresh()
+	{
+		if(m_Action == null || m_Action.bindings[m_BindingIndex] == null)
+		{
+			m_BoundKeyText.text = "";
+			return;
+		}
 
-        InputBinding inputBinding = m_Action.bindings[m_BindingIndex];
-        if(inputBinding.isPartOfComposite)
-        {
-            m_BoundKeyText.text = InputControlPath.ToHumanReadableString(
-                inputBinding.effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
-        }
-        else
-            m_BoundKeyText.text = m_Action.GetBindingDisplayString(m_BindingIndex);
+		InputBinding inputBinding = m_Action.bindings[m_BindingIndex];
+		if(inputBinding.isPartOfComposite)
+		{
+			m_BoundKeyText.text = InputControlPath.ToHumanReadableString(
+				inputBinding.effectivePath, InputControlPath.HumanReadableStringOptions.OmitDevice);
+		}
+		else
+			m_BoundKeyText.text = m_Action.GetBindingDisplayString(m_BindingIndex);
 
-        /*string inputNamesList = "";
+		/*string inputNamesList = "";
         foreach(InputBinding inputBinding in m_Action.bindings)
         {
             if(inputNamesList != "")
@@ -61,34 +59,34 @@ public class Rebinder : MonoBehaviour
             inputNamesList += m_Action.GetBindingDisplayString(inputBinding);
         }
         m_BoundKeyText.text = inputNamesList;*/
-    }
+	}
 
-    void Rebind()
-    {
-        if(m_Action == null)
-        {
-            Debug.LogError("No action...");
-            return;
-        }
+	void Rebind()
+	{
+		if(m_Action == null)
+		{
+			Debug.LogError("No action...");
+			return;
+		}
 
-        InputActionRebindingExtensions.RebindingOperation rebindOperation = m_Action.PerformInteractiveRebinding(m_BindingIndex)
-            .WithExpectedControlType("Button")
-            .WithControlsExcluding("Mouse")
-            .OnMatchWaitForAnother(0.1f)
-            .OnComplete(operation =>
-                {
-                    operation.Dispose();
-                    Refresh();
-                })
-            .Start();
-    }
+		InputActionRebindingExtensions.RebindingOperation rebindOperation = m_Action.PerformInteractiveRebinding(m_BindingIndex)
+			.WithExpectedControlType("Button")
+			.WithControlsExcluding("Mouse")
+			.OnMatchWaitForAnother(0.1f)
+			.OnComplete(operation =>
+				{
+					operation.Dispose();
+					Refresh();
+				})
+			.Start();
+	}
 
-    void RemoveBindings()
-    {
-        if(m_Action == null)
-            return;
+	void RemoveBindings()
+	{
+		if(m_Action == null)
+			return;
 
-        m_Action.ApplyBindingOverride(m_BindingIndex, "");
-        Refresh();
-    }
+		m_Action.ApplyBindingOverride(m_BindingIndex, "");
+		Refresh();
+	}
 }

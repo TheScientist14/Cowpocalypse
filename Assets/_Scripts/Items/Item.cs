@@ -1,34 +1,32 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class Item : MonoBehaviour
 {
-    [SerializeField] private GameObject item;
-    [SerializeField] private ItemData itemData;
+	[SerializeField] private GameObject item;
+	[SerializeField] private ItemData itemData;
 
-    private void Awake()
-    {
-        item = gameObject;
-    }
+	private void Awake()
+	{
+		item = gameObject;
+	}
 
-    public ItemData GetItemData()
-    {
-        return itemData;
-    }
+	public ItemData GetItemData()
+	{
+		return itemData;
+	}
 
-    public GameObject GetItem()
-    {
-        return item;
-    }
+	public GameObject GetItem()
+	{
+		return item;
+	}
 
-    public void SetItemData(ItemData data)
-    {
-        itemData = data;
-    }
+	public void SetItemData(ItemData data)
+	{
+		itemData = data;
+	}
 
-    public void SetItem(GameObject setItem)
-    {
-        item = setItem;
-    }
+	public void SetItem(GameObject setItem)
+	{
+		item = setItem;
+	}
 }

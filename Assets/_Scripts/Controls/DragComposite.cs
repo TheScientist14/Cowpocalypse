@@ -18,48 +18,50 @@ using UnityEditor;
 // source : https://forum.unity.com/threads/implement-a-mouse-drag-composite.807906/
 public class DragComposite : InputBindingComposite<Vector2>
 {
-    [InputControl(layout = "Button")]
-    public int Button;
+	[InputControl(layout = "Button")]
+	public int Button;
 
-    [InputControl(layout = "Value")]
-    public int CurrentPos;
+	[InputControl(layout = "Value")]
+	public int CurrentPos;
 
-    private bool isDragging = false;
-    private Vector2 oldPos;
+	private bool isDragging = false;
+	private Vector2 oldPos;
 
-    public override Vector2 ReadValue(ref InputBindingCompositeContext context)
-    {
-        Vector2 curPos = context.ReadValue<Vector2, Vector2MagnitudeComparer>(CurrentPos);
-        if(!isDragging)
-        {
-            oldPos = curPos;
-            isDragging = true;
-            // Debug.Log("init drag : " + curPos);
-            return Vector2.zero;
-        }
+	public override Vector2 ReadValue(ref InputBindingCompositeContext context)
+	{
+		Vector2 curPos = context.ReadValue<Vector2, Vector2MagnitudeComparer>(CurrentPos);
+		if(!isDragging)
+		{
+			oldPos = curPos;
+			isDragging = true;
+			// Debug.Log("init drag : " + curPos);
+			return Vector2.zero;
+		}
 
-        // Debug.Log("drag : " + (curPos - oldPos).magnitude);
-        return curPos - oldPos;
-    }
+		// Debug.Log("drag : " + (curPos - oldPos).magnitude);
+		return curPos - oldPos;
+	}
 
-    public override float EvaluateMagnitude(ref InputBindingCompositeContext context)
-    {
-        float magnitude = context.EvaluateMagnitude(Button);
-        // Debug.Log(magnitude);
-        if(magnitude <= 0)
-        {
-            isDragging = false;
-            return 0;
-        }
+	public override float EvaluateMagnitude(ref InputBindingCompositeContext context)
+	{
+		float magnitude = context.EvaluateMagnitude(Button);
+		// Debug.Log(magnitude);
+		if(magnitude <= 0)
+		{
+			isDragging = false;
+			return 0;
+		}
 
-        return magnitude;
-    }
+		return magnitude;
+	}
 
-    static DragComposite()
-    {
-        InputSystem.RegisterBindingComposite<DragComposite>();
-    }
+	static DragComposite()
+	{
+		InputSystem.RegisterBindingComposite<DragComposite>();
+	}
 
-    [RuntimeInitializeOnLoadMethod]
-    private static void Init() { }
+	[RuntimeInitializeOnLoadMethod]
+	private static void Init()
+	{
+	}
 }
