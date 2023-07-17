@@ -2,6 +2,7 @@ using NaughtyAttributes;
 using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using UnityEngine.Windows;
 using Random = UnityEngine.Random;
 
@@ -10,6 +11,7 @@ public class MapGenerator : Singleton<MapGenerator>
 	private int m_Seed;
 
 	[SerializeField] Grid m_WorldGridGeometry;
+	[SerializeField] private Material worldMaterial;
 
 	[Header("MapTexture")]
 	[SerializeField] int m_MapWidth = 200;
@@ -148,6 +150,7 @@ public class MapGenerator : Singleton<MapGenerator>
 		Sprite mapSprite = Sprite.Create(
 			mapTexture, new Rect(0, 0, m_MapWidth * m_PixelPerCell, m_MapHeight * m_PixelPerCell), 0.5f * Vector2.one, m_PixelPerCell);
 		mapRenderer.sprite = mapSprite;
+		mapRenderer.material = worldMaterial;
 	}
 
 	private TerrainType _GetTileType(Vector2Int iTileCoord, Vector2 iSeed1, Vector2 iSeed2)
