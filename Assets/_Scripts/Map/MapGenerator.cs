@@ -1,8 +1,10 @@
 using NaughtyAttributes;
 using System;
+using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.Tilemaps;
 using UnityEngine;
-using UnityEngine.Windows;
+using UnityEngine.Tilemaps;
 using Random = UnityEngine.Random;
 
 public class MapGenerator : Singleton<MapGenerator>
@@ -17,16 +19,34 @@ public class MapGenerator : Singleton<MapGenerator>
 	[SerializeField] int m_PixelPerCell = 16;
 
 	[Serializable]
-	private struct TerrainSprite
+	private struct RandomSprite
 	{
 		public Sprite Sprite;
-		public TerrainType TerrainType;
+		[Range(0, 1)]
+		public double Probability;
 	}
 
-	[SerializeField] List<TerrainSprite> m_TerrainSprites = new List<TerrainSprite>();
-	private Dictionary<TerrainType, Texture2D> m_TypeTextures = new Dictionary<TerrainType, Texture2D>();
+	[Serializable]
+	private struct RandomTile
+	{
+		public TileBase Tile;
+		[Range(0, 1)]
+		public double Probability;
+	}
 
-	private GameObject m_Map = null;
+	[Serializable]
+	private struct TerrainSprites
+	{
+		public TerrainType TerrainType;
+		public List<RandomSprite> BaseSprites;
+		public List<RandomSprite> RandomMotives;
+	}
+
+	[SerializeField] List<TerrainSprites> m_TerrainSprites = new List<TerrainSprites>();
+	private Dictionary<TerrainType, List<RandomTile>> m_TerrainGeneratedSprites = new Dictionary<TerrainType, List<RandomTile>>();
+
+	[SerializeField] Tilemap m_TilemapPrefab;
+	private Tilemap m_MapTilemap = null;
 
 	[Header("WorldGeneration")]
 	[SerializeField] float m_TerrainScale = 10;
@@ -43,48 +63,194 @@ public class MapGenerator : Singleton<MapGenerator>
 
 	protected void Start()
 	{
-		InitSpritesDictionnary();
+		InitTerrainSprites();
 		GenerateRandomMap();
 	}
 
-	[Button]
-	public void InitSpritesDictionnary()
+	private static bool AreRandomSpritesValid(List<RandomSprite> iRandomSprites)
 	{
-		m_TypeTextures.Clear();
-		foreach(TerrainSprite terrainSprite in m_TerrainSprites)
+		if(iRandomSprites == null || iRandomSprites.Count == 0)
 		{
-			if(m_TypeTextures.ContainsKey(terrainSprite.TerrainType))
-				continue;
-			if(terrainSprite.Sprite == null || terrainSprite.Sprite.texture == null)
-			{
-				Debug.LogError("Empty texture");
-				continue;
-			}
-			if(!terrainSprite.Sprite.texture.isReadable)
-			{
-				Debug.LogError(terrainSprite.Sprite.texture.name + " has not been set to be readable. See in texture import settings.");
-				continue;
-			}
+			Debug.LogError("Empty list.");
+			return false;
+		}
 
-			Texture2D baseText = terrainSprite.Sprite.texture;
+		int nbInvalidSprites = 0;
+		double probabilitiesSum = 0;
+		foreach(RandomSprite randomSprite in iRandomSprites)
+		{
+			bool isRandomSpriteValid = true;
 
-			if(baseText.width == m_PixelPerCell && baseText.height == m_PixelPerCell)
+			probabilitiesSum += randomSprite.Probability;
+			if(!(0 < randomSprite.Probability && randomSprite.Probability <= 1))
 			{
-				m_TypeTextures[terrainSprite.TerrainType] = baseText;
-				continue;
+				Debug.LogError("Probability out of validity range: " + randomSprite.Probability + " is not in ]0, 1].");
+				isRandomSpriteValid = false;
 			}
 
-			// when size is not appropriate, we need to resample the texture
-			RenderTexture renderTexture = new RenderTexture(m_PixelPerCell, m_PixelPerCell, 24);
-			RenderTexture.active = renderTexture;
-			Graphics.Blit(baseText, renderTexture);
+			if(randomSprite.Sprite == null || randomSprite.Sprite.texture == null)
+			{
+				Debug.LogError("Null sprite.");
+				isRandomSpriteValid = false;
+			}
+			else if(!randomSprite.Sprite.texture.isReadable)
+			{
+				Debug.LogError(randomSprite.Sprite.texture.name + " is not readable. Please check \"Read/Write\" in texture import settings.");
+				isRandomSpriteValid = false;
+			}
 
-			Texture2D resizedText = Instantiate(baseText);
-			resizedText.Reinitialize(m_PixelPerCell, m_PixelPerCell);
-			resizedText.ReadPixels(new Rect(0, 0, m_PixelPerCell, m_PixelPerCell), 0, 0);
-			resizedText.Apply();
+			if(!isRandomSpriteValid)
+				nbInvalidSprites++;
+		}
+		bool areSpritesValid = (nbInvalidSprites == 0);
+		if(!areSpritesValid)
+			Debug.LogError(nbInvalidSprites + " invalid sprite(s).");
 
-			m_TypeTextures[terrainSprite.TerrainType] = resizedText;
+		bool areProbabilitiesValid = (probabilitiesSum == 1);
+		if(!areProbabilitiesValid)
+			Debug.LogError("The sum of the probabilitie(s) (" + probabilitiesSum + ") is not equal to 1.");
+
+		return areProbabilitiesValid && areSpritesValid;
+	}
+
+	private bool AreTerrainSpritesValid()
+	{
+		if(m_TerrainSprites == null)
+		{
+			Debug.LogError("No terrain sprites defined.");
+			return false;
+		}
+
+		HashSet<TerrainType> terrainWithSprites = new HashSet<TerrainType>();
+		int nbInvalidTerrainSprites = 0;
+		foreach(TerrainSprites terrainSprites in m_TerrainSprites)
+		{
+			bool isTerrainSpritesValid = true;
+
+			if(terrainWithSprites.Contains(terrainSprites.TerrainType))
+			{
+				Debug.LogError(terrainSprites.TerrainType + " is already present.");
+				isTerrainSpritesValid = false;
+			}
+			terrainWithSprites.Add(terrainSprites.TerrainType);
+
+			if(!AreRandomSpritesValid(terrainSprites.BaseSprites))
+			{
+				Debug.LogError("BaseSprites are not valid for " + terrainSprites.TerrainType + ".");
+				isTerrainSpritesValid = false;
+			}
+			if(!AreRandomSpritesValid(terrainSprites.RandomMotives))
+			{
+				Debug.LogError("Motives are not valid for " + terrainSprites.TerrainType + ".");
+				isTerrainSpritesValid = false;
+			}
+
+			if(!isTerrainSpritesValid)
+				nbInvalidTerrainSprites++;
+		}
+
+		foreach(TerrainType terrainType in Enum.GetValues(typeof(TerrainType)))
+		{
+			if(!terrainWithSprites.Contains(terrainType))
+			{
+				Debug.LogError("Missing sprites for " + terrainType.ToString() + ".");
+				nbInvalidTerrainSprites++;
+			}
+		}
+
+		if(nbInvalidTerrainSprites != 0)
+		{
+			Debug.LogError(nbInvalidTerrainSprites + " invalid TerrainSprites.");
+			return false;
+		}
+
+		return true;
+	}
+
+	private static Texture2D ResizeTexture(Texture2D iTexture, int iWidth, int iHeight)
+	{
+		if(iTexture.width == iWidth && iTexture.height == iWidth)
+			return iTexture;
+
+		RenderTexture renderTexture = new RenderTexture(iWidth, iHeight, 24);
+		RenderTexture.active = renderTexture;
+		Graphics.Blit(iTexture, renderTexture);
+
+		Texture2D resizedText = Instantiate(iTexture);
+		resizedText.Reinitialize(iWidth, iHeight);
+		resizedText.ReadPixels(new Rect(0, 0, iWidth, iHeight), 0, 0);
+		resizedText.Apply();
+		return resizedText;
+	}
+
+	private static Texture2D MergeTextures(Texture2D iBaseTexture, Texture2D iTextureToAdd)
+	{
+		Texture2D mergedTexture = Instantiate(iBaseTexture);
+		if(iBaseTexture.width != iTextureToAdd.width || iBaseTexture.height != iTextureToAdd.height)
+		{
+			Debug.LogError("Unable to merge 2 textures with different sizes.");
+			return mergedTexture;
+		}
+
+		Color32[] basePixelColors = iBaseTexture.GetPixels32();
+		Color32[] pixelColorsToAdd = iTextureToAdd.GetPixels32();
+		int pixelIndex = 0;
+		Color32 addedCol;
+		float alpha, oneMinusAlpha;
+		while(pixelIndex < basePixelColors.Length && pixelIndex < pixelColorsToAdd.Length)
+		{
+			ref Color32 colRef = ref basePixelColors[pixelIndex];
+			addedCol = pixelColorsToAdd[pixelIndex];
+			alpha = addedCol.a / 255f;
+			oneMinusAlpha = 1 - alpha;
+
+			colRef.r = (byte)(colRef.r * oneMinusAlpha + addedCol.r * alpha);
+			colRef.g = (byte)(colRef.g * oneMinusAlpha + addedCol.g * alpha);
+			colRef.b = (byte)(colRef.b * oneMinusAlpha + addedCol.b * alpha);
+
+			pixelIndex++;
+		}
+
+		mergedTexture.SetPixels32(basePixelColors);
+		mergedTexture.Apply();
+		return mergedTexture;
+	}
+
+	public void InitTerrainSprites()
+	{
+		m_TerrainGeneratedSprites.Clear();
+
+		if(!AreTerrainSpritesValid())
+		{
+			Debug.LogError("Will generate blank map texture.");
+			return;
+		}
+
+		foreach(TerrainSprites terrainSprite in m_TerrainSprites)
+		{
+			if(m_TerrainGeneratedSprites.ContainsKey(terrainSprite.TerrainType))
+				continue;
+
+			List<RandomTile> terrainTiles = new List<RandomTile>();
+			foreach(RandomSprite randomSprite in terrainSprite.BaseSprites)
+			{
+				Texture2D baseTexture = ResizeTexture(randomSprite.Sprite.texture, m_PixelPerCell, m_PixelPerCell);
+				foreach(RandomSprite randomMotive in terrainSprite.RandomMotives)
+				{
+					RandomTile randomTile = new RandomTile();
+					randomTile.Probability = randomSprite.Probability * randomMotive.Probability;
+					Texture2D motiveTexture = ResizeTexture(randomMotive.Sprite.texture, m_PixelPerCell, m_PixelPerCell);
+					Sprite mergedSprite = Sprite.Create(
+						MergeTextures(baseTexture, motiveTexture),
+						new Rect(0, 0, m_PixelPerCell, m_PixelPerCell),
+						0.5f * Vector2.one,
+						m_PixelPerCell);
+					randomTile.Tile = TileUtility.DefaultTile(mergedSprite);
+
+					terrainTiles.Add(randomTile);
+				}
+			}
+			m_TerrainGeneratedSprites.Add(terrainSprite.TerrainType, terrainTiles);
 		}
 	}
 
@@ -96,7 +262,7 @@ public class MapGenerator : Singleton<MapGenerator>
 	[Button]
 	public void GenerateRandomMap()
 	{
-		InitMap(Random.Range(int.MinValue, int.MaxValue));
+		InitMap(Random.Range(int.MinValue, int.MaxValue)); // #TODO improve random seed generation
 	}
 
 	[Button]
@@ -105,25 +271,53 @@ public class MapGenerator : Singleton<MapGenerator>
 		InitMap(m_Seed);
 	}
 
+	private static Sprite GetRandomSprite(List<RandomSprite> iRandomSprites)
+	{
+		if(iRandomSprites == null)
+			return null;
+
+		double randVal = Random.value;
+		foreach(RandomSprite randomSprite in iRandomSprites)
+		{
+			if(randVal <= randomSprite.Probability)
+				return randomSprite.Sprite;
+
+			randVal -= randomSprite.Probability;
+		}
+
+		return null;
+	}
+
+	private static TileBase GetRandomTile(List<RandomTile> iRandomTiles)
+	{
+		if(iRandomTiles == null)
+			return null;
+
+		double randVal = Random.value;
+		foreach(RandomTile randomTile in iRandomTiles)
+		{
+			if(randVal <= randomTile.Probability)
+				return randomTile.Tile;
+
+			randVal -= randomTile.Probability;
+		}
+
+		return null;
+	}
+
 	public void InitMap(int iSeed)
 	{
-		if(m_Map != null)
-			Destroy(m_Map);
+		if(m_MapTilemap != null)
+			Destroy(m_MapTilemap.gameObject);
 
 		m_Seed = iSeed;
 		Random.InitState(iSeed);
 		Vector2 seedOffset = Random.insideUnitCircle * Random.Range(-10000, 10000);
 		Vector2 seedOffset2 = Random.insideUnitCircle * Random.Range(-10000, 10000);
 
-		m_Map = new GameObject();
-		m_Map.transform.parent = transform;
-		Vector3 originCellCenter = m_WorldGridGeometry.GetCellCenterWorld(Vector3Int.zero);
-		Vector3 originCellBottomLeftCorner = m_WorldGridGeometry.CellToWorld(Vector3Int.zero);
-		m_Map.transform.position = new Vector3((m_MapWidth % 2 == 0) ? originCellBottomLeftCorner.x : originCellCenter.x,
-												(m_MapHeight % 2 == 0) ? originCellBottomLeftCorner.y : originCellCenter.y,
-												0.5f);
+		m_MapTilemap = Instantiate(m_TilemapPrefab);
+		m_MapTilemap.transform.parent = m_WorldGridGeometry.transform;
 
-		Texture2D mapTexture = new Texture2D(m_MapWidth * m_PixelPerCell, m_MapHeight * m_PixelPerCell, TextureFormat.RGB24, false);
 		int xStart = -m_MapWidth / 2;
 		int yStart = -m_MapHeight / 2;
 		for(int xx = 0; xx < m_MapWidth; xx++)
@@ -133,21 +327,13 @@ public class MapGenerator : Singleton<MapGenerator>
 				Vector2Int gridPos = new Vector2Int(xStart + xx, yStart + yy);
 				TerrainType terrainType = _GetTileType(gridPos, seedOffset, seedOffset2);
 
-				Texture2D terrainTexture = m_TypeTextures.GetValueOrDefault(terrainType, null);
-				if(terrainTexture == null)
+				TileBase terrainTile = GetRandomTile(m_TerrainGeneratedSprites.GetValueOrDefault(terrainType, null));
+				if(terrainTile == null)
 					continue;
-
-				mapTexture.SetPixels(xx * m_PixelPerCell, yy * m_PixelPerCell, m_PixelPerCell, m_PixelPerCell, terrainTexture.GetPixels());
+				m_MapTilemap.SetTile(new Vector3Int(gridPos.x, gridPos.y), terrainTile);
 			}
 		}
-		mapTexture.Apply();
-		byte[] bytes = mapTexture.EncodeToPNG();
-		File.WriteAllBytes(Application.dataPath + "/Art/Sprites/Terrain/DebugMapTexture.png", bytes);
-
-		SpriteRenderer mapRenderer = m_Map.AddComponent<SpriteRenderer>();
-		Sprite mapSprite = Sprite.Create(
-			mapTexture, new Rect(0, 0, m_MapWidth * m_PixelPerCell, m_MapHeight * m_PixelPerCell), 0.5f * Vector2.one, m_PixelPerCell);
-		mapRenderer.sprite = mapSprite;
+		m_MapTilemap.RefreshAllTiles();
 	}
 
 	private TerrainType _GetTileType(Vector2Int iTileCoord, Vector2 iSeed1, Vector2 iSeed2)
