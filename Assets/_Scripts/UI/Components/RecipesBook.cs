@@ -12,6 +12,8 @@ public class RecipesBook : MonoBehaviour
 	{
 		public Image Image;
 		public TextMeshProUGUI Title;
+		public TextMeshProUGUI PageIndex;
+		public GameObject SummaryContainer;
 		public GameObject ItemInfoContainer;
 		public GameObject ItemLockedMask;
 		public Image ItemIcon;
@@ -26,24 +28,37 @@ public class RecipesBook : MonoBehaviour
 	[SerializeField] Button m_PrevPageButton;
 	[SerializeField] Button m_NextPageButton;
 
-	[SerializeField] Sprite m_FirstCover;
-	[SerializeField] Sprite m_LastCover;
+	[SerializeField] Sprite m_FrontCoverRecto;
+	[SerializeField] Sprite m_FrontCoverVerso;
+	[SerializeField] Sprite m_BackCoverRecto;
+	[SerializeField] Sprite m_BackCoverVerso;
 
 	[SerializeField] Sprite m_BlankPageSprite;
 
 	[SerializeField] GameObject m_RessourceUIPrefab;
+	[SerializeField] GameObject m_ClickableTextPrefab;
 
 	private List<ItemTier> m_ItemTiers = new List<ItemTier>();
-	private List<List<ItemData>> m_ItemsByTier = new List<List<ItemData>>();
-	private Dictionary<ItemData, List<KeyValuePair<ItemData, int>>> m_ItemsUsages = new Dictionary<ItemData, List<KeyValuePair<ItemData, int>>>();
+	private List<List<ItemData>> m_ItemsByTier = new List<List<ItemData>>(); // last element in every list can be null when need an empty page
+	private Dictionary<ItemData, List<KeyValuePair<ItemData, int>>> m_ItemsUsages =
+		new Dictionary<ItemData, List<KeyValuePair<ItemData, int>>>();
 	private int m_TotalItems = 0;
 
-	private bool m_NeedToAddAnEmptyPage = false;
-
-	private int m_RightPageIdx = 0; // 0 is the first cover
+	private int m_RightPageIdx;
 
 	// Start is called before the first frame update
 	void Start()
+	{
+		InitItemsLists();
+		GenerateSummaryLinks();
+
+		SetPageIndex(GetFrontCoverPageIndex());
+
+		m_PrevPageButton.onClick.AddListener(PreviousPage);
+		m_NextPageButton.onClick.AddListener(NextPage);
+	}
+
+	private void InitItemsLists()
 	{
 		IEnumerable<ItemData> itemDatas = ItemCreator.LoadAllResourceAtPath<ItemData>();
 		Dictionary<ItemTier, List<ItemData>> itemDatasByTier = new Dictionary<ItemTier, List<ItemData>>();
@@ -52,9 +67,9 @@ public class RecipesBook : MonoBehaviour
 			if(itemData == null || itemData.Tier == null)
 			{
 				if(itemData == null)
-					Debug.Log("Empty item data");
+					Debug.Log("Empty item data.");
 				else
-					Debug.LogError("Incomplete item " + itemData.name);
+					Debug.LogError("Incomplete item " + itemData.name + ": no assigned tier.");
 				continue;
 			}
 
@@ -76,23 +91,44 @@ public class RecipesBook : MonoBehaviour
 				m_ItemsUsages[recipeItemCount.Key].Add(new KeyValuePair<ItemData, int>(itemData, recipeItemCount.Value));
 			}
 		}
-
 		m_ItemTiers = new List<ItemTier>(itemDatasByTier.Keys);
-		m_ItemTiers.Sort((ItemTier tier1, ItemTier tier2) => tier1.Level.CompareTo(tier2.Level));
-
 		m_ItemsByTier = new List<List<ItemData>>(itemDatasByTier.Values);
+
+		// sorting
+		m_ItemTiers.Sort((ItemTier tier1, ItemTier tier2) => tier1.Level.CompareTo(tier2.Level));
 		m_ItemsByTier.Sort((List<ItemData> items1, List<ItemData> items2) => items1[0].Tier.Level.CompareTo(items2[0].Tier.Level));
 
-		if(GetPageNumber() % 2 != 0)
-			m_NeedToAddAnEmptyPage = true;
+		foreach(List<ItemData> itemsInTier in m_ItemsByTier)
+		{
+			itemsInTier.Sort((ItemData item1, ItemData item2) => item1.Name.CompareTo(item2.Name));
+			if(itemsInTier.Count % 2 == 0)
+			{
+				itemsInTier.Add(null); // empty page to ensure next tier page lays on the right page
+				m_TotalItems++;
+			}
+		}
+	}
 
-		m_PrevPageButton.onClick.AddListener(PreviousPage);
-		m_NextPageButton.onClick.AddListener(NextPage);
+	private void GenerateSummaryLinks()
+	{
+		// only right page shall contain the summary
+		foreach(Transform child in m_RightPage.SummaryContainer.transform)
+			Destroy(child.gameObject);
+
+		foreach(ItemTier itemTier in m_ItemTiers)
+		{
+			GameObject clickableText = Instantiate(m_ClickableTextPrefab, m_RightPage.SummaryContainer.transform);
+			Button button = clickableText.GetComponentInChildren<Button>();
+			int tierPageIdx = GetTierPageIndex(itemTier);
+			button.onClick.AddListener(() => SetPageIndex(tierPageIdx));
+			TextMeshProUGUI text = clickableText.GetComponentInChildren<TextMeshProUGUI>();
+			text.text = itemTier.Name + " (" + GetRealPageIndex(tierPageIdx) + ")";
+		}
 	}
 
 	void OnEnable()
 	{
-		m_RightPageIdx = 0;
+		SetPageIndex(GetFrontCoverPageIndex());
 		Render();
 	}
 
@@ -126,47 +162,55 @@ public class RecipesBook : MonoBehaviour
 		Render();
 	}
 
-	public void GoToItemPage(ItemData iItem)
+	public int GetFrontCoverPageIndex()
 	{
-		if(iItem == null)
-			return;
-
-		int itemIdx = 0;
-		int tierIdx = 0;
-		IEnumerator<List<ItemData>> tierIt = m_ItemsByTier.GetEnumerator();
-		tierIt.MoveNext();
-		while(tierIt.Current[0].Tier != iItem.Tier)
-		{
-			itemIdx += tierIt.Current.Count;
-			if(!tierIt.MoveNext())
-				return;
-			tierIdx++;
-		}
-		IEnumerator<ItemData> itemDataIt = tierIt.Current.GetEnumerator();
-		itemDataIt.MoveNext();
-		while(itemDataIt.Current != iItem)
-		{
-			if(!itemDataIt.MoveNext())
-				return;
-			itemIdx++;
-		}
-
-		SetPageIndex(1 + itemIdx + (tierIdx + 1));
+		return 0;
 	}
 
-	public void GoToItemTier(ItemTier iTier)
+	public int GetSummaryPageIndex()
 	{
-		int pageIdx = 0;
-		IEnumerator<List<ItemData>> tierIt = m_ItemsByTier.GetEnumerator();
-		tierIt.MoveNext();
-		while(tierIt.Current[0].Tier != iTier)
+		return GetFrontCoverPageIndex() + 2;
+	}
+
+	public int GetItemPageIndex(ItemData iItem)
+	{
+		if(iItem == null)
+			return 0;
+
+		List<ItemData> itemsInTier = m_ItemsByTier.Find(iItems => iItems.Contains(iItem));
+		if(itemsInTier == null)
+			return 0;
+		int itemIdx = itemsInTier.IndexOf(iItem) + 1;
+
+		return GetTierPageIndex(iItem.Tier) + itemIdx;
+	}
+
+	public int GetTierPageIndex(ItemTier iTier)
+	{
+		int tierIdx = m_ItemTiers.IndexOf(iTier) + 1;
+		int itemsInPreviousTiers = 0;
+		int visitedTiers = 0;
+		foreach(List<ItemData> itemsInTier in m_ItemsByTier)
 		{
-			pageIdx += tierIt.Current.Count + 1;
-			if(!tierIt.MoveNext())
-				return;
+			if(visitedTiers == tierIdx - 1)
+				break;
+
+			itemsInPreviousTiers += itemsInTier.Count;
+			visitedTiers++;
 		}
 
-		SetPageIndex(1 + pageIdx);
+		return GetSummaryPageIndex() + 1 + tierIdx + itemsInPreviousTiers;
+	}
+
+	public int GetBackCoverPageIndex()
+	{
+		return GetPageNumber() - 1;
+	}
+
+	private int GetRealPageIndex(int iPageIndex)
+	{
+		int firstIndexedPage = GetSummaryPageIndex();
+		return iPageIndex - firstIndexedPage + 1;
 	}
 
 	private void Render()
@@ -180,16 +224,31 @@ public class RecipesBook : MonoBehaviour
 
 	private void RenderPage(Page iPage, int iPageIndex)
 	{
+		_ClearPage(iPage);
+
+		int realPageIndex = GetRealPageIndex(iPageIndex);
+		if(1 <= realPageIndex && realPageIndex <= GetRealPageNumber())
+			iPage.PageIndex.text = realPageIndex.ToString();
+
 		if(iPageIndex < 0 || iPageIndex > GetPageNumber() - 1)
-			HidePage(iPage);
+			_HidePage(iPage);
 
-		if(iPageIndex == 0)
-			ShowSprite(iPage, m_FirstCover);
+		if(iPageIndex == GetFrontCoverPageIndex())
+			_ShowSprite(iPage, m_FrontCoverRecto);
+		if(iPageIndex == GetFrontCoverPageIndex() + 1)
+			_ShowSprite(iPage, m_FrontCoverVerso);
 
-		if(iPageIndex - 1 >= 0 && iPageIndex - 1 < m_TotalItems + m_ItemTiers.Count)
+		if(iPageIndex == GetSummaryPageIndex())
+			_ShowSummary(iPage);
+		if(iPageIndex == GetSummaryPageIndex() + 1)
+			_ShowSprite(iPage, m_BlankPageSprite);
+
+		int firstContentPageIdx = GetSummaryPageIndex() + 2;
+		int pageContentIdx = iPageIndex - firstContentPageIdx;
+		if(0 <= pageContentIdx && pageContentIdx < m_TotalItems + m_ItemTiers.Count)
 		{
 			int tierLevel = 0;
-			int pageIndexInTier = iPageIndex - 1;
+			int pageIndexInTier = pageContentIdx;
 			while(tierLevel < m_ItemsByTier.Count && pageIndexInTier > m_ItemsByTier[tierLevel].Count)
 			{
 				pageIndexInTier -= m_ItemsByTier[tierLevel].Count + 1;
@@ -197,49 +256,60 @@ public class RecipesBook : MonoBehaviour
 			}
 
 			if(pageIndexInTier <= 0)
-				ShowItemTier(iPage, tierLevel);
+				_ShowItemTier(iPage, tierLevel);
 			else
-				ShowItemData(iPage, m_ItemsByTier[tierLevel][pageIndexInTier - 1]);
+				_ShowItemData(iPage, m_ItemsByTier[tierLevel][pageIndexInTier - 1]);
 		}
 
-		if(iPageIndex == GetPageNumber() - 2 && m_NeedToAddAnEmptyPage)
-			ShowSprite(iPage, m_BlankPageSprite);
-
-		if(iPageIndex == GetPageNumber() - 1)
-			ShowSprite(iPage, m_LastCover);
+		if(iPageIndex == GetBackCoverPageIndex() - 1)
+			_ShowSprite(iPage, m_BackCoverRecto);
+		if(iPageIndex == GetBackCoverPageIndex())
+			_ShowSprite(iPage, m_BackCoverVerso);
 	}
 
-	private void HidePage(Page iPage)
+	private void _ClearPage(Page iPage)
+	{
+		iPage.Title.text = "";
+		iPage.PageIndex.text = "";
+		iPage.ItemInfoContainer.SetActive(false);
+		iPage.ItemLockedMask.SetActive(false);
+		iPage.SummaryContainer.SetActive(false);
+	}
+
+	private void _HidePage(Page iPage)
 	{
 		iPage.Image.gameObject.SetActive(false);
 	}
 
-	private void ShowSprite(Page iPage, Sprite iSprite, string iTitle = "")
+	private void _ShowSprite(Page iPage, Sprite iSprite, string iTitle = "")
 	{
 		iPage.Image.gameObject.SetActive(true);
 		iPage.Image.sprite = iSprite;
 		iPage.Title.text = iTitle;
-		iPage.ItemInfoContainer.SetActive(false);
-		iPage.ItemLockedMask.SetActive(false);
 	}
 
-	private void ShowSummary(Page iPage)
+	private void _ShowSummary(Page iPage)
 	{
-		// TODO
+		_ShowSprite(iPage, m_BlankPageSprite, "Summary");
+		iPage.SummaryContainer.SetActive(true);
 	}
 
-	private void ShowItemTier(Page iPage, int iTier)
+	private void _ShowItemTier(Page iPage, int iTier)
 	{
 		iPage.Image.gameObject.SetActive(true);
 		iPage.Image.sprite = m_BlankPageSprite;
 		ItemTier tier = m_ItemTiers[iTier];
 		iPage.Title.text = "Tier " + tier.Level + "\n" + tier.Name;
-		iPage.ItemInfoContainer.SetActive(false);
-		iPage.ItemLockedMask.SetActive(false);
 	}
 
-	private void ShowItemData(Page iPage, ItemData iItemData)
+	private void _ShowItemData(Page iPage, ItemData iItemData)
 	{
+		if(iItemData == null)
+		{
+			_ShowSprite(iPage, m_BlankPageSprite);
+			return;
+		}
+
 		iPage.Image.gameObject.SetActive(true);
 		iPage.Image.sprite = m_BlankPageSprite;
 
@@ -260,7 +330,7 @@ public class RecipesBook : MonoBehaviour
 			RessourceUI ressourceUi = ressource.GetComponent<RessourceUI>();
 			ressourceUi.SetItemData(recipeItemCount.Key);
 			ressourceUi.UpdateValue(iMax: recipeItemCount.Value);
-			ressourceUi.OnItemDataClicked.AddListener(GoToItemPage);
+			ressourceUi.OnItemDataClicked.AddListener(item => SetPageIndex(GetItemPageIndex(item)));
 		}
 
 		if(!m_ItemsUsages.ContainsKey(iItemData))
@@ -271,13 +341,18 @@ public class RecipesBook : MonoBehaviour
 			RessourceUI ressourceUi = ressource.GetComponent<RessourceUI>();
 			ressourceUi.SetItemData(itemUsageCount.Key);
 			ressourceUi.UpdateValue(iMax: itemUsageCount.Value);
-			ressourceUi.OnItemDataClicked.AddListener(GoToItemPage);
+			ressourceUi.OnItemDataClicked.AddListener(item => SetPageIndex(GetItemPageIndex(item)));
 		}
 	}
 
-	// first and last page + 1 page per item + 1 page per tier for presentation + 1 empty page if needed;
+	// front cover (recto/verso) + summary + empty page + 1 page per tier + 1 page per item + back cover (recto/verso)
 	private int GetPageNumber()
 	{
-		return 2 + m_TotalItems + m_ItemTiers.Count + (m_NeedToAddAnEmptyPage ? 1 : 0);
+		return 6 + m_TotalItems + m_ItemTiers.Count;
+	}
+
+	private int GetRealPageNumber()
+	{
+		return 2 + m_TotalItems + m_ItemTiers.Count;
 	}
 }
