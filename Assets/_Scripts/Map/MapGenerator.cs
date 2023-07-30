@@ -42,8 +42,18 @@ public class MapGenerator : Singleton<MapGenerator>
 		public List<RandomSprite> RandomMotives;
 	}
 
+	[Serializable]
+	private struct RessourceSprite
+	{
+		public TerrainType RessourceType;
+		public Sprite Sprite;
+	}
+
 	[SerializeField] List<TerrainSprites> m_TerrainSprites = new List<TerrainSprites>();
-	private Dictionary<TerrainType, List<RandomTile>> m_TerrainGeneratedSprites = new Dictionary<TerrainType, List<RandomTile>>();
+	[SerializeField] List<RessourceSprite> m_RessourceSprites = new List<RessourceSprite>();
+	private Dictionary<TerrainType, List<RandomTile>> m_BaseTerrainGeneratedSprites = new Dictionary<TerrainType, List<RandomTile>>();
+	private Dictionary<TerrainType, Dictionary<TerrainType, List<RandomTile>>> m_RessourcesGeneratedSprites =
+		new Dictionary<TerrainType, Dictionary<TerrainType, List<RandomTile>>>();
 
 	[SerializeField] Tilemap m_TilemapPrefab;
 	private Tilemap m_MapTilemap = null;
@@ -106,33 +116,33 @@ public class MapGenerator : Singleton<MapGenerator>
 		if(!areSpritesValid)
 			Debug.LogError(nbInvalidSprites + " invalid sprite(s).");
 
-		bool areProbabilitiesValid = (probabilitiesSum == 1);
+		bool areProbabilitiesValid = (Math.Abs(probabilitiesSum - 1) <= 0.01);
 		if(!areProbabilitiesValid)
 			Debug.LogError("The sum of the probabilitie(s) (" + probabilitiesSum + ") is not equal to 1.");
 
 		return areProbabilitiesValid && areSpritesValid;
 	}
 
-	private bool AreTerrainSpritesValid()
+	private bool AreSpritesValid()
 	{
-		if(m_TerrainSprites == null)
+		if(m_TerrainSprites == null || m_RessourceSprites == null)
 		{
-			Debug.LogError("No terrain sprites defined.");
+			Debug.LogError("Null list.");
 			return false;
 		}
 
-		HashSet<TerrainType> terrainWithSprites = new HashSet<TerrainType>();
+		HashSet<TerrainType> allTerrainTypesWithSprites = new HashSet<TerrainType>();
 		int nbInvalidTerrainSprites = 0;
 		foreach(TerrainSprites terrainSprites in m_TerrainSprites)
 		{
 			bool isTerrainSpritesValid = true;
 
-			if(terrainWithSprites.Contains(terrainSprites.TerrainType))
+			if(allTerrainTypesWithSprites.Contains(terrainSprites.TerrainType))
 			{
 				Debug.LogError(terrainSprites.TerrainType + " is already present.");
 				isTerrainSpritesValid = false;
 			}
-			terrainWithSprites.Add(terrainSprites.TerrainType);
+			allTerrainTypesWithSprites.Add(terrainSprites.TerrainType);
 
 			if(!AreRandomSpritesValid(terrainSprites.BaseSprites))
 			{
@@ -149,9 +159,35 @@ public class MapGenerator : Singleton<MapGenerator>
 				nbInvalidTerrainSprites++;
 		}
 
+		foreach(RessourceSprite ressourceSprite in m_RessourceSprites)
+		{
+			bool isRessourceSpriteValid = true;
+
+			if(allTerrainTypesWithSprites.Contains(ressourceSprite.RessourceType))
+			{
+				Debug.LogError(ressourceSprite.RessourceType + " is already present.");
+				isRessourceSpriteValid = false;
+			}
+			allTerrainTypesWithSprites.Add(ressourceSprite.RessourceType);
+
+			if(ressourceSprite.Sprite == null || ressourceSprite.Sprite.texture == null)
+			{
+				Debug.LogError("Null sprite.");
+				isRessourceSpriteValid = false;
+			}
+			else if(!ressourceSprite.Sprite.texture.isReadable)
+			{
+				Debug.LogError(ressourceSprite.Sprite.texture.name + " is not readable. Please check \"Read/Write\" in texture import settings.");
+				isRessourceSpriteValid = false;
+			}
+
+			if(!isRessourceSpriteValid)
+				nbInvalidTerrainSprites++;
+		}
+
 		foreach(TerrainType terrainType in Enum.GetValues(typeof(TerrainType)))
 		{
-			if(!terrainWithSprites.Contains(terrainType))
+			if(!allTerrainTypesWithSprites.Contains(terrainType))
 			{
 				Debug.LogError("Missing sprites for " + terrainType.ToString() + ".");
 				nbInvalidTerrainSprites++;
@@ -160,7 +196,7 @@ public class MapGenerator : Singleton<MapGenerator>
 
 		if(nbInvalidTerrainSprites != 0)
 		{
-			Debug.LogError(nbInvalidTerrainSprites + " invalid TerrainSprites.");
+			Debug.LogError(nbInvalidTerrainSprites + " invalid entries.");
 			return false;
 		}
 
@@ -185,13 +221,14 @@ public class MapGenerator : Singleton<MapGenerator>
 
 	private static Texture2D MergeTextures(Texture2D iBaseTexture, Texture2D iTextureToAdd)
 	{
-		Texture2D mergedTexture = Instantiate(iBaseTexture);
 		if(iBaseTexture.width != iTextureToAdd.width || iBaseTexture.height != iTextureToAdd.height)
 		{
 			Debug.LogError("Unable to merge 2 textures with different sizes.");
-			return mergedTexture;
+			return iBaseTexture;
 		}
 
+		// Texture2D mergedTexture = new Texture2D(iBaseTexture.width, iBaseTexture.height, iBaseTexture.format, false);
+		Texture2D mergedTexture = Instantiate(iBaseTexture);
 		Color32[] basePixelColors = iBaseTexture.GetPixels32();
 		Color32[] pixelColorsToAdd = iTextureToAdd.GetPixels32();
 		int pixelIndex = 0;
@@ -218,17 +255,27 @@ public class MapGenerator : Singleton<MapGenerator>
 
 	public void InitTerrainSprites()
 	{
-		m_TerrainGeneratedSprites.Clear();
+		m_BaseTerrainGeneratedSprites.Clear();
 
-		if(!AreTerrainSpritesValid())
+		if(!AreSpritesValid())
 		{
 			Debug.LogError("Will generate blank map texture.");
 			return;
 		}
 
+		Dictionary<TerrainType, Texture2D> resizedRessourcesSprites = new Dictionary<TerrainType, Texture2D>();
+		foreach(RessourceSprite ressourceSprite in m_RessourceSprites)
+		{
+			Dictionary<TerrainType, List<RandomTile>> terrains = new Dictionary<TerrainType, List<RandomTile>>();
+			foreach(TerrainSprites terrainSprites in m_TerrainSprites)
+				terrains.Add(terrainSprites.TerrainType, new List<RandomTile>());
+			m_RessourcesGeneratedSprites.Add(ressourceSprite.RessourceType, terrains);
+			resizedRessourcesSprites.Add(ressourceSprite.RessourceType, ResizeTexture(ressourceSprite.Sprite.texture, m_PixelPerCell, m_PixelPerCell));
+		}
+
 		foreach(TerrainSprites terrainSprite in m_TerrainSprites)
 		{
-			if(m_TerrainGeneratedSprites.ContainsKey(terrainSprite.TerrainType))
+			if(m_BaseTerrainGeneratedSprites.ContainsKey(terrainSprite.TerrainType))
 				continue;
 
 			List<RandomTile> terrainTiles = new List<RandomTile>();
@@ -240,17 +287,31 @@ public class MapGenerator : Singleton<MapGenerator>
 					RandomTile randomTile = new RandomTile();
 					randomTile.Probability = randomSprite.Probability * randomMotive.Probability;
 					Texture2D motiveTexture = ResizeTexture(randomMotive.Sprite.texture, m_PixelPerCell, m_PixelPerCell);
+					Texture2D mergedTexture = MergeTextures(baseTexture, motiveTexture);
+
 					Sprite mergedSprite = Sprite.Create(
-						MergeTextures(baseTexture, motiveTexture),
+						mergedTexture,
 						new Rect(0, 0, m_PixelPerCell, m_PixelPerCell),
 						0.5f * Vector2.one,
 						m_PixelPerCell);
 					randomTile.Tile = TileUtility.DefaultTile(mergedSprite);
-
 					terrainTiles.Add(randomTile);
+
+					foreach(KeyValuePair<TerrainType, Texture2D> ressourceTexture in resizedRessourcesSprites)
+					{
+						RandomTile terrainWithRessourceRandomTile = new RandomTile();
+						terrainWithRessourceRandomTile.Probability = randomTile.Probability;
+						Sprite terrainWithRessourceSprite = Sprite.Create(
+						MergeTextures(mergedTexture, ressourceTexture.Value),
+						new Rect(0, 0, m_PixelPerCell, m_PixelPerCell),
+						0.5f * Vector2.one,
+						m_PixelPerCell);
+						terrainWithRessourceRandomTile.Tile = TileUtility.DefaultTile(terrainWithRessourceSprite);
+						m_RessourcesGeneratedSprites[ressourceTexture.Key][terrainSprite.TerrainType].Add(terrainWithRessourceRandomTile);
+					}
 				}
 			}
-			m_TerrainGeneratedSprites.Add(terrainSprite.TerrainType, terrainTiles);
+			m_BaseTerrainGeneratedSprites.Add(terrainSprite.TerrainType, terrainTiles);
 		}
 	}
 
@@ -269,23 +330,6 @@ public class MapGenerator : Singleton<MapGenerator>
 	public void RegenerateMap()
 	{
 		InitMap(m_Seed);
-	}
-
-	private static Sprite GetRandomSprite(List<RandomSprite> iRandomSprites)
-	{
-		if(iRandomSprites == null)
-			return null;
-
-		double randVal = Random.value;
-		foreach(RandomSprite randomSprite in iRandomSprites)
-		{
-			if(randVal <= randomSprite.Probability)
-				return randomSprite.Sprite;
-
-			randVal -= randomSprite.Probability;
-		}
-
-		return null;
 	}
 
 	private static TileBase GetRandomTile(List<RandomTile> iRandomTiles)
@@ -325,28 +369,38 @@ public class MapGenerator : Singleton<MapGenerator>
 			for(int yy = 0; yy < m_MapHeight; yy++)
 			{
 				Vector2Int gridPos = new Vector2Int(xStart + xx, yStart + yy);
-				TerrainType terrainType = _GetTileType(gridPos, seedOffset, seedOffset2);
+				TerrainType baseTerrainType;
+				TerrainType terrainType = _GetTileType(gridPos, seedOffset, seedOffset2, out baseTerrainType);
 
-				TileBase terrainTile = GetRandomTile(m_TerrainGeneratedSprites.GetValueOrDefault(terrainType, null));
+				TileBase terrainTile;
+				if(m_RessourcesGeneratedSprites.ContainsKey(terrainType) && m_RessourcesGeneratedSprites[terrainType].ContainsKey(baseTerrainType))
+					terrainTile = GetRandomTile(m_RessourcesGeneratedSprites[terrainType][baseTerrainType]);
+				else
+					terrainTile = GetRandomTile(m_BaseTerrainGeneratedSprites.GetValueOrDefault(terrainType, null));
+
 				if(terrainTile == null)
 					continue;
+
 				m_MapTilemap.SetTile(new Vector3Int(gridPos.x, gridPos.y), terrainTile);
 			}
 		}
 		m_MapTilemap.RefreshAllTiles();
 	}
 
-	private TerrainType _GetTileType(Vector2Int iTileCoord, Vector2 iSeed1, Vector2 iSeed2)
+	private TerrainType _GetTileType(Vector2Int iTileCoord, Vector2 iSeed1, Vector2 iSeed2, out TerrainType oBaseTerrainType)
 	{
-		TerrainType terrainType = TerrainType.Grass;
-
 		// out of border
 		int minX = -m_MapWidth / 2;
 		int maxX = (m_MapWidth + 1) / 2 - 1;
 		int minY = -m_MapHeight / 2;
 		int maxY = (m_MapHeight + 1) / 2 - 1;
 		if(iTileCoord.x <= minX || iTileCoord.x >= maxX || iTileCoord.y <= minY || iTileCoord.y >= maxY)
-			return TerrainType.Border;
+		{
+			oBaseTerrainType = TerrainType.Border;
+			return oBaseTerrainType;
+		}
+
+		oBaseTerrainType = TerrainType.Grass;
 
 		// 1 - terrain height
 		// Three states :
@@ -356,20 +410,20 @@ public class MapGenerator : Singleton<MapGenerator>
 		float waterVal = GetPerlin(iTileCoord, iSeed1, m_TerrainScale * 2);
 		waterVal += GetPerlin(iTileCoord, iSeed2, m_TerrainScale);
 		if(waterVal <= m_WaterLevel)
-			terrainType = TerrainType.Water;
+			oBaseTerrainType = TerrainType.Water;
 
 		float rockVal = GetPerlin(iTileCoord, iSeed1 - 10000 * Vector2.one, m_TerrainScale);
 		rockVal += GetPerlin(iTileCoord, iSeed2 - 10000 * Vector2.down, m_TerrainScale / 2);
 		if(waterVal >= m_RockLevel)
-			terrainType = TerrainType.Rock;
+			oBaseTerrainType = TerrainType.Rock;
 
 		// 2 - temperature
 		// Two states :
 		//      - hot
 		//      - normal
 		float temperature = GetPerlin(iTileCoord, iSeed1 + 1000 * Vector2.up, m_TerrainScale);
-		if(terrainType == TerrainType.Grass && temperature >= m_SandTemperature)
-			terrainType = TerrainType.Sand;
+		if(oBaseTerrainType == TerrainType.Grass && temperature >= m_SandTemperature)
+			oBaseTerrainType = TerrainType.Sand;
 
 		// 3 - spawning ressources
 		// iron, copper & coal ores     in rocks
@@ -383,29 +437,29 @@ public class MapGenerator : Singleton<MapGenerator>
 		oilF += GetPerlin(iTileCoord, iSeed2 - 1000 * Vector2.one, m_RessourcesScale / 2);
 		bool isOil = oilF <= m_OilFrequency;
 
-		if(terrainType == TerrainType.Rock)
+		if(oBaseTerrainType == TerrainType.Rock)
 		{
 			if(isCopper)
-				terrainType = TerrainType.CopperOre;
+				return TerrainType.CopperOre;
 			if(isIron)
-				terrainType = TerrainType.IronOre;
+				return TerrainType.IronOre;
 			if(isCoal)
-				terrainType = TerrainType.CoalOre;
+				return TerrainType.CoalOre;
 		}
 
-		if(terrainType == TerrainType.Sand || terrainType == TerrainType.Grass)
+		if(oBaseTerrainType == TerrainType.Sand || oBaseTerrainType == TerrainType.Grass)
 		{
 			if(isSulfur)
-				terrainType = TerrainType.SulfurOre;
+				return TerrainType.SulfurOre;
 		}
 
-		if(terrainType == TerrainType.Water || terrainType == TerrainType.Sand || terrainType == TerrainType.Grass)
+		if(oBaseTerrainType == TerrainType.Water || oBaseTerrainType == TerrainType.Sand || oBaseTerrainType == TerrainType.Grass)
 		{
 			if(isOil)
-				terrainType = TerrainType.Oil;
+				return TerrainType.Oil;
 		}
 
-		return terrainType;
+		return oBaseTerrainType;
 	}
 
 	public TerrainType GetTileType(Vector3Int iTileCoord)
@@ -413,7 +467,8 @@ public class MapGenerator : Singleton<MapGenerator>
 		Random.InitState(m_Seed);
 		Vector2 seedOffset = Random.insideUnitCircle * Random.Range(-10000, 10000);
 		Vector2 seedOffset2 = Random.insideUnitCircle * Random.Range(-10000, 10000);
-		return _GetTileType(new Vector2Int(iTileCoord.x, iTileCoord.y), seedOffset, seedOffset2);
+		TerrainType baseTerrainType;
+		return _GetTileType(new Vector2Int(iTileCoord.x, iTileCoord.y), seedOffset, seedOffset2, out baseTerrainType);
 	}
 
 	public TerrainType GetTileType(Vector3 iWorldCoord)

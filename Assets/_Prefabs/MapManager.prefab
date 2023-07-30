@@ -69,45 +69,23 @@ MonoBehaviour:
       Probability: 1
     RandomMotives:
     - Sprite: {fileID: 21300000, guid: 975d735a2c18cbe43817c585337b9d25, type: 3}
-      Probability: 1
+      Probability: 0.949999988079071
+    - Sprite: {fileID: 21300000, guid: 9d15261207db1844cbf921cf336a7272, type: 3}
+      Probability: 0.05000000074505806
   - TerrainType: 3
     BaseSprites:
     - Sprite: {fileID: 21300000, guid: 5fd17c2296e1e8241b0d94f837200045, type: 3}
-      Probability: 1
+      Probability: 0.800000011920929
+    - Sprite: {fileID: 21300000, guid: 144498600bfd9e64686004ab23d72228, type: 3}
+      Probability: 0.20000000298023224
     RandomMotives:
     - Sprite: {fileID: 21300000, guid: 975d735a2c18cbe43817c585337b9d25, type: 3}
-      Probability: 1
+      Probability: 0.8999999761581421
+    - Sprite: {fileID: 21300000, guid: 9d15261207db1844cbf921cf336a7272, type: 3}
+      Probability: 0.10000000149011612
   - TerrainType: 4
     BaseSprites:
     - Sprite: {fileID: 21300000, guid: 77e487a46cd3fb94cb403f186015ed9a, type: 3}
-      Probability: 1
-    RandomMotives:
-    - Sprite: {fileID: 21300000, guid: 975d735a2c18cbe43817c585337b9d25, type: 3}
-      Probability: 1
-  - TerrainType: 5
-    BaseSprites:
-    - Sprite: {fileID: 21300000, guid: cfabc6d9d0d2c304cbe88e362e128274, type: 3}
-      Probability: 1
-    RandomMotives:
-    - Sprite: {fileID: 21300000, guid: 975d735a2c18cbe43817c585337b9d25, type: 3}
-      Probability: 1
-  - TerrainType: 6
-    BaseSprites:
-    - Sprite: {fileID: 21300000, guid: 17e3f33d1a96d7b45b62f9093d6679ae, type: 3}
-      Probability: 1
-    RandomMotives:
-    - Sprite: {fileID: 21300000, guid: 975d735a2c18cbe43817c585337b9d25, type: 3}
-      Probability: 1
-  - TerrainType: 7
-    BaseSprites:
-    - Sprite: {fileID: 21300000, guid: 63ad57fa314cd9b44afe3b9b6d195dea, type: 3}
-      Probability: 1
-    RandomMotives:
-    - Sprite: {fileID: 21300000, guid: 975d735a2c18cbe43817c585337b9d25, type: 3}
-      Probability: 1
-  - TerrainType: 8
-    BaseSprites:
-    - Sprite: {fileID: 21300000, guid: a19ec3413badae9489f2c8e26c66fd6d, type: 3}
       Probability: 1
     RandomMotives:
     - Sprite: {fileID: 21300000, guid: 975d735a2c18cbe43817c585337b9d25, type: 3}
@@ -119,6 +97,15 @@ MonoBehaviour:
     RandomMotives:
     - Sprite: {fileID: 21300000, guid: 975d735a2c18cbe43817c585337b9d25, type: 3}
       Probability: 1
+  m_RessourceSprites:
+  - RessourceType: 5
+    Sprite: {fileID: 21300000, guid: cfabc6d9d0d2c304cbe88e362e128274, type: 3}
+  - RessourceType: 6
+    Sprite: {fileID: 21300000, guid: 9d15261207db1844cbf921cf336a7272, type: 3}
+  - RessourceType: 7
+    Sprite: {fileID: 21300000, guid: 63ad57fa314cd9b44afe3b9b6d195dea, type: 3}
+  - RessourceType: 8
+    Sprite: {fileID: 21300000, guid: a19ec3413badae9489f2c8e26c66fd6d, type: 3}
   m_TilemapPrefab: {fileID: 7406291346270436577, guid: 64b9522e022963141946677ac652e863, type: 3}
   m_TerrainScale: 25
   m_RessourcesScale: 10
